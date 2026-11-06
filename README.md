@@ -40,7 +40,7 @@ npm run build --prefix frontend
 
 ## 项目材料
 
-- [课程要求](course_project.pdf)
-- [项目提案](StudyGraph_Project_Proposal%281%29.pdf)
-- [三周计划与分工](StudyGraph_三周计划与分工.docx)
-
+- [课程要求](docs/project/course_project.pdf)
+- [项目提案](docs/project/StudyGraph_Project_Proposal%281%29.pdf)
+- [三周计划与分工](docs/project/StudyGraph_三周计划与分工.docx)
+- [TACC 教程](docs/tacc/TACC_Toturial.pdf) · [公共环境参考包](docs/tacc/project-release-1.zip)

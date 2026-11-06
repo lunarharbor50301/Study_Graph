@@ -1,6 +1,6 @@
 # StudyGraph 如何把讲义变成一次有依据的学习对话
 
-[提案第 2 页图 3](../StudyGraph_Project_Proposal%281%29.pdf) 给出了四个环节：讲义解析、知识层、学习 Agent、TACC 推理。下图把它展开为两段：上课前处理一次讲义，学习时循环处理学生的请求。实线表示数据或操作的去向，虚线表示调用模型辅助生成或分析。
+[提案第 2 页图 3](project/StudyGraph_Project_Proposal%281%29.pdf) 给出了四个环节：讲义解析、知识层、学习 Agent、TACC 推理。下图把它展开为两段：上课前处理一次讲义，学习时循环处理学生的请求。实线表示数据或操作的去向，虚线表示调用模型辅助生成或分析。
 
 ```mermaid
 flowchart TD
