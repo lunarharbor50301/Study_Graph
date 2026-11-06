@@ -6,3 +6,8 @@ dist/
 *.sqlite3*
 *.pem
 *.key
+
+# Local course references and TACC run outputs
+/ACS_Lecture_1_2026F.pdf
+/project-release-private-vllm.zip
+/tacc-result-*.json
