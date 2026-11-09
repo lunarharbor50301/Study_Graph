@@ -27,7 +27,7 @@ flowchart TD
     reply -->|继续追问| ask
     select --> practice["请求练习"]
     reply --> practice
-    tests["Tests 页面选跨概念练习"] --> practice
+
     practice --> question["按目标概念和来源出题，保留参考答案与评分标准"]
     graph --> question
     question --> attempt["学生作答并说明理由"]
@@ -39,6 +39,18 @@ flowchart TD
     attempt --> record["按会话和题目保存每次作答、提示与重试"]
     feedback --> record
   end
+  subgraph exam["Tests · 独立套题页面"]
+    scope["选择讲义与概念范围"] --> build["生成一套覆盖多个概念的题，固定题序、评分依据和出处"]
+    build --> active["显示第 i 题 / 共 N 题"]
+    active --> hint["获取本题提示或讨论思路"] --> active
+    active --> submit["提交本题答案，记录反馈与进度"]
+    submit -->|重答本题| active
+    submit -->|还有题目| active
+    submit -->|已完成整套题| summary["查看整套结果、逐题反馈及对应讲义页"]
+  end
+  chunks --> build
+  graph --> build
+  build -.-> model
   model["③ TACC · Qwen 推理服务"]
   extract -.-> model
   explain -.-> model

@@ -1,0 +1,14 @@
+page,en,zh
+16,What are the five pipeline stages from fetch to write back?,五级指令流水线包含哪些阶段？
+17,How many cycles for N instructions in a perfect pipeline with M stages?,理想流水线执行若干指令的总周期数如何计算？
+18,How do data hazards and structural hazards differ?,数据冒险和结构冒险有什么区别？
+49,When do threads need atomicAdd on the same memory location?,多个线程更新同一内存位置为什么需要原子操作？
+55,What do threads share within a process?,同一进程内的线程共享哪些资源？
+57,How can concurrent updates to a shared sum lose a write?,两个线程同时累加为什么会丢失一次更新？
+58,What is the cost of mutex lock contention?,互斥锁竞争会产生什么代价？
+59,How does a barrier differ from a condition variable?,屏障和条件变量的区别是什么？
+61,What does CUDA host code do before and after kernel launch?,主机在启动核函数前后需要做哪些内存操作？
+62,How do blockIdx blockDim and threadIdx determine an element index?,如何用块编号和线程编号计算元素下标？
+63,What is the scope of __syncthreads compared with a kernel boundary?,块内同步和核函数边界的同步范围有何区别？
+66,Why does a serial fraction limit speedup under Amdahl's law?,为什么增加处理器仍然无法消除串行部分的耗时？
+67,How does arithmetic intensity determine the memory bandwidth bound?,计算强度如何决定内存带宽限制下的性能上限？

@@ -1,0 +1,7 @@
+[
+  {"kind":"paraphrase","question":"Two workers read the same running total and each writes an updated value. How can one contribution disappear?","pages":[57],"expect":"Both read the old sum and a later write overwrites the other update."},
+  {"kind":"paraphrase","question":"If only nine tenths of a fixed workload can run in parallel, what speedup ceiling remains with unlimited processors?","pages":[66],"expect":"Tenfold; the serial tenth remains."},
+  {"kind":"paraphrase","question":"How does the amount of arithmetic done per byte fetched affect the performance ceiling when data transfer is the bottleneck?","pages":[67],"expect":"Bandwidth times FLOPs per byte bounds attainable performance."},
+  {"kind":"outside","question":"What oven temperature does this lecture recommend for baking sourdough bread?","pages":[],"expect":"Insufficient lecture evidence."},
+  {"kind":"outside","question":"What exact retail price in US dollars does this lecture give for a GPU with 80 GB of memory?","pages":[],"expect":"Insufficient lecture evidence; hardware terminology alone is insufficient."}
+]

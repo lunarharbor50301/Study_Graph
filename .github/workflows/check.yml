@@ -12,6 +12,7 @@ jobs:
         with:
           node-version: '24'
       - run: python -m pip install -r backend/requirements-lock.txt
-      - run: python -m unittest backend.test_smoke
+      - run: python -m unittest backend.test_smoke backend.test_documents
       - run: npm ci --prefix frontend
       - run: npm run build --prefix frontend
+
