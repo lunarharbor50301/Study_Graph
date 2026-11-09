@@ -1,0 +1,39 @@
+{
+  "document_id": "roofline",
+  "title": "Roofline 入门",
+  "concepts": [
+    {
+      "id": "intensity",
+      "name": "计算强度",
+      "chunk_id": "roofline-p1",
+      "page": 1,
+      "text": "计算强度等于浮点运算次数除以传输的字节数，单位为 FLOP/byte。",
+      "keywords": [
+        "强度",
+        "FLOP",
+        "字节"
+      ]
+    },
+    {
+      "id": "bandwidth",
+      "name": "带宽上限",
+      "chunk_id": "roofline-p2",
+      "page": 2,
+      "text": "带宽提供的性能上限等于内存带宽乘以计算强度。例如 100 GB/s × 2 FLOP/byte = 200 GFLOP/s。实际性能上界还受峰值算力约束。",
+      "keywords": [
+        "带宽",
+        "上限",
+        "性能"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "source": "intensity",
+      "target": "bandwidth",
+      "label": "用于计算",
+      "chunk_id": "roofline-p2",
+      "inferred": false
+    }
+  ]
+}
