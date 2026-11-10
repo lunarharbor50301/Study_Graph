@@ -18,6 +18,8 @@ npm run build --prefix frontend
 
 打开 http://127.0.0.1:8000 ，接口文档在 http://127.0.0.1:8000/docs 。前端开发可另开终端运行 `npm --prefix frontend run dev`，使用 Vite 打印的地址。后端检查运行 `.\.venv\Scripts\python -m unittest backend.test_smoke`。后续开会只需运行最后一条启动命令；前端有改动时先重新构建。
 
+首页是检索与模型的英文演示页。上传 PDF/PPTX，在 Learning 输入讲义问题或关键词，点击引用核对原页。Tests 接受逗号分隔的概念，先用 Find evidence 检查每个概念的出处，再用 Generate set with TACC 生成一套简答题。离线可用检索、原文摘录和预览。真实模型配置见 [TACC 连接步骤](docs/tacc/live-qa.md)。原来的两页 Roofline 工作台保留在 `/?sample`。
+
 | 负责人 | 开工任务 | 第一次交接 |
 |---|---|---|
 | 底座负责人（兼任） | 准备前后端入口、锁定依赖、配置样例和 Windows 启动说明 | 另一名组员按 README 独立启动并打开样例讲义 |

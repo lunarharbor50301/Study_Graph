@@ -25,5 +25,5 @@ function Workspace({lecture}:{lecture:Lecture}){
   <aside><small>样例讲义 · 第 {page} / 2 页</small><h2>{lecture.title}</h2><article><h3>{source.name}</h3><p>{source.text}</p></article><button onClick={()=>open(page===1?2:1)}>{page===1?'下一页':'上一页'}</button></aside></main></>
 }
 const root=createRoot(document.getElementById('root')!)
-if (new URLSearchParams(location.search).has('documents')) root.render(<Documents/>)
+if (!new URLSearchParams(location.search).has('sample')) root.render(<Documents/>)
 else api('lecture').then(data=>root.render(<Workspace lecture={data}/>)).catch(()=>root.render(<p>无法读取讲义，请启动后端并刷新。</p>))

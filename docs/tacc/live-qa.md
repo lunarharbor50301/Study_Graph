@@ -14,7 +14,7 @@ $env:TACC_SSH_KEY = '/home/YOUR_WSL_USER/.ssh/tacc/id_ed25519'
 .\.venv\Scripts\python -m uvicorn backend.main:app --port 8016
 ```
 
-打开 http://127.0.0.1:8016 ，选择“带宽上限”，询问“带宽为 50 GB/s、计算强度为 2 FLOP/byte 时，性能上限是多少？” 后端从样例里选取片段，通过 WSL SSH 在网关向计算节点发送 HTTP 请求。SSH 只传输模型请求和回复，推理在 GPU 节点运行。
+打开 http://127.0.0.1:8016 ，在 Learning 选择 ACS 讲义，输入 “What is the Roofline model?”，点击 Ask。点击回答下的页码可查看原文。Tests 可输入 “Roofline, Amdahl's law” 后点击 Generate set with TACC。后端通过 WSL SSH 在网关向计算节点发送请求，推理在 GPU 节点运行。
 
 在浏览器开发者工具里查看 `POST /api/ask` 的响应。模型成功回答时含有 `provider: tacc`，引用由检索端返回。连接失败返回 HTTP 502。未配置 QWEN_BASE_URL 时使用原有的离线样例。如果后端所在环境可直接访问计算节点，只需设置 QWEN_BASE_URL。
 

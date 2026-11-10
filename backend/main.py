@@ -12,12 +12,14 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from backend.qwen_client import chat
 from backend import documents
+from backend import quiz
 
 ROOT = Path(__file__).resolve().parents[1]
 lecture = json.loads((ROOT / "examples/roofline.json").read_text(encoding="utf-8"))
 concepts = {c["id"]: c for c in lecture["concepts"]}
 app = FastAPI(title="StudyGraph", version="0.1.0")
 app.include_router(documents.router)
+app.include_router(quiz.router)
 
 
 class Question(BaseModel):
