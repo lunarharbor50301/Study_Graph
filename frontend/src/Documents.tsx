@@ -1,3 +1,4 @@
+import {Icon, Panel, SplitHandle} from './Layout'
 import { useEffect, useState } from 'react'
 
 type DocumentInfo = {
@@ -62,17 +63,22 @@ export default function Documents() {
   }
   const topics = [...new Set(concepts.split(',').map(s => s.trim()).filter(Boolean))]
   async function generate(useModel: boolean) {
-    setGroups([])
+    setGroups([]); setCurrent(0); setResponses({})
     const url = '/api/documents/' + id + '/'
     const options = {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({concepts:topics})}
     if (useModel) setGroups((await request<{questions:Group[]}>(url+'question-set', options)).questions)
     else setGroups(await request<Group[]>(url+'concept-evidence', options))
   }
   const preview = '/api/documents/' + id + '/pages/' + page + '/preview'
-  return <><header>StudyGraph <small>Lecture workspace</small></header><main><section>
-    <nav aria-label="Workspace"><button disabled={busy} aria-pressed={!tests} onClick={()=>{setTests(false);setError('');history.replaceState(null,'','?documents')}}>Learning</button>
-      <button disabled={busy} aria-pressed={tests} onClick={()=>{setTests(true);setError('');history.replaceState(null,'','?tests')}}>Tests</button></nav>
-    <h2>Lecture material</h2>
+  const [share, setShare] = useState(62)
+  const [expanded, setExpanded] = useState<string | null>(null)
+  const toggle = (panel: string) => setExpanded(value => value === panel ? null : panel)
+  const [current, setCurrent] = useState(0)
+  const [responses, setResponses] = useState<Record<number,string>>({})
+  return <div className="app-shell">
+    <aside className="sidebar"><div className="brand"><div className="brand__mark"><Icon name="graph"/></div><strong>StudyGraph</strong></div>
+    <nav className="sidebar__section">{['Learning','Tests'].map((label,i)=><button key={label} className={'nav-item '+(tests===Boolean(i)?'nav-item--active':'')} disabled={busy} onClick={()=>{setTests(Boolean(i));setError('');history.replaceState(null,'',i?'?tests':'?documents')}}><Icon name={i?'test':'learn'}/>{label}</button>)}</nav>
+    <div className="sidebar__section live-controls">
     <label>Upload a PDF or PPTX <input style={{width:'100%'}} type="file" accept=".pdf,.pptx" disabled={busy} onChange={e => {
       const file = e.target.files?.[0]
       e.target.value = ''
@@ -85,21 +91,26 @@ export default function Documents() {
     {busy && <p role="status">Working…</p>}{error && <p role="alert">{error}</p>}
     {doc && <><p><select aria-label="Current lecture" value={id} disabled={busy} onChange={e=>select(e.target.value)}>
       {docs.map(d=><option key={d.document_id} value={d.document_id}>{d.name}</option>)}</select></p>
-      {tests ? <><h2>Build a question set</h2><label>Enter up to five concepts, separated by commas.
+      </>}</div><a className="nav-item" href="?sample">Sample concept map</a></aside>
+    <div className="study-area study-area--with-viewer" style={{'--split-share':share/100} as React.CSSProperties}>
+    <Panel id="main" title={tests?'Practice test':'AI tutor'} subtitle={doc?.name} icon={tests?'test':'chat'} expanded={expanded} onExpand={()=>toggle('main')}>
+    <div className="live-content">{!doc ? <p>Select or upload a lecture to begin.</p> : tests ? <><h2>Build a question set</h2><label>Enter up to five concepts, separated by commas.
         <textarea value={concepts} disabled={busy} onChange={e=>{setConcepts(e.target.value);setGroups([])}} placeholder="Memory bandwidth, arithmetic intensity"/></label>
         <nav>{[false,true].map(model=><button key={String(model)} disabled={busy||!topics.length||topics.length>5||topics.some(t=>t.length>120)} onClick={()=>void run(()=>generate(model))}>
           {model?'Generate set with TACC':'Find evidence'}</button>)}</nav>
-        <ol>{groups.map(g=><li key={g.concept}><strong>{g.concept}</strong><p>{g.prompt}</p>
-          {!g.citations.length && <p>No matching passage.</p>}{g.citations.map(h=><details key={h.chunk_id}><summary>Evidence · page {h.page}</summary><p>{h.text}</p><button onClick={()=>setPage(h.page)}>Open page {h.page}</button></details>)}</li>)}</ol></> :
+        {groups.length>0 && <nav className="viewer-toolbar" aria-label="Question navigation">{groups.map((g,i)=><button key={g.concept} aria-pressed={current===i} onClick={()=>setCurrent(i)}>{i+1}</button>)}</nav>}
+        {groups.slice(current,current+1).map(g=><article key={g.concept}><strong>{g.concept}</strong><p>{g.prompt}</p>{g.prompt && <label>Your draft answer<textarea value={responses[current]??''} onChange={e=>setResponses({...responses,[current]:e.target.value})}/></label>}
+          {!g.citations.length && <p>No matching passage.</p>}{g.citations.map(h=><details key={h.chunk_id}><summary>Evidence · page {h.page}</summary><p>{h.text}</p><button onClick={()=>setPage(h.page)}>Open page {h.page}</button></details>)}</article>)}</> :
       <><h2>Ask the lecture</h2><form onSubmit={e=>{e.preventDefault();void run(()=>submit(true))}}>
         <input aria-label="Lecture question" placeholder="Ask a question in English" disabled={busy} value={query} onChange={e=>setQuery(e.target.value)}/>
         <button type="button" disabled={busy||!query.trim()} onClick={()=>void run(()=>submit(false))}>Search</button>
         <button disabled={busy||!query.trim()}>Ask</button></form>
-      <small>{stats}</small><p>{answer}</p>{hits.map(hit=><p key={hit.chunk_id}><button onClick={()=>setPage(hit.page)}>Page {hit.page}</button> {hit.text}</p>)}</>}</>}
-    </section>{doc && <aside><h2>{doc.name}</h2><p>Page {page} of {doc.page_count} · <a href={doc.original_url}>Open original</a></p>
+      <small>{stats}</small><p>{answer}</p>{hits.map(hit=><p key={hit.chunk_id}><button onClick={()=>setPage(hit.page)}>Page {hit.page}</button> {hit.text}</p>)}</>}
+    </div></Panel><SplitHandle axis="x" label="Resize lecture viewer" controls="panel-main" value={share} onChange={setShare}/>
+    <Panel id="viewer" title="Lecture viewer" icon="file" expanded={expanded} onExpand={()=>toggle('viewer')}>{doc && <div className="live-content"><p>Page {page} of {doc.page_count} · <a href={doc.original_url}>Open original</a></p>
       {doc.pages_without_text.includes(page) && <p>This page has no searchable text.</p>}
       {doc.preview_mode === 'page_image' ? <img src={preview} alt={'Lecture page '+page} style={{width:'100%'}}/> :
         <iframe sandbox="" title="Slide content preview" src={preview} style={{width:'100%',height:380,border:0}}/>}
       <button disabled={page===1} onClick={()=>setPage(page-1)}>Previous</button> <button disabled={page===doc.page_count} onClick={()=>setPage(page+1)}>Next</button>
-    </aside>}</main></>
+    </div>}</Panel></div></div>
 }
