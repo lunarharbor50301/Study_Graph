@@ -21,14 +21,14 @@ export async function loadLecture(): Promise<Lecture> {
   return fallbackLecture
 }
 
-export async function askAgent(question: string, conceptId: string, sessionId: string): Promise<AskResponse | null> {
-  try {
-    return await request<AskResponse>('ask', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ session_id: sessionId, concept_id: conceptId, question }),
-    })
-  } catch {
-    return null
-  }
+
+// The curated graph describes this exact version of the bundled ACS lecture.
+export const acsDocumentId = '34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402'
+
+export function askAgent(question: string, sessionId: string, context: string, documentId = acsDocumentId): Promise<AskResponse> {
+  return request<AskResponse>('ask', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ session_id: sessionId, document_id: documentId, tutor_context: context, question }),
+  })
 }

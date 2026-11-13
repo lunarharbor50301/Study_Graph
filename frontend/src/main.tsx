@@ -1,14 +1,14 @@
-import Documents from './Documents'
+import Documents, {type DocumentInfo} from './Documents'
 import {Icon, Panel, SplitHandle} from './Layout'
 import React, { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { askAgent, loadLecture } from './api'
+import { acsDocumentId, askAgent, loadLecture } from './api'
 import { lecture as fallbackLecture, sampleQuestions, starterMessages } from './data'
 import type { ChatMessage, Concept, DetailLevel, Lecture, Mode, QuestionProgress, TestQuestion } from './types'
 import './style.css'
 
-function Navigation({ mode, onMode, chatVisible, viewerVisible, onRestoreChat, onRestoreViewer, questionCounts, setQuestionCounts }: {
-  mode: Mode; onMode: (mode: Mode) => void; chatVisible: boolean; viewerVisible: boolean; onRestoreChat: () => void; onRestoreViewer: () => void
+function Navigation({ tool, onTool, mode, onMode, chatVisible, viewerVisible, onRestoreChat, onRestoreViewer, questionCounts, setQuestionCounts }: {
+  tool:string; onTool:(v:'documents'|'tests')=>void; mode: Mode; onMode: (mode: Mode) => void; chatVisible: boolean; viewerVisible: boolean; onRestoreChat: () => void; onRestoreViewer: () => void
   questionCounts: Record<string, number>; setQuestionCounts: React.Dispatch<React.SetStateAction<Record<string, number>>>
 }) {
   const controls = [
@@ -19,8 +19,8 @@ function Navigation({ mode, onMode, chatVisible, viewerVisible, onRestoreChat, o
   return <aside className="sidebar">
     <div className="brand"><div className="brand__mark"><Icon name="graph" size={22}/></div><div><strong>StudyGraph</strong><span>Learn with evidence</span></div></div>
     <div className="sidebar__section"><span className="sidebar__label">Workspace</span>
-      <button className={`nav-item ${mode === 'learn' ? 'nav-item--active' : ''}`} onClick={() => onMode('learn')}><Icon name="learn"/><span><b>Learning</b><small>Explore concepts</small></span></button>
-      <button className={`nav-item ${mode === 'test' ? 'nav-item--active' : ''}`} onClick={() => onMode('test')}><Icon name="test"/><span><b>Test</b><small>Practice & review</small></span></button>
+      <button className={`nav-item ${!tool && mode === 'learn' ? 'nav-item--active' : ''}`} onClick={() => onMode('learn')}><Icon name="learn"/><span><b>Learning</b><small>Explore concepts</small></span></button>
+      <button className={`nav-item ${!tool && mode === 'test' ? 'nav-item--active' : ''}`} onClick={() => onMode('test')}><Icon name="test"/><span><b>Test</b><small>Practice & review</small></span></button>
     </div>
     {mode === 'learn' ? <>
       <div className="sidebar__section"><span className="sidebar__label">Learning tools</span>
@@ -38,6 +38,8 @@ function Navigation({ mode, onMode, chatVisible, viewerVisible, onRestoreChat, o
       {!chatVisible && <button onClick={onRestoreChat}><Icon name="chat"/>Restore AI tutor</button>}
       {!viewerVisible && <button onClick={onRestoreViewer}><Icon name="file"/>Restore lecture</button>}
     </div>}
+    <button className={'nav-item '+(tool==='documents'?'nav-item--active':'')} onClick={()=>onTool('documents')}><Icon name="book"/>Lecture library</button>
+    <button className={'nav-item '+(tool==='tests'?'nav-item--active':'')} onClick={()=>onTool('tests')}><Icon name="test"/>Generate a question set</button>
     <div className="sidebar__footer"><div className="avatar">LS</div><div><b>Student workspace</b><small>Lecture 1 loaded</small></div></div>
   </aside>
 }
@@ -114,7 +116,7 @@ function TestPanel({ current, question, progress, allProgress, onCurrent, onResp
   </div>
 }
 
-function ChatPanel({ mode, concept, question, onCitation }: { mode: Mode; concept: Concept; question: TestQuestion; onCitation: (page: number) => void }) {
+function ChatPanel({ doc, mode, concept, question, onCitation }: { doc:DocumentInfo|null; mode: Mode; concept: Concept; question: TestQuestion; onCitation: (page: number) => void }) {
   const [messages, setMessages] = useState<ChatMessage[]>([{ id: 'welcome', role: 'assistant', text: starterMessages[mode] }])
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
@@ -125,40 +127,45 @@ function ChatPanel({ mode, concept, question, onCitation }: { mode: Mode; concep
   }, [])
   useEffect(() => { setMessages([{ id: `${mode}-welcome`, role: 'assistant', text: starterMessages[mode] }]) }, [mode])
   const suggestions = mode === 'learn' ? [`Explain ${concept.shortName} simply`, 'How is it related to the previous concept?', 'Give me one practice question'] : ['Clarify the question without giving the answer', 'What concept should I review?', 'Check my reasoning approach']
-  function fallbackAnswer(prompt: string) {
-    if (mode === 'test') return `Focus on ${fallbackLecture.concepts.find(c => c.id === question.conceptId)?.name}. ${question.hint} I will keep the final answer hidden until you submit.`
-    if (/practice|question/i.test(prompt)) return `Quick check: ${concept.keyPoints[0]} Can you explain why this matters in one sentence?`
-    return `${concept.summary} ${concept.detail} The supporting material is on page ${concept.page}.`
-  }
   async function send(event?: FormEvent, suggested?: string) {
     event?.preventDefault(); const prompt = (suggested ?? input).trim(); if (!prompt || busy) return
-    setInput(''); setMessages(value => [...value, { id: crypto.randomUUID(), role: 'user', text: prompt }]); setBusy(true)
-    const response = await askAgent(prompt, mode === 'learn' ? concept.id : question.conceptId, sessionId)
-    const citationPage = response?.citations?.[0]?.page ?? (mode === 'learn' ? concept.page : question.page)
-    setMessages(value => [...value, { id: crypto.randomUUID(), role: 'assistant', text: response?.answer ?? fallbackAnswer(prompt), page: citationPage }]); setBusy(false)
+    setInput(''); setMessages(value => [...value, { id: crypto.randomUUID(), role: 'user', text: prompt }])
+    setBusy(true)
+    try {
+      const context = doc ? doc.name : mode === 'learn' ? concept.name : question.prompt
+      const result = await askAgent(prompt, sessionId, context, doc?.document_id)
+      const pages = [...new Set(result.citations?.map(c => c.page) ?? [])]
+      setMessages(value => [...value, { id: crypto.randomUUID(), role: 'assistant', text: result.answer, pages }])
+    } catch (error) {
+      setMessages(value => [...value, { id: crypto.randomUUID(), role: 'assistant', text: String(error) }])
+    } finally { setBusy(false) }
   }
-  return <div className="chat-layout"><div className="chat-context"><span><Icon name={mode === 'learn' ? 'book' : 'test'} size={14}/>{mode === 'learn' ? `Discussing: ${concept.name}` : `Question ${sampleQuestions.indexOf(question) + 1}: ${fallbackLecture.concepts.find(c => c.id === question.conceptId)?.name}`}</span><small>Source-linked answers</small></div>
-    <div className="chat-messages" aria-live="polite">{messages.map(message => <div key={message.id} className={`message message--${message.role}`}>{message.role === 'assistant' && <span className="assistant-avatar"><Icon name="sparkle" size={15}/></span>}<div><p>{message.text}</p>{message.page && <button onClick={() => onCitation(message.page!)}><Icon name="file" size={13}/>View source · p. {message.page}</button>}</div></div>)}{busy && <div className="message message--assistant"><span className="assistant-avatar"><Icon name="sparkle" size={15}/></span><div className="typing"><i/><i/><i/></div></div>}</div>
+  return <div className="chat-layout"><div className="chat-context"><span><Icon name={mode === 'learn' ? 'book' : 'test'} size={14}/>{doc ? doc.name : mode === 'learn' ? `Discussing: ${concept.name}` : `Question ${sampleQuestions.indexOf(question) + 1}: ${fallbackLecture.concepts.find(c => c.id === question.conceptId)?.name}`}</span><small>Source-linked answers</small></div>
+    <div className="chat-messages" aria-live="polite">{messages.map(message => <div key={message.id} className={`message message--${message.role}`}>{message.role === 'assistant' && <span className="assistant-avatar"><Icon name="sparkle" size={15}/></span>}<div><p>{message.text}</p>{message.pages?.map(page => <button key={page} onClick={() => onCitation(page)}><Icon name="file" size={13}/>View source · p. {page}</button>)}</div></div>)}{busy && <div className="message message--assistant"><span className="assistant-avatar"><Icon name="sparkle" size={15}/></span><div className="typing"><i/><i/><i/></div></div>}</div>
     <div className="suggestions">{suggestions.map(suggestion => <button key={suggestion} onClick={() => send(undefined, suggestion)}>{suggestion}</button>)}</div>
     <form className="chat-input" onSubmit={send}><textarea aria-label="Message AI tutor" placeholder={mode === 'learn' ? 'Ask about this concept…' : 'Discuss your reasoning…'} value={input} onChange={event => setInput(event.target.value)} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); void send() } }}/><button disabled={!input.trim() || busy} aria-label="Send message"><Icon name="chevron"/></button><span>Enter to send · Shift + Enter for a new line</span></form>
   </div>
 }
 
-function SlideArtwork({ concept }: { concept: Concept }) {
-  if (concept.id === 'roofline') return <div className="roofline-chart"><div className="axis axis--y">Performance</div><div className="axis axis--x">Arithmetic intensity</div><svg viewBox="0 0 500 260"><path d="M45 225 L230 55 L460 55"/><line x1="230" y1="55" x2="230" y2="225" strokeDasharray="5 5"/><text x="80" y="175">memory-bound</text><text x="320" y="42">compute-bound</text><text x="238" y="245">ridge point</text></svg></div>
-  if (concept.id === 'amdahl') return <div className="speedup-chart"><svg viewBox="0 0 500 250"><path className="chart-axis" d="M48 20v195h420"/><path d="M50 210 C100 150 160 110 220 88 S360 62 460 57"/><path className="chart-limit" d="M50 55h410" strokeDasharray="6 6"/><text x="270" y="45">Serial fraction limits speedup</text><text x="360" y="235">Processors</text><text x="8" y="25">Speedup</text></svg></div>
-  if (concept.id === 'simt' || concept.id === 'divergence') return <div className="warp-grid"><span className="warp-label">Warp · 32 threads</span>{Array.from({ length: 32 }, (_, i) => <i key={i} className={concept.id === 'divergence' && i > 15 ? 'inactive' : ''}>{i}</i>)}</div>
-  if (concept.id === 'pipeline') return <div className="pipeline-diagram">{['IF', 'ID', 'EX', 'MEM', 'WB'].map((stage, index) => <React.Fragment key={stage}><span>{stage}<small>{['Fetch', 'Decode', 'Execute', 'Memory', 'Write back'][index]}</small></span>{index < 4 && <Icon name="chevron"/>}</React.Fragment>)}</div>
-  if (concept.id === 'hierarchy') return <div className="hierarchy-diagram">{['Application / Problem', 'Algorithm', 'Program / Language', 'System Software', 'Operating System', 'Microarchitecture', 'Digital Logic'].map((layer, index) => <span key={layer} className={index === 5 ? 'highlight' : ''}>{layer}</span>)}</div>
-  return <div className="architecture-diagram"><div className="chip chip--cpu"><b>CPU</b><span>Host controller</span></div><div className="bus">PCIe / NVLink <Icon name="chevron"/></div><div className="chip chip--gpu"><b>GPU</b><span>Compute engine</span><div>{Array.from({ length: 12 }, (_, i) => <i key={i}/>)}</div></div></div>
-}
-
-function LectureViewer({ lecture, page, selected, onPage, evidenceVisible, setEvidenceVisible }: { lecture: Lecture; page: number; selected: Concept; onPage: (page: number) => void; evidenceVisible: boolean; setEvidenceVisible: (visible: boolean) => void }) {
-  const pageConcept = lecture.concepts.find(concept => concept.page === page) ?? selected
-  return <div className="viewer-layout"><div className="file-strip"><span className="pdf-mark">PDF</span><div><b>{lecture.fileName}</b><small>{lecture.totalPages} pages · Text and layout extracted</small></div><span className="ready-badge"><i/>Ready</span></div>
-    <div className="viewer-toolbar"><button onClick={() => onPage(Math.max(1, page - 1))} disabled={page <= 1} aria-label="Previous page"><Icon name="previous"/></button><label>Page<input type="number" min="1" max={lecture.totalPages} value={page} onChange={event => onPage(Math.max(1, Math.min(lecture.totalPages, Number(event.target.value))))}/><span>of {lecture.totalPages}</span></label><button onClick={() => onPage(Math.min(lecture.totalPages, page + 1))} disabled={page >= lecture.totalPages} aria-label="Next page"><Icon name="next"/></button><button className={`evidence-toggle ${evidenceVisible ? 'active' : ''}`} onClick={() => setEvidenceVisible(!evidenceVisible)}><Icon name="sparkle" size={14}/>Evidence</button></div>
-    <div className="slide-stage"><article className="slide-page"><div className="slide-brand">Advanced AI Computing and Systems <span>Lecture 1</span></div><div className="slide-accent"/><span className="slide-kicker">{pageConcept.eyebrow}</span><h3>{pageConcept.name}</h3><div className="slide-content"><ul>{pageConcept.keyPoints.map(point => <li key={point}>{point}</li>)}</ul><SlideArtwork concept={pageConcept}/></div>{pageConcept.formula && <div className="slide-formula">{pageConcept.formula}</div>}{evidenceVisible && <div className="evidence-highlight"><span><Icon name="sparkle" size={13}/>Source evidence</span></div>}<span className="slide-number">{page}</span></article></div>
-    <div className="evidence-panel"><div><span className="eyebrow">Selected evidence</span><p>{pageConcept.sourceText}</p></div><button onClick={() => setEvidenceVisible(!evidenceVisible)}>{evidenceVisible ? 'Hide highlight' : 'Highlight on slide'}</button></div>
+function LectureViewer({ doc, lecture, page, onPage, evidenceVisible, setEvidenceVisible }: { doc:DocumentInfo|null; lecture: Lecture; page: number; onPage: (page: number) => void; evidenceVisible: boolean; setEvidenceVisible: (visible: boolean) => void }) {
+  const pageUrl = '/api/documents/' + (doc?.document_id ?? acsDocumentId) + '/pages/' + page
+  const [excerpt, setExcerpt] = useState<{url: string; text: string} | null>(null)
+  useEffect(() => {
+    if (!evidenceVisible) return
+    const controller = new AbortController()
+    fetch(pageUrl, {signal: controller.signal}).then(async response => {
+      if (!response.ok) throw Error()
+      const data = await response.json()
+      if (!controller.signal.aborted) setExcerpt({url:pageUrl, text:data.text || 'No searchable text on this page.'})
+    }).catch(() => {
+      if (!controller.signal.aborted) setExcerpt({url:pageUrl, text:'Page text unavailable.'})
+    })
+    return () => controller.abort()
+  }, [pageUrl, evidenceVisible])
+  return <div className="viewer-layout"><div className="file-strip"><span className="pdf-mark">{doc?.name.toLowerCase().endsWith('.pptx')?'PPTX':'PDF'}</span><div><b>{doc?.name ?? lecture.fileName}</b><small>{(doc?.page_count ?? lecture.totalPages)} pages · Text and layout extracted</small></div><span className="ready-badge"><i/>Ready</span></div>
+    <div className="viewer-toolbar"><button onClick={() => onPage(Math.max(1, page - 1))} disabled={page <= 1} aria-label="Previous page"><Icon name="previous"/></button><label>Page<input type="number" min="1" max={(doc?.page_count ?? lecture.totalPages)} value={page} onChange={event => onPage(Math.max(1, Math.min((doc?.page_count ?? lecture.totalPages), Math.trunc(Number(event.target.value)))))}/><span>of {(doc?.page_count ?? lecture.totalPages)}</span></label><button onClick={() => onPage(Math.min((doc?.page_count ?? lecture.totalPages), page + 1))} disabled={page >= (doc?.page_count ?? lecture.totalPages)} aria-label="Next page"><Icon name="next"/></button><button className={`evidence-toggle ${evidenceVisible ? 'active' : ''}`} onClick={() => setEvidenceVisible(!evidenceVisible)}><Icon name="sparkle" size={14}/>Evidence</button></div>
+    <div className="slide-stage">{doc?.preview_mode==='slide_content' ? <iframe title="Slide content" sandbox="" src={pageUrl+'/preview'} style={{width:'100%',height:'100%'}}/> : <img key={pageUrl} src={pageUrl+'/preview'} alt={'Lecture page '+page} style={{width:'100%',height:'auto'}}/>}</div>
+    {evidenceVisible && <div className="evidence-panel" style={{maxHeight:'25%',overflow:'auto'}}><div><span className="eyebrow">Page {page} text</span><p>{excerpt?.url===pageUrl ? excerpt.text : 'Loading…'}</p></div></div>}
   </div>
 }
 
@@ -169,6 +176,14 @@ function createProgress(): Record<string, QuestionProgress> {
 function normalize(value: string) { return value.toLowerCase().replace(/[×x]/g, 'x').replace(/[^a-z0-9]+/g, ' ').trim() }
 
 function App() {
+  const initialTool = new URLSearchParams(location.search)
+  const [tool,setTool] = useState<''|'documents'|'tests'>(initialTool.has('tests')?'tests':initialTool.has('documents')?'documents':'')
+  const [libraryDoc,setLibraryDoc] = useState<DocumentInfo|null>(null)
+  const activeDoc = tool ? libraryDoc : null
+  function openTool(next: ''|'documents'|'tests') {
+    setTool(next); setExpanded(null); setPage(1)
+    history.replaceState(null,'',next?'?'+next:location.pathname)
+  }
   const [loadedLecture, setLecture] = useState<Lecture>(fallbackLecture)
   const [mode, setMode] = useState<Mode>('learn')
   const [selectedId, setSelectedId] = useState('hierarchy')
@@ -188,7 +203,7 @@ function App() {
   const questionProgress = progress[question.id]
   const toggleExpand = (id: string) => setExpanded(value => value === id ? null : id)
   const selectConcept = (concept: Concept) => { setSelectedId(concept.id); setPage(concept.page); setEvidenceVisible(true) }
-  const switchMode = (next: Mode) => { setMode(next); setExpanded(null); if (next === 'test') { const q = sampleQuestions[currentQuestion]; setSelectedId(q.conceptId); setPage(q.page) } else setPage(selected.page) }
+  const switchMode = (next: Mode) => { openTool(''); setMode(next); setExpanded(null); if (next === 'test') { const q = sampleQuestions[currentQuestion]; setSelectedId(q.conceptId); setPage(q.page) } else setPage(selected.page) }
   const chooseQuestion = (index: number) => { const next = Math.max(0, Math.min(sampleQuestions.length - 1, index)); setCurrentQuestion(next); setSelectedId(sampleQuestions[next].conceptId); setPage(sampleQuestions[next].page); setEvidenceVisible(true) }
   const updateCurrent = (update: Partial<QuestionProgress>) => setProgress(value => ({ ...value, [question.id]: { ...value[question.id], ...update } }))
   const submit = () => {
@@ -197,25 +212,25 @@ function App() {
     const correct = accepted.some(answer => response === answer || (question.type === 'short-answer' && response.includes(answer)))
     updateCurrent({ submitted: true, correct, attempts: questionProgress.attempts + 1 })
   }
-  const currentMainTitle = mode === 'learn' ? 'Knowledge explorer' : 'Practice test'
+  const currentMainTitle = tool === 'documents' ? 'Lecture library' : tool === 'tests' ? 'Generate a question set' : mode === 'learn' ? 'Knowledge explorer' : 'Practice test'
   return <div className="app-shell">
-    <Navigation mode={mode} onMode={switchMode} chatVisible={chatVisible} viewerVisible={viewerVisible} onRestoreChat={() => setChatVisible(true)} onRestoreViewer={() => setViewerVisible(true)} questionCounts={questionCounts} setQuestionCounts={setQuestionCounts}/>
+    <Navigation tool={tool} onTool={openTool} mode={mode} onMode={switchMode} chatVisible={chatVisible} viewerVisible={viewerVisible} onRestoreChat={() => setChatVisible(true)} onRestoreViewer={() => setViewerVisible(true)} questionCounts={questionCounts} setQuestionCounts={setQuestionCounts}/>
     <div className={`study-area ${viewerVisible ? 'study-area--with-viewer' : ''}`} style={{ '--split-share': workspaceShare / 100 } as React.CSSProperties}>
       <main id="study-workspace" className={`workspace ${chatVisible ? 'workspace--with-chat' : ''}`} style={{ '--split-share': mainShare / 100 } as React.CSSProperties}>
-        <Panel id="main" title={currentMainTitle} subtitle={mode === 'learn' ? 'Explore the lecture as a connected knowledge structure' : 'Answer, get feedback, and retry'} icon={mode === 'learn' ? 'brain' : 'test'} expanded={expanded} onExpand={() => toggleExpand('main')} className="panel--main">
-          {mode === 'learn' ? <LearningPanel lecture={loadedLecture} selected={selected} onSelect={selectConcept} onPage={setPage}/> : <TestPanel current={currentQuestion} question={question} progress={questionProgress} allProgress={progress} onCurrent={chooseQuestion} onResponse={response => updateCurrent({ response })} onHint={() => updateCurrent({ hintVisible: !questionProgress.hintVisible })} onSubmit={submit} onRetry={() => updateCurrent({ submitted: false, correct: null, answerVisible: false })} onReveal={() => updateCurrent({ answerVisible: !questionProgress.answerVisible })}/>}
+        <Panel id="main" title={currentMainTitle} subtitle={tool ? libraryDoc?.name : mode === 'learn' ? 'Explore the lecture as a connected knowledge structure' : 'Answer, get feedback, and retry'} icon={mode === 'learn' ? 'brain' : 'test'} expanded={expanded} onExpand={() => toggleExpand('main')} className="panel--main">
+          {tool ? <Documents tests={tool==='tests'} doc={libraryDoc} onSelect={d=>{setLibraryDoc(d);setPage(1)}} setPage={p=>{setPage(p);setViewerVisible(true)}}/> : mode === 'learn' ? <LearningPanel lecture={loadedLecture} selected={selected} onSelect={selectConcept} onPage={setPage}/> : <TestPanel current={currentQuestion} question={question} progress={questionProgress} allProgress={progress} onCurrent={chooseQuestion} onResponse={response => updateCurrent({ response })} onHint={() => updateCurrent({ hintVisible: !questionProgress.hintVisible })} onSubmit={submit} onRetry={() => updateCurrent({ submitted: false, correct: null, answerVisible: false })} onReveal={() => updateCurrent({ answerVisible: !questionProgress.answerVisible })}/>}
         </Panel>
         {chatVisible && <SplitHandle axis="y" label="Resize main panel and AI tutor" controls="panel-main" value={mainShare} onChange={setMainShare}/>}
         <Panel id="chat" title="AI tutor" subtitle={mode === 'learn' ? 'Ask, compare, and practice' : 'Discuss your reasoning without spoilers'} icon="chat" canClose hidden={!chatVisible} expanded={expanded} onClose={() => { setChatVisible(false); if (expanded === 'chat') setExpanded(null) }} onExpand={() => toggleExpand('chat')} className="panel--chat">
-          <ChatPanel mode={mode} concept={selected} question={question} onCitation={citation => { setPage(citation); setViewerVisible(true); setEvidenceVisible(true) }}/>
+          <ChatPanel key={activeDoc?.document_id ?? acsDocumentId} doc={activeDoc} mode={mode} concept={selected} question={question} onCitation={citation => { setPage(citation); setViewerVisible(true); setEvidenceVisible(true) }}/>
         </Panel>
       </main>
       {viewerVisible && <SplitHandle axis="x" label="Resize workspace and lecture viewer" controls="study-workspace" value={workspaceShare} onChange={setWorkspaceShare}/>}
       <Panel id="viewer" title="Lecture viewer" subtitle="Source evidence from the uploaded material" icon="file" canClose hidden={!viewerVisible} expanded={expanded} onClose={() => { setViewerVisible(false); if (expanded === 'viewer') setExpanded(null) }} onExpand={() => toggleExpand('viewer')} className="panel--viewer">
-        <LectureViewer lecture={loadedLecture} page={page} selected={selected} onPage={setPage} evidenceVisible={evidenceVisible} setEvidenceVisible={setEvidenceVisible}/>
+        <LectureViewer doc={activeDoc} lecture={loadedLecture} page={page} onPage={setPage} evidenceVisible={evidenceVisible} setEvidenceVisible={setEvidenceVisible}/>
       </Panel>
     </div>
   </div>
 }
 
-createRoot(document.getElementById('root')!).render(new URLSearchParams(location.search).has('sample') ? <App/> : <Documents/>)
+createRoot(document.getElementById('root')!).render(<App/>)
