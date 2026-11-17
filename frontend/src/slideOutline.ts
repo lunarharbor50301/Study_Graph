@@ -10,26 +10,80 @@ function shorten(text: string, length: number) {
   return text.length <= length ? text : `${text.slice(0, length - 1).trimEnd()}…`
 }
 
-function slideConcept(slide: SlideText): Concept | undefined {
-  const lines = slide.text.split(/\r?\n/)
-    .map(line => line.replace(/^[\s•●▪◦·¡]+/u, '').replace(/\s+/g, ' ').trim())
-    .filter(line => /\p{L}/u.test(line))
-  if (!lines.length) return
+function normalizeHeading(text: string) {
+  return text.normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim()
+}
 
-  const heading = lines.find(line => line.length >= 3 && line.length <= 95) ?? `Slide ${slide.page}`
-  const body = lines.filter(line => line !== heading)
-  const summary = shorten(body.find(line => line.length >= 20) ?? heading, 195)
+function readSlide(slide: SlideText) {
+  const lines = slide.text.split(/\r?\n/).filter(line => /\p{L}/u.test(line))
+  if (!lines.length) return
+  const clean = (line: string) => line.replace(/^[\s•●▪◦·¡]+/u, '').replace(/\s+/g, ' ').trim()
+  const heading = lines.map(clean).find(line => line.length >= 3 && line.length <= 110) ?? `Slide ${slide.page}`
+  const next = lines[1]
+  const subheading = next && !/^[\s•●▪◦·¡]/u.test(next) && !/[.!?。！？]\s*$/u.test(next)
+    && next.length <= 110 && next.length >= 3 ? clean(next) : undefined
+  return { page: slide.page, heading, subheading, lines: lines.map(clean) }
+}
+
+type OutlinedSlide = NonNullable<ReturnType<typeof readSlide>>
+
+function conceptFromSlides(name: string, section: string, slides: OutlinedSlide[]): Concept {
+  const first = slides[0]
+  const excerpts = slides.map(slide => slide.lines.filter(line => line !== slide.heading && line !== name))
+  const keyPoints = [...new Set(excerpts.map(lines => lines.find(line => line.length >= 20)).filter((line): line is string => !!line))]
+  const body = [...new Set([...keyPoints, ...excerpts.flat()])]
   return {
-    id: `slide-${slide.page}`,
-    name: shorten(heading, 76),
-    shortName: shorten(heading, 45),
-    page: slide.page,
-    eyebrow: 'Slide notes',
-    summary,
-    detail: shorten(body.slice(0, 12).join(' ') || heading, 950),
-    keyPoints: [...new Set(body)].slice(0, 4).map(line => shorten(line, 155)),
-    sourceText: shorten(lines.join(' '), 260),
+    id: `slide-${first.page}`, name: shorten(name, 76), shortName: shorten(name, 45),
+    page: first.page, sourcePages: slides.map(slide => slide.page), eyebrow: section,
+    summary: shorten(body.find(line => line.length >= 20) ?? name, 195),
+    detail: shorten(body.join(' ') || name, 950),
+    keyPoints: body.slice(0, 6).map(line => shorten(line, 155)),
+    sourceText: shorten(first.lines.join(' '), 260),
   }
+}
+
+function splitSections(slides: OutlinedSlide[]) {
+  const runs: OutlinedSlide[][] = []
+  for (const slide of slides) {
+    const last = runs.at(-1)
+    if (last && normalizeHeading(last[0].heading) === normalizeHeading(slide.heading)) last.push(slide)
+    else runs.push([slide])
+  }
+  const sections: { slides: OutlinedSlide[]; hasSectionHeading: boolean }[] = []
+  for (const run of runs) {
+    const previous = sections.at(-1)
+    if (run.length === 1 && previous && !previous.hasSectionHeading && previous.slides.length < 8) {
+      previous.slides.push(...run)
+    } else {
+      sections.push({ slides: run, hasSectionHeading: run.length > 1 })
+    }
+  }
+  return sections
+}
+
+function sectionConcepts(slides: OutlinedSlide[], sectionTitle: string, hasSectionHeading: boolean) {
+  const titleFor = (slide: OutlinedSlide) => hasSectionHeading ? slide.subheading ?? slide.heading : slide.heading
+  const prefixes = new Map<string, number>()
+  for (const slide of slides) {
+    const title = titleFor(slide)
+    const colon = title.search(/[:：]/u)
+    if (colon >= 3) {
+      const prefix = normalizeHeading(title.slice(0, colon))
+      prefixes.set(prefix, (prefixes.get(prefix) ?? 0) + 1)
+    }
+  }
+  const groups = new Map<string, { title: string; slides: OutlinedSlide[] }>()
+  for (const slide of slides) {
+    const title = titleFor(slide)
+    const colon = title.search(/[:：]/u)
+    const prefix = colon >= 3 ? title.slice(0, colon).trim() : title
+    const name = (prefixes.get(normalizeHeading(prefix)) ?? 0) >= 2 ? prefix : title
+    const key = normalizeHeading(name)
+    const group = groups.get(key)
+    if (group) group.slides.push(slide)
+    else groups.set(key, { title: name, slides: [slide] })
+  }
+  return [...groups.values()].map(group => conceptFromSlides(group.title, sectionTitle, group.slides))
 }
 
 export async function createSlideOutline(doc: DocumentInfo, getPage: (page: number) => Promise<SlideText>): Promise<Lecture> {
@@ -40,31 +94,32 @@ export async function createSlideOutline(doc: DocumentInfo, getPage: (page: numb
     : Array.from({ length: outlinePageLimit }, (_, index) =>
       available[Math.round(index * (available.length - 1) / (outlinePageLimit - 1))])
 
-  const concepts: Concept[] = []
+  const parsedSlides: OutlinedSlide[] = []
   for (let offset = 0; offset < pageNumbers.length; offset += 6) {
     const slides = await Promise.all(pageNumbers.slice(offset, offset + 6).map(getPage))
     for (const slide of slides) {
-      const concept = slideConcept(slide)
-      if (concept) concepts.push(concept)
+      const parsed = readSlide(slide)
+      if (parsed) parsedSlides.push(parsed)
     }
   }
-  if (!concepts.length) throw Error('This lecture has no readable text. Try a PDF or PPTX with selectable text.')
+  if (!parsedSlides.length) throw Error('This lecture has no readable text. Try a PDF or PPTX with selectable text.')
 
-  const groupCount = Math.min(7, Math.max(1, Math.ceil(concepts.length / 4)))
-  const topics: LectureTopic[] = Array.from({ length: groupCount }, (_, index) => {
-    const group = concepts.slice(Math.floor(index * concepts.length / groupCount),
-      Math.floor((index + 1) * concepts.length / groupCount))
+  const concepts: Concept[] = []
+  const topics: LectureTopic[] = splitSections(parsedSlides).map(({ slides, hasSectionHeading }) => {
+    const sectionTitle = shorten(slides[0].heading, 76)
+    const group = sectionConcepts(slides, sectionTitle, hasSectionHeading)
+    concepts.push(...group)
     return {
-      id: `section-${group[0].page}`,
-      title: group[0].name,
-      firstPage: group[0].page,
-      lastPage: group[group.length - 1].page,
+      id: `section-${slides[0].page}`,
+      title: sectionTitle,
+      firstPage: slides[0].page,
+      lastPage: slides[slides.length - 1].page,
       conceptIds: group.map(concept => concept.id),
     }
   })
   const title = lectureName(doc.name)
   return {
     title, fileName: doc.name, totalPages: doc.page_count, concepts, relations: [],
-    outline: { title, subtitle: 'From slide text', topics },
+    outline: { title, subtitle: 'From slide text', strategy: 'heading-groups', topics },
   }
 }

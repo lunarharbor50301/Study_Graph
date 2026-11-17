@@ -7,6 +7,7 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from backend import documents
+from backend.demo_users import demo_user
 from backend.qwen_client import normalize_base_url
 
 router = APIRouter(prefix="/api/agent")
@@ -98,7 +99,7 @@ async def stream_turn(body: Turn):
     if not node:
         raise HTTPException(503, "Install Node.js and run npm ci --prefix agent.")
     key = body.session_id + ":" + body.document_id
-    lock = locks.setdefault(key, asyncio.Lock())
+    lock = locks.setdefault((demo_user.get(), key), asyncio.Lock())
     if lock.locked():
         raise HTTPException(409, "This conversation is already answering.")
     async def events():

@@ -204,7 +204,8 @@ export function MindMap({ title, subtitle, topics, activeTopic, visited, hidden,
                   onClick={() => onOpenConcept(concept)}>
                   <span className="mind-map__text">
                     <strong title={concept.name}>{concept.name}</strong>
-                    <small>{pageLabel(concept.page)}</small>
+                    <small>{concept.sourcePages && concept.sourcePages.length > 1
+                      ? `${concept.sourcePages.length} pages · p. ${concept.page}` : pageLabel(concept.page)}</small>
                   </span>
                   <Icon name="chevron" size={13}/>
                 </button>

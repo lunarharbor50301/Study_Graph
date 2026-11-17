@@ -1,6 +1,6 @@
 # Study-Graph
 
-V2 的 pi Agent 在 `lyq-v2` 分支开发。安装运行依赖时增加 `npm ci --prefix agent --ignore-scripts`。助教面板勾选 Agent 后启用多轮对话、工具检索和流式回答，运行配置见 [pi Agent 接入说明](docs/pi-agent.md)。
+V2 的 pi Agent 在 `lyq-v2` 分支开发。安装运行依赖时增加 `npm ci --prefix agent --ignore-scripts`。助教默认使用 Agent，支持多轮对话、工具检索和流式回答，运行配置见 [pi Agent 接入说明](docs/pi-agent.md)。
 
 StudyGraph 帮助学生从课程讲义的概念图出发，提问、回到原页核对解释，并在同一会话中练习、查看提示和重答。
 
@@ -21,6 +21,8 @@ npm run build --prefix frontend
 打开 http://127.0.0.1:8000 ，接口文档在 http://127.0.0.1:8000/docs 。前端开发可另开终端运行 `npm --prefix frontend run dev`，使用 Vite 打印的地址。后端检查运行 `.\.venv\Scripts\python -m unittest backend.test_smoke`。后续开会只需运行最后一条启动命令；前端有改动时先重新构建。
 
 从 Learning 上传 PDF 或 PPTX，生成概念图后可在助教面板提问，点击引用打开讲义原页。Test 支持上传多份讲义，选题型和难度后生成练习。课程架保存概念图、测验和作答进度，也可以直接打开内置样例。浏览器保存课程架与普通问答，Agent 对话保存在后端。真实模型配置见 [TACC 连接步骤](docs/tacc/live-qa.md)和 [pi Agent 接入说明](docs/pi-agent.md)。
+
+上传资料的概念图使用解析出的标题和小标题分组。同名知识点或共享标题前缀的内容可以合为一个节点，学习笔记保留各自的原页入口。生成图谱不需要模型。已保存的按页图谱会在重新打开时尝试重新分组。
 
 | 负责人 | 开工任务 | 第一次交接 |
 |---|---|---|

@@ -12,15 +12,18 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from backend.qwen_client import chat
 from backend import documents
-from backend import quiz, agent_api
+from backend import quiz, agent_api, study_notes
+from backend.demo_users import database_path, select_demo_user
 
 ROOT = Path(__file__).resolve().parents[1]
 lecture = json.loads((ROOT / "examples/roofline.json").read_text(encoding="utf-8"))
 concepts = {c["id"]: c for c in lecture["concepts"]}
 app = FastAPI(title="StudyGraph", version="0.1.0")
+app.middleware("http")(select_demo_user)
 app.include_router(documents.router)
 app.include_router(quiz.router)
 app.include_router(agent_api.router)
+app.include_router(study_notes.router)
 
 
 class Question(BaseModel):
@@ -193,7 +196,7 @@ def attempt(body: Attempt):
         correct = False
     attempt_id = str(uuid4())
     feedback = "正确，50 × 2 = 100 GFLOP/s。" if correct else "提示：用带宽乘以计算强度，再试一次。"
-    with closing(sqlite3.connect(ROOT / "backend/practice.sqlite3")) as db, db:
+    with closing(sqlite3.connect(database_path(ROOT / "backend/practice.sqlite3"))) as db, db:
         db.execute("CREATE TABLE IF NOT EXISTS attempts (id TEXT PRIMARY KEY, session TEXT, exercise TEXT, answer TEXT, correct INTEGER, feedback TEXT)")
         db.execute("INSERT INTO attempts VALUES (?, ?, ?, ?, ?, ?)", (attempt_id, body.session_id, "bw-01", body.answer, correct, feedback))
         count = db.execute("SELECT COUNT(*) FROM attempts WHERE session=? AND exercise=?", (body.session_id, "bw-01")).fetchone()[0]

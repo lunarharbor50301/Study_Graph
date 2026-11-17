@@ -29,8 +29,7 @@ def normalize_base_url(base_url):
     return url
 
 
-def chat(messages, base_url, max_tokens=256, temperature=0.7):
-    """Return the full JSON response, including choices and token usage."""
+def chat_request(messages, base_url, max_tokens, temperature, *, streaming=False):
     base_url = normalize_base_url(base_url)
     payload = {
         "model": "qwen3.8-27b",
@@ -39,11 +38,42 @@ def chat(messages, base_url, max_tokens=256, temperature=0.7):
         "temperature": temperature,
         "chat_template_kwargs": {"enable_thinking": False},
     }
-    request = Request(
+    if streaming:
+        payload["stream"] = True
+    return Request(
         base_url + "/chat/completions",
         data=json.dumps(payload).encode("utf-8"),
         headers={"Content-Type": "application/json"},
     )
+
+
+def stream_chat(messages, base_url, max_tokens=256, temperature=0):
+    """Yield text as it arrives from a directly connected model."""
+    if os.environ.get("TACC_SSH_TARGET"):
+        yield chat(messages, base_url, max_tokens, temperature)["choices"][0]["message"]["content"]
+        return
+    request = chat_request(messages, base_url, max_tokens, temperature, streaming=True)
+    yield from stream_response(request)
+
+
+def stream_response(request):
+    with urlopen(request, timeout=90) as response:
+        for line in response:
+            if not line.startswith(b"data:"):
+                continue
+            data = line[5:].strip()
+            if data == b"[DONE]":
+                return
+            packet = json.loads(data)
+            for choice in packet.get("choices", []):
+                if content := choice.get("delta", {}).get("content"):
+                    yield content
+    raise RuntimeError("The model stream ended early.")
+
+
+def chat(messages, base_url, max_tokens=256, temperature=0.7):
+    """Return the full JSON response, including choices and token usage."""
+    request = chat_request(messages, base_url, max_tokens, temperature)
     try:
         gateway = os.environ.get("TACC_SSH_TARGET")
         if gateway:

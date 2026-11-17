@@ -19,6 +19,7 @@ from fastapi.responses import Response
 from pptx import Presentation
 from pptx.enum.shapes import MSO_SHAPE_TYPE
 from pydantic import BaseModel, Field
+from backend.demo_users import database_path
 
 router = APIRouter(prefix="/api/documents", tags=["Documents"])
 LIMIT = 40 * 1024 * 1024
@@ -28,7 +29,7 @@ MIME = {"pdf": "application/pdf", "pptx": "application/vnd.openxmlformats-office
 @contextmanager
 def database():
     path = os.getenv("STUDYGRAPH_DATABASE", str(Path(__file__).with_name("lectures.sqlite3")))
-    db = sqlite3.connect(path, timeout=30)
+    db = sqlite3.connect(database_path(path), timeout=30)
     db.row_factory = sqlite3.Row
     try:
         with db:

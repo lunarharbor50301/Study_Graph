@@ -5,10 +5,11 @@ import {Icon, Panel, SplitHandle} from './Layout'
 import { getMapTopics, MindMap, type MapTopic } from './MindMap'
 import React, { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { askAgent, request, streamAgent } from './api'
+import { demoUser, request, streamAgent, streamEvents, withDemoUser } from './api'
 import { currentDocument, firstEntryPage, lectureName, useCourseStore, type CourseItem, type SavedMap, type SavedTest } from './courseStore'
 import { lecture as fallbackLecture, starterMessages } from './data'
-import type { ChatMessage, Concept, CourseQuestion, DetailLevel, DocumentInfo, Lecture, Mode, QuestionProgress, TestQuestion } from './types'
+import { createSlideOutline, type SlideText } from './slideOutline'
+import type { ChatMessage, Concept, CourseQuestion, DocumentInfo, Lecture, Mode, QuestionProgress, TestQuestion } from './types'
 import './style.css'
 
 function Navigation({ workspaceActive, courseShelf, mode, onMode, chatVisible, viewerVisible, onChatVisibilityChange, onViewerVisibilityChange }: {
@@ -57,26 +58,76 @@ function Navigation({ workspaceActive, courseShelf, mode, onMode, chatVisible, v
 
     {courseShelf}
 
-    <div className="sidebar__footer">Student workspace</div>
+    <div className="sidebar__footer">
+      <span className="sidebar__label" id="demo-user-label">Demo user</span>
+      <nav className="demo-user-switch" aria-labelledby="demo-user-label">
+        {(['A', 'B'] as const).map(user =>
+          <a key={user} aria-current={user === demoUser ? 'true' : undefined}
+            href={withDemoUser(location.pathname + (mode === 'test' ? '?tests' : ''), user)}>User {user}</a>)}
+      </nav>
+    </div>
   </aside>
 }
 
-function StudyNote({ concept, fileName, level, backLabel, onLevel, onCitation, onBack }: {
+type GeneratedNote = {
+  summary: string; explanation: string; formula?: string | null; key_points: string[]
+  evidence?: { page: number; quote: string } | null
+}
+type NoteEvent =
+  | {type: 'section'; field: 'summary' | 'explanation' | 'formula'; value: string}
+  | {type: 'section'; field: 'key_points'; value: string[]}
+  | {type: 'done'; note: GeneratedNote}
+
+function StudyNote({ concept, fileName, documentId, noteCache, backLabel, onCitation, onBack }: {
   concept: Concept
   fileName: string
-  level: DetailLevel
+  documentId?: string
+  noteCache: Map<string, GeneratedNote>
   backLabel: string
-  onLevel: (level: DetailLevel) => void
-  onCitation: () => void
+  onCitation: (page: number) => void
   onBack: () => void
 }) {
+  const pages = concept.sourcePages ?? [concept.page]
+  const noteKey = `${documentId}:${concept.name}:${pages.join(',')}`
+  const [note, setNote] = useState(() => noteCache.get(noteKey))
+  const [draft, setDraft] = useState<Partial<GeneratedNote>>({})
+  const [error, setError] = useState('')
+  const [attempt, setAttempt] = useState(0)
+  useEffect(() => {
+    if (!documentId || noteCache.has(noteKey)) return
+    const controller = new AbortController()
+    void streamEvents<NoteEvent>(`/api/documents/${documentId}/study-note/stream`, { concept: concept.name, pages }, controller.signal, event => {
+      if (controller.signal.aborted) return
+      if (event.type === 'section') setDraft(previous => ({ ...previous, [event.field]: event.value }))
+      if (event.type === 'done') {
+        noteCache.set(noteKey, event.note)
+        setNote(event.note)
+      }
+    }).catch(error => { if (!controller.signal.aborted) setError(error.message) })
+    return () => controller.abort()
+  }, [noteKey, attempt])
+
+  const content = note ?? draft
+  const summary = documentId ? content.summary : concept.summary
+  const explanation = documentId ? content.explanation : concept.detail
+  const formula = documentId ? content.formula : concept.formula
+  const points = documentId ? content.key_points : concept.keyPoints
+  const evidence = documentId ? note?.evidence : { page: concept.page, quote: concept.sourceText }
   return <article className="study-note">
-    <div className="note-toolbar"><button className="back-to-map" onClick={onBack}><Icon name="previous" size={15}/>{backLabel}</button><div className="segmented"><button className={level === 'concise' ? 'active' : ''} onClick={() => onLevel('concise')}>Concise</button><button className={level === 'detailed' ? 'active' : ''} onClick={() => onLevel('detailed')}>Detailed</button></div></div>
-    <header className="note-hero"><span className="eyebrow">{concept.eyebrow}</span><h3 id="study-note-title" tabIndex={-1}>{concept.name}</h3><p>{concept.summary}</p><button className="citation" onClick={onCitation}><Icon name="file" size={14}/>{fileName} · p. {concept.page}</button></header>
-    {level === 'detailed' && <section className="note-section"><h4>How it works</h4><p>{concept.detail}</p></section>}
-    {concept.formula && <section className="formula-card"><span>Key relationship</span><strong>{concept.formula}</strong></section>}
-    <section className="note-section"><h4>Key points</h4><ul>{concept.keyPoints.map(point => <li key={point}><span><Icon name="check" size={14}/></span>{point}</li>)}</ul></section>
-    {level === 'detailed' && <section className="source-card"><div><Icon name="book"/><span><b>Lecture evidence</b><small>Directly grounded in the uploaded material</small></span></div><blockquote>“{concept.sourceText}”</blockquote><button onClick={onCitation}>Locate on slide <Icon name="chevron" size={15}/></button></section>}
+    <div className="note-toolbar"><button className="back-to-map" onClick={onBack}><Icon name="previous" size={15}/>{backLabel}</button></div>
+    <header className="note-hero"><span className="eyebrow">{concept.eyebrow}</span><h3 id="study-note-title" tabIndex={-1}>{concept.name}</h3>{summary && <p>{summary}</p>}
+      <div className="note-citations" aria-label={`Source pages in ${fileName}`}>
+        {pages.map(page => <button className="citation" key={page} onClick={() => onCitation(page)}><Icon name="file" size={14}/>Page {page}</button>)}
+      </div>
+    </header>
+    {explanation && <section className="note-section"><h4>How it works</h4><p>{explanation}</p></section>}
+    {formula && <section className="formula-card"><span>Key relationship</span><strong>{formula}</strong></section>}
+    {!!points?.length && <section className="note-section"><h4>Key points</h4><ul>{points.map(point => <li key={point}><span><Icon name="check" size={14}/></span>{point}</li>)}</ul></section>}
+    {evidence && <section className="source-card"><div><Icon name="book"/><span><b>Lecture evidence</b><small>Directly grounded in the uploaded material</small></span></div><blockquote>“{evidence.quote}”</blockquote><button onClick={() => onCitation(evidence.page)}>Locate on slide <Icon name="chevron" size={15}/></button></section>}
+    {documentId && !note && <section className="note-section">
+      {error ? <><p role="alert">{error}</p><button className="button button--secondary" onClick={() => { setError(''); setDraft({}); setAttempt(value => value + 1) }}>Retry</button></>
+        : <p role="status">{summary ? 'Preparing the rest of the note…' : 'Preparing the summary…'}</p>}
+    </section>}
   </article>
 }
 
@@ -90,17 +141,19 @@ function readVisitedTopics(key: string): Set<string> {
   return new Set()
 }
 
-function LearningPanel({ lecture, selected, onSelect, onPage, onCitation }: {
+function LearningPanel({ lecture, documentId, selected, onSelect, onPage, onCitation }: {
   lecture: Lecture
+  documentId: string
   selected: Concept
   onSelect: (concept: Concept) => void
   onPage: (page: number) => void
   onCitation: (page: number) => void
 }) {
   const [view, setView] = useState<'map' | 'note'>('map')
-  const [level, setLevel] = useState<DetailLevel>('detailed')
+  const noteCache = useRef(new Map<string, GeneratedNote>())
   const [topicId, setTopicId] = useState<string | null>(null)
-  const storageKey = `studygraph:lecture-progress:v1:${lecture.fileName}`
+  const progressPrefix = demoUser === 'A' ? 'studygraph:lecture-progress:v1' : 'studygraph:lecture-progress:v1:B'
+  const storageKey = `${progressPrefix}:${lecture.fileName}`
   const [visited, setVisited] = useState(() => readVisitedTopics(storageKey))
   const topics = useMemo(() => getMapTopics(lecture), [lecture])
   const activeTopic = topics.find(topic => topic.id === topicId)
@@ -158,9 +211,10 @@ function LearningPanel({ lecture, selected, onSelect, onPage, onCitation }: {
       topics={topics} activeTopic={activeTopic} visited={visited} hidden={view !== 'map'}
       onOpenTopic={openTopic} onOpenConcept={openNote} onBack={showOverview}/>
     {view === 'note' &&
-      <StudyNote concept={selected} fileName={lecture.fileName} level={level} onLevel={setLevel}
+      <StudyNote key={`${selected.id}:${selected.sourcePages?.join(',')}`} concept={selected} fileName={lecture.fileName}
+          documentId={lecture.outline?.subtitle === 'From slide text' ? documentId : undefined} noteCache={noteCache.current}
           backLabel={activeTopic ? `Back to ${activeTopic.title}` : 'Back to overview'}
-          onCitation={() => onCitation(selected.page)} onBack={showMap}/>}
+          onCitation={onCitation} onBack={showMap}/>}
   </div>
 }
 
@@ -198,20 +252,34 @@ function TestPanel({ title, questions, current, question, progress, allProgress,
   </div>
 }
 
-function ChatPanel({ doc, page, mode, concept, item, onMessage, onAgentSession, onCitation }: {
+function describeLookup(line: string) {
+  const match = /^(\w+) (\{.*\}) → (.*)$/.exec(line)
+  if (!match) return line
+  try {
+    const [, tool, args, rawPages] = match
+    const { query, page } = JSON.parse(args)
+    const pages = rawPages.replace(/[\[\]]/g, '').trim()
+    if (tool === 'search_lecture') return `Searched for “${query}” · ${pages ? `pages ${pages}` : 'no matches'}`
+    if (tool === 'read_page') return `Read page ${page}`
+    if (tool === 'list_documents') return 'Checked available lectures'
+  } catch {
+    // Older messages may contain traces in a different format.
+  }
+  return line
+}
+
+function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation }: {
   doc: DocumentInfo; page: number; mode: Mode; concept: Concept
-  item: CourseItem; onMessage: (message: ChatMessage) => void
+  item: CourseItem
   onAgentSession: (sessionId: string) => void; onCitation: (page: number, documentId?: string) => void
 }) {
-  const [agentMode, setAgentMode] = useState(() => localStorage.getItem('studygraph-agent-mode') === 'true')
   const [sessionId, setSessionId] = useState(() => item.agentSessionId ?? crypto.randomUUID())
   const [agentMessages, setAgentMessages] = useState<ChatMessage[]>([])
-  const [loadingHistory, setLoadingHistory] = useState(agentMode)
+  const [loadingHistory, setLoadingHistory] = useState(true)
   const [status, setStatus] = useState('')
   const abort = useRef<AbortController | null>(null)
   useEffect(() => () => abort.current?.abort(), [])
   useEffect(() => {
-    if (!agentMode) return
     const controller = new AbortController()
     setLoadingHistory(true)
     setAgentMessages([])
@@ -223,8 +291,7 @@ function ChatPanel({ doc, page, mode, concept, item, onMessage, onAgentSession, 
       .catch(() => { if (!controller.signal.aborted) setStatus('Could not restore conversation.') })
       .finally(() => { if (!controller.signal.aborted) setLoadingHistory(false) })
     return () => controller.abort()
-  }, [agentMode, sessionId, doc.document_id])
-  const messages = agentMode ? agentMessages : item.messages
+  }, [sessionId, doc.document_id])
   const welcome: ChatMessage = { id: 'welcome', role: 'assistant', text: starterMessages[mode] }
   const archivedQuestion = item?.kind === 'test' ? item.questions[item.current] : undefined
   const [input, setInput] = useState('')
@@ -235,76 +302,64 @@ function ChatPanel({ doc, page, mode, concept, item, onMessage, onAgentSession, 
   async function send(event?: FormEvent, suggested?: string) {
     event?.preventDefault()
     const prompt = (suggested ?? input).trim()
-    if (!prompt || busy || (agentMode && loadingHistory)) return
+    if (!prompt || busy || loadingHistory) return
     setInput('')
     const userMessage: ChatMessage = { id: crypto.randomUUID(), role: 'user', text: prompt }
     setBusy(true)
     setStatus('')
-    if (agentMode) {
-      const controller = new AbortController()
-      abort.current = controller
-      if (!item.agentSessionId) onAgentSession(sessionId)
-      const replyId = crypto.randomUUID()
-      setAgentMessages(messages => [...messages, userMessage, { id: replyId, role: 'assistant', text: '' }])
-      const updateReply = (update: (message: ChatMessage) => ChatMessage) => {
-        if (!controller.signal.aborted) setAgentMessages(messages => messages.map(message => message.id === replyId ? update(message) : message))
-      }
-      try {
-        await streamAgent(prompt, sessionId, context.slice(0, 2000), doc.document_id, page, controller.signal, event => {
-          if (event.type === 'model_start') setStatus('Preparing answer…')
-          if (event.type === 'tool_start') setStatus(event.tool === 'read_page' ? 'Reading lecture page…' : 'Searching for evidence…')
-          if (event.type === 'answer_start') updateReply(message => ({ ...message, text: '' }))
-          if (event.type === 'delta') updateReply(message => ({ ...message, text: message.text + event.text }))
-          if (event.type === 'done') {
-            const pages = [...new Set<number>(event.citations.filter((citation: {document_id: string}) => citation.document_id === doc.document_id).map((citation: {page: number}) => citation.page))]
-            const trace = event.trace.map((entry: {tool: string; args: unknown; pages: number[]}) => `${entry.tool} ${JSON.stringify(entry.args)} → ${entry.pages.join(', ')}`)
-            updateReply(message => ({ ...message, text: event.answer, pages, trace, documentId: doc.document_id }))
-            setStatus(`${event.model_calls} model calls · ${(event.timing_ms.total / 1000).toFixed(2)} s`)
-          }
-        })
-      } catch (error) {
-        setAgentMessages(messages => messages.filter(message => message.id !== replyId && message.id !== userMessage.id))
-        setStatus(controller.signal.aborted ? 'Stopped.' : String(error))
-      } finally {
-        abort.current = null
-        setBusy(false)
-      }
-      return
+    const controller = new AbortController()
+    abort.current = controller
+    if (!item.agentSessionId) onAgentSession(sessionId)
+    const replyId = crypto.randomUUID()
+    setAgentMessages(messages => [...messages, userMessage, { id: replyId, role: 'assistant', text: '' }])
+    const updateReply = (update: (message: ChatMessage) => ChatMessage) => {
+      if (!controller.signal.aborted) setAgentMessages(messages => messages.map(message => message.id === replyId ? update(message) : message))
     }
-    onMessage(userMessage)
     try {
-      const result = await askAgent(prompt, item.id, context.slice(0, 2000), doc.document_id)
-      const pages = [...new Set(result.citations?.map(c => c.page) ?? [])]
-      onMessage({ id: crypto.randomUUID(), role: 'assistant', text: result.answer, pages, documentId: doc.document_id })
+      await streamAgent(prompt, sessionId, context.slice(0, 2000), doc.document_id, page, controller.signal, event => {
+        if (event.type === 'model_start') setStatus('Preparing answer…')
+        if (event.type === 'tool_start') {
+          if (event.tool === 'read_page') setStatus(`Reading page ${event.args.page}…`)
+          else if (event.tool === 'search_lecture') setStatus('Searching the lecture…')
+          else setStatus('Checking available lectures…')
+        }
+        if (event.type === 'answer_start') updateReply(message => ({ ...message, text: '' }))
+        if (event.type === 'delta') updateReply(message => ({ ...message, text: message.text + event.text }))
+        if (event.type === 'done') {
+          const pages = [...new Set<number>(event.citations.filter((citation: {document_id: string}) => citation.document_id === doc.document_id).map((citation: {page: number}) => citation.page))]
+          const trace = event.trace.map((entry: {tool: string; args: unknown; pages: number[]}) => `${entry.tool} ${JSON.stringify(entry.args)} → ${entry.pages.join(', ')}`)
+          updateReply(message => ({ ...message, text: event.answer, pages, trace, documentId: doc.document_id }))
+          setStatus(`${event.model_calls} model calls · ${(event.timing_ms.total / 1000).toFixed(2)} s`)
+        }
+      })
     } catch (error) {
-      onMessage({ id: crypto.randomUUID(), role: 'assistant', text: String(error) })
-    } finally { setBusy(false) }
+      setAgentMessages(messages => messages.filter(message => message.id !== replyId && message.id !== userMessage.id))
+      setStatus(controller.signal.aborted ? 'Stopped.' : String(error))
+    } finally {
+      abort.current = null
+      setBusy(false)
+    }
   }
   return <div className="chat-layout"><div className="chat-context">
     <span><Icon name={mode === 'learn' ? 'book' : 'test'} size={14}/>{contextLabel}</span>
-    <label><input type="checkbox" checked={agentMode} disabled={busy} onChange={event => {
-      setAgentMode(event.target.checked)
-      setStatus('')
-      localStorage.setItem('studygraph-agent-mode', String(event.target.checked))
-    }}/>Agent</label>
-    {agentMode && (busy ? <button onClick={() => abort.current?.abort()}>Stop</button> : <button onClick={() => {
+    {busy ? <button onClick={() => abort.current?.abort()}>Stop</button> : <button onClick={() => {
       const next = crypto.randomUUID()
       setStatus('')
       onAgentSession(next)
       setSessionId(next)
-    }}>New conversation</button>)}
-    <small role="status">{agentMode && loadingHistory ? 'Restoring conversation…' : status}</small>
+    }}>New conversation</button>}
+    <small role="status">{loadingHistory ? 'Restoring conversation…' : status}</small>
   </div>
-    <div className="chat-messages" aria-live="polite">{[welcome, ...messages].map(message => <div key={message.id} className={`message message--${message.role}`}>
+    <div className="chat-messages" aria-live="polite">{[welcome, ...agentMessages].map(message => <div key={message.id} className={`message message--${message.role}`}>
       {message.role === 'assistant' && <span className="assistant-avatar"><Icon name="sparkle" size={15}/></span>}
       <div>
         {message.role === 'assistant' ? <TutorMarkdown text={message.text}/> : <p>{message.text}</p>}
-        {!!message.trace?.length && <details><summary>Lecture lookups</summary>{message.trace.map((line, i) => <p key={i}>{line}</p>)}</details>}
+        {!!message.trace?.length && <details><summary>Lecture lookups</summary>{message.trace.map((line, i) => <p key={i}>{describeLookup(line)}</p>)}</details>}
         {message.pages?.map(page => <button key={page} onClick={() => onCitation(page, message.documentId)}><Icon name="file" size={13}/>View source · p. {page}</button>)}
       </div>
     </div>)}{busy && <div className="message message--assistant"><span className="assistant-avatar"><Icon name="sparkle" size={15}/></span><div className="typing"><i/><i/><i/></div></div>}</div>
     <div className="suggestions">{suggestions.map(suggestion => <button key={suggestion} onClick={() => send(undefined, suggestion)}>{suggestion}</button>)}</div>
-    <form className="chat-input" onSubmit={send}><textarea aria-label="Message AI tutor" placeholder={mode === 'learn' ? 'Ask about this concept…' : 'Discuss your reasoning…'} value={input} onChange={event => setInput(event.target.value)} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); void send() } }}/><button disabled={!input.trim() || busy || (agentMode && loadingHistory)} aria-label="Send message"><Icon name="chevron"/></button><span>Enter to send · Shift + Enter for a new line</span></form>
+    <form className="chat-input" onSubmit={send}><textarea aria-label="Message AI tutor" placeholder={mode === 'learn' ? 'Ask about this concept…' : 'Discuss your reasoning…'} value={input} onChange={event => setInput(event.target.value)} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); void send() } }}/><button disabled={!input.trim() || busy || loadingHistory} aria-label="Send message"><Icon name="chevron"/></button><span>Enter to send · Shift + Enter for a new line</span></form>
   </div>
 }
 
@@ -314,7 +369,7 @@ function LectureViewer({ doc, page, onPage, evidenceVisible, setEvidenceVisible 
   useEffect(() => {
     if (!evidenceVisible) return
     const controller = new AbortController()
-    fetch(pageUrl, {signal: controller.signal}).then(async response => {
+    fetch(withDemoUser(pageUrl), {signal: controller.signal}).then(async response => {
       if (!response.ok) throw Error()
       const data = await response.json()
       if (!controller.signal.aborted) setExcerpt({url:pageUrl, text:data.text || 'No searchable text on this page.'})
@@ -323,9 +378,9 @@ function LectureViewer({ doc, page, onPage, evidenceVisible, setEvidenceVisible 
     })
     return () => controller.abort()
   }, [pageUrl, evidenceVisible])
-  return <div className="viewer-layout"><div className="file-strip"><span className="pdf-mark">{doc.name.toLowerCase().endsWith('.pptx')?'PPTX':'PDF'}</span><div><b>{doc.name}</b><small>{doc.page_count} pages · <a href={doc.original_url}>Download original</a></small></div><span className="ready-badge"><i/>Ready</span></div>
+  return <div className="viewer-layout"><div className="file-strip"><span className="pdf-mark">{doc.name.toLowerCase().endsWith('.pptx')?'PPTX':'PDF'}</span><div><b>{doc.name}</b><small>{doc.page_count} pages · <a href={withDemoUser(doc.original_url)}>Download original</a></small></div><span className="ready-badge"><i/>Ready</span></div>
     <div className="viewer-toolbar"><button onClick={() => onPage(Math.max(1, page - 1))} disabled={page <= 1} aria-label="Previous page"><Icon name="previous"/></button><label>Page<input type="number" min="1" max={doc.page_count} value={page} onChange={event => onPage(Math.max(1, Math.min(doc.page_count, Math.trunc(Number(event.target.value)))))}/><span>of {doc.page_count}</span></label><button onClick={() => onPage(Math.min(doc.page_count, page + 1))} disabled={page >= doc.page_count} aria-label="Next page"><Icon name="next"/></button><button className={`evidence-toggle ${evidenceVisible ? 'active' : ''}`} onClick={() => setEvidenceVisible(!evidenceVisible)}><Icon name="sparkle" size={14}/>Evidence</button></div>
-    <div className="slide-stage">{doc.preview_mode==='slide_content' ? <iframe title="Slide content" sandbox="" src={pageUrl+'/preview'} style={{width:'100%',height:'100%'}}/> : <img key={pageUrl} src={pageUrl+'/preview'} alt={'Lecture page '+page} style={{width:'100%',height:'auto'}}/>}</div>
+    <div className="slide-stage">{doc.preview_mode==='slide_content' ? <iframe title="Slide content" sandbox="" src={withDemoUser(pageUrl+'/preview')} style={{width:'100%',height:'100%'}}/> : <img key={pageUrl} src={withDemoUser(pageUrl+'/preview')} alt={'Lecture page '+page} style={{width:'100%',height:'auto'}}/>}</div>
     {evidenceVisible && <div className="evidence-panel" style={{maxHeight:'25%',overflow:'auto'}}><div><span className="eyebrow">Page {page} text</span><p>{excerpt?.url===pageUrl ? excerpt.text : 'Loading…'}</p></div></div>}
   </div>
 }
@@ -385,6 +440,17 @@ function App() {
   const course = useCourseStore()
   const [entryId, setEntryId] = useState(() => initial.get('entry'))
   const item = course.items.find(entry => entry.id === entryId)
+  useEffect(() => {
+    if (item?.kind !== 'map' || item.lecture.outline?.subtitle !== 'From slide text' || item.lecture.outline.strategy) return
+    const controller = new AbortController()
+    const doc = item.document
+    void createSlideOutline(doc, page => request<SlideText>(`documents/${doc.document_id}/pages/${page}`, { signal: controller.signal }))
+      .then(lecture => {
+        if (!controller.signal.aborted) course.update(item.id, entry => entry.kind === 'map' ? { ...entry, lecture } : entry)
+      })
+      .catch(error => { if (!controller.signal.aborted) console.warn('Could not regroup saved concept map.', error) })
+    return () => controller.abort()
+  }, [item])
   const [workspaceMode, setWorkspaceMode] = useState<Mode>(() => initial.has('tests') ? 'test' : 'learn')
   const mode = item ? item.kind === 'test' ? 'test' : 'learn' : workspaceMode
   const [selectedId, setSelectedId] = useState(() => item?.kind === 'map' ? item.lecture.concepts[0].id : 'hierarchy')
@@ -422,7 +488,7 @@ function App() {
     setEntryId(null)
     setWorkspaceMode(next)
     setExpanded(null)
-    history.replaceState(null, '', next === 'test' ? '?tests' : location.pathname)
+    history.replaceState(null, '', withDemoUser(location.pathname + (next === 'test' ? '?tests' : '')))
   }
 
   function openSaved(entry: CourseItem) {
@@ -430,7 +496,7 @@ function App() {
     if (entry.kind === 'map') setSelectedId(entry.lecture.concepts[0].id)
     setExpanded(null)
     openCitation(firstEntryPage(entry))
-    history.replaceState(null, '', `?entry=${encodeURIComponent(entry.id)}`)
+    history.replaceState(null, '', withDemoUser(location.pathname + `?entry=${encodeURIComponent(entry.id)}`))
   }
 
   function addMap(document: DocumentInfo, newLecture: Lecture, open: boolean) {
@@ -465,7 +531,7 @@ function App() {
       <main id="study-workspace" className={`workspace${chatVisible ? ' workspace--with-chat' : ''}${mode === 'learn' ? ' workspace--learning' : ''}`} style={{ '--split-share': mainShare / 100 } as React.CSSProperties}>
         <Panel id="main" title={item.title} subtitle={activeDoc.name} icon={mode === 'learn' ? 'brain' : 'test'} expanded={expanded} onExpand={() => toggleExpand('main')} className="panel--main">
           {item.kind === 'map'
-            ? <LearningPanel key={item.id} lecture={item.lecture} selected={selected} onSelect={selectConcept} onPage={setPage} onCitation={openCitation}/>
+            ? <LearningPanel key={item.id} lecture={item.lecture} documentId={activeDoc.document_id} selected={selected} onSelect={selectConcept} onPage={setPage} onCitation={openCitation}/>
             : <ArchivedTest key={item.id} item={item} onPage={openCitation}
               onSource={(nextPage, documentId) => { setPage(nextPage); setSourceId(documentId); setEvidenceVisible(true) }}
               onEdit={(id, apply) => course.update(id, entry => entry.kind === 'test' ? apply(entry) : entry)}/>}
@@ -473,8 +539,7 @@ function App() {
         {chatVisible && <SplitHandle axis="y" label="Resize main panel and AI tutor" controls="panel-main" value={mainShare} onChange={setMainShare}/>}
         <Panel id="chat" title="AI Tutor" subtitle={mode === 'learn' ? 'Ask, compare, and practice' : 'Discuss your reasoning without spoilers'} icon="chat" canClose hidden={!chatVisible} expanded={expanded} onClose={() => setChatPanelVisible(false)} onExpand={() => toggleExpand('chat')} className="panel--chat">
           <ChatPanel key={`${item.id}:${activeDoc.document_id}`} item={item} doc={activeDoc} page={sourceDoc.document_id === activeDoc.document_id ? page : firstEntryPage(item)} mode={mode} concept={selected} onCitation={openCitation}
-            onAgentSession={agentSessionId => course.update(item.id, entry => ({ ...entry, agentSessionId }))}
-            onMessage={message => course.update(item.id, entry => ({ ...entry, messages: [...entry.messages, message] }))}/>
+            onAgentSession={agentSessionId => course.update(item.id, entry => ({ ...entry, agentSessionId }))}/>
         </Panel>
       </main>
       {viewerVisible && <SplitHandle axis="x" label="Resize workspace and lecture viewer" controls="study-workspace" value={workspaceShare} onChange={setWorkspaceShare}/>}

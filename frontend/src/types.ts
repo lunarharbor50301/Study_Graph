@@ -1,5 +1,4 @@
 export type Mode = 'learn' | 'test'
-export type DetailLevel = 'concise' | 'detailed'
 export type QuestionType = 'multiple-choice' | 'true-false' | 'short-answer'
 
 export type Concept = {
@@ -7,6 +6,7 @@ export type Concept = {
   name: string
   shortName: string
   page: number
+  sourcePages?: number[]
   eyebrow: string
   summary: string
   detail: string
@@ -26,6 +26,7 @@ export type LectureTopic = {
 export type LectureOutline = {
   title: string
   subtitle?: string
+  strategy?: 'heading-groups'
   topics: LectureTopic[]
 }
 

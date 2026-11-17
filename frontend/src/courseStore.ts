@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { acsDocumentId } from './api'
+import { acsDocumentId, demoUser } from './api'
 import { lecture as sampleLecture, sampleQuestions } from './data'
 import type { ChatMessage, CourseQuestion, DocumentInfo, GeneratedQuestion, Lecture, QuestionProgress } from './types'
 
@@ -24,7 +24,7 @@ export type SavedTest = CourseEntry & {
 }
 export type CourseItem = SavedMap | SavedTest
 
-const storageKey = 'studygraph:my-course:v1'
+const storageKey = demoUser === 'A' ? 'studygraph:my-course:v1' : 'studygraph:my-course:v1:B'
 const sample: SavedMap = {
   id: 'acs-lecture-1',
   kind: 'map',
@@ -64,13 +64,13 @@ function loadCourse(): CourseItem[] {
       const parsed: unknown = JSON.parse(stored)
       if (Array.isArray(parsed)) {
         const entries = parsed.filter(isCourseItem)
-        return entries.some(item => item.id === sampleTest.id) ? entries : [...entries, sampleTest]
+        return demoUser === 'B' || entries.some(item => item.id === sampleTest.id) ? entries : [...entries, sampleTest]
       }
     }
   } catch {
     // The sample remains available if browser storage cannot be read.
   }
-  return [sample, sampleTest]
+  return demoUser === 'A' ? [sample, sampleTest] : []
 }
 
 function isCourseItem(item: unknown): item is CourseItem {

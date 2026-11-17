@@ -39,7 +39,17 @@ Remove-Item Env:TACC_SSH_TARGET -ErrorAction SilentlyContinue
 .\.venv\Scripts\python -m uvicorn backend.main:app --port 8024
 ```
 
-助教面板勾选 Agent 后调用 POST /api/agent/stream，响应为逐行 JSON。未勾选时使用 V1 接口。Agent 会收到当前页、选中概念或题目，以及同一会话、同一讲义最近四轮成功的对话。对话存入本地 SQLite，失败和中止的轮次不进入后续上下文。超过上下文预算时按整轮丢弃旧记录。此开发服务使用单个 Uvicorn worker，同一会话串行执行。
+助教统一调用 POST /api/agent/stream，响应为逐行 JSON。单轮问答接口保留用于对照评测。Agent 会收到当前页、选中概念或题目，以及同一会话、同一讲义最近四轮成功的对话。对话存入本地 SQLite，失败和中止的轮次不进入后续上下文。超过上下文预算时按整轮丢弃旧记录。此开发服务使用单个 Uvicorn worker，同一会话串行执行。
+
+出题和流式学习笔记可以使用 DeepSeek，AI 学习助手通过 `QWEN_BASE_URL` 连接 TACC Qwen。在仓库根目录的本地 `.env` 中设置 `STUDYGRAPH_GENERATION_PROVIDER=deepseek` 和 `DEEPSEEK_API_KEY`。官方服务默认使用 `https://api.deepseek.com` 和 `deepseek-flash`，可通过 `DEEPSEEK_BASE_URL` 与 `DEEPSEEK_MODEL` 指定。用 PowerShell 把这些配置加载到同一个终端，再运行上面的启动命令。
+
+```powershell
+Get-Content .env | ForEach-Object {
+    if ($_ -match '^\s*(STUDYGRAPH_GENERATION_PROVIDER|DEEPSEEK_API_KEY|DEEPSEEK_BASE_URL|DEEPSEEK_MODEL)\s*=\s*(.*?)\s*$') {
+        [Environment]::SetEnvironmentVariable($Matches[1], $Matches[2].Trim('"', "'"), 'Process')
+    }
+}
+```
 
 浏览器在课程架中为每个概念图或测验保存一个 Agent 会话 ID。Agent 后端再按讲义 ID 分开保存对话。切换讲义或刷新时，Agent 用 GET /api/agent/history?session_id=...&document_id=... 恢复该讲义最近四轮成功对话及引用、检索记录。普通问答的显示记录保存在课程架，其模型调用仍按单轮执行。New conversation 为当前课程架条目创建新的 Agent 会话 ID。切换课程架条目或讲义会中止当前 Agent 请求。合并前按概念保存的旧会话仍保留在原存储中，新课程架使用新的会话 ID。
 

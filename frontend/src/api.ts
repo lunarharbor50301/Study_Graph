@@ -3,8 +3,17 @@ import type { DocumentInfo, Lecture } from './types'
 
 type AskResponse = { answer: string; citations?: { page: number }[] }
 
+export const demoUser = new URLSearchParams(location.search).get('user') === 'B' ? 'B' : 'A'
+
+export function withDemoUser(path: string, user = demoUser) {
+  const url = new URL(path, location.origin)
+  if (user === 'B') url.searchParams.set('user', 'B')
+  else url.searchParams.delete('user')
+  return url.pathname + url.search + url.hash
+}
+
 export async function request<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`/api/${path}`, init)
+  const response = await fetch(withDemoUser(`/api/${path}`), init)
   if (!response.ok) {
     const error = await response.json().catch(() => ({}))
     throw new Error(typeof error.detail === 'string' ? error.detail : `API request failed (${response.status})`)
@@ -42,13 +51,17 @@ export function askAgent(question: string, sessionId: string, context: string, d
   })
 }
 export async function streamAgent(question: string, sessionId: string, context: string, documentId: string, page: number, signal: AbortSignal, onEvent: (event: any) => void) {
-  const response = await fetch('/api/agent/stream', {
+  return streamEvents('/api/agent/stream', {question,session_id:sessionId,context,page,document_id:documentId}, signal, onEvent)
+}
+
+export async function streamEvents<T>(url: string, body: unknown, signal: AbortSignal, onEvent: (event: T) => void) {
+  const response = await fetch(withDemoUser(url), {
     method:'POST', headers:{'Content-Type':'application/json'}, signal,
-    body:JSON.stringify({question,session_id:sessionId,context,page,document_id:documentId}),
+    body:JSON.stringify(body),
   })
   if (!response.ok) {
-    const error = await response.json()
-    throw Error(error.detail ?? 'Agent request failed')
+    const error = await response.json().catch(() => ({}))
+    throw Error(typeof error.detail === 'string' ? error.detail : `Request failed (${response.status})`)
   }
   const reader = response.body!.getReader()
   const decoder = new TextDecoder()
