@@ -1,4 +1,5 @@
 import UploadWorkspace, { SavedQuestionSet } from './Documents'
+import { ChatTranscript } from './ChatTranscript'
 import { CourseShelf } from './CourseShelf'
 import {Icon, Panel, SplitHandle} from './Layout'
 import { getMapTopics, MindMap, type MapTopic } from './MindMap'
@@ -214,15 +215,15 @@ function ChatPanel({ doc, mode, concept, item, onMessage, onCitation }: {
     setInput(''); onMessage({ id: crypto.randomUUID(), role: 'user', text: prompt })
     setBusy(true)
     try {
-      const result = await askAgent(prompt, item.id, context.slice(0, 2000), doc.document_id)
-      const pages = [...new Set(result.citations?.map(c => c.page) ?? [])]
-      onMessage({ id: crypto.randomUUID(), role: 'assistant', text: result.answer, pages, documentId: doc.document_id })
+      const sources = item.kind === 'test' ? item.documents ?? [doc] : [doc]
+      const documentIds = [doc.document_id, ...sources.map(source => source.document_id).filter(id => id !== doc.document_id)]
+      onMessage(await askAgent(prompt, item.id, context, documentIds, messages))
     } catch (error) {
       onMessage({ id: crypto.randomUUID(), role: 'assistant', text: String(error) })
     } finally { setBusy(false) }
   }
   return <div className="chat-layout"><div className="chat-context"><span><Icon name={mode === 'learn' ? 'book' : 'test'} size={14}/>{contextLabel}</span><small>Source-linked answers</small></div>
-    <div className="chat-messages" aria-live="polite">{[welcome, ...messages].map(message => <div key={message.id} className={`message message--${message.role}`}>{message.role === 'assistant' && <span className="assistant-avatar"><Icon name="sparkle" size={15}/></span>}<div><p>{message.text}</p>{message.pages?.map(page => <button key={page} onClick={() => onCitation(page, message.documentId)}><Icon name="file" size={13}/>View source · p. {page}</button>)}</div></div>)}{busy && <div className="message message--assistant"><span className="assistant-avatar"><Icon name="sparkle" size={15}/></span><div className="typing"><i/><i/><i/></div></div>}</div>
+    <ChatTranscript messages={[welcome, ...messages]} busy={busy} onCitation={onCitation}/>
     <div className="suggestions">{suggestions.map(suggestion => <button key={suggestion} onClick={() => send(undefined, suggestion)}>{suggestion}</button>)}</div>
     <form className="chat-input" onSubmit={send}><textarea aria-label="Message AI tutor" placeholder={mode === 'learn' ? 'Ask about this concept…' : 'Discuss your reasoning…'} value={input} onChange={event => setInput(event.target.value)} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); void send() } }}/><button disabled={!input.trim() || busy} aria-label="Send message"><Icon name="chevron"/></button><span>Enter to send · Shift + Enter for a new line</span></form>
   </div>
@@ -332,6 +333,11 @@ function App() {
   }
   const selectConcept = (concept: Concept) => { setSelectedId(concept.id); setPage(concept.page); setEvidenceVisible(true) }
   const openCitation = (citation: number, documentId?: string) => {
+    if (documentId && documentId !== activeDoc?.document_id &&
+        !(item?.kind === 'test' && item.documents?.some(document => document.document_id === documentId))) {
+      window.open(`/api/documents/${encodeURIComponent(documentId)}/pages/${citation}/preview`, '_blank', 'noopener,noreferrer')
+      return
+    }
     setPage(citation)
     setSourceId(documentId)
     setViewerVisible(true)
@@ -353,26 +359,32 @@ function App() {
     history.replaceState(null, '', `?entry=${encodeURIComponent(entry.id)}`)
   }
 
-  function addMap(document: DocumentInfo, newLecture: Lecture, open: boolean) {
+  function addMap(document: DocumentInfo, newLecture: Lecture, open: boolean, conversation: Pick<CourseItem, 'id' | 'messages'>) {
     const entry: SavedMap = {
-      id: crypto.randomUUID(), kind: 'map', title: newLecture.outline?.title ?? newLecture.title,
-      document, lecture: newLecture, messages: [],
+      ...conversation, kind: 'map', title: newLecture.outline?.title ?? newLecture.title,
+      document, lecture: newLecture,
     }
     course.change(items => [entry, ...items])
-    if (open) openSaved(entry)
+    if (open) {
+      if (conversation.messages.length) setChatPanelVisible(true)
+      openSaved(entry)
+    }
   }
 
-  function addTest(documents: DocumentInfo[], questions: CourseQuestion[], open: boolean) {
+  function addTest(documents: DocumentInfo[], questions: CourseQuestion[], open: boolean, conversation: Pick<CourseItem, 'id' | 'messages'>) {
     const document = documents[0]
     const entry: SavedTest = {
-      id: crypto.randomUUID(), kind: 'test', title: '', document, documents, questions, messages: [], current: 0, responses: {},
+      ...conversation, kind: 'test', title: '', document, documents, questions, current: 0, responses: {},
     }
     course.change(items => {
       const count = items.filter(saved => saved.kind === 'test' && saved.document.document_id === document.document_id).length
       const lectureTitle = documents.length === 1 ? lectureName(document.name) : `${lectureName(document.name)} + ${documents.length - 1} more`
       return [{ ...entry, title: `${lectureTitle} — Test ${count + 1}` }, ...items]
     })
-    if (open) openSaved(entry)
+    if (open) {
+      if (conversation.messages.length) setChatPanelVisible(true)
+      openSaved(entry)
+    }
   }
 
   const courseShelf = <CourseShelf items={course.items} activeId={item?.id} storageError={course.storageError}

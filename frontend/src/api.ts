@@ -1,7 +1,5 @@
 import { lecture as fallbackLecture } from './data'
-import type { DocumentInfo, Lecture } from './types'
-
-type AskResponse = { answer: string; citations?: { page: number }[] }
+import type { ChatMessage, DocumentInfo, Lecture } from './types'
 
 export async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`/api/${path}`, init)
@@ -34,10 +32,16 @@ export async function loadLecture(): Promise<Lecture> {
 // The curated graph describes this exact version of the bundled ACS lecture.
 export const acsDocumentId = '34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402'
 
-export function askAgent(question: string, sessionId: string, context: string, documentId = acsDocumentId): Promise<AskResponse> {
-  return request<AskResponse>('ask', {
+export async function askAgent(question: string, sessionId: string, context: string, documentIds: string[], history: ChatMessage[]): Promise<ChatMessage> {
+  const [documentId, ...otherDocuments] = documentIds
+  const result = await request<{ answer: string; citations?: ChatMessage['citations'] }>('ask', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ session_id: sessionId, document_id: documentId, tutor_context: context, question }),
+    body: JSON.stringify({
+      session_id: sessionId, document_id: documentId, additional_document_ids: otherDocuments,
+      tutor_context: context.slice(0, 2000), question,
+      history: history.slice(-8).map(({ role, text }) => ({ role, text: text.slice(0, 2000) })),
+    }),
   })
+  return { id: crypto.randomUUID(), role: 'assistant', text: result.answer, citations: result.citations }
 }
