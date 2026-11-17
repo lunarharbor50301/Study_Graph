@@ -314,7 +314,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
   min-width: 0;
   min-height: 0;
   overflow: auto;
-  padding: clamp(40px, 14vh, 156px) clamp(18px, 4vw, 54px) 36px;
+  padding: clamp(36px, 10vh, 112px) clamp(18px, 4vw, 54px) 36px;
   border-radius: 16px;
   background: radial-gradient(circle, #d2dfef 0.75px, transparent 1.2px) 0 0 / 19px 19px, #f7f9fc;
 }
@@ -353,6 +353,48 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 .creation-files { list-style: none; display: grid; gap: 6px; padding: 0; margin: 11px 0 0; }
 .creation-files li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px; align-items: center; color: #345679; background: #f2f6fb; border-radius: 8px; padding: 4px 7px 4px 10px; font-size: 12px; }
 .creation-files li span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.creation-composer {
+  margin-top: 14px;
+  overflow: hidden;
+  border: 1px solid #dce5ef;
+  border-radius: 12px;
+  background: #fff;
+}
+.creation-composer:focus-within { border-color: #86a9d2; box-shadow: 0 0 0 3px #e9f1fb; }
+.creation-composer label { display: block; margin: 12px 13px 4px; color: #314b67; font-size: 12px; font-weight: 600; }
+.creation-composer textarea {
+  display: block;
+  width: 100%;
+  min-height: 66px;
+  padding: 6px 13px;
+  resize: vertical;
+  border: 0;
+  color: #19334f;
+  background: transparent;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.creation-composer textarea:focus-visible { outline: none; }
+.creation-composer textarea::placeholder { color: #60758e; }
+.creation-composer__actions { display: flex; justify-content: flex-end; padding: 6px 9px 9px; }
+.creation-prompt-suggestions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+.creation-prompt-suggestions button {
+  padding: 5px 10px;
+  border: 1px solid #dce5ef;
+  border-radius: 99px;
+  background: #f7fafd;
+  color: #345679;
+  font-size: 12px;
+  cursor: pointer;
+}
+.creation-prompt-suggestions button:hover:enabled { border-color: #86a9d2; background: #eaf2fc; }
+.creation-prompt-suggestions button:disabled { opacity: .55; cursor: default; }
+.creation-tutor { margin-top: 14px; overflow: hidden; border: 1px solid #dce5ef; border-radius: 12px; }
+.creation-tutor__heading { display: flex; align-items: center; gap: 7px; padding: 9px 13px; background: #f3f7fc; color: #26496e; font-size: 13px; font-weight: 650; }
+.creation-tutor .chat-messages { max-height: 240px; }
+.creation-tutor .message > div { font-size: 13px; padding: 8px 11px; }
+.chat-messages .message p { white-space: pre-wrap; overflow-wrap: anywhere; }
+.message a { display: flex; gap: 4px; align-items: center; margin-top: 5px; color: #27649d; font-size: 10px; font-weight: 600; }
 .creation-options { margin: 20px 0 0; border: 0; padding: 0; min-width: 0; }
 .creation-options legend { padding: 0; margin-bottom: 8px; color: #243e5c; font-size: 13px; font-weight: 600; }
 .creation-counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 8px; }

@@ -219,7 +219,7 @@ function LearningPanel({ lecture, documentId, selected, onSelect, onPage, onCita
 }
 
 function QuestionInput({ question, progress, onResponse }: { question: TestQuestion; progress: QuestionProgress; onResponse: (response: string) => void }) {
-  if (question.options) return <div className="answer-options">{question.options.map((option, index) => <label key={option} className={`answer-option ${progress.response === option ? 'answer-option--selected' : ''} ${progress.submitted && option === question.answer ? 'answer-option--correct' : ''} ${progress.submitted && progress.response === option && option !== question.answer ? 'answer-option--wrong' : ''}`}>
+  if (question.type !== 'short-answer' && question.options?.length) return <div className="answer-options">{question.options.map((option, index) => <label key={option} className={`answer-option ${progress.response === option ? 'answer-option--selected' : ''} ${progress.submitted && option === question.answer ? 'answer-option--correct' : ''} ${progress.submitted && progress.response === option && option !== question.answer ? 'answer-option--wrong' : ''}`}>
     <input type="radio" name={question.id} value={option} checked={progress.response === option} disabled={progress.submitted} onChange={() => onResponse(option)}/><span className="option-marker">{question.type === 'true-false' ? <Icon name={option === 'True' ? 'check' : 'close'} size={16}/> : String.fromCharCode(65 + index)}</span><span>{option}</span>
   </label>)}</div>
   return <label className="written-answer"><span>Your answer</span><textarea placeholder="Show your reasoning or enter a concise answer…" value={progress.response} disabled={progress.submitted} onChange={event => onResponse(event.target.value)}/><small>Your response is checked against the lecture-based reference answer.</small></label>
@@ -271,7 +271,7 @@ function describeLookup(line: string) {
 function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation }: {
   doc: DocumentInfo; page: number; mode: Mode; concept: Concept
   item: CourseItem
-  onAgentSession: (sessionId: string) => void; onCitation: (page: number, documentId?: string) => void
+  onAgentSession: (sessionId: string, clearSetupHistory?: boolean) => void; onCitation: (page: number, documentId?: string) => void
 }) {
   const [sessionId, setSessionId] = useState(() => item.agentSessionId ?? crypto.randomUUID())
   const [agentMessages, setAgentMessages] = useState<ChatMessage[]>([])
@@ -316,6 +316,9 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
       if (!controller.signal.aborted) setAgentMessages(messages => messages.map(message => message.id === replyId ? update(message) : message))
     }
     try {
+      const additionalDocuments = item.kind === 'test'
+        ? (item.documents ?? []).map(source => source.document_id).filter(id => id !== doc.document_id)
+        : []
       await streamAgent(prompt, sessionId, context.slice(0, 2000), doc.document_id, page, controller.signal, event => {
         if (event.type === 'model_start') setStatus('Preparing answer…')
         if (event.type === 'tool_start') {
@@ -326,12 +329,11 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
         if (event.type === 'answer_start') updateReply(message => ({ ...message, text: '' }))
         if (event.type === 'delta') updateReply(message => ({ ...message, text: message.text + event.text }))
         if (event.type === 'done') {
-          const pages = [...new Set<number>(event.citations.filter((citation: {document_id: string}) => citation.document_id === doc.document_id).map((citation: {page: number}) => citation.page))]
           const trace = event.trace.map((entry: {tool: string; args: unknown; pages: number[]}) => `${entry.tool} ${JSON.stringify(entry.args)} → ${entry.pages.join(', ')}`)
-          updateReply(message => ({ ...message, text: event.answer, pages, trace, documentId: doc.document_id }))
+          updateReply(message => ({ ...message, text: event.answer, citations: event.citations, trace }))
           setStatus(`${event.model_calls} model calls · ${(event.timing_ms.total / 1000).toFixed(2)} s`)
         }
-      })
+      }, additionalDocuments)
     } catch (error) {
       setAgentMessages(messages => messages.filter(message => message.id !== replyId && message.id !== userMessage.id))
       setStatus(controller.signal.aborted ? 'Stopped.' : String(error))
@@ -345,17 +347,18 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
     {busy ? <button onClick={() => abort.current?.abort()}>Stop</button> : <button onClick={() => {
       const next = crypto.randomUUID()
       setStatus('')
-      onAgentSession(next)
+      onAgentSession(next, true)
       setSessionId(next)
     }}>New conversation</button>}
     <small role="status">{loadingHistory ? 'Restoring conversation…' : status}</small>
   </div>
-    <div className="chat-messages" aria-live="polite">{[welcome, ...agentMessages].map(message => <div key={message.id} className={`message message--${message.role}`}>
+    <div className="chat-messages" aria-live="polite">{[welcome, ...item.messages, ...agentMessages].map(message => <div key={message.id} className={`message message--${message.role}`}>
       {message.role === 'assistant' && <span className="assistant-avatar"><Icon name="sparkle" size={15}/></span>}
       <div>
         {message.role === 'assistant' ? <TutorMarkdown text={message.text}/> : <p>{message.text}</p>}
         {!!message.trace?.length && <details><summary>Lecture lookups</summary>{message.trace.map((line, i) => <p key={i}>{describeLookup(line)}</p>)}</details>}
-        {message.pages?.map(page => <button key={page} onClick={() => onCitation(page, message.documentId)}><Icon name="file" size={13}/>View source · p. {page}</button>)}
+        {(message.citations ?? message.pages?.map(page => ({ page, document_id: message.documentId })))?.map(({ page, document_id }) =>
+          <button key={`${document_id ?? ''}:${page}`} onClick={() => onCitation(page, document_id)}><Icon name="file" size={13}/>View source · p. {page}</button>)}
       </div>
     </div>)}{busy && <div className="message message--assistant"><span className="assistant-avatar"><Icon name="sparkle" size={15}/></span><div className="typing"><i/><i/><i/></div></div>}</div>
     <div className="suggestions">{suggestions.map(suggestion => <button key={suggestion} onClick={() => send(undefined, suggestion)}>{suggestion}</button>)}</div>
@@ -478,6 +481,11 @@ function App() {
   }
   const selectConcept = (concept: Concept) => { setSelectedId(concept.id); setPage(concept.page); setEvidenceVisible(true) }
   const openCitation = (citation: number, documentId?: string) => {
+    if (documentId && documentId !== activeDoc?.document_id &&
+        !(item?.kind === 'test' && item.documents?.some(document => document.document_id === documentId))) {
+      window.open(withDemoUser(`/api/documents/${encodeURIComponent(documentId)}/pages/${citation}/preview`), '_blank', 'noopener,noreferrer')
+      return
+    }
     setPage(citation)
     setSourceId(documentId)
     setViewerVisible(true)
@@ -499,26 +507,32 @@ function App() {
     history.replaceState(null, '', withDemoUser(location.pathname + `?entry=${encodeURIComponent(entry.id)}`))
   }
 
-  function addMap(document: DocumentInfo, newLecture: Lecture, open: boolean) {
+  function addMap(document: DocumentInfo, newLecture: Lecture, open: boolean, conversation: Pick<CourseItem, 'id' | 'messages'>) {
     const entry: SavedMap = {
-      id: crypto.randomUUID(), kind: 'map', title: newLecture.outline?.title ?? newLecture.title,
-      document, lecture: newLecture, messages: [],
+      ...conversation, kind: 'map', title: newLecture.outline?.title ?? newLecture.title,
+      document, lecture: newLecture,
     }
     course.change(items => [entry, ...items])
-    if (open) openSaved(entry)
+    if (open) {
+      if (conversation.messages.length) setChatPanelVisible(true)
+      openSaved(entry)
+    }
   }
 
-  function addTest(documents: DocumentInfo[], questions: CourseQuestion[], open: boolean) {
+  function addTest(documents: DocumentInfo[], questions: CourseQuestion[], open: boolean, conversation: Pick<CourseItem, 'id' | 'messages'>) {
     const document = documents[0]
     const entry: SavedTest = {
-      id: crypto.randomUUID(), kind: 'test', title: '', document, documents, questions, messages: [], current: 0, responses: {},
+      ...conversation, kind: 'test', title: '', document, documents, questions, current: 0, responses: {},
     }
     course.change(items => {
       const count = items.filter(saved => saved.kind === 'test' && saved.document.document_id === document.document_id).length
       const lectureTitle = documents.length === 1 ? lectureName(document.name) : `${lectureName(document.name)} + ${documents.length - 1} more`
       return [{ ...entry, title: `${lectureTitle} — Test ${count + 1}` }, ...items]
     })
-    if (open) openSaved(entry)
+    if (open) {
+      if (conversation.messages.length) setChatPanelVisible(true)
+      openSaved(entry)
+    }
   }
 
   const courseShelf = <CourseShelf items={course.items} activeId={item?.id} storageError={course.storageError}
@@ -539,7 +553,9 @@ function App() {
         {chatVisible && <SplitHandle axis="y" label="Resize main panel and AI tutor" controls="panel-main" value={mainShare} onChange={setMainShare}/>}
         <Panel id="chat" title="AI Tutor" subtitle={mode === 'learn' ? 'Ask, compare, and practice' : 'Discuss your reasoning without spoilers'} icon="chat" canClose hidden={!chatVisible} expanded={expanded} onClose={() => setChatPanelVisible(false)} onExpand={() => toggleExpand('chat')} className="panel--chat">
           <ChatPanel key={`${item.id}:${activeDoc.document_id}`} item={item} doc={activeDoc} page={sourceDoc.document_id === activeDoc.document_id ? page : firstEntryPage(item)} mode={mode} concept={selected} onCitation={openCitation}
-            onAgentSession={agentSessionId => course.update(item.id, entry => ({ ...entry, agentSessionId }))}/>
+            onAgentSession={(agentSessionId, clearSetupHistory) => course.update(item.id, entry => ({
+              ...entry, agentSessionId, messages: clearSetupHistory ? [] : entry.messages,
+            }))}/>
         </Panel>
       </main>
       {viewerVisible && <SplitHandle axis="x" label="Resize workspace and lecture viewer" controls="study-workspace" value={workspaceShare} onChange={setWorkspaceShare}/>}

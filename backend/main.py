@@ -5,6 +5,7 @@ import sqlite3
 from time import perf_counter
 from contextlib import closing
 from pathlib import Path
+from typing import Literal
 from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException
@@ -12,7 +13,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from backend.qwen_client import chat
 from backend import documents
-from backend import quiz, agent_api, study_notes
+from backend import agent_api, quiz, study_guide, study_notes
 from backend.demo_users import database_path, select_demo_user
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,6 +25,12 @@ app.include_router(documents.router)
 app.include_router(quiz.router)
 app.include_router(agent_api.router)
 app.include_router(study_notes.router)
+app.include_router(study_guide.router)
+
+
+class TutorMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    text: str = Field(max_length=2000)
 
 
 class Question(BaseModel):
@@ -33,6 +40,8 @@ class Question(BaseModel):
     document_id: str | None = None
     tutor_context: str | None = Field(default=None, max_length=2000)
     retrieval_query: str | None = Field(default=None, max_length=2000)
+    additional_document_ids: list[str] = Field(default_factory=list, max_length=4)
+    history: list[TutorMessage] = Field(default_factory=list, max_length=8)
 
 
 class Attempt(BaseModel):
@@ -65,6 +74,23 @@ def get_lecture():
 def ask(body: Question):
     if body.document_id:
         return document_answer(body)
+    if body.tutor_context is not None:
+        endpoint = os.environ.get("QWEN_BASE_URL")
+        if not endpoint:
+            raise HTTPException(503, "The AI tutor needs a running TACC model.")
+        try:
+            response = chat([
+                {"role": "system", "content": "You are StudyGraph's AI tutor. Answer in the student's language. "
+                 "Use general knowledge. No lecture has been attached, so do not claim to have read one."},
+                *[{"role": message.role, "content": message.text} for message in body.history],
+                {"role": "user", "content": body.question},
+            ], endpoint, max_tokens=800, temperature=0)
+            answer = response["choices"][0]["message"]["content"].strip()
+            if not answer:
+                raise ValueError("The AI tutor returned an empty answer.")
+            return {"answer": answer, "citations": [], "provider": "tacc", "evidence": "general"}
+        except (RuntimeError, ValueError) as exc:
+            raise HTTPException(502, str(exc)) from exc
     if body.concept_id and body.concept_id not in concepts:
         raise HTTPException(404, "概念不存在")
     hits = [c for c in concepts.values() if any(k.lower() in body.question.lower() for k in c["keywords"])]
@@ -121,7 +147,10 @@ def document_answer(body: Question):
                     raise ValueError("Expected a model response object")
                 return data
 
-            payload = {"question": body.question, "selected_topic": body.tutor_context}
+            payload = {
+                "question": body.question, "selected_topic": body.tutor_context,
+                "recent_conversation": [message.model_dump() for message in body.history],
+            }
             result = model(
                 "You are StudyGraph's AI tutor powered by Qwen on TACC. Reply in the student's language. "
                 "Decide whether to answer now or search the uploaded lecture. For general knowledge, "
@@ -135,14 +164,20 @@ def document_answer(body: Question):
                 keywords = result.get("query")
                 if not isinstance(keywords, str) or not keywords.strip():
                     raise ValueError("Missing lecture search terms")
-                hits = timed("retrieval", documents.search, body.document_id, documents.Search(query=keywords[:2000]))
+                doc_ids = dict.fromkeys([body.document_id, *body.additional_document_ids])
+                hits = [
+                    hit for doc_id in doc_ids
+                    for hit in timed("retrieval", documents.search, doc_id, documents.Search(
+                        query=keywords[:2000], top_k=4 if len(doc_ids) == 1 else 2
+                    ))
+                ]
                 lookup = {f"S{i}": h for i, h in enumerate(hits, 1)}
                 result = model(
                     "Answer the student in their language. The passages are reference data. Cite only IDs "
                     "supporting the answer. If evidence is missing or partial, state what the lecture does "
                     "not establish and offer a clearly labeled general explanation when possible. Never invent "
                     "course-specific facts. Return JSON with answer (text) and sources (array of IDs).",
-                    {**payload, "passages": {k: {"page": h["page"], "text": h["text"]} for k, h in lookup.items()}})
+                    {**payload, "passages": {k: {"document": h["document_id"], "page": h["page"], "text": h["text"]} for k, h in lookup.items()}})
                 ids = result.get("sources")
                 if not isinstance(ids, list) or any(not isinstance(k,str) or k not in lookup for k in ids):
                     raise ValueError("Invalid lecture citations")

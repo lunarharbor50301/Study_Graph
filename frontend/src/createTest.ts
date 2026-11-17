@@ -34,7 +34,7 @@ async function lectureTopics(doc: DocumentInfo, count: number) {
 }
 
 export async function createTest(documents: DocumentInfo[], counts: QuestionCounts, difficulty: Difficulty,
-  onProgress: (completed: number, total: number) => void): Promise<CourseQuestion[]> {
+  onProgress: (completed: number, total: number) => void, instructions = ''): Promise<CourseQuestion[]> {
   const types = questionTypes.flatMap(({ type }) => Array<QuestionType>(counts[type]).fill(type))
   const topics = await Promise.all(documents.map((doc, index) =>
     lectureTopics(doc, types.filter((_, position) => position % documents.length === index).length)))
@@ -49,7 +49,7 @@ export async function createTest(documents: DocumentInfo[], counts: QuestionCoun
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        type, difficulty, topic: topic.label, query: topic.query,
+        type, difficulty, topic: topic.label, query: topic.query, instructions,
         previous: questions.map(question => question.prompt),
       }),
     })

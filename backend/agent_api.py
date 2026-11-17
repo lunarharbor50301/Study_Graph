@@ -45,6 +45,7 @@ class Turn(BaseModel):
     question: str = Field(min_length=1, max_length=2000)
     context: str = Field(default="", max_length=2000)
     page: int | None = Field(default=None, ge=1)
+    additional_document_ids: list[str] = Field(default_factory=list, max_length=4)
 
 
 @router.get("/history")
@@ -70,13 +71,17 @@ def conversation_history(session_id: str, document_id: str):
             answer = "".join(b.get("text", "") for b in last.get("content", []) if b["type"] == "text")
         messages.append({"id": f"{row['id']}-assistant", "role": "assistant", "text": answer,
                          "pages": list(dict.fromkeys(c["page"] for c in turn.get("citations", []) if c["document_id"] == document_id)),
+                         "citations": [{"document_id": c["document_id"], "page": c["page"]}
+                                       for c in turn.get("citations", [])],
                          "trace": [f"{t['tool']} {json.dumps(t['args'])} → {t['pages']}" for t in turn.get("trace", [])]})
     return {"messages": messages}
 
 
-def tool(name, args):
+def tool(name, args, sources):
     if name == "list_documents":
-        return {"documents": documents.documents(), "citations": []}
+        return {"documents": list(sources.values()), "citations": []}
+    if args.get("document_id") not in sources:
+        raise ValueError("This lecture is outside the current workspace.")
     if name == "search_lecture":
         return {"citations": documents.search(args["document_id"], documents.Search(query=args["query"], top_k=3))}
     if name == "read_page":
@@ -94,7 +99,8 @@ async def stream_turn(body: Turn):
         raise HTTPException(503, "Configure a running TACC endpoint.")
     if os.getenv("TACC_SSH_TARGET"):
         raise HTTPException(503, "Use a persistent SSH tunnel for pi streaming.")
-    documents.document(body.document_id)
+    sources = {doc_id: documents.document(doc_id)
+               for doc_id in dict.fromkeys([body.document_id, *body.additional_document_ids])}
     node = shutil.which("node")
     if not node:
         raise HTTPException(503, "Install Node.js and run npm ci --prefix agent.")
@@ -118,7 +124,7 @@ async def stream_turn(body: Turn):
                         event = json.loads(line)
                         if event["type"] == "tool_request":
                             try:
-                                result = await asyncio.to_thread(tool, event["name"], event["args"])
+                                result = await asyncio.to_thread(tool, event["name"], event["args"], sources)
                             except (HTTPException, ValueError, KeyError) as exc:
                                 result = {"error": str(exc)}
                             proc.stdin.write((json.dumps({"id": event["id"], **result})+"\n").encode())

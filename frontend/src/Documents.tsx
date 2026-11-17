@@ -1,15 +1,32 @@
 import { useEffect, useRef, useState } from 'react'
 import { Icon } from './Layout'
-import { request, uploadLecture } from './api'
+import { askAgent, request, uploadLecture } from './api'
+import { ChatTranscript } from './ChatTranscript'
 import { createTest, maxQuestions, questionTypes, type Difficulty, type QuestionCounts } from './createTest'
-import { createSlideOutline, type SlideText } from './slideOutline'
+import { createPersonalizedOutline, createSlideOutline, type SlideText } from './slideOutline'
 import type { SavedTest } from './courseStore'
-import type { CourseQuestion, DocumentInfo, EvidenceHit, Lecture, Mode } from './types'
+import type { ChatMessage, CourseQuestion, DocumentInfo, EvidenceHit, Lecture, Mode } from './types'
+
+type WorkspaceConversation = { id: string; messages: ChatMessage[] }
+
+const promptLimit = 2000
+const promptSuggestions = {
+  learn: [
+    { label: 'Highlight key formulas', text: 'Highlight the key formulas and explain when to use each one.' },
+    { label: 'Organize by chapter', text: 'Group the concept map and notes by chapter or lecture section.' },
+    { label: 'Explain with examples', text: 'Explain the most difficult concepts with examples from the lecture.' },
+  ],
+  test: [
+    { label: 'Focus on calculations', text: 'Focus on calculation and quantitative reasoning where the lecture supports it.' },
+    { label: 'Use real-world scenarios', text: 'Use realistic scenarios to test how the lecture concepts are applied.' },
+    { label: 'Test common mistakes', text: 'Target common mistakes and explain why tempting wrong answers are incorrect.' },
+  ],
+}
 
 type WorkspaceProps = {
   mode: Mode
-  onMapCreated: (doc: DocumentInfo, lecture: Lecture, open: boolean) => void
-  onTestCreated: (docs: DocumentInfo[], questions: CourseQuestion[], open: boolean) => void
+  onMapCreated: (doc: DocumentInfo, lecture: Lecture, open: boolean, conversation: WorkspaceConversation) => void
+  onTestCreated: (docs: DocumentInfo[], questions: CourseQuestion[], open: boolean, conversation: WorkspaceConversation) => void
 }
 
 export default function UploadWorkspace({ mode, onMapCreated, onTestCreated }: WorkspaceProps) {
@@ -20,11 +37,17 @@ export default function UploadWorkspace({ mode, onMapCreated, onTestCreated }: W
   const [status, setStatus] = useState('')
   const [error, setError] = useState('')
   const [dragging, setDragging] = useState(false)
+  const [prompt, setPrompt] = useState('')
+  const [asking, setAsking] = useState(false)
+  const [messages, setMessages] = useState<ChatMessage[]>([])
+  const [sessionId] = useState(() => crypto.randomUUID())
   const input = useRef<HTMLInputElement>(null)
+  const composer = useRef<HTMLTextAreaElement>(null)
+  const imported = useRef(new WeakMap<File, DocumentInfo>())
   const mounted = useRef(true)
   const pending = useRef(false)
   const total = Object.values(counts).reduce((sum, count) => sum + count, 0)
-  const busy = !!status
+  const busy = !!status || asking
   const fileLimit = tests ? 5 : 1
 
   useEffect(() => {
@@ -53,27 +76,60 @@ export default function UploadWorkspace({ mode, onMapCreated, onTestCreated }: W
     setError('')
   }
 
+  async function uploadSelected() {
+    const uploaded: DocumentInfo[] = []
+    for (const file of files) {
+      const doc = imported.current.get(file) ?? await uploadLecture(file)
+      imported.current.set(file, doc)
+      if (!uploaded.some(existing => existing.document_id === doc.document_id)) uploaded.push(doc)
+    }
+    return uploaded
+  }
+
+  async function askTutor() {
+    const question = prompt.trim()
+    if (pending.current || !question) return
+    const message: ChatMessage = { id: crypto.randomUUID(), role: 'user', text: question }
+    pending.current = true
+    setAsking(true)
+    setError('')
+    setPrompt('')
+    setMessages([...messages, message])
+    try {
+      const docs = await uploadSelected()
+      const reply = await askAgent(question, sessionId, docs.map(doc => doc.name).join(', '),
+        docs.map(doc => doc.document_id), messages)
+      setMessages([...messages, message, reply])
+    } catch (error) {
+      setMessages(messages)
+      setPrompt(question)
+      setError(error instanceof Error ? error.message : String(error))
+    } finally {
+      pending.current = false
+      setAsking(false)
+    }
+  }
+
   async function generate() {
     if (pending.current || !files.length || (tests && total < files.length)) return
     pending.current = true
     setError('')
     setStatus(files.length === 1 ? 'Uploading lecture…' : 'Uploading lectures…')
     try {
-      const uploaded: DocumentInfo[] = []
-      for (const file of files) {
-        const doc = await uploadLecture(file)
-        if (!uploaded.some(existing => existing.document_id === doc.document_id)) uploaded.push(doc)
-      }
+      const uploaded = await uploadSelected()
+      const instructions = prompt.trim()
+      const conversation = { id: sessionId, messages }
       if (tests) {
         setStatus(`Generating questions (0/${total})…`)
         const questions = await createTest(uploaded, counts, difficulty,
-          (completed, count) => setStatus(`Generating questions (${completed}/${count})…`))
-        onTestCreated(uploaded, questions, mounted.current)
+          (completed, count) => setStatus(`Generating questions (${completed}/${count})…`), instructions)
+        onTestCreated(uploaded, questions, mounted.current, conversation)
       } else {
         const doc = uploaded[0]
         setStatus('Building your concept map…')
-        const lecture = await createSlideOutline(doc, page => request<SlideText>(`documents/${doc.document_id}/pages/${page}`))
-        onMapCreated(doc, lecture, mounted.current)
+        const lecture = instructions ? await createPersonalizedOutline(doc, instructions)
+          : await createSlideOutline(doc, page => request<SlideText>(`documents/${doc.document_id}/pages/${page}`))
+        onMapCreated(doc, lecture, mounted.current, conversation)
       }
     } catch (error) {
       setError(error instanceof Error ? error.message : String(error))
@@ -112,6 +168,32 @@ export default function UploadWorkspace({ mode, onMapCreated, onTestCreated }: W
           <button className="icon-button" type="button" disabled={busy} aria-label={`Remove ${file.name}`}
             onClick={() => { setFiles(current => current.filter((_, position) => position !== index)); setError('') }}><Icon name="close" size={16}/></button>
         </li>)}</ul>}
+        {(asking || messages.length > 0) && <section className="creation-tutor" aria-label="AI Tutor">
+          <div className="creation-tutor__heading"><Icon name="chat" size={16}/>AI Tutor</div>
+          <ChatTranscript messages={messages} busy={asking}/>
+        </section>}
+        <div className="creation-composer">
+          <label htmlFor="creation-message">Message AI Tutor or add generation instructions</label>
+          <textarea ref={composer} id="creation-message" rows={3} maxLength={promptLimit} disabled={busy} value={prompt}
+            placeholder={tests ? 'Focus on calculations and use realistic examples.' : 'Highlight the key formulas and keep the study notes concise.'}
+            onChange={event => setPrompt(event.target.value)}/>
+          <div className="creation-composer__actions">
+            <button className="button button--secondary" type="button" disabled={busy || !prompt.trim()}
+              onClick={() => void askTutor()}><Icon name="chat" size={15}/>Ask AI Tutor</button>
+          </div>
+        </div>
+        <div className="creation-prompt-suggestions" role="group" aria-label="Suggested generation prompts">
+          {promptSuggestions[mode].map(({ label, text }) => {
+            const draft = prompt.trimEnd()
+            const next = draft ? `${draft}\n${text}` : text
+            return <button key={label} type="button" title={text}
+              disabled={busy || next.length > promptLimit || draft.split('\n').includes(text)}
+              onClick={() => {
+                setPrompt(next)
+                composer.current?.focus()
+              }}>{label}</button>
+          })}
+        </div>
         {tests && <fieldset className="creation-options" disabled={busy}>
           <legend>Question types</legend>
           <div className="creation-counts">
