@@ -1,0 +1,251 @@
+.learning-panel--map {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.learning-panel .content-tabs { flex-shrink: 0; }
+
+.mind-map {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  padding: 10px 14px 14px;
+}
+
+.mind-map[hidden] { display: none; }
+
+.mind-map__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+  justify-content: space-between;
+  min-height: 27px;
+  margin-bottom: 6px;
+  color: #5d7088;
+  font-size: 10px;
+}
+
+.mind-map__label { color: #435a76; font-weight: 600; }
+
+.mind-map__tools,
+.mind-map__zoom {
+  display: flex;
+  align-items: center;
+}
+
+.mind-map__tools { gap: 8px; margin-left: auto; }
+.mind-map__zoom {
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid #dbe5f0;
+  border-radius: 7px;
+  background: #fff;
+}
+.mind-map__zoom button {
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 23px;
+  padding: 0 5px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #24548b;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mind-map__zoom button:hover:not(:disabled) { background: #eaf2fc; }
+.mind-map__zoom button:disabled { opacity: .4; cursor: default; }
+.mind-map__zoom output {
+  min-width: 35px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.mind-map__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px 4px 0;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #24548b;
+  font-size: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mind-map__back:hover { background: #eaf2fc; }
+
+.mind-map__viewport {
+  position: relative;
+  flex: 1;
+  min-height: 280px;
+  border: 1px solid #e0e7f0;
+  border-radius: 12px;
+  background: #f9fbfd radial-gradient(#dbe5f1 .8px, transparent .8px) 0 0 / 15px 15px;
+}
+.mind-map__canvas {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  overflow: auto;
+  scrollbar-gutter: stable;
+  border-radius: inherit;
+}
+.mind-map__canvas.can-pan { cursor: grab; }
+.mind-map__canvas.is-panning,
+.mind-map__canvas.is-panning button { cursor: grabbing; user-select: none; }
+.mind-map__canvas:focus-visible { outline: 2px solid #88acd2; outline-offset: 2px; }
+
+.mind-map__frame {
+  display: grid;
+  place-items: center;
+  min-width: 100%;
+  min-height: 100%;
+}
+.mind-map__surface {
+  position: relative;
+  overflow: clip;
+}
+.mind-map__diagram {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+}
+
+.mind-map__links {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  stroke: #c0d2e7;
+  stroke-width: 1.35px;
+  animation: map-link-in 360ms ease-out both;
+}
+
+.mind-map__hub,
+.mind-map__node {
+  position: absolute;
+  left: var(--map-x, 50%);
+  top: var(--map-y, 50%);
+  transform: translate(-50%, -50%);
+  color: #253d59;
+}
+
+.mind-map__hub,
+.mind-map__topic.is-focused {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 5px;
+  width: var(--map-hub-size);
+  height: var(--map-hub-size);
+  padding: 8px;
+  border: 1px solid #c7d9ed;
+  border-radius: 50%;
+  background: #eaf2fc;
+  text-align: center;
+  line-height: 1.2;
+  box-shadow: 0 0 0 5px #f0f5fb;
+}
+
+.mind-map__hub { z-index: 1; transition: opacity 180ms ease, transform 260ms ease; }
+.mind-map__hub strong {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow-wrap: anywhere;
+  font-size: 16px;
+}
+.mind-map__hub small { color: #526a86; font-size: 11px; }
+
+.mind-map__node {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: var(--map-node-width);
+  height: var(--map-node-height);
+  padding: 5px 8px;
+  border: 1px solid #d7e2ef;
+  border-radius: 9px;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 2px 5px #233e6010;
+}
+
+.mind-map__topic {
+  transition: left 340ms cubic-bezier(.22,.75,.24,1), top 340ms cubic-bezier(.22,.75,.24,1),
+    width 340ms ease, height 340ms ease, border-radius 340ms ease,
+    background-color 180ms ease, border-color 180ms ease, opacity 180ms ease, transform 240ms ease,
+    visibility 180ms step-end;
+}
+
+.mind-map__topic.is-focused { z-index: 3; cursor: default; }
+.mind-map__topic.is-focused .mind-map__text { align-items: center; }
+.mind-map__topic.is-focused .mind-map__text strong { font-size: 14px; }
+.mind-map__node:not(:disabled):hover { background: #f0f6fd; border-color: #a8c5e3; }
+.mind-map__topic.is-visited:not(.is-focused) { background: #eaf2fc; border-color: #c5d8ed; }
+.mind-map__hub.is-hidden,
+.mind-map__topic.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(.88);
+}
+.mind-map__topic.is-hidden { visibility: hidden; }
+
+.mind-map__text { display: flex; flex: 1; flex-direction: column; gap: 2px; min-width: 0; }
+.mind-map__text strong {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  line-height: 1.18;
+}
+.mind-map__text small { color: #506984; font-size: 11px; white-space: nowrap; }
+.mind-map__number {
+  flex: 0 0 auto;
+  min-width: 22px;
+  padding: 3px;
+  border-radius: 5px;
+  background: #eff4fa;
+  color: #3f6189;
+  font-size: 10px;
+  font-weight: 650;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.mind-map__topic.is-focused .mind-map__number { background: #fff; }
+.mind-map__visited { position: absolute; top: 3px; right: 3px; color: #386894; }
+.mind-map__leaf > .icon { color: #567b9e; }
+.mind-map__leaf { animation: map-fan-out 380ms cubic-bezier(.2,.75,.25,1) both; }
+
+@keyframes map-fan-out {
+  from { left: 50%; top: 50%; opacity: 0; transform: translate(-50%, -50%) scale(.7); }
+  to { left: var(--map-x); top: var(--map-y); opacity: 1; transform: translate(-50%, -50%); }
+}
+@keyframes map-link-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@container (max-width: 410px) {
+  .mind-map { padding-inline: 9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mind-map__links, .mind-map__hub, .mind-map__topic, .mind-map__leaf {
+    animation: none;
+    transition: none;
+  }
+}

@@ -27,3 +27,30 @@ class QuestionSetTest(unittest.TestCase):
             with self.assertRaises(HTTPException) as error:
                 quiz.question_set("lecture", scope)
             self.assertEqual(error.exception.status_code, 502)
+
+    def test_practice_question_rejects_invalid_source_and_preserves_selected_formats(self):
+        hit = {"chunk_id": "slide-1", "text": "The host CPU coordinates the GPU.", "page": 1}
+        for question_type, answer, options in [
+            ("multiple-choice", "CPU", ["CPU", "GPU", "Disk", "NIC"]),
+            ("true-false", "false", []),
+            ("short-answer", "CPU", []),
+        ]:
+            with self.subTest(question_type=question_type):
+                scope = quiz.PracticeRequest(topic="Host", query="host CPU", type=question_type, difficulty="Mixed")
+                draft = {"prompt": "Practice prompt", "hint": "Think about the host.", "explanation": hit["text"],
+                         "answer": answer, "options": options, "accepted_answers": ["Host processor"]}
+
+                def model(*args, **kwargs):
+                    source = "S1" if kwargs["temperature"] else "invalid"
+                    return {"choices": [{"message": {"content": json.dumps({**draft, "source": source})}}]}
+
+                with patch.dict("os.environ", QWEN_BASE_URL="test"), patch.object(
+                    quiz.documents, "search", return_value=[hit]
+                ), patch.object(quiz, "chat", side_effect=model) as provider:
+                    question = quiz.practice_question("lecture", scope)
+                    self.assertEqual(provider.call_count, 2)
+                    self.assertEqual(question["type"], question_type)
+                    self.assertEqual(question["citations"], [hit])
+                    self.assertEqual(question["answer"], "False" if question_type == "true-false" else answer)
+                    self.assertEqual(question["options"], ["True", "False"] if question_type == "true-false" else options)
+                    self.assertEqual(question["accepted_answers"], ["Host processor"] if question_type == "short-answer" else [])
