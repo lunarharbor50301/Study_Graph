@@ -3,7 +3,7 @@ import TutorMarkdown from './TutorMarkdown'
 import { CourseShelf } from './CourseShelf'
 import {Icon, Panel, SplitHandle} from './Layout'
 import { getMapTopics, MindMap, type MapTopic } from './MindMap'
-import React, { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
+import React, { FormEvent, lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { demoUser, request, streamAgent, streamEvents, withDemoUser } from './api'
 import { currentDocument, firstEntryPage, lectureName, useCourseStore, type CourseItem, type SavedMap, type SavedTest } from './courseStore'
@@ -11,6 +11,8 @@ import { lecture as fallbackLecture, starterMessages } from './data'
 import { createSlideOutline, type SlideText } from './slideOutline'
 import type { ChatMessage, Concept, CourseQuestion, DocumentInfo, Lecture, Mode, QuestionProgress, TestQuestion } from './types'
 import './style.css'
+
+const StudyFormula = lazy(() => import('./StudyFormula'))
 
 function Navigation({ workspaceActive, courseShelf, mode, onMode, chatVisible, viewerVisible, onChatVisibilityChange, onViewerVisibilityChange }: {
   workspaceActive: boolean; courseShelf: React.ReactNode
@@ -110,7 +112,7 @@ function StudyNote({ concept, fileName, documentId, noteCache, backLabel, onCita
   const content = note ?? draft
   const summary = documentId ? content.summary : concept.summary
   const explanation = documentId ? content.explanation : concept.detail
-  const formula = documentId ? content.formula : concept.formula
+  const formula = (documentId ? content.formula : concept.formula)?.trim()
   const points = documentId ? content.key_points : concept.keyPoints
   const evidence = documentId ? note?.evidence : { page: concept.page, quote: concept.sourceText }
   return <article className="study-note">
@@ -121,7 +123,7 @@ function StudyNote({ concept, fileName, documentId, noteCache, backLabel, onCita
       </div>
     </header>
     {explanation && <section className="note-section"><h4>How it works</h4><p>{explanation}</p></section>}
-    {formula && <section className="formula-card"><span>Key relationship</span><strong>{formula}</strong></section>}
+    {formula && formula.toLowerCase() !== 'null' && <Suspense fallback={null}><StudyFormula source={formula}/></Suspense>}
     {!!points?.length && <section className="note-section"><h4>Key points</h4><ul>{points.map(point => <li key={point}><span><Icon name="check" size={14}/></span>{point}</li>)}</ul></section>}
     {evidence && <section className="source-card"><div><Icon name="book"/><span><b>Lecture evidence</b><small>Directly grounded in the uploaded material</small></span></div><blockquote>“{evidence.quote}”</blockquote><button onClick={() => onCitation(evidence.page)}>Locate on slide <Icon name="chevron" size={15}/></button></section>}
     {documentId && !note && <section className="note-section">

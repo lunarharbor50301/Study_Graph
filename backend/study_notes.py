@@ -16,7 +16,7 @@ from backend.qwen_client import stream_chat
 router = APIRouter(prefix="/api/documents")
 PageNumber = Annotated[int, Field(ge=1, strict=True)]
 Point = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=240)]
-NOTE_CACHE_VERSION = 1
+NOTE_CACHE_VERSION = 2
 note_locks = [Lock() for _ in range(32)]
 
 
@@ -123,7 +123,11 @@ def generate_note(doc: str, concept: str, page_numbers: list[int], endpoint: str
         "Preserve qualifications and distinguish historical projections from established facts. "
         "Write one sentence for the summary, up to two sentences for the explanation, and two or three brief distinct key points. "
         "Aim for 60–90 words total across those fields, or comparable brevity in the lecture's language. Avoid repeating facts. "
-        "Put a relationship in formula only if the pages state it, otherwise use null. "
+        "When the pages show a formula central to the concept, transcribe that equation faithfully in LaTeX "
+        "wrapped in \\( and \\). Preserve operators, parentheses, fractions, derivatives, Greek letters, "
+        "and subscripts. PDF text may place fraction numerators and denominators on separate lines. "
+        "Keep the source notation instead of introducing abbreviated variables. "
+        "Use JSON null if the formula cannot be recovered reliably. "
         "If a clear supporting excerpt exists, copy one short phrase or sentence verbatim and give its exact page number. "
         "Return JSON only. Write keys in this order: summary, explanation, formula, key_points, evidence (page and quote, or null)."
     )

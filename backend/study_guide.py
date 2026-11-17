@@ -51,9 +51,10 @@ def study_guide(doc: str, body: StudyRequest):
         raise HTTPException(503, "Connect a generation model to create a personalized concept map.")
 
     count = min(32, len(rows))
-    pages = {rows[index * len(rows) // count][0]: rows[index * len(rows) // count][1] for index in range(count)}
+    sampled = (rows[index * len(rows) // count] for index in range(count))
+    pages = {page: documents.normalize_pdf_math(text) for page, text in sampled}
     for hit in documents.search(doc, documents.Search(query=body.instructions, top_k=8)):
-        pages[hit["page"]] = hit["text"][:700]
+        pages[hit["page"]] = documents.normalize_pdf_math(hit["text"][:700])
     payload = {"lecture": metadata["name"], "student_preferences": body.instructions, "pages": pages}
     instruction = (
         "Create a study guide for this lecture that follows the student's learning preferences where the source allows. "
@@ -61,7 +62,9 @@ def study_guide(doc: str, body: StudyRequest):
         "for each note. Reply in the language requested by the student, or use the lecture's language if unspecified. "
         "Return JSON only: {title, topics: [{title, notes: [{page, title, summary, detail, keyPoints, formula}]}]}. "
         "Use 1 to 5 topics, 1 to 4 concise notes per topic and 1 to 5 short key points per note. "
-        "Use null for formula unless it is supported. Keep titles under 100 characters, summary under 350, detail under 1100. "
+        "Transcribe the source equation in LaTeX wrapped in \\( and \\), preserving fractions, operators, "
+        "and subscripts. Use JSON null if no formula can be recovered reliably. "
+        "Keep titles under 100 characters, summary under 350, detail under 1100. "
         "If a requested topic is missing, do not make up material. Focus on the closest supported content."
     )
     try:

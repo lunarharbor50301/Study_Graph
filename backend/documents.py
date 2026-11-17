@@ -24,6 +24,12 @@ from backend.demo_users import database_path
 router = APIRouter(prefix="/api/documents", tags=["Documents"])
 LIMIT = 40 * 1024 * 1024
 MIME = {"pdf": "application/pdf", "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation"}
+# SymbolMT can store Adobe Symbol byte codes in Unicode's private-use area.
+PDF_MATH_SYMBOLS = str.maketrans({"\uf044": "Δ", "\uf0b6": "∂", "\uf0bb": "≈"})
+
+
+def normalize_pdf_math(text: str) -> str:
+    return text.translate(PDF_MATH_SYMBOLS)
 
 
 @contextmanager
@@ -82,7 +88,7 @@ def parse(data, kind):
                 if not text.strip() and languages:
                     textpage = page.get_textpage_ocr(language=languages, dpi=200, full=True)
                     text = page.get_text(textpage=textpage, sort=True)
-                yield text, ""
+                yield normalize_pdf_math(text), ""
     else:
         with ZipFile(io.BytesIO(data)) as archive:
             if sum(entry.file_size for entry in archive.infolist()) > 200 * 1024**2:
@@ -223,7 +229,8 @@ def page(doc: str, num: int):
     with database() as db:
         row = page_row(db, doc, num)
         chunks = db.execute("SELECT id AS chunk_id,body AS text FROM chunks WHERE doc=? AND page=? ORDER BY rowid", (doc,num))
-        return {"document_id": doc, "page": num, "text": row["text"], "chunks": [dict(r) for r in chunks],
+        return {"document_id": doc, "page": num, "text": normalize_pdf_math(row["text"]),
+                "chunks": [{**dict(r), "text": normalize_pdf_math(r["text"])} for r in chunks],
                 "preview_url": f"/api/documents/{doc}/pages/{num}/preview"}
 
 
