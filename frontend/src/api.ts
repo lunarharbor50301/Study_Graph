@@ -1,12 +1,21 @@
 import { lecture as fallbackLecture } from './data'
-import type { Lecture } from './types'
+import type { DocumentInfo, Lecture } from './types'
 
 type AskResponse = { answer: string; citations?: { page: number }[] }
 
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
+export async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`/api/${path}`, init)
-  if (!response.ok) throw new Error(`API request failed (${response.status})`)
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}))
+    throw new Error(typeof error.detail === 'string' ? error.detail : `API request failed (${response.status})`)
+  }
   return response.json() as Promise<T>
+}
+
+export function uploadLecture(file: File) {
+  const body = new FormData()
+  body.append('file', file)
+  return request<DocumentInfo>('documents', { method: 'POST', body })
 }
 
 export async function loadLecture(): Promise<Lecture> {

@@ -1,9 +1,11 @@
 import type { Lecture, TestQuestion } from './types'
+import { acsOutline, outlineConcepts } from './lectureOutline'
 
 export const lecture: Lecture = {
   title: 'Advanced AI Computing and Systems — Lecture 1',
   fileName: 'ACS_Lecture_1_2026F.pdf',
   totalPages: 67,
+  outline: acsOutline,
   concepts: [
     {
       id: 'hierarchy',
@@ -15,7 +17,6 @@ export const lecture: Lecture = {
       detail: 'Each layer exposes an abstraction to the layer above it. Efficient AI systems require reasoning across these layers instead of optimizing only one component.',
       keyPoints: ['Application requirements flow downward through the stack.', 'Performance constraints can originate at any layer.', 'Hardware and software must be co-designed for efficiency.'],
       sourceText: 'The lecture presents computing as a full-stack transformation process from problems to results.',
-      position: { x: 10, y: 14 },
     },
     {
       id: 'cpu-host',
@@ -27,7 +28,6 @@ export const lecture: Lecture = {
       detail: 'The host controls devices through PCIe, manages storage and networking, and coordinates launch and data movement for GPU kernels.',
       keyPoints: ['Runs control-heavy and latency-sensitive work.', 'Manages the operating system and I/O.', 'Coordinates accelerators rather than replacing them.'],
       sourceText: 'CPU package: the host controller. Main function: run the operating system and system software.',
-      position: { x: 37, y: 10 },
     },
     {
       id: 'gpu-throughput',
@@ -39,7 +39,6 @@ export const lecture: Lecture = {
       detail: 'A GPU sacrifices complex per-thread control for massive parallelism. It is especially effective for matrix and tensor operations common in AI workloads.',
       keyPoints: ['Optimized for throughput instead of single-thread latency.', 'Uses high-bandwidth memory.', 'Excels at regular, data-parallel workloads.'],
       sourceText: 'GPU package: the main computing power. Main function: provide high-throughput computation.',
-      position: { x: 69, y: 15 },
     },
     {
       id: 'pipeline',
@@ -52,7 +51,6 @@ export const lecture: Lecture = {
       formula: 'Ideal cycles = M + N − 1',
       keyPoints: ['Five stages: IF, ID, EX, MEM, and WB.', 'Overlapping stages improves throughput.', 'Dependencies and branches can introduce stalls.'],
       sourceText: 'Instruction pipeline stages: IF, ID, EX, MEM, and WB.',
-      position: { x: 22, y: 49 },
     },
     {
       id: 'simt',
@@ -65,7 +63,6 @@ export const lecture: Lecture = {
       formula: '1 warp = 32 threads',
       keyPoints: ['Thread blocks are assigned to streaming multiprocessors.', 'Warps are the basic scheduling unit.', 'Regular control flow preserves utilization.'],
       sourceText: 'A thread block contains multiple warps; each warp contains 32 threads.',
-      position: { x: 51, y: 48 },
     },
     {
       id: 'divergence',
@@ -77,7 +74,6 @@ export const lecture: Lecture = {
       detail: 'Branch divergence reduces SIMD utilization because inactive lanes wait while another branch executes. Aligning control flow within each warp improves efficiency.',
       keyPoints: ['Occurs within a warp, not across all GPU threads.', 'Different paths are executed serially.', 'Reduces effective parallelism and throughput.'],
       sourceText: 'Branch divergence causes portions of a warp to be inactive while different control-flow paths execute.',
-      position: { x: 77, y: 51 },
     },
     {
       id: 'amdahl',
@@ -90,7 +86,6 @@ export const lecture: Lecture = {
       formula: 'Speedup(N) = 1 / ((1 − f) + f / N)',
       keyPoints: ['f is the parallel fraction.', 'The serial fraction is 1 − f.', 'Maximum speedup as N → ∞ is 1 / (1 − f).'],
       sourceText: 'Amdahl’s Law analyzes the maximum speedup for a fixed problem size as parallel resources increase.',
-      position: { x: 31, y: 82 },
     },
     {
       id: 'roofline',
@@ -103,8 +98,8 @@ export const lecture: Lecture = {
       formula: 'Performance ≤ min(Peak FLOP/s, Bandwidth × Arithmetic Intensity)',
       keyPoints: ['Arithmetic intensity = FLOPs / bytes moved.', 'The sloped region is memory-bound.', 'The flat region is compute-bound.'],
       sourceText: 'Roofline uses arithmetic intensity to determine whether an application is memory-bound or compute-bound.',
-      position: { x: 65, y: 84 },
     },
+    ...outlineConcepts,
   ],
   relations: [
     { source: 'hierarchy', target: 'cpu-host', label: 'includes' },

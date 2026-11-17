@@ -13,7 +13,20 @@ export type Concept = {
   formula?: string
   keyPoints: string[]
   sourceText: string
-  position: { x: number; y: number }
+}
+
+export type LectureTopic = {
+  id: string
+  title: string
+  firstPage: number
+  lastPage: number
+  conceptIds: string[]
+}
+
+export type LectureOutline = {
+  title: string
+  subtitle?: string
+  topics: LectureTopic[]
 }
 
 export type Relation = {
@@ -28,6 +41,7 @@ export type Lecture = {
   totalPages: number
   concepts: Concept[]
   relations: Relation[]
+  outline?: LectureOutline
 }
 
 export type ChatMessage = {
@@ -35,8 +49,21 @@ export type ChatMessage = {
   role: 'assistant' | 'user'
   text: string
   pages?: number[]
+  documentId?: string
   trace?: string[]
 }
+
+export type DocumentInfo = {
+  document_id: string
+  name: string
+  page_count: number
+  original_url: string
+  preview_mode: 'page_image' | 'slide_content'
+  pages_without_text: number[]
+}
+
+export type EvidenceHit = { chunk_id: string; page: number; text: string }
+export type GeneratedQuestion = { concept: string; citations: EvidenceHit[]; prompt: string }
 
 export type TestQuestion = {
   id: string
@@ -50,6 +77,8 @@ export type TestQuestion = {
   hint: string
   explanation: string
 }
+
+export type CourseQuestion = GeneratedQuestion & { exercise: TestQuestion; documentId: string }
 
 export type QuestionProgress = {
   response: string

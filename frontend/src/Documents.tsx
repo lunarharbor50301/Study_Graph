@@ -1,114 +1,178 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { Icon } from './Layout'
+import { request, uploadLecture } from './api'
+import { createTest, maxQuestions, questionTypes, type Difficulty, type QuestionCounts } from './createTest'
+import { createSlideOutline, type SlideText } from './slideOutline'
+import type { SavedTest } from './courseStore'
+import type { CourseQuestion, DocumentInfo, EvidenceHit, Lecture, Mode } from './types'
 
-export type DocumentInfo = {
-  document_id: string; name: string; page_count: number
-  original_url: string; preview_mode: 'page_image' | 'slide_content'; pages_without_text: number[]
-}
-type Hit = {chunk_id: string; page: number; text: string}
-type Group = {concept: string; citations: Hit[]; prompt?: string}
-async function request<T>(url: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(url, init)
-  if (!response.ok) {
-    const error = await response.json().catch(() => ({}))
-    throw new Error(typeof error.detail === 'string' ? error.detail : 'Request failed: ' + response.status)
-  }
-  return response.json()
+type WorkspaceProps = {
+  mode: Mode
+  onMapCreated: (doc: DocumentInfo, lecture: Lecture, open: boolean) => void
+  onTestCreated: (docs: DocumentInfo[], questions: CourseQuestion[], open: boolean) => void
 }
 
-export default function Documents({tests, doc, onSelect, setPage}: {tests:boolean; doc:DocumentInfo|null; onSelect:(d:DocumentInfo)=>void; setPage:(p:number)=>void}) {
-  const [docs, setDocs] = useState<DocumentInfo[]>([])
-  const id = doc?.document_id ?? ''
-  const [query, setQuery] = useState('')
-  const [hits, setHits] = useState<Hit[]>([])
-  const [answer, setAnswer] = useState('')
-  const [concepts, setConcepts] = useState('')
-  const [groups, setGroups] = useState<Group[]>([])
+export default function UploadWorkspace({ mode, onMapCreated, onTestCreated }: WorkspaceProps) {
+  const tests = mode === 'test'
+  const [files, setFiles] = useState<File[]>([])
+  const [counts, setCounts] = useState<QuestionCounts>({ 'multiple-choice': 2, 'true-false': 1, 'short-answer': 2 })
+  const [difficulty, setDifficulty] = useState<Difficulty>('Mixed')
+  const [status, setStatus] = useState('')
   const [error, setError] = useState('')
-  const [busy, setBusy] = useState(true)
-  const [uploading, setUploading] = useState(false)
-  const [uploadedName, setUploadedName] = useState('')
+  const [dragging, setDragging] = useState(false)
+  const input = useRef<HTMLInputElement>(null)
+  const mounted = useRef(true)
+  const pending = useRef(false)
+  const total = Object.values(counts).reduce((sum, count) => sum + count, 0)
+  const busy = !!status
+  const fileLimit = tests ? 5 : 1
 
   useEffect(() => {
-    request<DocumentInfo[]>('/api/documents').then(list => {
-      setDocs(list)
-      if (!doc && list.length) onSelect(list.find(d=>d.name==='ACS_Lecture_1_2026F.pdf') ?? list[0])
-    }).catch(e => setError(String(e))).finally(() => setBusy(false))
+    mounted.current = true
+    return () => { mounted.current = false }
   }, [])
-  function select(value: string) {
-    const next = docs.find(d=>d.document_id===value); if (next) onSelect(next); setHits([]); setAnswer(''); setError('')
-    setQuery(''); setConcepts(''); setGroups([])
-  }
-  async function run(action: () => Promise<void>) {
-    setBusy(true); setError('')
-    try { await action() } catch (e) { setError(String(e)) } finally { setBusy(false) }
-  }
-  async function upload(file: File) {
-    setUploadedName('')
-    if (!/\.(pdf|pptx)$/i.test(file.name)) {
+
+  function addFiles(added: File[]) {
+    if (pending.current || !added.length) return
+    if (added.some(file => !/\.(pdf|pptx)$/i.test(file.name))) {
       setError('Choose a PDF or PPTX file. Save older PPT files as PPTX first.')
       return
     }
-    if (file.size > 40 * 1024 * 1024) {
-      setError('This file is over the 40 MiB limit.')
+    if (added.some(file => file.size > 40 * 1024 * 1024)) {
+      setError('Each lecture file must be 40 MiB or smaller.')
       return
     }
-    setUploading(true)
+    const next = tests ? [...files, ...added.filter(file =>
+      !files.some(existing => existing.name === file.name && existing.size === file.size && existing.lastModified === file.lastModified))]
+      : added
+    if (next.length > fileLimit) {
+      setError(tests ? 'Choose up to five lecture files.' : 'Choose one lecture file.')
+      return
+    }
+    setFiles(next)
+    setError('')
+  }
+
+  async function generate() {
+    if (pending.current || !files.length || (tests && total < files.length)) return
+    pending.current = true
+    setError('')
+    setStatus(files.length === 1 ? 'Uploading lecture…' : 'Uploading lectures…')
     try {
-      await run(async () => {
-        const form = new FormData()
-        form.append('file', file)
-        const uploaded = await request<DocumentInfo>('/api/documents', {method:'POST', body:form})
-        setDocs(list => [uploaded, ...list.filter(item => item.document_id !== uploaded.document_id)])
-        onSelect(uploaded)
-        setHits([]); setGroups([]); setAnswer(''); setQuery(''); setConcepts('')
-        setUploadedName(uploaded.name)
-      })
+      const uploaded: DocumentInfo[] = []
+      for (const file of files) {
+        const doc = await uploadLecture(file)
+        if (!uploaded.some(existing => existing.document_id === doc.document_id)) uploaded.push(doc)
+      }
+      if (tests) {
+        setStatus(`Generating questions (0/${total})…`)
+        const questions = await createTest(uploaded, counts, difficulty,
+          (completed, count) => setStatus(`Generating questions (${completed}/${count})…`))
+        onTestCreated(uploaded, questions, mounted.current)
+      } else {
+        const doc = uploaded[0]
+        setStatus('Building your concept map…')
+        const lecture = await createSlideOutline(doc, page => request<SlideText>(`documents/${doc.document_id}/pages/${page}`))
+        onMapCreated(doc, lecture, mounted.current)
+      }
+    } catch (error) {
+      setError(error instanceof Error ? error.message : String(error))
     } finally {
-      setUploading(false)
+      pending.current = false
+      setStatus('')
     }
   }
-  async function search() {
-    setAnswer(''); setHits([])
-    const list = await request<Hit[]>('/api/documents/'+id+'/search', {
-      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({query})
-    })
-    setHits(list)
-    if (!list.length) setAnswer('No matching passages.')
-  }
-  const topics = [...new Set(concepts.split(',').map(s => s.trim()).filter(Boolean))]
-  async function generate(useModel: boolean) {
-    setGroups([]); setCurrent(0); setResponses({})
-    const url = '/api/documents/' + id + '/'
-    const options = {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({concepts:topics})}
-    if (useModel) setGroups((await request<{questions:Group[]}>(url+'question-set', options)).questions)
-    else setGroups(await request<Group[]>(url+'concept-evidence', options))
-  }
-  const [current, setCurrent] = useState(0)
-  const [responses, setResponses] = useState<Record<number,string>>({})
-  return <div className="live-content"><div className="live-controls">
-    <div className="lecture-upload">
-    <label htmlFor="lecture-upload">Upload lecture material</label>
-    <p id="lecture-upload-help">PDF or PowerPoint (.pptx), up to 40 MiB. Save older .ppt files as .pptx first.</p>
-    <input id="lecture-upload" aria-describedby="lecture-upload-help" type="file" accept=".pdf,.pptx" disabled={busy} onChange={e => {
-      const file = e.target.files?.[0]
-      e.target.value = ''
-      if (file) void upload(file)
-    }}/>
-    </div>
-    <p role="status">{uploading ? 'Uploading and indexing…' : busy ? 'Working…' : uploadedName ? `${uploadedName} is ready.` : ''}</p>
-    {error && <p role="alert">{error}</p>}
-    {doc && <><p><select aria-label="Current lecture" value={id} disabled={busy} onChange={e=>select(e.target.value)}>
-      {docs.map(d=><option key={d.document_id} value={d.document_id}>{d.name}</option>)}</select></p>
-      </>}</div>{!doc ? <p>Select or upload a lecture to begin.</p> : tests ? <><h2>Build a question set</h2><label>Enter up to five concepts, separated by commas.
-        <textarea value={concepts} disabled={busy} onChange={e=>{setConcepts(e.target.value);setGroups([])}} placeholder="Memory bandwidth, arithmetic intensity"/></label>
-        <nav>{[false,true].map(model=><button key={String(model)} disabled={busy||!topics.length||topics.length>5||topics.some(t=>t.length>120)} onClick={()=>void run(()=>generate(model))}>
-          {model?'Generate set with TACC':'Find evidence'}</button>)}</nav>
-        {groups.length>0 && <nav className="viewer-toolbar" aria-label="Question navigation">{groups.map((g,i)=><button key={g.concept} aria-pressed={current===i} onClick={()=>setCurrent(i)}>{i+1}</button>)}</nav>}
-        {groups.slice(current,current+1).map(g=><article key={g.concept}><strong>{g.concept}</strong><p>{g.prompt}</p>{g.prompt && <label>Your draft answer<textarea value={responses[current]??''} onChange={e=>setResponses({...responses,[current]:e.target.value})}/></label>}
-          {!g.citations.length && <p>No matching passage.</p>}{g.citations.map(h=><details key={h.chunk_id}><summary>Evidence · page {h.page}</summary><p>{h.text}</p><button onClick={()=>setPage(h.page)}>Open page {h.page}</button></details>)}</article>)}</> :
-      <><h2>Search passages</h2><form onSubmit={e=>{e.preventDefault();void run(search)}}>
-        <input aria-label="Search passages" placeholder="Enter a keyword or phrase" disabled={busy} value={query} onChange={e=>setQuery(e.target.value)}/>
-        <button disabled={busy||!query.trim()}>Search</button></form>
-      <p>{answer}</p>{hits.map(hit=><p key={hit.chunk_id}><button onClick={()=>setPage(hit.page)}>Page {hit.page}</button> {hit.text}</p>)}</>}
-    </div>
+
+  return <main className="creation-workspace">
+    <section className="creation-content" aria-labelledby="creation-title">
+      <header>
+        <h1 id="creation-title">{tests ? 'Create a practice test' : 'Create a concept map'}</h1>
+        <p>{tests ? 'Upload lecture slides and choose how you want to practice.'
+          : 'Turn a lecture into an interactive concept map and study notes.'}</p>
+      </header>
+      <form className="creation-card" onSubmit={event => { event.preventDefault(); void generate() }}>
+        <input ref={input} type="file" aria-label="Upload lecture files" accept=".pdf,.pptx" multiple={tests}
+          hidden disabled={busy} onChange={event => {
+            addFiles(Array.from(event.target.files ?? []))
+            event.target.value = ''
+          }}/>
+        <button className="creation-drop" data-dragging={dragging} type="button" disabled={busy}
+          onClick={() => input.current?.click()} onDragOver={event => { event.preventDefault(); setDragging(!busy) }}
+          onDragLeave={() => setDragging(false)} onDrop={event => {
+            event.preventDefault()
+            setDragging(false)
+            addFiles(Array.from(event.dataTransfer.files))
+          }}>
+          <span className="creation-drop__icon"><Icon name="file" size={22}/></span>
+          <span><strong>Choose or drop {tests ? 'lecture files' : 'a lecture file'}</strong>
+            <small>{tests ? 'Up to five PDF or PPTX files' : 'One PDF or PPTX file'} · 40 MiB per file</small></span>
+        </button>
+        {files.length > 0 && <ul className="creation-files">{files.map((file, index) => <li key={`${file.name}-${file.lastModified}`}>
+          <Icon name="file" size={16}/><span title={file.name}>{file.name}</span>
+          <button className="icon-button" type="button" disabled={busy} aria-label={`Remove ${file.name}`}
+            onClick={() => { setFiles(current => current.filter((_, position) => position !== index)); setError('') }}><Icon name="close" size={16}/></button>
+        </li>)}</ul>}
+        {tests && <fieldset className="creation-options" disabled={busy}>
+          <legend>Question types</legend>
+          <div className="creation-counts">
+            {questionTypes.map(({ type, label }) => <div className="creation-count" key={type}>
+              <span>{label}</span><div className="creation-stepper">
+                <button type="button" aria-label={`Remove ${label}`} disabled={!counts[type]}
+                  onClick={() => setCounts(value => ({ ...value, [type]: value[type] - 1 }))}>−</button>
+                <output aria-label={`${label} count`}>{counts[type]}</output>
+                <button type="button" aria-label={`Add ${label}`} disabled={total >= maxQuestions}
+                  onClick={() => setCounts(value => ({ ...value, [type]: value[type] + 1 }))}>+</button>
+              </div>
+            </div>)}
+          </div>
+          <label className="creation-difficulty">Difficulty
+            <select value={difficulty} onChange={event => setDifficulty(event.target.value as Difficulty)}>
+              <option>Mixed</option><option>Foundational</option><option>Advanced</option>
+            </select>
+          </label>
+        </fieldset>}
+        {error && <p className="creation-error" role="alert">{error}</p>}
+        {tests && files.length > total && <p className="creation-status">Choose at least one question per lecture file.</p>}
+        <div className="creation-footer">
+          <span aria-live="polite">{status || (tests ? `${total} of ${maxQuestions} questions` : '')}</span>
+          <button className="button button--primary" type="submit" disabled={busy || !files.length || (tests && total < files.length)}>
+            {tests ? 'Generate test' : 'Generate concept map'}<Icon name="chevron" size={16}/>
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+}
+
+function EvidenceList({ citations, onPage }: { citations: EvidenceHit[]; onPage: (page: number) => void }) {
+  if (!citations.length) return null
+  return <div className="question-evidence">{citations.map(hit => <details key={hit.chunk_id}>
+    <summary>Evidence · page {hit.page}</summary>
+    <p>{hit.text}</p>
+    <button onClick={() => onPage(hit.page)}>Open page {hit.page}</button>
+  </details>)}</div>
+}
+
+export function SavedQuestionSet({ item, onQuestion, onResponse, onPage }: {
+  item: SavedTest
+  onQuestion: (index: number) => void
+  onResponse: (index: number, response: string) => void
+  onPage: (page: number) => void
+}) {
+  const { current, questions, responses } = item
+  const question = questions[current]
+  return <div className="live-content saved-test">
+    <nav aria-label="Question navigation">{questions.map((_, index) => <button type="button" key={index}
+      aria-label={`Question ${index + 1}`} aria-pressed={index === current} onClick={() => onQuestion(index)}>
+      {index + 1}
+    </button>)}</nav>
+    <article>
+      <p className="eyebrow">Question {current + 1} of {questions.length} · {question.concept}</p>
+      <h3>{question.prompt}</h3>
+      <label>Your draft answer
+        <textarea value={responses[current] ?? ''} onChange={event => onResponse(current, event.target.value)}/>
+      </label>
+      <EvidenceList citations={question.citations} onPage={onPage}/>
+    </article>
+  </div>
 }

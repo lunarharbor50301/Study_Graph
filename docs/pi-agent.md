@@ -41,7 +41,7 @@ Remove-Item Env:TACC_SSH_TARGET -ErrorAction SilentlyContinue
 
 助教面板勾选 Agent 后调用 POST /api/agent/stream，响应为逐行 JSON。未勾选时使用 V1 接口。Agent 会收到当前页、选中概念或题目，以及同一会话、同一讲义最近四轮成功的对话。对话存入本地 SQLite，失败和中止的轮次不进入后续上下文。超过上下文预算时按整轮丢弃旧记录。此开发服务使用单个 Uvicorn worker，同一会话串行执行。
 
-浏览器为每个讲义、概念或练习、对话模式保存独立会话 ID。切换回来或刷新页面时，Agent 用 GET /api/agent/history?session_id=...&document_id=... 恢复最近四轮成功对话及引用、检索记录。V1 的显示记录保存在浏览器，其模型调用仍按单轮执行。New conversation 创建新的会话 ID，后续请求使用空上下文。切换概念、讲义或模式会中止当前请求。浏览器存储被清空或换设备后，当前界面无法自动找到旧会话 ID。
+浏览器在课程架中为每个概念图或测验保存一个 Agent 会话 ID。Agent 后端再按讲义 ID 分开保存对话。切换讲义或刷新时，Agent 用 GET /api/agent/history?session_id=...&document_id=... 恢复该讲义最近四轮成功对话及引用、检索记录。普通问答的显示记录保存在课程架，其模型调用仍按单轮执行。New conversation 为当前课程架条目创建新的 Agent 会话 ID。切换课程架条目或讲义会中止当前 Agent 请求。合并前按概念保存的旧会话仍保留在原存储中，新课程架使用新的会话 ID。
 
 模型可以调用 search_lecture、read_page、list_documents。检索和读页限定为当前选中的讲义。读页提供最多 16000 字符，对更长页面暂时读取前段。最多调用模型三次、执行六个工具，整体超时 180 秒。第三次调用要求直接完成回答。最终引用必须匹配实际读到的来源 ID，页码和预览 URL 由后端提供。
 
