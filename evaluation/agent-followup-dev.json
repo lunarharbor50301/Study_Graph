@@ -1,0 +1,18 @@
+[
+  {
+    "id": "prior-evidence-sufficient",
+    "kind": "conversation",
+    "turns": [
+      {"question": "In the lecture, what does arithmetic intensity measure?", "evidence_groups": [[67]]},
+      {"question": "If that value doubles while bandwidth stays fixed, what happens to the memory-bound performance ceiling?", "evidence_groups": [[67]], "key_points": ["The bandwidth-derived ceiling doubles, subject to the peak compute limit."]}
+    ]
+  },
+  {
+    "id": "new-evidence-required",
+    "kind": "conversation",
+    "turns": [
+      {"question": "In the lecture, what does arithmetic intensity measure?", "evidence_groups": [[67]]},
+      {"question": "How does this Roofline limit differ from what the lecture says about Amdahl's law? Support both claims with lecture citations.", "evidence_groups": [[66], [67]], "key_points": ["Serial work limits speedup under Amdahl's law.", "The Roofline ceiling depends on arithmetic intensity, bandwidth and peak compute."]}
+    ]
+  }
+]

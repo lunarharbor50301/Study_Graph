@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import {createServer} from 'node:http';
+import {spawn} from 'node:child_process';
+import {createInterface} from 'node:readline';
+let calls=0;
+const server=createServer(async(req,res)=>{
+ let raw='';for await(const chunk of req)raw+=chunk;
+ const payload=JSON.parse(raw);calls++;
+ const tool= calls===1 ? {name:'search_lecture',arguments:JSON.stringify({document_id:'lecture',query:'Roofline'})} : null;
+ res.writeHead(200,{'Content-Type':'text/event-stream'});
+ const base={id:'test',object:'chat.completion.chunk',created:0,model:'qwen3.8-27b'};
+ const delta= tool ? {role:'assistant',tool_calls:[{index:0,id:'call1',type:'function',function:tool}]} : {role:'assistant',content:'Bandwidth limits performance [S1].'};
+ res.write('data: '+JSON.stringify({...base,choices:[{index:0,delta,finish_reason:null}]})+'\n\n');
+ res.write('data: '+JSON.stringify({...base,choices:[{index:0,delta:{},finish_reason:tool?'tool_calls':'stop'}]})+'\n\n');
+ res.end('data: [DONE]\n\n');
+});
+await new Promise(r=>server.listen(0,'127.0.0.1',r));
+const child=spawn(process.execPath,['agent/runner.mjs'],{stdio:['pipe','pipe','inherit']});
+const events=[];
+createInterface({input:child.stdout}).on('line',line=>{
+ const event=JSON.parse(line);events.push(event);
+ if(event.type==='tool_request')child.stdin.write(JSON.stringify({id:event.id,citations:[{document_id:'lecture',chunk_id:'c1',page:67,text:'Roofline',preview_url:'/preview'}]})+'\n');
+});
+child.stdin.write(JSON.stringify({endpoint:'http://127.0.0.1:'+server.address().port+'/v1',document_id:'lecture',question:'Find Roofline',messages:[],evidence:{}})+'\n');
+await new Promise(r=>child.on('exit',r));
+server.close();
+assert.equal(events.at(-1).type,'done',JSON.stringify(events));
+assert.equal(events.at(-1).citations[0].page,67);
+assert.equal(calls,2);
+assert.ok(events.some(e=>e.type==='delta'));
+const modelEnds = events.filter(event => event.type === 'model_end');
+assert.deepEqual(modelEnds.map(event => [event.call, event.stop_reason]), [[1, 'toolUse'], [2, 'stop']]);
+assert.equal(modelEnds[0].first_text_ms, null);
+assert.ok(Number.isFinite(modelEnds[1].first_text_ms));
+assert.ok(modelEnds[1].first_text_ms <= modelEnds[1].duration_ms);
+assert.equal(events.find(event => event.type === 'tool_result').model_call, 1);
+console.log('pi native tool call, follow-up generation, streaming and validated citation passed.');

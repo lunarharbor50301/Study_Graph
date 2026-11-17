@@ -1,0 +1,9 @@
+[
+  {"id":"greeting","question":"Hi! Reply in one sentence."},
+  {"id":"identity","question":"Who are you? Reply in one sentence."},
+  {"id":"read-current-page","page":67,"question":"Read the current lecture page and explain arithmetic intensity in two sentences, citing the page.","evidence_groups":[[67]]},
+  {"id":"search-followup","turns":[
+    {"question":"Find where the lecture discusses Amdahl's law and explain its limit in two sentences, citing evidence.","evidence_groups":[[66]]},
+    {"question":"How does that differ from the Roofline limit in this lecture? Search for the relevant evidence and answer briefly.","evidence_groups":[[67]]}
+  ]}
+]

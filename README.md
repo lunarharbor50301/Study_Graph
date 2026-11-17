@@ -1,5 +1,7 @@
 # Study-Graph
 
+V2 的 pi Agent 在 `lyq-v2` 分支开发。安装运行依赖时增加 `npm ci --prefix agent --ignore-scripts`。助教面板勾选 Agent 后启用多轮对话、工具检索和流式回答，运行配置见 [pi Agent 接入说明](docs/pi-agent.md)。
+
 StudyGraph 帮助学生从课程讲义的概念图出发，提问、回到原页核对解释，并在同一会话中练习、查看提示和重答。
 
 ## 组员从这里开始

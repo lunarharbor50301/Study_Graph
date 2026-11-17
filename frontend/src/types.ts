@@ -35,6 +35,7 @@ export type ChatMessage = {
   role: 'assistant' | 'user'
   text: string
   pages?: number[]
+  trace?: string[]
 }
 
 export type TestQuestion = {

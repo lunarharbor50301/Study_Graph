@@ -1,8 +1,9 @@
 import Documents, {type DocumentInfo} from './Documents'
+import TutorMarkdown from './TutorMarkdown'
 import {Icon, Panel, SplitHandle} from './Layout'
 import React, { FormEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { acsDocumentId, askAgent, loadLecture } from './api'
+import { acsDocumentId, askAgent, loadLecture, streamAgent } from './api'
 import { lecture as fallbackLecture, sampleQuestions, starterMessages } from './data'
 import type { ChatMessage, Concept, DetailLevel, Lecture, Mode, QuestionProgress, TestQuestion } from './types'
 import './style.css'
@@ -21,6 +22,7 @@ function Navigation({ tool, onTool, mode, onMode, chatVisible, viewerVisible, on
     <div className="sidebar__section"><span className="sidebar__label">Workspace</span>
       <button className={`nav-item ${!tool && mode === 'learn' ? 'nav-item--active' : ''}`} onClick={() => onMode('learn')}><Icon name="learn"/><span><b>Learning</b><small>Explore concepts</small></span></button>
       <button className={`nav-item ${!tool && mode === 'test' ? 'nav-item--active' : ''}`} onClick={() => onMode('test')}><Icon name="test"/><span><b>Test</b><small>Practice & review</small></span></button>
+      <button className={`nav-item ${tool === 'documents' ? 'nav-item--active' : ''}`} onClick={() => onTool('documents')}><Icon name="book"/><span><b>Lecture library</b><small>Upload PDF or PowerPoint</small></span></button>
     </div>
     {mode === 'learn' ? <>
       <div className="sidebar__section"><span className="sidebar__label">Learning tools</span>
@@ -38,7 +40,6 @@ function Navigation({ tool, onTool, mode, onMode, chatVisible, viewerVisible, on
       {!chatVisible && <button onClick={onRestoreChat}><Icon name="chat"/>Restore AI tutor</button>}
       {!viewerVisible && <button onClick={onRestoreViewer}><Icon name="file"/>Restore lecture</button>}
     </div>}
-    <button className={'nav-item '+(tool==='documents'?'nav-item--active':'')} onClick={()=>onTool('documents')}><Icon name="book"/>Lecture library</button>
     <button className={'nav-item '+(tool==='tests'?'nav-item--active':'')} onClick={()=>onTool('tests')}><Icon name="test"/>Generate a question set</button>
     <div className="sidebar__footer"><div className="avatar">LS</div><div><b>Student workspace</b><small>Lecture 1 loaded</small></div></div>
   </aside>
@@ -116,34 +117,90 @@ function TestPanel({ current, question, progress, allProgress, onCurrent, onResp
   </div>
 }
 
-function ChatPanel({ doc, mode, concept, question, onCitation }: { doc:DocumentInfo|null; mode: Mode; concept: Concept; question: TestQuestion; onCitation: (page: number) => void }) {
-  const [messages, setMessages] = useState<ChatMessage[]>([{ id: 'welcome', role: 'assistant', text: starterMessages[mode] }])
-  const [input, setInput] = useState('')
+function ChatPanel(props: Omit<React.ComponentProps<typeof ChatConversation>, 'scope'|'agentMode'|'onAgentMode'>) {
+  const [agentMode,setAgentMode] = useState(()=>localStorage.getItem('studygraph-agent-mode')==='true')
+  const [revision,setRevision] = useState(0)
+  const topic = props.doc ? 'library' : props.mode==='learn' ? props.concept.id : props.question.id
+  const scope = ['studygraph-v2',props.doc?.document_id ?? acsDocumentId,props.mode,topic,agentMode?'agent':'v1'].join(':')
+  return <div style={{display:'flex',flexDirection:'column',height:'100%',minHeight:0}}><div className="viewer-toolbar"><button onClick={()=>{
+    localStorage.removeItem(scope)
+    setRevision(v=>v+1)
+  }}>New conversation</button></div><ChatConversation key={scope+revision} {...props} scope={scope} agentMode={agentMode} onAgentMode={value=>{
+    localStorage.setItem('studygraph-agent-mode',String(value));setAgentMode(value)
+  }}/></div>
+}
+
+function ChatConversation({ scope, agentMode, onAgentMode, page, doc, mode, concept, question, onCitation }: { scope:string; agentMode:boolean; onAgentMode:(v:boolean)=>void; page:number; doc:DocumentInfo|null; mode: Mode; concept: Concept; question: TestQuestion; onCitation: (page: number) => void }) {
+  const [sessionId] = useState(()=>{
+    const saved = localStorage.getItem(scope)
+    if (saved) return saved
+    const id=crypto.randomUUID(); localStorage.setItem(scope,id); return id
+  })
+  const [messages,setMessages] = useState<ChatMessage[]>(()=>{
+    try { return JSON.parse(localStorage.getItem('chat:'+sessionId) ?? 'null') ?? [{id:'welcome',role:'assistant',text:starterMessages[mode]}] }
+    catch { return [{id:'welcome',role:'assistant',text:starterMessages[mode]}] }
+  })
   const [busy, setBusy] = useState(false)
-  const sessionId = useMemo(() => {
-    const stored = sessionStorage.getItem('studygraph-session')
-    if (stored) return stored
-    const next = crypto.randomUUID(); sessionStorage.setItem('studygraph-session', next); return next
-  }, [])
-  useEffect(() => { setMessages([{ id: `${mode}-welcome`, role: 'assistant', text: starterMessages[mode] }]) }, [mode])
+  const [ready,setReady] = useState(!agentMode)
+  const [historyError,setHistoryError] = useState('')
+  useEffect(()=>{
+    const controller=new AbortController()
+    if (agentMode) fetch('/api/agent/history?'+new URLSearchParams({session_id:sessionId,document_id:doc?.document_id ?? acsDocumentId}),{signal:controller.signal})
+      .then(async response=>{if(!response.ok) throw Error('Could not restore conversation.');return response.json()})
+      .then(data=>{setMessages(data.messages.length?data.messages:[{id:'welcome',role:'assistant',text:starterMessages[mode]}]);setReady(true)})
+      .catch(error=>{if(!controller.signal.aborted)setHistoryError(String(error))})
+    return ()=>controller.abort()
+  },[])
+  useEffect(()=>{
+    if(ready && !busy) localStorage.setItem('chat:'+sessionId,JSON.stringify(messages))
+  },[messages,ready,busy,sessionId])
+  const [status,setStatus] = useState('')
+  const abort = useRef<AbortController|null>(null)
+  useEffect(()=>()=>abort.current?.abort(),[])
+  const [input, setInput] = useState('')
   const suggestions = mode === 'learn' ? [`Explain ${concept.shortName} simply`, 'How is it related to the previous concept?', 'Give me one practice question'] : ['Clarify the question without giving the answer', 'What concept should I review?', 'Check my reasoning approach']
   async function send(event?: FormEvent, suggested?: string) {
-    event?.preventDefault(); const prompt = (suggested ?? input).trim(); if (!prompt || busy) return
+    event?.preventDefault(); const prompt = (suggested ?? input).trim(); if (!prompt || busy || !ready) return
     setInput(''); setMessages(value => [...value, { id: crypto.randomUUID(), role: 'user', text: prompt }])
     setBusy(true)
     try {
       const context = doc ? doc.name : mode === 'learn' ? concept.name : question.prompt
+      if (agentMode) {
+        const id = crypto.randomUUID()
+        const controller = new AbortController()
+        abort.current = controller
+        setMessages(value=>[...value,{id,role:'assistant',text:''}])
+        await streamAgent(prompt,sessionId,context,doc?.document_id ?? acsDocumentId,page,controller.signal,event=>{
+          if (event.type==='model_start') setStatus('Preparing answer…')
+          if (event.type==='tool_start') setStatus(event.tool==='read_page'?'Reading lecture page…':event.tool==='search_lecture'?'Searching lecture…':'Checking available lectures…')
+          if (event.type==='tool_result') setStatus(event.tool+' · pages '+event.pages.join(', '))
+          if (event.type==='answer_start') setMessages(value=>value.map(m=>m.id===id?{...m,text:''}:m))
+          if (event.type==='delta') setMessages(value=>value.map(m=>m.id===id?{...m,text:m.text+event.text}:m))
+          if (event.type==='done') {
+            setMessages(value=>value.map(m=>m.id===id?{...m,text:event.answer,trace:event.trace.map((t:any)=>t.tool+' '+JSON.stringify(t.args)+' → '+t.pages.join(', ')),pages:event.citations.filter((c:any)=>c.document_id===(doc?.document_id ?? acsDocumentId)).map((c:any)=>c.page)}:m))
+            setStatus(event.model_calls+' model calls · '+(event.timing_ms.total/1000).toFixed(2)+' s')
+          }
+        })
+        return
+      }
       const result = await askAgent(prompt, sessionId, context, doc?.document_id)
       const pages = [...new Set(result.citations?.map(c => c.page) ?? [])]
       setMessages(value => [...value, { id: crypto.randomUUID(), role: 'assistant', text: result.answer, pages }])
     } catch (error) {
-      setMessages(value => [...value, { id: crypto.randomUUID(), role: 'assistant', text: String(error) }])
+      setMessages(value => [...value, { id: crypto.randomUUID(), role: 'assistant', text: error instanceof DOMException && error.name==='AbortError' ? 'Stopped.' : String(error) }])
     } finally { setBusy(false) }
   }
-  return <div className="chat-layout"><div className="chat-context"><span><Icon name={mode === 'learn' ? 'book' : 'test'} size={14}/>{doc ? doc.name : mode === 'learn' ? `Discussing: ${concept.name}` : `Question ${sampleQuestions.indexOf(question) + 1}: ${fallbackLecture.concepts.find(c => c.id === question.conceptId)?.name}`}</span><small>Source-linked answers</small></div>
-    <div className="chat-messages" aria-live="polite">{messages.map(message => <div key={message.id} className={`message message--${message.role}`}>{message.role === 'assistant' && <span className="assistant-avatar"><Icon name="sparkle" size={15}/></span>}<div><p>{message.text}</p>{message.pages?.map(page => <button key={page} onClick={() => onCitation(page)}><Icon name="file" size={13}/>View source · p. {page}</button>)}</div></div>)}{busy && <div className="message message--assistant"><span className="assistant-avatar"><Icon name="sparkle" size={15}/></span><div className="typing"><i/><i/><i/></div></div>}</div>
+  return <div className="chat-layout" style={{flex:1,minHeight:0}}><div className="chat-context"><label><input type="checkbox" checked={agentMode} disabled={busy} onChange={e=>onAgentMode(e.target.checked)}/>Agent</label>{busy && <button onClick={()=>abort.current?.abort()}>Stop</button>}<small role="status">{historyError || (!ready ? 'Restoring conversation…' : agentMode?status:'')}</small><span><Icon name={mode === 'learn' ? 'book' : 'test'} size={14}/>{doc ? doc.name : mode === 'learn' ? `Discussing: ${concept.name}` : `Question ${sampleQuestions.indexOf(question) + 1}: ${fallbackLecture.concepts.find(c => c.id === question.conceptId)?.name}`}</span><small>Source-linked answers</small></div>
+    <div className="chat-messages" aria-live="polite">{messages.map(message => <div key={message.id} className={`message message--${message.role}`}>
+      {message.role === 'assistant' && <span className="assistant-avatar"><Icon name="sparkle" size={15}/></span>}
+      <div>
+        {message.role === 'assistant' ? <TutorMarkdown text={message.text}/> : <p>{message.text}</p>}
+        {message.trace?.length ? <details><summary>Lecture lookups</summary>{message.trace.map((line,i)=><p key={i}>{line}</p>)}</details> : null}
+        {message.pages?.map(page => <button key={page} onClick={() => onCitation(page)}><Icon name="file" size={13}/>View source · p. {page}</button>)}
+      </div>
+    </div>)}{busy && <div className="message message--assistant"><span className="assistant-avatar"><Icon name="sparkle" size={15}/></span><div className="typing"><i/><i/><i/></div></div>}</div>
     <div className="suggestions">{suggestions.map(suggestion => <button key={suggestion} onClick={() => send(undefined, suggestion)}>{suggestion}</button>)}</div>
-    <form className="chat-input" onSubmit={send}><textarea aria-label="Message AI tutor" placeholder={mode === 'learn' ? 'Ask about this concept…' : 'Discuss your reasoning…'} value={input} onChange={event => setInput(event.target.value)} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); void send() } }}/><button disabled={!input.trim() || busy} aria-label="Send message"><Icon name="chevron"/></button><span>Enter to send · Shift + Enter for a new line</span></form>
+    <form className="chat-input" onSubmit={send}><textarea aria-label="Message AI tutor" placeholder={mode === 'learn' ? 'Ask about this concept…' : 'Discuss your reasoning…'} value={input} onChange={event => setInput(event.target.value)} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); void send() } }}/><button disabled={!input.trim() || busy || !ready} aria-label="Send message"><Icon name="chevron"/></button><span>Enter to send · Shift + Enter for a new line</span></form>
   </div>
 }
 
@@ -218,11 +275,11 @@ function App() {
     <div className={`study-area ${viewerVisible ? 'study-area--with-viewer' : ''}`} style={{ '--split-share': workspaceShare / 100 } as React.CSSProperties}>
       <main id="study-workspace" className={`workspace ${chatVisible ? 'workspace--with-chat' : ''}`} style={{ '--split-share': mainShare / 100 } as React.CSSProperties}>
         <Panel id="main" title={currentMainTitle} subtitle={tool ? libraryDoc?.name : mode === 'learn' ? 'Explore the lecture as a connected knowledge structure' : 'Answer, get feedback, and retry'} icon={mode === 'learn' ? 'brain' : 'test'} expanded={expanded} onExpand={() => toggleExpand('main')} className="panel--main">
-          {tool ? <Documents tests={tool==='tests'} doc={libraryDoc} onSelect={d=>{setLibraryDoc(d);setPage(1)}} setPage={p=>{setPage(p);setViewerVisible(true)}}/> : mode === 'learn' ? <LearningPanel lecture={loadedLecture} selected={selected} onSelect={selectConcept} onPage={setPage}/> : <TestPanel current={currentQuestion} question={question} progress={questionProgress} allProgress={progress} onCurrent={chooseQuestion} onResponse={response => updateCurrent({ response })} onHint={() => updateCurrent({ hintVisible: !questionProgress.hintVisible })} onSubmit={submit} onRetry={() => updateCurrent({ submitted: false, correct: null, answerVisible: false })} onReveal={() => updateCurrent({ answerVisible: !questionProgress.answerVisible })}/>}
+          {tool ? <Documents tests={tool==='tests'} doc={libraryDoc} onSelect={d=>{setLibraryDoc(d);setPage(1);setViewerVisible(true)}} setPage={p=>{setPage(p);setViewerVisible(true)}}/> : mode === 'learn' ? <LearningPanel lecture={loadedLecture} selected={selected} onSelect={selectConcept} onPage={setPage}/> : <TestPanel current={currentQuestion} question={question} progress={questionProgress} allProgress={progress} onCurrent={chooseQuestion} onResponse={response => updateCurrent({ response })} onHint={() => updateCurrent({ hintVisible: !questionProgress.hintVisible })} onSubmit={submit} onRetry={() => updateCurrent({ submitted: false, correct: null, answerVisible: false })} onReveal={() => updateCurrent({ answerVisible: !questionProgress.answerVisible })}/>}
         </Panel>
         {chatVisible && <SplitHandle axis="y" label="Resize main panel and AI tutor" controls="panel-main" value={mainShare} onChange={setMainShare}/>}
         <Panel id="chat" title="AI tutor" subtitle={mode === 'learn' ? 'Ask, compare, and practice' : 'Discuss your reasoning without spoilers'} icon="chat" canClose hidden={!chatVisible} expanded={expanded} onClose={() => { setChatVisible(false); if (expanded === 'chat') setExpanded(null) }} onExpand={() => toggleExpand('chat')} className="panel--chat">
-          <ChatPanel key={activeDoc?.document_id ?? acsDocumentId} doc={activeDoc} mode={mode} concept={selected} question={question} onCitation={citation => { setPage(citation); setViewerVisible(true); setEvidenceVisible(true) }}/>
+          <ChatPanel page={page} key={(activeDoc?.document_id ?? acsDocumentId)+mode+(activeDoc?'library':mode==='learn'?selected.id:question.id)} doc={activeDoc} mode={mode} concept={selected} question={question} onCitation={citation => { setPage(citation); setViewerVisible(true); setEvidenceVisible(true) }}/>
         </Panel>
       </main>
       {viewerVisible && <SplitHandle axis="x" label="Resize workspace and lecture viewer" controls="study-workspace" value={workspaceShare} onChange={setWorkspaceShare}/>}

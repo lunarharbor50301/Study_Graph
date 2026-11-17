@@ -1,0 +1,26 @@
+[
+  {
+    "id": "cross-page-ceilings",
+    "kind": "cross-page",
+    "question": "How do Amdahl's law and the Roofline model describe different limits on program performance?",
+    "evidence_groups": [[66], [67]],
+    "key_points": ["Amdahl relates speedup to the fraction that can be parallelized.", "Roofline bounds attainable performance using arithmetic intensity, bandwidth and peak compute."],
+    "review_status": "candidate: a second team member must verify the answer points and pages"
+  },
+  {
+    "id": "roofline-followup",
+    "kind": "conversation",
+    "turns": [
+      {"question": "In the lecture, what does arithmetic intensity measure?", "evidence_groups": [[67]], "key_points": ["Floating-point operations per byte moved from memory."]},
+      {"question": "If that value doubles while bandwidth stays fixed, what happens to the memory-bound performance ceiling?", "evidence_groups": [[67]], "key_points": ["The bandwidth-derived ceiling doubles, subject to other limits such as peak compute."]}
+    ],
+    "review_status": "candidate: verify against the lecture before freezing"
+  },
+  {
+    "id": "missing-course-fact",
+    "kind": "insufficient-course-evidence",
+    "question": "What exact retail price in US dollars does this lecture give for a GPU with 80 GB of memory?",
+    "key_points": ["Do not invent a course-specific retail price. Clearly state that the lecture does not establish one."],
+    "review_status": "candidate: verify absence from the entire document"
+  }
+]

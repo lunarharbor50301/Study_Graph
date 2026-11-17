@@ -23,6 +23,8 @@ HTTP 404 表示文档或页不存在，413 为文件过大，415 为格式不支
 
 默认使用 backend/lectures.sqlite3 持久化，可通过 STUDYGRAPH_DATABASE 指定文件路径。原文件内容不同即生成不同 ID。扫描 PDF 可显示原页；要提取扫描页文本，配置可用的 Tesseract 语言数据和 STUDYGRAPH_OCR_LANG（例如 eng 或 chi_sim+eng）。用 pages_without_text 提醒用户哪些页不能检索。
 
+当前资料库在同一后端实例内共享。面向多个学生时，可以继续用 SQLite，增加由登录账号确定的资料归属。列表、预览、原件下载、检索及 Tutor 引用都要核对访问权限。资料原件或索引可以共享存储，每个学生的资料关系和学习记录分别保存。
+
 PPTX 默认显示文字、表格和支持的图片；版式、图表或字体保真需要安装 LibreOffice，令 soffice 位于 PATH 或设置 SOFFICE_PATH，并在首次导入前配置。模型配置见 [TACC 说明](tacc/live-qa.md)。本地参考页与正式前端可复用同一后端。
 `POST /api/ask` 的文档问答成功响应包含 timing_ms（毫秒）：expansion 保留为 0（英文问题直接检索），retrieval 为检索，generation 为回答生成往返，total 为文档问答处理总耗时。未调用的阶段记为 0。
 

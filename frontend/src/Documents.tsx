@@ -25,6 +25,8 @@ export default function Documents({tests, doc, onSelect, setPage}: {tests:boolea
   const [groups, setGroups] = useState<Group[]>([])
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(true)
+  const [uploading, setUploading] = useState(false)
+  const [uploadedName, setUploadedName] = useState('')
 
   useEffect(() => {
     request<DocumentInfo[]>('/api/documents').then(list => {
@@ -39,6 +41,31 @@ export default function Documents({tests, doc, onSelect, setPage}: {tests:boolea
   async function run(action: () => Promise<void>) {
     setBusy(true); setError('')
     try { await action() } catch (e) { setError(String(e)) } finally { setBusy(false) }
+  }
+  async function upload(file: File) {
+    setUploadedName('')
+    if (!/\.(pdf|pptx)$/i.test(file.name)) {
+      setError('Choose a PDF or PPTX file. Save older PPT files as PPTX first.')
+      return
+    }
+    if (file.size > 40 * 1024 * 1024) {
+      setError('This file is over the 40 MiB limit.')
+      return
+    }
+    setUploading(true)
+    try {
+      await run(async () => {
+        const form = new FormData()
+        form.append('file', file)
+        const uploaded = await request<DocumentInfo>('/api/documents', {method:'POST', body:form})
+        setDocs(list => [uploaded, ...list.filter(item => item.document_id !== uploaded.document_id)])
+        onSelect(uploaded)
+        setHits([]); setGroups([]); setAnswer(''); setQuery(''); setConcepts('')
+        setUploadedName(uploaded.name)
+      })
+    } finally {
+      setUploading(false)
+    }
   }
   async function search() {
     setAnswer(''); setHits([])
@@ -59,16 +86,17 @@ export default function Documents({tests, doc, onSelect, setPage}: {tests:boolea
   const [current, setCurrent] = useState(0)
   const [responses, setResponses] = useState<Record<number,string>>({})
   return <div className="live-content"><div className="live-controls">
-    <label>Upload a PDF or PPTX <input style={{width:'100%'}} type="file" accept=".pdf,.pptx" disabled={busy} onChange={e => {
+    <div className="lecture-upload">
+    <label htmlFor="lecture-upload">Upload lecture material</label>
+    <p id="lecture-upload-help">PDF or PowerPoint (.pptx), up to 40 MiB. Save older .ppt files as .pptx first.</p>
+    <input id="lecture-upload" aria-describedby="lecture-upload-help" type="file" accept=".pdf,.pptx" disabled={busy} onChange={e => {
       const file = e.target.files?.[0]
       e.target.value = ''
-      if (file) void run(async () => {
-        const form = new FormData(); form.append('file',file)
-        const d = await request<DocumentInfo>('/api/documents',{method:'POST',body:form})
-        setDocs(list => [d,...list.filter(x => x.document_id !== d.document_id)]); onSelect(d); setHits([]); setGroups([]); setAnswer(''); setQuery(''); setConcepts('')
-      })
-    }}/></label>
-    {busy && <p role="status">Working…</p>}{error && <p role="alert">{error}</p>}
+      if (file) void upload(file)
+    }}/>
+    </div>
+    <p role="status">{uploading ? 'Uploading and indexing…' : busy ? 'Working…' : uploadedName ? `${uploadedName} is ready.` : ''}</p>
+    {error && <p role="alert">{error}</p>}
     {doc && <><p><select aria-label="Current lecture" value={id} disabled={busy} onChange={e=>select(e.target.value)}>
       {docs.map(d=><option key={d.document_id} value={d.document_id}>{d.name}</option>)}</select></p>
       </>}</div>{!doc ? <p>Select or upload a lecture to begin.</p> : tests ? <><h2>Build a question set</h2><label>Enter up to five concepts, separated by commas.

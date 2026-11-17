@@ -32,3 +32,32 @@ export function askAgent(question: string, sessionId: string, context: string, d
     body: JSON.stringify({ session_id: sessionId, document_id: documentId, tutor_context: context, question }),
   })
 }
+export async function streamAgent(question: string, sessionId: string, context: string, documentId: string, page: number, signal: AbortSignal, onEvent: (event: any) => void) {
+  const response = await fetch('/api/agent/stream', {
+    method:'POST', headers:{'Content-Type':'application/json'}, signal,
+    body:JSON.stringify({question,session_id:sessionId,context,page,document_id:documentId}),
+  })
+  if (!response.ok) {
+    const error = await response.json()
+    throw Error(error.detail ?? 'Agent request failed')
+  }
+  const reader = response.body!.getReader()
+  const decoder = new TextDecoder()
+  let buffer = ''
+  let finished = false
+  while (true) {
+    const {value,done} = await reader.read()
+    buffer += decoder.decode(value,{stream:!done})
+    const lines = buffer.split('\n')
+    buffer = lines.pop()!
+    for (const line of lines) {
+      if (!line.trim()) continue
+      const event = JSON.parse(line)
+      if (event.type==='error') throw Error(event.message)
+      if (event.type==='done') finished = true
+      onEvent(event)
+    }
+    if (done) break
+  }
+  if (!finished) throw Error('The answer stream ended early.')
+}

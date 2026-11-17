@@ -145,3 +145,20 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 .live-content button{cursor:pointer;background:#f6f8fb;color:#23415b}
 .live-content button[aria-pressed=true]{background:#233f5c;color:white}
 .live-controls [role=alert]{color:#963725}
+.message p{white-space:pre-wrap}
+.message>div{min-width:0;overflow-wrap:anywhere}
+.tutor-markdown>*+*{margin-top:.65em}
+.tutor-markdown p{white-space:normal}
+.tutor-markdown p+p{margin-top:.6em}
+.tutor-markdown ol,.tutor-markdown ul{padding-inline-start:1.6em;margin-bottom:0}
+.tutor-markdown li+li{margin-top:.3em}
+.tutor-markdown h1,.tutor-markdown h2,.tutor-markdown h3{font-size:1.18em;margin-bottom:.35em}
+.tutor-markdown pre,.tutor-markdown table{display:block;max-width:100%;overflow-x:auto}
+.tutor-markdown pre{padding:.6em;background:#e4ebf4;border-radius:4px}
+.tutor-markdown table{border-collapse:collapse}
+.tutor-markdown th,.tutor-markdown td{padding:.35em .55em;border:1px solid #ccd6e1;text-align:start}
+.lecture-upload{padding:12px;border:1px solid #d9e2ed;border-radius:10px;background:#f6f8fb}
+.lecture-upload label{font-weight:650}
+.lecture-upload p{margin:4px 0;color:#52677d;font-size:.85em}
+.lecture-upload input{margin:6px 0 0;background:#fff}
+.live-controls [role=status]:empty{display:none}
