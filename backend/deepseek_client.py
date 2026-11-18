@@ -1,6 +1,7 @@
 """DeepSeek Chat Completions for experimental quiz and note generation."""
 
 import json
+import http.client
 import os
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
@@ -49,6 +50,8 @@ def chat(messages, base_url, max_tokens=256, temperature=0, timeout=90):
             return json.load(response)
     except HTTPError as exc:
         raise RuntimeError(f"DeepSeek returned HTTP {exc.code}.") from exc
+    except http.client.HTTPException as exc:
+        raise RuntimeError("The DeepSeek response ended early. Please retry.") from exc
     except (URLError, TimeoutError, OSError) as exc:
         raise RuntimeError("The DeepSeek request failed or timed out.") from exc
 
