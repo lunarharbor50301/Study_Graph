@@ -76,18 +76,18 @@ B 用同一讲义版本、同一模型、同一条预热后的 SSH 连接和相�
 
 ## 检索开发集与复现
 
-[ACS 开发集](../evaluation/acs-dev.csv) 包含 13 个知识点，每题各有中、英文问法，并标注一页参考原文。该集合用于调试，正式评测需另留题目。
+[ACS 开发集](../evaluation/archive/legacy/acs-dev.csv) 包含 13 个知识点，每题各有中、英文问法，并标注一页参考原文。该集合用于调试，正式评测需另留题目。
 
 在仓库根目录运行：
 
 ```powershell
-.\.venv\Scripts\python -m evaluation.retrieval docs/ACS_Lecture_1_2026F.pdf evaluation/acs-dev.csv
+.\.venv\Scripts\python -m evaluation.runners.retrieval docs/ACS_Lecture_1_2026F.pdf evaluation/archive/legacy/acs-dev.csv
 ```
 
 脚本在临时 SQLite 库导入讲义，输出每题前四个片段的页码和参考页排名。本次英文问法首位命中 12/13，前四命中 13/13；中文原词前四命中 0/13。这个结果只衡量直接 BM25 检索。本阶段只运行英文题。下一轮用英文同义改写和范围外问题检查召回、引用支持与拒答。
 
-英文问答追加验证（开发集）：[三道改写题与两道范围外问题](../evaluation/acs-english-challenge.json)。首次真实联调中三道改写题触发引用编号校验错误。将候选片段标为 S1、S2 等字符串，并要求模型原样返回后，同批复测引用页为 57、66、67，两道范围外题均返回 insufficient 和空引用。第二题只回答 10x，数值正确，未解释串行部分的影响。单次复测的检索耗时为 1.46–3.39 ms，模型往返为 4.03–9.48 s。此批用例用于修正提示词，正式评测需使用其他题目。
+英文问答追加验证（开发集）：[三道改写题与两道范围外问题](../evaluation/archive/legacy/acs-english-challenge.json)。首次真实联调中三道改写题触发引用编号校验错误。将候选片段标为 S1、S2 等字符串，并要求模型原样返回后，同批复测引用页为 57、66、67，两道范围外题均返回 insufficient 和空引用。第二题只回答 10x，数值正确，未解释串行部分的影响。单次复测的检索耗时为 1.46–3.39 ms，模型往返为 4.03–9.48 s。此批用例用于修正提示词，正式评测需使用其他题目。
 
-复现时在真实模型后端导入 ACS 讲义，运行 `python -m evaluation.english_qa http://127.0.0.1:8016 DOCUMENT_ID evaluation/acs-english-challenge.json`。脚本核对页码和证据不足状态，回答内容按题目中的 expect 另行复核。
+复现时在真实模型后端导入 ACS 讲义，运行 `python -m evaluation.runners.english_qa http://127.0.0.1:8016 DOCUMENT_ID evaluation/archive/legacy/acs-english-challenge.json`。脚本核对页码和证据不足状态，回答内容按题目中的 expect 另行复核。
 
 **B 对 Tests 的交付。** 接收 C 制定的概念覆盖和题量，为每个概念检索可核验的讲义片段，提供按套生成题目草稿的模型调用，并核验返回的来源 ID。C 负责题组设计、评分和学习记录，A 在独立 Tests 页面呈现题序、提示、进度和整套结果。接口见[套题接口草案](document-api.md#tests-套题接口待开发)。

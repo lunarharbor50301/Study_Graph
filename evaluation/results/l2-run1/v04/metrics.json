@@ -1,0 +1,231 @@
+{
+  "concepts": {
+    "precision": {
+      "numerator": 20,
+      "denominator": 20,
+      "value": 1.0,
+      "status": "measured"
+    },
+    "core_recall": {
+      "numerator": 8,
+      "denominator": 20,
+      "value": 0.4,
+      "status": "measured"
+    },
+    "missing_core_ids": [
+      "bank-conflict",
+      "banks",
+      "cache-hit",
+      "coherence",
+      "coherence-protocol",
+      "cuda-spaces",
+      "hbm",
+      "memory-hierarchy",
+      "shared-memory",
+      "sram-dram",
+      "tiering",
+      "tlb"
+    ],
+    "raw_count": 20,
+    "deduplicated_count": 20
+  },
+  "relations": {
+    "precision": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null,
+      "status": "not_applicable"
+    },
+    "core_recall": {
+      "numerator": 0,
+      "denominator": 9,
+      "value": 0.0,
+      "status": "measured"
+    },
+    "missing_core_ids": [
+      "R10",
+      "R11",
+      "R12",
+      "R13",
+      "R14",
+      "R16",
+      "R17",
+      "R18",
+      "R19"
+    ],
+    "raw_count": 0,
+    "deduplicated_count": 0
+  },
+  "study_notes": {
+    "mean_point_score": {
+      "numerator": 6.833333333333333,
+      "denominator": 20,
+      "value": 0.3416666666666667,
+      "status": "measured"
+    },
+    "micro_point_score": {
+      "numerator": 36,
+      "denominator": 104,
+      "value": 0.34615384615384615,
+      "status": "measured"
+    },
+    "fully_covered_points": {
+      "numerator": 15,
+      "denominator": 52,
+      "value": 0.28846153846153844,
+      "status": "measured"
+    },
+    "items": [
+      {
+        "id": "N-memory-hierarchy",
+        "numerator": 0,
+        "denominator": 4,
+        "value": 0.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-locality",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-cache-hit",
+        "numerator": 0,
+        "denominator": 6,
+        "value": 0.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-amat",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-tlb",
+        "numerator": 0,
+        "denominator": 6,
+        "value": 0.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-sram-dram",
+        "numerator": 2,
+        "denominator": 4,
+        "value": 0.5,
+        "status": "measured"
+      },
+      {
+        "id": "N-banks",
+        "numerator": 1,
+        "denominator": 4,
+        "value": 0.25,
+        "status": "measured"
+      },
+      {
+        "id": "N-channels",
+        "numerator": 0,
+        "denominator": 4,
+        "value": 0.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-gpu-memory",
+        "numerator": 2,
+        "denominator": 8,
+        "value": 0.25,
+        "status": "measured"
+      },
+      {
+        "id": "N-cuda-spaces",
+        "numerator": 0,
+        "denominator": 6,
+        "value": 0.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-coalescing",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-shared-memory",
+        "numerator": 0,
+        "denominator": 4,
+        "value": 0.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-bank-conflict",
+        "numerator": 0,
+        "denominator": 6,
+        "value": 0.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-hbm",
+        "numerator": 0,
+        "denominator": 4,
+        "value": 0.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-memory-tradeoff",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-coherence",
+        "numerator": 0,
+        "denominator": 4,
+        "value": 0.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-coherence-protocol",
+        "numerator": 0,
+        "denominator": 4,
+        "value": 0.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-cxl",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-memory-wall",
+        "numerator": 5,
+        "denominator": 6,
+        "value": 0.8333333333333334,
+        "status": "measured"
+      },
+      {
+        "id": "N-tiering",
+        "numerator": 0,
+        "denominator": 8,
+        "value": 0.0,
+        "status": "measured"
+      }
+    ]
+  },
+  "review_type": "llm_judge",
+  "reference_status": "human_review_pending",
+  "limitations": [
+    "Semantic decisions require human verification, especially LLM judge decisions.",
+    "Reference set is non-exhaustive; valid extra concepts count toward precision.",
+    "Fact point coverage is not a measurement of all generated factual claims.",
+    "Relations require semantic/direction/endpoint review; layout edges are not relations."
+  ],
+  "reference_sha256": "c94af170600f6616e95d8a750094f41631b9e99e10cd2b739232f6bed3394a27",
+  "prediction_sha256": "acf78f82b5f563fdd2c937f2891cc4eb04c7ff2affdb84707eae962540739bd4"
+}
