@@ -10,6 +10,12 @@ export QWEN_CACHE_HOME="$TACC_USERDIR/CSIT6000V-project-cache"
 mkdir -p -m 700 "$QWEN_CACHE_HOME"
 printf 'CUDA_VISIBLE_DEVICES=%s\n' "${CUDA_VISIBLE_DEVICES:-unset}"
 nvidia-smi
+# Some job containers expose only the allocated pair, renumbered by NVML.
+visible_indices=$(nvidia-smi --query-gpu=index --format=csv,noheader)
+if [[ "$visible_indices" == $'0\n1' && ${CUDA_VISIBLE_DEVICES:-} =~ ^[0-9]+,[0-9]+$ && ${CUDA_VISIBLE_DEVICES} != "1,0" ]]; then
+  export CUDA_VISIBLE_DEVICES=0,1
+fi
+printf 'vLLM CUDA_VISIBLE_DEVICES=%s\n' "${CUDA_VISIBLE_DEVICES:-unset}"
 QWEN_PORT=${QWEN_PORT:-18231}
 printf 'SERVICE_BASE_URL=http://%s:%s/v1\n' "$(hostname)" "$QWEN_PORT"
 bash "$QWEN_PROJECT_ROOT/runtime.sh" "$QWEN_PROJECT_ROOT/vllm-env/bin/python" \
