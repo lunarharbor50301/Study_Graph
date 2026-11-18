@@ -13,7 +13,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from backend.qwen_client import chat
 from backend import documents
-from backend import agent_api, quiz, study_guide, study_notes
+from backend import agent_api, quiz, study_guide, study_notes, knowledge_export
 from backend.demo_users import database_path, select_demo_user
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,6 +26,7 @@ app.include_router(quiz.router)
 app.include_router(agent_api.router)
 app.include_router(study_notes.router)
 app.include_router(study_guide.router)
+app.include_router(knowledge_export.router)
 
 
 class TutorMessage(BaseModel):
