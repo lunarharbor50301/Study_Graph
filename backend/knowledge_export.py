@@ -27,9 +27,9 @@ def knowledge(doc: str, body: study_guide.StudyRequest):
     return {"version": "0.3", "status": "generated", "document_id": doc,
             "concepts": concepts, "relations": [], "study_notes": notes,
             "generation": {"path": "study-guide", "instructions": body.instructions,
-                           "provider": os.getenv("STUDYGRAPH_GENERATION_PROVIDER", "tacc"),
-                           "model": (os.getenv("DEEPSEEK_MODEL", "deepseek-flash")
-                                     if os.getenv("STUDYGRAPH_GENERATION_PROVIDER") == "deepseek"
-                                     else "qwen3.8-27b"),
-                           "limitations": ["Same sampling and 20-note maximum as study-guide; no relations generated.",
+                           "provider": "deepseek",
+                           "model": os.getenv("DEEPSEEK_MODEL", "deepseek-flash"),
+                           "pipeline": os.getenv("STUDYGRAPH_CONCEPT_MAP_MODE", "staged"),
+                           "limitations": ["Uses the study-guide endpoint; node count scales with the lecture.",
+                                           "May return partial notes when the call/time budget is exhausted.",
                                            "Exports study-guide notes, not lazy study-note endpoint output."]}}

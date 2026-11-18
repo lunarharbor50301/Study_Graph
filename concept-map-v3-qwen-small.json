@@ -1,0 +1,82 @@
+{
+  "title": "Memory small",
+  "topics": [
+    {
+      "title": "Memory Hierarchy and Locality",
+      "notes": [
+        {
+          "page": 1,
+          "title": "Memory hierarchy structure",
+          "summary": "The memory hierarchy organizes registers, caches, DRAM, and storage based on their latency and capacity characteristics.",
+          "detail": "This structure places faster, smaller components like registers at the top and slower, larger components like storage at the bottom. The arrangement allows for efficient data management by balancing speed and size.",
+          "keyPoints": [
+            "Registers and caches are faster but smaller.",
+            "DRAM and storage are slower but larger.",
+            "Hierarchy is ordered by latency and capacity."
+          ],
+          "formula": null
+        },
+        {
+          "page": 2,
+          "title": "Temporal and spatial locality",
+          "summary": "Temporal locality involves reusing recently accessed data, while spatial locality involves reusing nearby memory addresses.",
+          "detail": "These principles are fundamental to cache efficiency, as they predict future data access patterns. Understanding them helps in designing algorithms that maximize cache hits.",
+          "keyPoints": [
+            "Temporal locality reuses recent data.",
+            "Spatial locality reuses nearby addresses.",
+            "Locality drives cache performance."
+          ],
+          "formula": null
+        }
+      ]
+    },
+    {
+      "title": "Memory Technologies and Challenges",
+      "notes": [
+        {
+          "page": 3,
+          "title": "DRAM organization and row buffer",
+          "summary": "DRAM is structured into banks, rows, and columns, where row buffer hits significantly reduce access latency.",
+          "detail": "The organization allows for parallel access to different banks. When a requested address is in the same row as the previous access, the row buffer hit speeds up the operation.",
+          "keyPoints": [
+            "DRAM uses banks, rows, and columns.",
+            "Row buffer hits lower latency.",
+            "Structure enables parallel access."
+          ],
+          "formula": null
+        },
+        {
+          "page": 4,
+          "title": "GPU memory architecture",
+          "summary": "GPU memory relies on high bandwidth and deep parallelism, featuring caches shared across streaming multiprocessors.",
+          "detail": "This architecture is designed to handle massive data throughput required by parallel computing tasks. Shared caches help manage data flow between the many processing units efficiently.",
+          "keyPoints": [
+            "High bandwidth and deep parallelism.",
+            "Caches are shared across SMs.",
+            "Optimized for parallel data processing."
+          ],
+          "formula": null
+        },
+        {
+          "page": 5,
+          "title": "The memory wall",
+          "summary": "The memory wall is the performance gap created because processor speed increased faster than DRAM bandwidth.",
+          "detail": "This bottleneck limits overall system performance as CPUs wait for data from memory. It highlights the need for improved memory technologies or architectural changes to keep pace with processor advancements.",
+          "keyPoints": [
+            "Processor performance outpaced DRAM bandwidth.",
+            "Creates a performance bottleneck.",
+            "Limits overall system speed."
+          ],
+          "formula": null
+        }
+      ]
+    }
+  ],
+  "sources": {
+    "1": "Memory hierarchy overview. The memory hierarchy places registers, caches, DRAM and storage in order of latency and capacity. The memory hierarchy places registers, caches, DRAM and storage in order of latency and capacity. The memory hierarchy places registers, caches, DRAM and storage in order of latency and capacity. The memory hierarchy places registers, caches, DRAM and storage in order of latency and capacity. The memory hierarchy places registers, caches, DRAM and storage in order of latency and capacity. ",
+    "2": "Cache locality. Temporal locality reuses recently accessed data; spatial locality reuses nearby addresses. Temporal locality reuses recently accessed data; spatial locality reuses nearby addresses. Temporal locality reuses recently accessed data; spatial locality reuses nearby addresses. Temporal locality reuses recently accessed data; spatial locality reuses nearby addresses. Temporal locality reuses recently accessed data; spatial locality reuses nearby addresses. Temporal locality reuses recently accessed data; spatial locality reuses nearby addresses. ",
+    "3": "DRAM organization. DRAM is organized in banks, rows and columns; row buffer hits reduce latency. DRAM is organized in banks, rows and columns; row buffer hits reduce latency. DRAM is organized in banks, rows and columns; row buffer hits reduce latency. DRAM is organized in banks, rows and columns; row buffer hits reduce latency. DRAM is organized in banks, rows and columns; row buffer hits reduce latency. DRAM is organized in banks, rows and columns; row buffer hits reduce latency. ",
+    "4": "GPU memory. GPU memory uses high bandwidth and deep parallelism, with caches shared across streaming multiprocessors. GPU memory uses high bandwidth and deep parallelism, with caches shared across streaming multiprocessors. GPU memory uses high bandwidth and deep parallelism, with caches shared across streaming multiprocessors. GPU memory uses high bandwidth and deep parallelism, with caches shared across streaming multiprocessors. GPU memory uses high bandwidth and deep parallelism, with caches shared across streaming multiprocessors. GPU memory uses high bandwidth and deep parallelism, with caches shared across streaming multiprocessors. ",
+    "5": "Memory wall. Processor performance grew faster than DRAM bandwidth, creating the memory wall. Processor performance grew faster than DRAM bandwidth, creating the memory wall. Processor performance grew faster than DRAM bandwidth, creating the memory wall. Processor performance grew faster than DRAM bandwidth, creating the memory wall. Processor performance grew faster than DRAM bandwidth, creating the memory wall. Processor performance grew faster than DRAM bandwidth, creating the memory wall. "
+  }
+}

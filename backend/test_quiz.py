@@ -18,9 +18,9 @@ class QuestionSetTest(unittest.TestCase):
         def model(*args, **kwargs):
             return {"choices": [{"message": {"content": json.dumps({"questions": items})}}]}
 
-        with patch.dict("os.environ", QWEN_BASE_URL="test"), patch.object(
+        with patch.dict("os.environ", {"DEEPSEEK_API_KEY": "test", "DEEPSEEK_BASE_URL": "https://example.test"}), patch.object(
             quiz.documents, "search", side_effect=retrieve
-        ), patch.object(quiz, "chat", side_effect=model):
+        ), patch.object(quiz.deepseek_client, "chat", side_effect=model):
             questions = quiz.question_set("lecture", scope)["questions"]
             self.assertEqual([q["concept"] for q in questions], ["first", "second"])
             items[1]["source"] = "first"
@@ -44,9 +44,9 @@ class QuestionSetTest(unittest.TestCase):
                     source = "S1" if kwargs["temperature"] else "invalid"
                     return {"choices": [{"message": {"content": json.dumps({**draft, "source": source})}}]}
 
-                with patch.dict("os.environ", QWEN_BASE_URL="test"), patch.object(
+                with patch.dict("os.environ", {"DEEPSEEK_API_KEY": "test", "DEEPSEEK_BASE_URL": "https://example.test"}), patch.object(
                     quiz.documents, "search", return_value=[hit]
-                ), patch.object(quiz, "chat", side_effect=model) as provider:
+                ), patch.object(quiz.deepseek_client, "chat", side_effect=model) as provider:
                     question = quiz.practice_question("lecture", scope)
                     self.assertEqual(provider.call_count, 2)
                     self.assertEqual(question["type"], question_type)

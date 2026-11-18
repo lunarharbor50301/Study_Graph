@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field, field_validator
 
 from backend import deepseek_client, documents
-from backend.qwen_client import chat
+from backend.concept_map import StudyGuide, build_study_guide
 
 router = APIRouter(prefix="/api/documents")
 
@@ -27,28 +27,15 @@ class StudyRequest(BaseModel):
         return value
 
 
-class Note(BaseModel):
-    page: int
-    title: str = Field(min_length=1, max_length=100)
-    summary: str = Field(min_length=1, max_length=350)
-    detail: str = Field(min_length=1, max_length=1100)
-    keyPoints: list[str] = Field(min_length=1, max_length=5)
-    formula: str | None = None
-
-
-class Topic(BaseModel):
-    title: str = Field(min_length=1, max_length=100)
-    notes: list[Note] = Field(min_length=1, max_length=4)
-
-
-class StudyGuide(BaseModel):
-    title: str = Field(min_length=1, max_length=100)
-    topics: list[Topic] = Field(min_length=1, max_length=5)
-    sources: dict[int, str] = Field(default_factory=dict)
-
-
 @router.post("/{doc}/study-guide", response_model=StudyGuide)
 def study_guide(doc: str, body: StudyRequest):
+    if os.getenv("STUDYGRAPH_CONCEPT_MAP_MODE", "staged") == "single":
+        return single_call(doc, body)
+    return build_study_guide(doc, body.instructions)
+
+
+def single_call(doc: str, body: StudyRequest):
+    """The previous one-call implementation, kept as a rollback path."""
     with documents.database() as db:
         metadata = documents.metadata(db, doc)
         rows = db.execute(
@@ -56,11 +43,9 @@ def study_guide(doc: str, body: StudyRequest):
         ).fetchall()
     if not rows:
         raise HTTPException(422, "This lecture has no readable text.")
-    use_deepseek = os.getenv("STUDYGRAPH_GENERATION_PROVIDER") == "deepseek"
-    endpoint = (os.getenv("DEEPSEEK_BASE_URL", deepseek_client.DEFAULT_BASE_URL)
-                if use_deepseek else os.getenv("QWEN_BASE_URL"))
-    if not endpoint:
-        raise HTTPException(503, "Connect a generation model to create a concept map.")
+    endpoint = os.getenv("DEEPSEEK_BASE_URL", deepseek_client.DEFAULT_BASE_URL)
+    if not os.getenv("DEEPSEEK_API_KEY", "").strip():
+        raise HTTPException(503, "Set DEEPSEEK_API_KEY to create a concept map.")
 
     count = min(32, len(rows))
     sampled = (rows[index * len(rows) // count] for index in range(count))
@@ -80,15 +65,14 @@ def study_guide(doc: str, body: StudyRequest):
         "explain how or why it works in detail when supported, and use keyPoints for distinct facts from that page. "
         "Omit unsupported details and use fewer nodes when the excerpts are sparse. "
         "Return JSON only: {title, topics: [{title, notes: [{page, title, summary, detail, keyPoints, formula}]}]}. "
-        "Use 1 to 5 topics, 1 to 4 concise notes per topic and 1 to 5 short key points per note. "
+        "Use 1 to 5 short key points per note. "
         "Transcribe the source equation in LaTeX wrapped in \\( and \\), preserving fractions, operators, "
         "and subscripts. Use JSON null if no formula can be recovered reliably. "
         "Keep titles under 100 characters, summary under 350, detail under 1100. "
         "If a requested topic is missing, do not make up material. Focus on the closest supported content."
     )
     try:
-        generate = deepseek_client.chat if use_deepseek else chat
-        result = generate([
+        result = deepseek_client.chat([
             {"role": "system", "content": instruction},
             {"role": "user", "content": json.dumps(payload, ensure_ascii=False)},
         ], endpoint, temperature=0, max_tokens=4400)

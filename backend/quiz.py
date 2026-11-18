@@ -7,7 +7,6 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field, StringConstraints
 
 from backend import deepseek_client, documents
-from backend.qwen_client import chat
 
 router = APIRouter(prefix="/api/documents")
 Concept = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=120)]
@@ -71,12 +70,9 @@ FORMATS = {
 
 
 def quiz_model():
-    if os.getenv("STUDYGRAPH_GENERATION_PROVIDER") == "deepseek":
-        return "deepseek", os.getenv("DEEPSEEK_BASE_URL", deepseek_client.DEFAULT_BASE_URL), deepseek_client.chat
-    endpoint = os.getenv("QWEN_BASE_URL")
-    if not endpoint:
-        raise HTTPException(503, "Connect a model to generate a practice test.")
-    return "tacc", endpoint, chat
+    if not os.getenv("DEEPSEEK_API_KEY", "").strip():
+        raise HTTPException(503, "Set DEEPSEEK_API_KEY to generate a practice test.")
+    return "deepseek", os.getenv("DEEPSEEK_BASE_URL", deepseek_client.DEFAULT_BASE_URL), deepseek_client.chat
 
 
 @router.post("/{doc}/practice-question", response_model=PracticeQuestion)

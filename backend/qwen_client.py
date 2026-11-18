@@ -71,7 +71,7 @@ def stream_response(request):
     raise RuntimeError("The model stream ended early.")
 
 
-def chat(messages, base_url, max_tokens=256, temperature=0.7):
+def chat(messages, base_url, max_tokens=256, temperature=0.7, timeout=90):
     """Return the full JSON response, including choices and token usage."""
     request = chat_request(messages, base_url, max_tokens, temperature)
     try:
@@ -82,14 +82,14 @@ def chat(messages, base_url, max_tokens=256, temperature=0.7):
                      "-p", os.environ.get("TACC_SSH_PORT", "22")]
             if key := os.environ.get("TACC_SSH_KEY"):
                 args += ["-i", key]
-            command = shlex.join(["curl", "-fsS", "--noproxy", "*", "--max-time", "90",
+            command = shlex.join(["curl", "-fsS", "--noproxy", "*", "--max-time", str(timeout),
                                   "-H", "Content-Type: application/json", "--data-binary", "@-",
                                   request.full_url])
             proc = subprocess.run(args + ["--", gateway, command], input=request.data,
-                                  capture_output=True, timeout=110, check=True)
+                                  capture_output=True, timeout=timeout + 20, check=True)
             result = json.loads(proc.stdout)
         else:
-            with urlopen(request, timeout=90) as response:
+            with urlopen(request, timeout=timeout) as response:
                 result = json.load(response)
     except subprocess.SubprocessError as exc:
         raise RuntimeError("TACC gateway request failed. Check SSH access and the service job.") from exc

@@ -18,7 +18,8 @@ class GenerationFlow(unittest.TestCase):
         tmp = tempfile.TemporaryDirectory()
         self.addCleanup(tmp.cleanup)
         env = patch.dict(os.environ, {'STUDYGRAPH_DATABASE': str(Path(tmp.name)/'test.sqlite3'),
-                                      'STUDYGRAPH_GENERATION_PROVIDER': 'deepseek'})
+                                      'STUDYGRAPH_CONCEPT_MAP_MODE': 'single',
+                                      'DEEPSEEK_API_KEY': 'test'})
         env.start()
         self.addCleanup(env.stop)
         with pymupdf.open() as pdf:

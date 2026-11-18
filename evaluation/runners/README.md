@@ -16,7 +16,7 @@ knowledge.py 支持后端概念图导出和语义评分，完整命令见下文�
 
 - 本命令测的是**后端概念图/学习指南**，不是 Tutor 的 pi Agent。网页与命令行共用同一生成路径；网页不填偏好或命令省略 `--instructions` 时，都使用 `backend/study_guide.py` 中的 `DEFAULT_INSTRUCTIONS`。自定义偏好时两端使用相同文本。旧标题分组图谱直接从课程架恢复，不会自动重新生成。
 - 导出模型实际返回的 summary、detail、keyPoints、formula，作为概念 facts 和笔记点；`required_points` 在预测文件中是生成的知识陈述，不是真值。source quote 不算生成的解释。
-- 后端目前最多 5 组 × 4 个节点，抽样最多 32 页并追加检索片段，每页截取 700 字符。这些限制沿用产品，不因评测而扩大预算。
+- 后端默认使用 V3 staged：全页索引、骨架、按主题分批笔记和覆盖检查；不设 5×4，节点数由讲义内容和调用预算决定。`single` 回滚路径仍是 32 页 × 700 字、4400 输出。
 - `relations` 保持空数组，因为该产品路径不生成语义关系。参考关系非空时 Recall=0、Precision=N/A，不把页面布局连接当成知识关系。
 - 网页打开节点时会另外调用 `/study-note/stream`；本流程导出的是 `study-guide` 自带笔记，不能宣称评测了该延迟生成接口。
 
@@ -28,11 +28,10 @@ knowledge.py 支持后端概念图导出和语义评分，完整命令见下文�
 set -a
 source .env
 set +a
-export STUDYGRAPH_GENERATION_PROVIDER=deepseek
 .venv/bin/python -m uvicorn backend.main:app --port 8000
 ```
 
-已启动旧后端时先停止并重启，以加载新接口。选择 TACC 时改用 `STUDYGRAPH_GENERATION_PROVIDER=tacc`，按 `docs/pi-agent.md` 配置 Qwen 服务和 SSH 隧道。评分器的 `--judge deepseek` 单独使用 DeepSeek 配置，与生成提供方独立。
+已启动旧后端时先停止并重启，以加载新接口。生成固定使用 DeepSeek；TACC 只给 AI tutor/Agent，不再用于概念图生成。评分器的 `--judge deepseek` 单独使用 DeepSeek 配置。
 
 ### 2. 生成 Lecture 1 预测
 

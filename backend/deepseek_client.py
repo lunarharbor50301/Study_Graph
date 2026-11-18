@@ -43,9 +43,9 @@ def completion_request(messages, base_url, max_tokens, temperature, *, stream=Fa
     return request
 
 
-def chat(messages, base_url, max_tokens=256, temperature=0):
+def chat(messages, base_url, max_tokens=256, temperature=0, timeout=90):
     try:
-        with urlopen(completion_request(messages, base_url, max_tokens, temperature), timeout=90) as response:
+        with urlopen(completion_request(messages, base_url, max_tokens, temperature), timeout=timeout) as response:
             return json.load(response)
     except HTTPError as exc:
         raise RuntimeError(f"DeepSeek returned HTTP {exc.code}.") from exc
