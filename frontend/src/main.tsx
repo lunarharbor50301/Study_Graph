@@ -8,7 +8,6 @@ import { createRoot } from 'react-dom/client'
 import { demoUser, request, streamAgent, streamEvents, withDemoUser } from './api'
 import { currentDocument, firstEntryPage, lectureName, useCourseStore, type CourseItem, type SavedMap, type SavedTest } from './courseStore'
 import { lecture as fallbackLecture, starterMessages } from './data'
-import { createSlideOutline, type SlideText } from './slideOutline'
 import type { ChatMessage, Concept, CourseQuestion, DocumentInfo, Lecture, Mode, QuestionProgress, TestQuestion } from './types'
 import './style.css'
 
@@ -445,17 +444,6 @@ function App() {
   const course = useCourseStore()
   const [entryId, setEntryId] = useState(() => initial.get('entry'))
   const item = course.items.find(entry => entry.id === entryId)
-  useEffect(() => {
-    if (item?.kind !== 'map' || item.lecture.outline?.subtitle !== 'From slide text' || item.lecture.outline.strategy) return
-    const controller = new AbortController()
-    const doc = item.document
-    void createSlideOutline(doc, page => request<SlideText>(`documents/${doc.document_id}/pages/${page}`, { signal: controller.signal }))
-      .then(lecture => {
-        if (!controller.signal.aborted) course.update(item.id, entry => entry.kind === 'map' ? { ...entry, lecture } : entry)
-      })
-      .catch(error => { if (!controller.signal.aborted) console.warn('Could not regroup saved concept map.', error) })
-    return () => controller.abort()
-  }, [item])
   const [workspaceMode, setWorkspaceMode] = useState<Mode>(() => initial.has('tests') ? 'test' : 'learn')
   const mode = item ? item.kind === 'test' ? 'test' : 'learn' : workspaceMode
   const [selectedId, setSelectedId] = useState(() => item?.kind === 'map' ? item.lecture.concepts[0].id : 'hierarchy')

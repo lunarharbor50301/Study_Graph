@@ -3,7 +3,7 @@ import { Icon } from './Layout'
 import { askAgent, request, uploadLecture } from './api'
 import { ChatTranscript } from './ChatTranscript'
 import { createTest, maxQuestions, questionTypes, type Difficulty, type QuestionCounts } from './createTest'
-import { createPersonalizedOutline, createSlideOutline, type SlideText } from './slideOutline'
+import { createGeneratedOutline } from './slideOutline'
 import type { SavedTest } from './courseStore'
 import type { ChatMessage, CourseQuestion, DocumentInfo, EvidenceHit, Lecture, Mode } from './types'
 
@@ -127,8 +127,7 @@ export default function UploadWorkspace({ mode, onMapCreated, onTestCreated }: W
       } else {
         const doc = uploaded[0]
         setStatus('Building your concept map…')
-        const lecture = instructions ? await createPersonalizedOutline(doc, instructions)
-          : await createSlideOutline(doc, page => request<SlideText>(`documents/${doc.document_id}/pages/${page}`))
+        const lecture = await createGeneratedOutline(doc, instructions)
         onMapCreated(doc, lecture, mounted.current, conversation)
       }
     } catch (error) {
