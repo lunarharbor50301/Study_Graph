@@ -1,7 +1,7 @@
 # 概念图 V3 后端进度
 
 最后更新：2026-11-19
-当前状态：V3 已移植到 yxy-2.0（V2.5）基线；默认指令、generated-only 前端、knowledge 导出和评测数据保留 yxy；V3 staged、无 5×4、生成固定 DeepSeek 保留我们的实现。V3 默认指令的一次 54 节点结果已用 v0.4-en + DeepSeek judge 评分：核心概念 20/20、Precision 54/54、笔记 96.25%；仍需人工复核和重复运行。
+当前状态：V3 已移植到 yxy-2.0（V2.5）基线；默认指令、generated-only 前端、knowledge 导出和评测数据保留 yxy；V3 staged、无 5×4、生成固定 DeepSeek 保留我们的实现。V3 默认指令的一次 54 节点结果已用 v0.4-en + DeepSeek judge 评分：核心概念 20/20、Precision 54/54、笔记 96.25%；仍需人工复核和重复运行。AI tutor 的 New conversation 已改为新建线程并保留旧线程，完整对话入库，超过 8 轮时用摘要压缩送入模型的上下文。
 
 ## 给前端和测试的对接摘要
 
@@ -58,6 +58,23 @@
 - 设计计划：[docs/概念图V3后端修改计划.md](概念图V3后端修改计划.md)
 
 ## 变更与实验记录
+
+## 2026-11-19 — 对话线程保存与上下文压缩
+
+- **类型**：功能
+- **范围**：`backend/agent_api.py`、`agent/runner.mjs`、`frontend/src/main.tsx`、`frontend/src/api.ts`、`frontend/src/courseStore.ts`、`frontend/src/types.ts`、`frontend/src/style.css`。
+- **改动**：
+  - 新增 `agent_conversations` 表：按 `session_id + document_id` 保存标题、时间、轮数、摘要和摘要覆盖到的 turn id。
+  - `agent_turns` 不再删除旧轮次；`GET /api/agent/history` 返回该会话全部成功轮次，供界面恢复。
+  - 新增 `GET /api/agent/conversations?document_id=...`，按更新时间列出已保存会话。
+  - 模型上下文改为“更早轮次摘要 + 最近 6 轮”；超过 8 轮时用 `deepseek-flash` 生成摘要，完整原文仍保留。
+  - `agent/runner.mjs` 把摘要作为参考数据追加到 system prompt。
+  - 前端 `New conversation` 现在新建线程、不删除旧线程；聊天头部新增会话下拉，保持原按钮位置和现有配色。
+  - 上传页产生的 setup 消息写入 `sessionId`；切回旧线程时仍显示原来的 setup 消息。
+- **对前端**：已有课程架条目会在读取时把旧 `messages` 迁移到当时的 `agentSessionId`；新条目在创建时写入会话 ID。会话下拉的宽度上限 150px，随头部换行。
+- **对测试**：新增 `backend/test_agent_history.py`，覆盖会话列表、完整历史、摘要只压缩模型上下文不删 UI 历史；后端 31 个用例通过，`npm run build --prefix frontend` 通过。
+- **局限/下一步**：没有浏览器 E2E 和真实 pi 多轮摘要测试；会话暂不支持重命名/删除；摘要依赖 `DEEPSEEK_API_KEY`，失败时退回最近 6 轮。
+- **产物**：[backend/agent_api.py](../backend/agent_api.py)、[agent/runner.mjs](../agent/runner.mjs)、[backend/test_agent_history.py](../backend/test_agent_history.py)
 
 ## 2026-11-19 — V3 默认指令的 v0.4-en 评分（54 节点）
 

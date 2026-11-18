@@ -1,40 +1,207 @@
 import asyncio
 import json
+import logging
 import os
 import shutil
+from datetime import datetime, timezone
 from pathlib import Path
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
-from backend import documents
+from backend import deepseek_client, documents
 from backend.demo_users import demo_user
 from backend.qwen_client import normalize_base_url
 
 router = APIRouter(prefix="/api/agent")
+logger = logging.getLogger(__name__)
+
+RECENT_TURNS = 6
+SUMMARY_TRIGGER_TURNS = 8
+SUMMARY_MAX_CHARS = 6000
+CONTEXT_MAX_CHARS = 80_000
+SUMMARY_MAX_TOKENS = 700
+
+
+def _now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _schema(db):
+    db.execute("CREATE TABLE IF NOT EXISTS agent_turns (id INTEGER PRIMARY KEY, scope TEXT, data TEXT)")
+    db.execute(
+        "CREATE TABLE IF NOT EXISTS agent_conversations ("
+        "session_id TEXT NOT NULL, document_id TEXT NOT NULL, title TEXT NOT NULL, "
+        "created_at TEXT NOT NULL, updated_at TEXT NOT NULL, summary TEXT NOT NULL DEFAULT '', "
+        "summary_through INTEGER NOT NULL DEFAULT 0, turn_count INTEGER NOT NULL DEFAULT 0, "
+        "PRIMARY KEY(session_id, document_id))"
+    )
+
+
+def _first_user_text(messages):
+    for message in messages:
+        if message.get("role") != "user":
+            continue
+        content = message.get("content")
+        if isinstance(content, str):
+            text = content
+        else:
+            text = "".join(block.get("text", "") for block in content or [] if block.get("type") == "text")
+        text = " ".join(text.split())
+        if text:
+            return text[:80]
+    return "New conversation"
+
+
+def _ensure_conversation(db, session_id, document_id):
+    row = db.execute(
+        "SELECT * FROM agent_conversations WHERE session_id=? AND document_id=?",
+        (session_id, document_id),
+    ).fetchone()
+    if row:
+        return row
+    scope = session_id + ":" + document_id
+    first = db.execute("SELECT data FROM agent_turns WHERE scope=? ORDER BY id LIMIT 1", (scope,)).fetchone()
+    count = db.execute("SELECT COUNT(*) FROM agent_turns WHERE scope=?", (scope,)).fetchone()[0]
+    created = _now()
+    title = "New conversation"
+    if first:
+        try:
+            title = _first_user_text(json.loads(first["data"]).get("messages", []))
+        except (ValueError, TypeError):
+            pass
+    db.execute(
+        "INSERT INTO agent_conversations(session_id, document_id, title, created_at, updated_at, turn_count) "
+        "VALUES (?,?,?,?,?,?)",
+        (session_id, document_id, title, created, created, count),
+    )
+    return db.execute(
+        "SELECT * FROM agent_conversations WHERE session_id=? AND document_id=?",
+        (session_id, document_id),
+    ).fetchone()
+
+
+def _backfill_conversations(db, document_id=None):
+    query = "SELECT DISTINCT scope FROM agent_turns"
+    params = ()
+    if document_id:
+        query += " WHERE scope LIKE ?"
+        params = ("%:" + document_id,)
+    for row in db.execute(query, params).fetchall():
+        session_id, _, document = row["scope"].partition(":")
+        if session_id and document:
+            _ensure_conversation(db, session_id, document)
+
+
 def load_history(key):
+    session_id, _, document_id = key.partition(":")
     with documents.database() as db:
-        db.execute("CREATE TABLE IF NOT EXISTS agent_turns (id INTEGER PRIMARY KEY, scope TEXT, data TEXT)")
-        rows = db.execute("SELECT data FROM agent_turns WHERE scope=? ORDER BY id DESC LIMIT 4", (key,)).fetchall()
+        _schema(db)
+        _ensure_conversation(db, session_id, document_id)
+        conversation = db.execute(
+            "SELECT summary, summary_through FROM agent_conversations WHERE session_id=? AND document_id=?",
+            (session_id, document_id),
+        ).fetchone()
+        rows = db.execute("SELECT id, data FROM agent_turns WHERE scope=? ORDER BY id", (key,)).fetchall()
+    summary = conversation["summary"] if conversation else ""
+    through = conversation["summary_through"] if conversation else 0
+    selected = [row for row in rows if row["id"] > through]
+    if not summary:
+        selected = selected[-RECENT_TURNS:]
     messages, evidence = [], {}
     size = 0
-    selected = []
-    for row in rows:
-        size += len(row[0])
-        if size > 180000:
+    chosen = []
+    for row in reversed(selected):
+        size += len(row["data"])
+        if size > CONTEXT_MAX_CHARS and len(chosen) >= 2:
             break
-        selected.append(json.loads(row[0]))
-    for turn in reversed(selected):
+        chosen.append(row)
+    for row in reversed(chosen):
+        turn = json.loads(row["data"])
         messages.extend(turn["messages"])
         evidence.update(turn["evidence"])
-    return {"messages": messages, "evidence": evidence}
+    return {"messages": messages, "evidence": evidence, "summary": summary}
+
+
+def _summary_transcript(rows):
+    chunks = []
+    for row in rows:
+        turn = json.loads(row["data"])
+        question = _first_user_text(turn.get("messages", []))
+        answer = " ".join((turn.get("answer") or "").split())
+        if question or answer:
+            chunks.append(f"Student: {question}\nTutor: {answer[:1200]}")
+    return "\n\n".join(chunks)
+
+
+def maybe_summarize(key, previous_summary):
+    if not os.getenv("DEEPSEEK_API_KEY", "").strip():
+        return
+    session_id, _, document_id = key.partition(":")
+    with documents.database() as db:
+        _schema(db)
+        _ensure_conversation(db, session_id, document_id)
+        rows = db.execute("SELECT id, data FROM agent_turns WHERE scope=? ORDER BY id", (key,)).fetchall()
+        if len(rows) <= SUMMARY_TRIGGER_TURNS:
+            return
+        cutoff_id = rows[-RECENT_TURNS - 1]["id"]
+        old = db.execute(
+            "SELECT summary_through FROM agent_conversations WHERE session_id=? AND document_id=?",
+            (session_id, document_id),
+        ).fetchone()
+        if old and cutoff_id <= old["summary_through"]:
+            return
+        through = old["summary_through"] if old else 0
+        older = [row for row in rows if through < row["id"] <= cutoff_id]
+    transcript = _summary_transcript(older)
+    if not transcript.strip():
+        return
+    try:
+        response = deepseek_client.chat([
+            {"role": "system", "content": (
+                "Compress an earlier tutoring conversation into a compact context summary. "
+                "Preserve the student's goals, questions, misconceptions, decisions, unresolved follow-ups, "
+                "and lecture page numbers or source IDs cited. Do not add facts. Keep it under 500 words. "
+                "Return JSON only: {\"summary\":\"...\"}."
+            )},
+            {"role": "user", "content": json.dumps({
+                "previous_summary": previous_summary,
+                "turns": transcript,
+            }, ensure_ascii=False)},
+        ], os.getenv("DEEPSEEK_BASE_URL", deepseek_client.DEFAULT_BASE_URL),
+            max_tokens=SUMMARY_MAX_TOKENS, temperature=0, timeout=60)
+        raw = response["choices"][0]["message"]["content"].strip()
+        try:
+            parsed = json.loads(raw.removeprefix("```json").removesuffix("```").strip())
+            summary = parsed.get("summary", "") if isinstance(parsed, dict) else raw
+        except (ValueError, TypeError):
+            summary = raw
+        summary = summary.strip()[:SUMMARY_MAX_CHARS]
+    except Exception as exc:
+        logger.warning("Agent summary failed: %s", exc)
+        return
+    with documents.database() as db:
+        db.execute(
+            "UPDATE agent_conversations SET summary=?, summary_through=? WHERE session_id=? AND document_id=?",
+            (summary, cutoff_id, session_id, document_id),
+        )
 
 
 def save_history(key, event):
     data = {"messages": event.pop("messages"), "evidence": event.pop("evidence"),
             "answer": event["answer"], "citations": event["citations"], "trace": event["trace"]}
+    session_id, _, document_id = key.partition(":")
     with documents.database() as db:
-        db.execute("INSERT INTO agent_turns(scope,data) VALUES (?,?)", (key,json.dumps(data)))
-        db.execute("DELETE FROM agent_turns WHERE scope=? AND id NOT IN (SELECT id FROM agent_turns WHERE scope=? ORDER BY id DESC LIMIT 4)",(key,key))
+        _schema(db)
+        conversation = _ensure_conversation(db, session_id, document_id)
+        db.execute("INSERT INTO agent_turns(scope,data) VALUES (?,?)", (key, json.dumps(data)))
+        count = db.execute("SELECT COUNT(*) FROM agent_turns WHERE scope=?", (key,)).fetchone()[0]
+        title = conversation["title"] if conversation["title"] != "New conversation" else _first_user_text(data["messages"])
+        db.execute(
+            "UPDATE agent_conversations SET title=?, updated_at=?, turn_count=? "
+            "WHERE session_id=? AND document_id=?",
+            (title, _now(), count, session_id, document_id),
+        )
+    maybe_summarize(key, conversation["summary"] if conversation else "")
 
 locks = {}
 
@@ -48,16 +215,37 @@ class Turn(BaseModel):
     additional_document_ids: list[str] = Field(default_factory=list, max_length=4)
 
 
+@router.get("/conversations")
+def conversations(document_id: str | None = None):
+    """List saved threads for the current lecture, newest first."""
+    with documents.database() as db:
+        _schema(db)
+        _backfill_conversations(db, document_id)
+        if document_id:
+            rows = db.execute(
+                "SELECT session_id, title, updated_at, turn_count FROM agent_conversations "
+                "WHERE document_id=? ORDER BY updated_at DESC", (document_id,)).fetchall()
+        else:
+            rows = db.execute(
+                "SELECT session_id, title, updated_at, turn_count FROM agent_conversations "
+                "ORDER BY updated_at DESC").fetchall()
+    return {"conversations": [{
+        "id": row["session_id"], "title": row["title"],
+        "updated_at": row["updated_at"], "turn_count": row["turn_count"],
+    } for row in rows]}
+
+
 @router.get("/history")
 def conversation_history(session_id: str, document_id: str):
-    """Restore the same successful turns supplied to the model on its next run."""
+    """Return every saved turn for the thread, not just the model context window."""
     documents.document(document_id)
     key = session_id + ":" + document_id
-    load_history(key)  # Initialize the table for an empty installation.
     with documents.database() as db:
-        rows = db.execute("SELECT id,data FROM agent_turns WHERE scope=? ORDER BY id DESC LIMIT 4", (key,)).fetchall()
+        _schema(db)
+        conversation = _ensure_conversation(db, session_id, document_id)
+        rows = db.execute("SELECT id,data FROM agent_turns WHERE scope=? ORDER BY id", (key,)).fetchall()
     messages = []
-    for row in reversed(rows):
+    for row in rows:
         turn = json.loads(row["data"])
         for item in turn["messages"]:
             if item["role"] != "user":
@@ -74,7 +262,8 @@ def conversation_history(session_id: str, document_id: str):
                          "citations": [{"document_id": c["document_id"], "page": c["page"]}
                                        for c in turn.get("citations", [])],
                          "trace": [f"{t['tool']} {json.dumps(t['args'])} → {t['pages']}" for t in turn.get("trace", [])]})
-    return {"messages": messages}
+    return {"messages": messages, "title": conversation["title"],
+            "summary": conversation["summary"] if conversation else ""}
 
 
 def tool(name, args, sources):
@@ -131,7 +320,7 @@ async def stream_turn(body: Turn):
                             await proc.stdin.drain()
                             continue
                         if event["type"] == "done":
-                            save_history(key, event)
+                            await asyncio.to_thread(save_history, key, event)
                         yield json.dumps(event, ensure_ascii=False)+"\n"
                         if event["type"] in {"done", "error"}:
                             return

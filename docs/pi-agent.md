@@ -39,7 +39,7 @@ Remove-Item Env:TACC_SSH_TARGET -ErrorAction SilentlyContinue
 .\.venv\Scripts\python -m uvicorn backend.main:app --port 8024
 ```
 
-助教统一调用 POST /api/agent/stream，响应为逐行 JSON。单轮问答接口保留用于对照评测。Agent 会收到当前页、选中概念或题目，以及同一会话、同一讲义最近四轮成功的对话。对话存入本地 SQLite，失败和中止的轮次不进入后续上下文。超过上下文预算时按整轮丢弃旧记录。此开发服务使用单个 Uvicorn worker，同一会话串行执行。
+助教统一调用 POST /api/agent/stream，响应为逐行 JSON。单轮问答接口保留用于对照评测。Agent 会收到当前页、选中概念或题目，以及同一会话、同一讲义最近六轮成功的对话和更早对话的摘要。完整对话按会话存入本地 SQLite；失败和中止的轮次不进入后续上下文。超过预算时只压缩送入模型的历史，不删除用于界面恢复的完整记录。此开发服务使用单个 Uvicorn worker，同一会话串行执行。
 
 出题、流式学习笔记和个性化学习指南固定使用 DeepSeek；AI 学习助手通过 `QWEN_BASE_URL` 连接 TACC Qwen。上传页助教使用 `/api/ask`，学习和测验页面的助教使用流式 Agent。生成不再读取 `STUDYGRAPH_GENERATION_PROVIDER`，只需在仓库根目录的本地 `.env` 中设置 `DEEPSEEK_API_KEY` 和 `QWEN_BASE_URL`。官方服务默认使用 `https://api.deepseek.com` 和 `deepseek-flash`，可通过 `DEEPSEEK_BASE_URL` 与 `DEEPSEEK_MODEL` 指定。用 PowerShell 把这些配置加载到同一个终端，再运行上面的启动命令。
 
@@ -51,7 +51,9 @@ Get-Content .env | ForEach-Object {
 }
 ```
 
-浏览器在课程架中为每个概念图或测验保存一个 Agent 会话 ID。Agent 后端再按讲义 ID 分开保存对话。切换讲义或刷新时，Agent 用 GET /api/agent/history?session_id=...&document_id=... 恢复该讲义最近四轮成功对话及引用、检索记录。普通问答的显示记录保存在课程架，其模型调用仍按单轮执行。New conversation 为当前课程架条目创建新的 Agent 会话 ID。切换课程架条目或讲义会中止当前 Agent 请求。合并前按概念保存的旧会话仍保留在原存储中，新课程架使用新的会话 ID。
+浏览器在课程架中为每个概念图或测验保存当前 Agent 会话 ID。Agent 后端再按讲义 ID 分开保存会话和完整对话。切换讲义或刷新时，Agent 用 GET /api/agent/history?session_id=...&document_id=... 恢复该会话的全部成功对话及引用、检索记录；GET /api/agent/conversations?document_id=... 列出该讲义下保存过的会话。New conversation 新建一个会话线程，不删除旧线程；旧线程仍保留在列表里，可随时切回。普通问答的显示记录保存在课程架，其模型调用仍按单轮执行。切换课程架条目或讲义会中止当前 Agent 请求。
+
+当会话超过 8 轮时，后端把最近 6 轮之前的旧轮次用 `deepseek-flash` 压缩成一段摘要，下一次请求把“摘要 + 最近 6 轮”交给 pi；完整原文仍保存在 `agent_turns`，界面恢复不受摘要影响。pi-agent-core 提供 `transformContext` / `prepareNextTurn` 钩子但没有内建摘要器，压缩由本项目后端实现。
 
 模型可以调用 search_lecture、read_page、list_documents。学习页面的检索和读页限定为当前讲义，测验页面的检索和读页限定为该测验关联的讲义。读页提供最多 16000 字符，对更长页面暂时读取前段。最多调用模型三次、执行六个工具，整体超时 180 秒。第三次调用要求直接完成回答。最终引用必须匹配实际读到的来源 ID，页码和预览 URL 由后端提供。
 

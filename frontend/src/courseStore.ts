@@ -63,7 +63,16 @@ function loadCourse(): CourseItem[] {
     if (stored) {
       const parsed: unknown = JSON.parse(stored)
       if (Array.isArray(parsed)) {
-        const entries = parsed.filter(isCourseItem)
+        const entries = parsed.filter(isCourseItem).map(item => {
+          const sessionId = item.agentSessionId ?? (item.messages.length ? item.id : undefined)
+          return {
+            ...item,
+            agentSessionId: sessionId,
+            messages: item.messages.map(message => message.sessionId || !sessionId
+              ? message
+              : { ...message, sessionId }),
+          }
+        })
         return entries
       }
     }

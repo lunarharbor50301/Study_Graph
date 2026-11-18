@@ -60,6 +60,17 @@ export async function streamAgent(question: string, sessionId: string, context: 
   }, signal, onEvent)
 }
 
+export type ConversationSummary = {
+  id: string
+  title: string
+  updated_at: string
+  turn_count: number
+}
+
+export function listConversations(documentId: string) {
+  return request<{ conversations: ConversationSummary[] }>(`agent/conversations?document_id=${encodeURIComponent(documentId)}`)
+}
+
 export async function streamEvents<T>(url: string, body: unknown, signal: AbortSignal, onEvent: (event: T) => void) {
   const response = await fetch(withDemoUser(url), {
     method:'POST', headers:{'Content-Type':'application/json'}, signal,

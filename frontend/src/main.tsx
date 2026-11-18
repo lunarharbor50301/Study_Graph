@@ -5,7 +5,7 @@ import {Icon, Panel, SplitHandle} from './Layout'
 import { getMapTopics, MindMap, type MapTopic } from './MindMap'
 import React, { FormEvent, lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { demoUser, request, streamAgent, streamEvents, withDemoUser } from './api'
+import { demoUser, listConversations, request, streamAgent, streamEvents, withDemoUser, type ConversationSummary } from './api'
 import { currentDocument, firstEntryPage, lectureName, useCourseStore, type CourseItem, type SavedMap, type SavedTest } from './courseStore'
 import { lecture as fallbackLecture, starterMessages } from './data'
 import type { ChatMessage, Concept, CourseQuestion, DocumentInfo, Lecture, Mode, QuestionProgress, TestQuestion } from './types'
@@ -272,10 +272,11 @@ function describeLookup(line: string) {
 function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation }: {
   doc: DocumentInfo; page: number; mode: Mode; concept: Concept
   item: CourseItem
-  onAgentSession: (sessionId: string, clearSetupHistory?: boolean) => void; onCitation: (page: number, documentId?: string) => void
+  onAgentSession: (sessionId: string) => void; onCitation: (page: number, documentId?: string) => void
 }) {
   const [sessionId, setSessionId] = useState(() => item.agentSessionId ?? crypto.randomUUID())
   const [agentMessages, setAgentMessages] = useState<ChatMessage[]>([])
+  const [conversations, setConversations] = useState<ConversationSummary[]>([])
   const [loadingHistory, setLoadingHistory] = useState(true)
   const [status, setStatus] = useState('')
   const abort = useRef<AbortController | null>(null)
@@ -293,6 +294,20 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
       .finally(() => { if (!controller.signal.aborted) setLoadingHistory(false) })
     return () => controller.abort()
   }, [sessionId, doc.document_id])
+  useEffect(() => {
+    let cancelled = false
+    void listConversations(doc.document_id)
+      .then(data => { if (!cancelled) setConversations(data.conversations) })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [doc.document_id])
+  const refreshConversations = () => {
+    void listConversations(doc.document_id)
+      .then(data => setConversations(data.conversations))
+      .catch(() => {})
+  }
+  const setupMessages = item.messages.filter(message =>
+    message.sessionId ? message.sessionId === sessionId : sessionId === item.agentSessionId)
   const welcome: ChatMessage = { id: 'welcome', role: 'assistant', text: starterMessages[mode] }
   const archivedQuestion = item?.kind === 'test' ? item.questions[item.current] : undefined
   const [input, setInput] = useState('')
@@ -333,6 +348,7 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
           const trace = event.trace.map((entry: {tool: string; args: unknown; pages: number[]}) => `${entry.tool} ${JSON.stringify(entry.args)} → ${entry.pages.join(', ')}`)
           updateReply(message => ({ ...message, text: event.answer, citations: event.citations, trace }))
           setStatus(`${event.model_calls} model calls · ${(event.timing_ms.total / 1000).toFixed(2)} s`)
+          refreshConversations()
         }
       }, additionalDocuments)
     } catch (error) {
@@ -343,17 +359,33 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
       setBusy(false)
     }
   }
+  const conversationOptions = conversations.some(conversation => conversation.id === sessionId)
+    ? conversations
+    : [{ id: sessionId, title: 'New conversation', updated_at: '', turn_count: 0 }, ...conversations]
   return <div className="chat-layout"><div className="chat-context">
     <span><Icon name={mode === 'learn' ? 'book' : 'test'} size={14}/>{contextLabel}</span>
+    <select className="chat-conversation" aria-label="Conversation history" value={sessionId}
+      disabled={busy} onChange={event => {
+        const next = event.target.value
+        setStatus('')
+        onAgentSession(next)
+        setSessionId(next)
+      }}>
+      {conversationOptions.map(conversation => <option key={conversation.id} value={conversation.id}>{conversation.title}</option>)}
+    </select>
     {busy ? <button onClick={() => abort.current?.abort()}>Stop</button> : <button onClick={() => {
       const next = crypto.randomUUID()
       setStatus('')
-      onAgentSession(next, true)
+      onAgentSession(next)
       setSessionId(next)
+      setConversations(current => [
+        { id: next, title: 'New conversation', updated_at: new Date().toISOString(), turn_count: 0 },
+        ...current.filter(conversation => conversation.id !== next),
+      ])
     }}>New conversation</button>}
     <small role="status">{loadingHistory ? 'Restoring conversation…' : status}</small>
   </div>
-    <div className="chat-messages" aria-live="polite">{[welcome, ...item.messages, ...agentMessages].map(message => <div key={message.id} className={`message message--${message.role}`}>
+    <div className="chat-messages" aria-live="polite">{[welcome, ...setupMessages, ...agentMessages].map(message => <div key={message.id} className={`message message--${message.role}`}>
       {message.role === 'assistant' && <span className="assistant-avatar"><Icon name="sparkle" size={15}/></span>}
       <div>
         {message.role === 'assistant' ? <TutorMarkdown text={message.text}/> : <p>{message.text}</p>}
@@ -498,9 +530,10 @@ function App() {
   }
 
   function addMap(document: DocumentInfo, newLecture: Lecture, open: boolean, conversation: Pick<CourseItem, 'id' | 'messages'>) {
+    const messages = conversation.messages.map(message => ({ ...message, sessionId: conversation.id }))
     const entry: SavedMap = {
-      ...conversation, kind: 'map', title: newLecture.outline?.title ?? newLecture.title,
-      document, lecture: newLecture,
+      ...conversation, id: conversation.id, agentSessionId: conversation.id, messages,
+      kind: 'map', title: newLecture.outline?.title ?? newLecture.title, document, lecture: newLecture,
     }
     course.change(items => [entry, ...items])
     if (open) {
@@ -511,8 +544,10 @@ function App() {
 
   function addTest(documents: DocumentInfo[], questions: CourseQuestion[], open: boolean, conversation: Pick<CourseItem, 'id' | 'messages'>) {
     const document = documents[0]
+    const messages = conversation.messages.map(message => ({ ...message, sessionId: conversation.id }))
     const entry: SavedTest = {
-      ...conversation, kind: 'test', title: '', document, documents, questions, current: 0, responses: {},
+      ...conversation, id: conversation.id, agentSessionId: conversation.id, messages,
+      kind: 'test', title: '', document, documents, questions, current: 0, responses: {},
     }
     course.change(items => {
       const count = items.filter(saved => saved.kind === 'test' && saved.document.document_id === document.document_id).length
@@ -547,8 +582,8 @@ function App() {
         {chatVisible && <SplitHandle axis="y" label="Resize main panel and AI tutor" controls="panel-main" value={mainShare} onChange={setMainShare}/>}
         <Panel id="chat" title="AI Tutor" subtitle={mode === 'learn' ? 'Ask, compare, and practice' : 'Discuss your reasoning without spoilers'} icon="chat" canClose hidden={!chatVisible} expanded={expanded} onClose={() => setChatPanelVisible(false)} onExpand={() => toggleExpand('chat')} className="panel--chat">
           <ChatPanel key={`${item.id}:${activeDoc.document_id}`} item={item} doc={activeDoc} page={sourceDoc.document_id === activeDoc.document_id ? page : firstEntryPage(item)} mode={mode} concept={selected} onCitation={openCitation}
-            onAgentSession={(agentSessionId, clearSetupHistory) => course.update(item.id, entry => ({
-              ...entry, agentSessionId, messages: clearSetupHistory ? [] : entry.messages,
+            onAgentSession={agentSessionId => course.update(item.id, entry => ({
+              ...entry, agentSessionId,
             }))}/>
         </Panel>
       </main>

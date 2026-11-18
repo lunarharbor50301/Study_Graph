@@ -51,6 +51,7 @@ export type ChatMessage = {
   text: string
   pages?: number[]
   documentId?: string
+  sessionId?: string
   trace?: string[]
   citations?: { page: number; document_id: string }[]
 }
