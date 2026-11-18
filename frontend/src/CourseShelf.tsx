@@ -13,11 +13,11 @@ type CourseShelfProps = {
   storageError: boolean
   onOpen: (item: CourseItem) => void
   onRename: (id: string, title: string) => void
+  onDelete: (id: string) => void
 }
 
-export function CourseShelf({ items, activeId, storageError, onOpen, onRename }: CourseShelfProps) {
+export function CourseShelf({ items, activeId, storageError, onOpen, onRename, onDelete }: CourseShelfProps) {
   const [collapsed, setCollapsed] = useState<Partial<Record<CourseProject, boolean>>>({})
-  const [menuId, setMenuId] = useState<string | null>(null)
   const [editingId, setEditingId] = useState<string | null>(null)
   const activeProject = items.find(item => item.id === activeId)?.kind
 
@@ -38,35 +38,29 @@ export function CourseShelf({ items, activeId, storageError, onOpen, onRename }:
         </button>
         <ul className="course-project__entries" id={`course-project-${project.id}`} hidden={!expanded}>
           {entries.length === 0 && <li className="course-empty">No saved items yet</li>}
-          {entries.map(item => <li key={item.id}
-            className="course-entry" onContextMenu={event => {
-              if (editingId === item.id) return
-              event.preventDefault()
-              setEditingId(null)
-              setMenuId(item.id)
-            }}
-            onBlur={event => {
-              if (!event.currentTarget.contains(event.relatedTarget) && menuId === item.id) setMenuId(null)
-            }}
-            onKeyDown={event => { if (event.key === 'Escape') setMenuId(null) }}>
-            {editingId === item.id ? <form className="course-rename" onSubmit={event => {
-              event.preventDefault()
-              const title = String(new FormData(event.currentTarget).get('title') ?? '').trim()
-              if (title) { onRename(item.id, title); setEditingId(null) }
-            }} onKeyDown={event => { if (event.key === 'Escape') setEditingId(null) }}>
-              <input name="title" aria-label="Course item name" defaultValue={item.title} autoFocus required maxLength={120}
-                onFocus={event => event.currentTarget.select()}/>
-              <button type="submit" aria-label="Save name"><Icon name="check" size={15}/></button>
-              <button type="button" aria-label="Cancel rename" onClick={() => setEditingId(null)}><Icon name="close" size={15}/></button>
-            </form> : <div className="course-entry__row" data-active={item.id === activeId}>
-              <button className="sidebar__item course-entry__title" type="button" title={item.title}
-                aria-current={item.id === activeId ? 'page' : undefined}
-                onClick={() => { setMenuId(null); setEditingId(null); onOpen(item) }}>{item.title}</button>
-              <button className="course-entry__actions" type="button" aria-label={`Actions for ${item.title}`}
-                aria-expanded={menuId === item.id} onClick={() => setMenuId(menuId === item.id ? null : item.id)}>⋯</button>
-            </div>}
-            {menuId === item.id && <button type="button" className="course-entry__rename" autoFocus
-              onClick={() => { setMenuId(null); setEditingId(item.id) }}>Rename</button>}
+          {entries.map(item => <li key={item.id} className="course-entry">
+            <div className="course-entry__row" data-active={item.id === activeId}>
+              {editingId === item.id ? <input className="course-entry__input"
+                aria-label={`Rename ${item.title}`} defaultValue={item.title} autoFocus maxLength={120}
+                onFocus={event => event.currentTarget.select()}
+                onBlur={event => {
+                  const title = event.currentTarget.value.trim()
+                  if (title && title !== item.title) onRename(item.id, title)
+                  setEditingId(null)
+                }}
+                onKeyDown={event => {
+                  if (event.nativeEvent.isComposing) return
+                  if (event.key === 'Enter') { event.preventDefault(); event.currentTarget.blur() }
+                  if (event.key === 'Escape') { event.preventDefault(); setEditingId(null) }
+                }}/>
+                : <button className="sidebar__item course-entry__title" type="button"
+                  title={`${item.title} — Click to rename`} aria-label={`Open and rename ${item.title}`}
+                  aria-current={item.id === activeId ? 'page' : undefined}
+                  onClick={() => { onOpen(item); setEditingId(item.id) }}>{item.title}</button>}
+              <button className="course-entry__delete" type="button" title="Delete"
+                aria-label={`Delete ${item.title}`}
+                onClick={() => { setEditingId(null); onDelete(item.id) }}><Icon name="close" size={14}/></button>
+            </div>
           </li>)}
         </ul>
       </div>

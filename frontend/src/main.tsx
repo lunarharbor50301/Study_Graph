@@ -526,7 +526,11 @@ function App() {
   }
 
   const courseShelf = <CourseShelf items={course.items} activeId={item?.id} storageError={course.storageError}
-    onOpen={openSaved} onRename={(id, title) => course.update(id, entry => ({ ...entry, title }))}/>
+    onOpen={openSaved} onRename={(id, title) => course.update(id, entry => ({ ...entry, title }))}
+    onDelete={id => {
+      course.change(entries => entries.filter(entry => entry.id !== id))
+      if (entryId === id) switchMode(mode)
+    }}/>
   return <div className="app-shell">
     <Navigation workspaceActive={!item} courseShelf={courseShelf} mode={mode} onMode={switchMode}
       chatVisible={chatVisible} viewerVisible={viewerVisible}

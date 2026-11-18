@@ -64,7 +64,7 @@ function loadCourse(): CourseItem[] {
       const parsed: unknown = JSON.parse(stored)
       if (Array.isArray(parsed)) {
         const entries = parsed.filter(isCourseItem)
-        return demoUser === 'B' || entries.some(item => item.id === sampleTest.id) ? entries : [...entries, sampleTest]
+        return entries
       }
     }
   } catch {
