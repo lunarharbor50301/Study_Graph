@@ -1,0 +1,401 @@
+[
+  {
+    "id": "F01",
+    "question_id": "Q07",
+    "split_group": "divergence",
+    "student_answer": "同一个 warp 的线程走不同分支，导致部分线程执行，降低利用率。",
+    "expected_class": "correct",
+    "error_spans": [],
+    "expected_feedback": "认可正确内容，不捏造错误。",
+    "reference_points": [
+      "同一 warp 内线程走不同执行路径",
+      "部分线程执行会降低 SIMD 利用率"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 44,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A GPU uses a SIMD pipeline to save area on \ncontrol logic\n¡\nGroups scalar threads into warps\n¡ Branch Divergence\n¡\nOccurs when threads inside warps branch to \ndifferent execution path\n¡ Result: Only a subset of threads execute, \nwaste SIMD pipeline utilization\nIssue of SIMD Utilization: Control Divergence"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F02",
+    "question_id": "Q07",
+    "split_group": "divergence",
+    "student_answer": "同一个 warp 的线程走不同分支。",
+    "expected_class": "partial_missing",
+    "error_spans": [],
+    "expected_feedback": "指出缺少的必要要点，不将已有正确陈述判错。",
+    "reference_points": [
+      "同一 warp 内线程走不同执行路径",
+      "部分线程执行会降低 SIMD 利用率"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 44,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A GPU uses a SIMD pipeline to save area on \ncontrol logic\n¡\nGroups scalar threads into warps\n¡ Branch Divergence\n¡\nOccurs when threads inside warps branch to \ndifferent execution path\n¡ Result: Only a subset of threads execute, \nwaste SIMD pipeline utilization\nIssue of SIMD Utilization: Control Divergence"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F03",
+    "question_id": "Q07",
+    "split_group": "divergence",
+    "student_answer": "分歧是不同 GPU 使用不同程序，只会增加显存容量。",
+    "expected_class": "incorrect",
+    "error_spans": [
+      "分歧是不同 GPU 使用不同程序，只会增加显存容量。"
+    ],
+    "expected_feedback": "明确纠正该错误，并基于参考要点给提示。",
+    "reference_points": [
+      "同一 warp 内线程走不同执行路径",
+      "部分线程执行会降低 SIMD 利用率"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 44,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A GPU uses a SIMD pipeline to save area on \ncontrol logic\n¡\nGroups scalar threads into warps\n¡ Branch Divergence\n¡\nOccurs when threads inside warps branch to \ndifferent execution path\n¡ Result: Only a subset of threads execute, \nwaste SIMD pipeline utilization\nIssue of SIMD Utilization: Control Divergence"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F04",
+    "question_id": "Q08",
+    "split_group": "block-sync",
+    "student_answer": "它同步一个 block 内的线程，不能同步不同 block。",
+    "expected_class": "correct",
+    "error_spans": [],
+    "expected_feedback": "认可正确内容，不捏造错误。",
+    "reference_points": [
+      "__syncthreads 作用域是一个 CUDA block",
+      "可用于共享内存装载后的线程协调"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 63,
+        "quote": "GPU Programming: CUDA\n¡ __syncthreads()\n¡ Scope: One CUDA block\n¡ Use: Tile coordination in the shared \nmemory.\n¡ Kernel boundary\n¡ Scope: Whole threads\n¡ Use: Global phase between kernels\n¡ Achieved by launching separate kernels\nCUDA Synchronization \n__shared__ float tile[256];\ntile[threadIdx.x] = A[i];\n__syncthreads();\nuse(tile);\n¡ Load data from global memory to shared memory.\n¡ Wait until all threads in the block complete the \nshared-memory load."
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F05",
+    "question_id": "Q08",
+    "split_group": "block-sync",
+    "student_answer": "它是一种线程同步操作。",
+    "expected_class": "partial_missing",
+    "error_spans": [],
+    "expected_feedback": "指出缺少的必要要点，不将已有正确陈述判错。",
+    "reference_points": [
+      "__syncthreads 作用域是一个 CUDA block",
+      "可用于共享内存装载后的线程协调"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 63,
+        "quote": "GPU Programming: CUDA\n¡ __syncthreads()\n¡ Scope: One CUDA block\n¡ Use: Tile coordination in the shared \nmemory.\n¡ Kernel boundary\n¡ Scope: Whole threads\n¡ Use: Global phase between kernels\n¡ Achieved by launching separate kernels\nCUDA Synchronization \n__shared__ float tile[256];\ntile[threadIdx.x] = A[i];\n__syncthreads();\nuse(tile);\n¡ Load data from global memory to shared memory.\n¡ Wait until all threads in the block complete the \nshared-memory load."
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F06",
+    "question_id": "Q08",
+    "split_group": "block-sync",
+    "student_answer": "它会同步整台 GPU 上的所有 block。",
+    "expected_class": "incorrect",
+    "error_spans": [
+      "它会同步整台 GPU 上的所有 block。"
+    ],
+    "expected_feedback": "明确纠正该错误，并基于参考要点给提示。",
+    "reference_points": [
+      "__syncthreads 作用域是一个 CUDA block",
+      "可用于共享内存装载后的线程协调"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 63,
+        "quote": "GPU Programming: CUDA\n¡ __syncthreads()\n¡ Scope: One CUDA block\n¡ Use: Tile coordination in the shared \nmemory.\n¡ Kernel boundary\n¡ Scope: Whole threads\n¡ Use: Global phase between kernels\n¡ Achieved by launching separate kernels\nCUDA Synchronization \n__shared__ float tile[256];\ntile[threadIdx.x] = A[i];\n__syncthreads();\nuse(tile);\n¡ Load data from global memory to shared memory.\n¡ Wait until all threads in the block complete the \nshared-memory load."
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F07",
+    "question_id": "Q18",
+    "split_group": "local-memory",
+    "student_answer": "local memory 是线程私有，但通常在设备 DRAM 中并通过缓存访问。",
+    "expected_class": "correct",
+    "error_spans": [],
+    "expected_feedback": "认可正确内容，不捏造错误。",
+    "reference_points": [
+      "作用域是线程私有",
+      "通常位于设备 DRAM 并经过 L1/L2",
+      "不能因 local 名称就认为位于寄存器"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 46,
+        "quote": "GPU Memory Hierarchy\nEvery CUDA Memory Space Maps to a Physical Resource\nLocal memory is thread-private in scope but usually resides in device DRAM and \npasses through L1/L2.\n▪\nRegister and shared-memory allocations limit how many blocks and warps can \nreside on an SM.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n46"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F08",
+    "question_id": "Q18",
+    "split_group": "local-memory",
+    "student_answer": "local memory 的作用域是线程私有。",
+    "expected_class": "partial_missing",
+    "error_spans": [],
+    "expected_feedback": "指出缺少的必要要点，不将已有正确陈述判错。",
+    "reference_points": [
+      "作用域是线程私有",
+      "通常位于设备 DRAM 并经过 L1/L2",
+      "不能因 local 名称就认为位于寄存器"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 46,
+        "quote": "GPU Memory Hierarchy\nEvery CUDA Memory Space Maps to a Physical Resource\nLocal memory is thread-private in scope but usually resides in device DRAM and \npasses through L1/L2.\n▪\nRegister and shared-memory allocations limit how many blocks and warps can \nreside on an SM.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n46"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F09",
+    "question_id": "Q18",
+    "split_group": "local-memory",
+    "student_answer": "local memory 总是存放在寄存器中。",
+    "expected_class": "incorrect",
+    "error_spans": [
+      "local memory 总是存放在寄存器中。"
+    ],
+    "expected_feedback": "明确纠正该错误，并基于参考要点给提示。",
+    "reference_points": [
+      "作用域是线程私有",
+      "通常位于设备 DRAM 并经过 L1/L2",
+      "不能因 local 名称就认为位于寄存器"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 46,
+        "quote": "GPU Memory Hierarchy\nEvery CUDA Memory Space Maps to a Physical Resource\nLocal memory is thread-private in scope but usually resides in device DRAM and \npasses through L1/L2.\n▪\nRegister and shared-memory allocations limit how many blocks and warps can \nreside on an SM.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n46"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F10",
+    "question_id": "Q20",
+    "split_group": "bank-conflict",
+    "student_answer": "同 bank 不同地址需要多个服务轮次，同地址读可以广播。",
+    "expected_class": "correct",
+    "error_spans": [],
+    "expected_feedback": "认可正确内容，不捏造错误。",
+    "reference_points": [
+      "同 bank 不同地址需要多个服务轮次",
+      "同地址读取可以广播",
+      "与全局访存合并是不同问题"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 51,
+        "quote": "GPU Memory Hierarchy\nAccess Memory: Bank Conflicts Serialize Otherwise Parallel \nAccesses\nTypical GPUs use 32 banks; the figure shows 8 for readability. Same-address \nreads can use broadcast.\n▪\nDifferent addresses in the same bank require multiple service rounds. This differs \nfrom global-memory coalescing.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n51"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F11",
+    "question_id": "Q20",
+    "split_group": "bank-conflict",
+    "student_answer": "同 bank 不同地址需要多个服务轮次。",
+    "expected_class": "partial_missing",
+    "error_spans": [],
+    "expected_feedback": "指出缺少的必要要点，不将已有正确陈述判错。",
+    "reference_points": [
+      "同 bank 不同地址需要多个服务轮次",
+      "同地址读取可以广播",
+      "与全局访存合并是不同问题"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 51,
+        "quote": "GPU Memory Hierarchy\nAccess Memory: Bank Conflicts Serialize Otherwise Parallel \nAccesses\nTypical GPUs use 32 banks; the figure shows 8 for readability. Same-address \nreads can use broadcast.\n▪\nDifferent addresses in the same bank require multiple service rounds. This differs \nfrom global-memory coalescing.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n51"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F12",
+    "question_id": "Q20",
+    "split_group": "bank-conflict",
+    "student_answer": "同地址读取一定比不同地址的冲突更严重。",
+    "expected_class": "incorrect",
+    "error_spans": [
+      "同地址读取一定比不同地址的冲突更严重。"
+    ],
+    "expected_feedback": "明确纠正该错误，并基于参考要点给提示。",
+    "reference_points": [
+      "同 bank 不同地址需要多个服务轮次",
+      "同地址读取可以广播",
+      "与全局访存合并是不同问题"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 51,
+        "quote": "GPU Memory Hierarchy\nAccess Memory: Bank Conflicts Serialize Otherwise Parallel \nAccesses\nTypical GPUs use 32 banks; the figure shows 8 for readability. Same-address \nreads can use broadcast.\n▪\nDifferent addresses in the same bank require multiple service rounds. This differs \nfrom global-memory coalescing.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n51"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F13",
+    "question_id": "Q23",
+    "split_group": "lpddr",
+    "student_answer": "LPDDR 扩展可寻址容量，不会增大 HBM 本身。",
+    "expected_class": "correct",
+    "error_spans": [],
+    "expected_feedback": "认可正确内容，不捏造错误。",
+    "reference_points": [
+      "Grace 经 NVLink-C2C 连接 LPDDR5X",
+      "扩展加速器可寻址容量，不增大 HBM 本身"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 68,
+        "quote": "SOTA Memory Technologies\nMemory Extension: LPDDR\nHopper retains local HBM. Grace connects LPDDR5X through the coherent \nNVLink-C2C CPU–GPU link.\n▪\nLPDDR extends the capacity the accelerator can address; it does not enlarge \nHBM itself.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n68"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F14",
+    "question_id": "Q23",
+    "split_group": "lpddr",
+    "student_answer": "LPDDR 可以扩展可寻址容量。",
+    "expected_class": "partial_missing",
+    "error_spans": [],
+    "expected_feedback": "指出缺少的必要要点，不将已有正确陈述判错。",
+    "reference_points": [
+      "Grace 经 NVLink-C2C 连接 LPDDR5X",
+      "扩展加速器可寻址容量，不增大 HBM 本身"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 68,
+        "quote": "SOTA Memory Technologies\nMemory Extension: LPDDR\nHopper retains local HBM. Grace connects LPDDR5X through the coherent \nNVLink-C2C CPU–GPU link.\n▪\nLPDDR extends the capacity the accelerator can address; it does not enlarge \nHBM itself.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n68"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F15",
+    "question_id": "Q23",
+    "split_group": "lpddr",
+    "student_answer": "连接 LPDDR 会直接增加 HBM 芯片容量。",
+    "expected_class": "incorrect",
+    "error_spans": [
+      "连接 LPDDR 会直接增加 HBM 芯片容量。"
+    ],
+    "expected_feedback": "明确纠正该错误，并基于参考要点给提示。",
+    "reference_points": [
+      "Grace 经 NVLink-C2C 连接 LPDDR5X",
+      "扩展加速器可寻址容量，不增大 HBM 本身"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 68,
+        "quote": "SOTA Memory Technologies\nMemory Extension: LPDDR\nHopper retains local HBM. Grace connects LPDDR5X through the coherent \nNVLink-C2C CPU–GPU link.\n▪\nLPDDR extends the capacity the accelerator can address; it does not enlarge \nHBM itself.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n68"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F16",
+    "question_id": "Q24",
+    "split_group": "tiering",
+    "student_answer": "热数据优先放 HBM，但迁移收益必须超过传输和管理成本。",
+    "expected_class": "correct",
+    "error_spans": [],
+    "expected_feedback": "认可正确内容，不捏造错误。",
+    "reference_points": [
+      "热且延迟敏感的数据优先放 HBM",
+      "大且冷的数据可放 LPDDR",
+      "迁移收益必须超过搬运和管理成本"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 69,
+        "quote": "SOTA Memory Technologies\nTiered Memory Management Decides What Stays in HBM\nKeep hot, latency-critical, frequently reused data in HBM. Place large, cold objects \nin the LPDDR capacity tier.\n▪\nPromotion helps only when future reuse saves more than the transfer and \nbookkeeping cost.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n69"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F17",
+    "question_id": "Q24",
+    "split_group": "tiering",
+    "student_answer": "热数据优先放 HBM。",
+    "expected_class": "partial_missing",
+    "error_spans": [],
+    "expected_feedback": "指出缺少的必要要点，不将已有正确陈述判错。",
+    "reference_points": [
+      "热且延迟敏感的数据优先放 HBM",
+      "大且冷的数据可放 LPDDR",
+      "迁移收益必须超过搬运和管理成本"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 69,
+        "quote": "SOTA Memory Technologies\nTiered Memory Management Decides What Stays in HBM\nKeep hot, latency-critical, frequently reused data in HBM. Place large, cold objects \nin the LPDDR capacity tier.\n▪\nPromotion helps only when future reuse saves more than the transfer and \nbookkeeping cost.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n69"
+      }
+    ],
+    "review_status": "human_pending"
+  },
+  {
+    "id": "F18",
+    "question_id": "Q24",
+    "split_group": "tiering",
+    "student_answer": "所有数据都应该立即迁移到 HBM，迁移没有成本。",
+    "expected_class": "incorrect",
+    "error_spans": [
+      "所有数据都应该立即迁移到 HBM，迁移没有成本。"
+    ],
+    "expected_feedback": "明确纠正该错误，并基于参考要点给提示。",
+    "reference_points": [
+      "热且延迟敏感的数据优先放 HBM",
+      "大且冷的数据可放 LPDDR",
+      "迁移收益必须超过搬运和管理成本"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 69,
+        "quote": "SOTA Memory Technologies\nTiered Memory Management Decides What Stays in HBM\nKeep hot, latency-critical, frequently reused data in HBM. Place large, cold objects \nin the LPDDR capacity tier.\n▪\nPromotion helps only when future reuse saves more than the transfer and \nbookkeeping cost.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n69"
+      }
+    ],
+    "review_status": "human_pending"
+  }
+]

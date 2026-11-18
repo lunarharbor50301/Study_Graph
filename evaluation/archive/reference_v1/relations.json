@@ -1,0 +1,382 @@
+[
+  {
+    "id": "R01",
+    "source": "hazard",
+    "relation": "reduces_efficiency_of",
+    "target": "pipeline",
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 18,
+        "quote": "¡ Any condition that causes the pipeline to \nstall is called a hazard.\n¡\nResult: Much bubbles and degraded efficiency\n¡ Various types of hazards\n¡\nData Hazard: Stall due to dependencies of some \ndata\n¡\nRead-after-write (RAW)\n¡\nWrite-after-write (WAW)\n¡\nWrite-after-read (WAR)\n¡\nControl Hazard: Stall due to branch and \nsynchronization\n¡\nStructural hazard: Stall due to contention on \nhardware such as memory channel, cache slot, \nqueue, etc.\nCPU: Optimize Latency of a Small Number of Complex Threads\nWhy Pipeline Stalls: Hazards"
+      },
+      {
+        "document_id": "ACS-L1",
+        "page": 16,
+        "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R02",
+    "source": "forwarding",
+    "relation": "mitigates_stalls_in",
+    "target": "pipeline",
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 22,
+        "quote": "¡ Enable Register-to-Register or Register-to-ALU Forwarding \n¡\nE.g., result is passed directly from pipeline register to ALU input. \n¡\nThe consumer can execute earlier ——> Fewer stalls and higher pipeline efficiency\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #1: Data Forwarding"
+      },
+      {
+        "document_id": "ACS-L1",
+        "page": 16,
+        "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R03",
+    "source": "ooo",
+    "relation": "mitigates_stalls_in",
+    "target": "pipeline",
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 25,
+        "quote": "¡ Out-of-order execution separates:\n¡\nProgram order: order written by the programmer\n¡\nExecution order: order chosen by hardware\n¡\nCommit order: order that updates architectural state\n¡ Typically, the compiler would find independent instruction sets to enable OoO execution, reducing \nthe stall time of the instruction pipeline.\n¡ At runtime, CPU involves a controller to find independent instructions while some instructions are \nwaiting.\n¡\nPreempt current pipeline\n¡\nIssue independent instruction\n¡\nRestore preempted instruction when it finishes waiting\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #3: Out-of-Order (OoO) Execution"
+      },
+      {
+        "document_id": "ACS-L1",
+        "page": 16,
+        "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R04",
+    "source": "superscalar",
+    "relation": "widens",
+    "target": "pipeline",
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 26,
+        "quote": "¡ Superscalar CPU: tries to execute multiple instructions every cycle.\n¡ Need a \"wide\" pipeline\n¡\nWide fetch \n¡\nWide decode \n¡\nMultiple execution units \n¡\nMultiple load/store paths \n¡\nWide writeback \n¡\nMulti-ported register file\n¡ Challenge: \n¡\nIf instruction pipeline can issue N instructions concurrently,\n¡\nThe CPU needs resolve O(N2) dependence complexity.\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #4: Superscalar"
+      },
+      {
+        "document_id": "ACS-L1",
+        "page": 16,
+        "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R05",
+    "source": "sm",
+    "relation": "schedules",
+    "target": "warp",
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 35,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡\nHundreds of Streaming Multiprocessors\n(SM)s\n¡\nEach SM consists of:\n¡\nProcessing units, e.g., INT32, FP32, FP64, etc.\n¡\nSimplified pipelines compared to CPU cores.\n¡\nEach unit executes specific instructions that are \ndesigned to specific computing precision.\n¡\nWarp Scheduler\n¡\nWhen deploy multiple threads, GPU packages a \nbranch of threads into a warp.\n¡\nThe scheduler decides which warp would run at one \ntime slot, and these threads shard a register file.\n¡\nWhen one warp waits, schedule another ready warp.\n¡\nHigh-speed shared memory for intra-SM data \nexchange.\n¡\nTensor core: accelerator for matrix operations.\nChip Organization"
+      },
+      {
+        "document_id": "ACS-L1",
+        "page": 37,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R06",
+    "source": "latency-hiding",
+    "relation": "interleaves",
+    "target": "warp",
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 41,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\nWarp Execution\n¡ Interleave execution among \"warps\" to hide latencies"
+      },
+      {
+        "document_id": "ACS-L1",
+        "page": 37,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R07",
+    "source": "divergence",
+    "relation": "reduces_utilization_of",
+    "target": "warp",
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 44,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A GPU uses a SIMD pipeline to save area on \ncontrol logic\n¡\nGroups scalar threads into warps\n¡ Branch Divergence\n¡\nOccurs when threads inside warps branch to \ndifferent execution path\n¡ Result: Only a subset of threads execute, \nwaste SIMD pipeline utilization\nIssue of SIMD Utilization: Control Divergence"
+      },
+      {
+        "document_id": "ACS-L1",
+        "page": 37,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R08",
+    "source": "block-sync",
+    "relation": "coordinates_access_to",
+    "target": "shared-memory",
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 63,
+        "quote": "GPU Programming: CUDA\n¡ __syncthreads()\n¡ Scope: One CUDA block\n¡ Use: Tile coordination in the shared \nmemory.\n¡ Kernel boundary\n¡ Scope: Whole threads\n¡ Use: Global phase between kernels\n¡ Achieved by launching separate kernels\nCUDA Synchronization \n__shared__ float tile[256];\ntile[threadIdx.x] = A[i];\n__syncthreads();\nuse(tile);\n¡ Load data from global memory to shared memory.\n¡ Wait until all threads in the block complete the \nshared-memory load."
+      },
+      {
+        "document_id": "ACS-L2",
+        "page": 50,
+        "quote": "GPU Memory Hierarchy\nAccess Memory: Shared Memory Creates an Explicit On-Chip \nData Stage\nSoftware explicitly chooses the data to stage in shared memory and when threads \nmust synchronize.\n▪\nOne off-chip load can support repeated on-chip reuse, reducing DRAM traffic and \nincreasing arithmetic intensity.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n50"
+      }
+    ],
+    "support_type": "synthesis",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R09",
+    "source": "roofline",
+    "relation": "depends_on_reuse_enabled_by",
+    "target": "shared-memory",
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 67,
+        "quote": "Performance Models\n¡\nMemory wall: how much computation it performs for each byte moved.\n¡\nRoofline Model: Compute-Bound or Memory-Bound?\nRoofline Model\nArithmetic Intensity = FLOPs / Bytes moved from memory\nWhy peak is hard\n•\nmemory-bound: limited by bandwidth x \nintensity\n•\ncompute-bound: still needs vectorization, \ntensor cores, occupancy\n•\nreal ceilings fall with poor locality or pipeline \nutilization"
+      },
+      {
+        "document_id": "ACS-L2",
+        "page": 50,
+        "quote": "GPU Memory Hierarchy\nAccess Memory: Shared Memory Creates an Explicit On-Chip \nData Stage\nSoftware explicitly chooses the data to stage in shared memory and when threads \nmust synchronize.\n▪\nOne off-chip load can support repeated on-chip reuse, reducing DRAM traffic and \nincreasing arithmetic intensity.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n50"
+      }
+    ],
+    "support_type": "synthesis",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R10",
+    "source": "memory-hierarchy",
+    "relation": "exploits",
+    "target": "locality",
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 21,
+        "quote": "For frequent data: use fast but expensive and small memory (e.g., cache)\nFor not frequent data: use slow but cheap and large memory (e.g., main \nmemory, disk)\nCPU Memory Hierarchy\nMemory Hierarchy: Taking Advantage of Locality\nThe working set changes over time. The hierarchy is useful when a small, active \nsubset receives most accesses.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n21"
+      },
+      {
+        "document_id": "ACS-L2",
+        "page": 22,
+        "quote": "Spatial Locality\nThe neighbors of the current data \naccess tend to be accessed in the \nfuture.\nE.g., array\nTemporal Locality\nA piece of data is quickly reused \nin the future.\nE.g., Loops\nCPU Memory Hierarchy\nLocality: The Hot Feature Makes Caches Useful\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n22"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R11",
+    "source": "cache-hit",
+    "relation": "determines_miss_rate_in",
+    "target": "amat",
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 25,
+        "quote": "Hit: The requested memory block is \nfound in the current cache level, with \na valid tag match.\nHit Rate: Hits / Total Accesses\nCache Read/Write: Find the data on \ncache and then perform read/write\nMiss: The requested memory block \nis not present in the current cache \nlevel, so it must be retrieved from the \nnext lower level.\nMiss Rate: 1 - Hit Rate\nMiss Penalty: The additional time \nrequired to service a miss\nCPU Memory Hierarchy\nHit or Miss of Caches: Benefit vs. Penalty\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n25"
+      },
+      {
+        "document_id": "ACS-L2",
+        "page": 26,
+        "quote": "AMAT = Hit time + Miss rate x Miss penalty\nMiss Penalty: time to fetch a block from lower memory \nlevel\nAccess Time: Latency for the memory to handle one access\nTransfer Time: Latency to transfer data block to higher level\nMiss penalty = access time + data size / bandwidth\nCPU Memory Hierarchy\nAverage Memory Access Time (AMAT)\nA cache helps when common hits remain fast and sufficiently few accesses pay \nthe miss penalty.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n26"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R12",
+    "source": "sram-dram",
+    "relation": "provides_storage_technologies_for",
+    "target": "memory-hierarchy",
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 32,
+        "quote": "SRAM --- Store data via stable transistor circuit\nRequires low power to retain bit (423mV for 45nm) \nRequires 6 transistors/bit --- expansive\nUsage: Caches, register files\nDRAM --- Store date via tiny capacitors (bit is represented as \ncharged and discharged)\nOne transistor/bit --- cheap\nMust be re-written after being read\nMust also be periodically refreshed\nEach row can be refreshed simultaneously\nAddress lines are multiplexed:\nUpper half of address: row access strobe (RAS)\nLower half of address: column access strobe (CAS)\nUsage: DDR / GDDR / HBM\nCPU Memory Hierarchy\nDRAM Behind Cache: SRAM vs. DRAM\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n32"
+      },
+      {
+        "document_id": "ACS-L2",
+        "page": 21,
+        "quote": "For frequent data: use fast but expensive and small memory (e.g., cache)\nFor not frequent data: use slow but cheap and large memory (e.g., main \nmemory, disk)\nCPU Memory Hierarchy\nMemory Hierarchy: Taking Advantage of Locality\nThe working set changes over time. The hierarchy is useful when a small, active \nsubset receives most accesses.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n21"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R13",
+    "source": "banks",
+    "relation": "shares_bandwidth_within",
+    "target": "channels",
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 36,
+        "quote": "Memory\nController\nData Bus\nChannel\nMulti-Banked DRAM Chip\nCPU Memory Hierarchy\nDRAM Behind Cache: Multi-Bank DRAM\nBanks provide independent storage arrays. Work in one bank can overlap \npreparation in another.\n▪\nThe shared data bus still limits how much data the channel can return at once.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n36\nAddr  and Cmd Bus"
+      },
+      {
+        "document_id": "ACS-L2",
+        "page": 40,
+        "quote": "CPU Memory Hierarchy\nDRAM Behind Cache: Channel Bandwidth Grows Along Three\nAxes\nIndependent channels add bandwidth when requests use them concurrently. Bank \nscheduling improves bus utilization.\n▪\nDDR5 splits 64 data bits into two 32-bit subchannels. This split alone does not \ndouble total data width.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n40"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R14",
+    "source": "local-memory",
+    "relation": "maps_to_device_DRAM_in",
+    "target": "gpu-memory",
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 46,
+        "quote": "GPU Memory Hierarchy\nEvery CUDA Memory Space Maps to a Physical Resource\nLocal memory is thread-private in scope but usually resides in device DRAM and \npasses through L1/L2.\n▪\nRegister and shared-memory allocations limit how many blocks and warps can \nreside on an SM.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n46"
+      },
+      {
+        "document_id": "ACS-L2",
+        "page": 43,
+        "quote": "Registers\nAllocated per thread, hardware \nmanaged\nShared Memory + L1 Cache\nPer SM explicit scratchpad, \nhardware cache\nL2 Cache\nDevice-wide, shared by all SMs\nDevice Memory: GDDR / HBM\nOff-chip physical memory serving \nthe global address space\nGPU Memory Hierarchy\nLarger Capacity, Longer Access Time\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n43"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R15",
+    "source": "coalescing",
+    "relation": "optimizes_transactions_for",
+    "target": "warp",
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 48,
+        "quote": "GPU Memory Hierarchy\nAccess Memory: Coalescing Packs Nearby Addresses into \nFewer Transactions\nCoalescing is evaluated for one warp memory instruction. Aligned, contiguous \naddresses touch fewer segments.\n▪\nMisalignment can cross extra boundaries. Strided accesses can touch many more \nsegments.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n48"
+      },
+      {
+        "document_id": "ACS-L1",
+        "page": 37,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+      }
+    ],
+    "support_type": "synthesis",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R16",
+    "source": "bank-conflict",
+    "relation": "can_serialize_access_to",
+    "target": "shared-memory",
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 51,
+        "quote": "GPU Memory Hierarchy\nAccess Memory: Bank Conflicts Serialize Otherwise Parallel \nAccesses\nTypical GPUs use 32 banks; the figure shows 8 for readability. Same-address \nreads can use broadcast.\n▪\nDifferent addresses in the same bank require multiple service rounds. This differs \nfrom global-memory coalescing.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n51"
+      },
+      {
+        "document_id": "ACS-L2",
+        "page": 50,
+        "quote": "GPU Memory Hierarchy\nAccess Memory: Shared Memory Creates an Explicit On-Chip \nData Stage\nSoftware explicitly chooses the data to stage in shared memory and when threads \nmust synchronize.\n▪\nOne off-chip load can support repeated on-chip reuse, reducing DRAM traffic and \nincreasing arithmetic intensity.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n50"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R17",
+    "source": "coherence-protocol",
+    "relation": "implements",
+    "target": "coherence",
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 64,
+        "quote": "Coherence Protocols: Snooping and Directory\nSOTA Memory Technologies\nMulticore Technologies: Coherence\nSnooping broadcasts coherence requests. A directory tracks owners and sharers \nto target the messages.\n▪\nMESI describes permissions. Snooping and directory designs determine how \ncoherence messages reach the caches.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n64"
+      },
+      {
+        "document_id": "ACS-L2",
+        "page": 63,
+        "quote": "A write can make another core’s copy stale\nWrite Propagation: Other processors must eventually observe the write\nWrite Serialization: All processors must agree on one order for writes to the same \nlocation\nSOTA Memory Technologies\nMulticore Technologies: Coherence\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n63"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R18",
+    "source": "lpddr",
+    "relation": "provides_capacity_tier_for",
+    "target": "tiering",
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 68,
+        "quote": "SOTA Memory Technologies\nMemory Extension: LPDDR\nHopper retains local HBM. Grace connects LPDDR5X through the coherent \nNVLink-C2C CPU–GPU link.\n▪\nLPDDR extends the capacity the accelerator can address; it does not enlarge \nHBM itself.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n68"
+      },
+      {
+        "document_id": "ACS-L2",
+        "page": 69,
+        "quote": "SOTA Memory Technologies\nTiered Memory Management Decides What Stays in HBM\nKeep hot, latency-critical, frequently reused data in HBM. Place large, cold objects \nin the LPDDR capacity tier.\n▪\nPromotion helps only when future reuse saves more than the transfer and \nbookkeeping cost.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n69"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  },
+  {
+    "id": "R19",
+    "source": "hbm",
+    "relation": "provides_hot_data_tier_for",
+    "target": "tiering",
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 57,
+        "quote": "GPU Memory Hierarchy\nFrom GDDR to HBM: 2.5D Packaging\nHBM commonly sits beside the XPU on an interposer, forming a 2.5D package.\n▪\nDense connections improve bandwidth and energy per bit, with costs in assembly, \nyield, cooling, and power delivery.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n57"
+      },
+      {
+        "document_id": "ACS-L2",
+        "page": 69,
+        "quote": "SOTA Memory Technologies\nTiered Memory Management Decides What Stays in HBM\nKeep hot, latency-critical, frequently reused data in HBM. Place large, cold objects \nin the LPDDR capacity tier.\n▪\nPromotion helps only when future reuse saves more than the transfer and \nbookkeeping cost.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n69"
+      }
+    ],
+    "support_type": "course_grounded",
+    "review_status": "human_pending"
+  }
+]

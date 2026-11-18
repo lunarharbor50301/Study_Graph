@@ -1,0 +1,21 @@
+{
+  "version": "0.3",
+  "status": "human_review_pending",
+  "document_id": "ACS-L1",
+  "question_ids": [
+    "L1-ANSWER01",
+    "L1-ANSWER02",
+    "L1-ANSWER03",
+    "L1-ANSWER04",
+    "L1-ANSWER05",
+    "L1-ANSWER06",
+    "L1-ANSWER07",
+    "L1-ANSWER08",
+    "L1-ANSWER09",
+    "L1-ANSWER10",
+    "L1-ANSWER11",
+    "L1-ANSWER25"
+  ],
+  "question_bank": "../shared/question_bank.json",
+  "mode": "fixed_exercise_answering"
+}

@@ -1,0 +1,1434 @@
+{
+  "version": "0.4-en",
+  "status": "human_review_pending",
+  "document_id": "ACS-L1",
+  "concepts": [
+    {
+      "id": "hierarchy",
+      "document_id": "ACS-L1",
+      "name": "Computing abstraction hierarchy",
+      "aliases": [
+        "transformation hierarchy"
+      ],
+      "importance": "core",
+      "facts": [
+        "The application defines the goal.",
+        "The algorithm defines the method and parallelism.",
+        "Microarchitecture executes instructions and moves data."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 6,
+          "quote": "Transformation Hierarchy of Computing\nAbstraction in System Design\nApplication / Problem\ngoal of the computation\nAlgorithm\nmethod, dependency, parallelism\nProgram / Language / Compiler\nmachine-facing expression\nSystem Software\norganize executable work\nOperating System\nmanage resources and protection\nMicroarchitecture\nexecute instructions and move data\nrefine\nexpress\ntranslate\ndeploy\nmanage\nDigital Logic\nexecute computation\nrealize as circuits\n¡\nApplication / Problem\n¡\nAI inference, training, web \nsearch, recommendation \n¡ Algorithm\n¡\nGEMM, attention, \noptimization, sampling \n¡ Program / Language\n¡\nPython, C++, CUDA, Go\n¡ System Software\n¡\nDistributed frameworks, \nlibraries, drivers, compilers, \nruntime\n¡\nOperating System\n¡\nProcess, thread, memory, \nscheduling, I/O \n¡ Microarchitecture\n¡\nCore, cache, RAM, pipeline, \nbus, controller\n¡ Digital Logic\n¡\nGates, registers, wires, \narithmetic units"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "hierarchy"
+    },
+    {
+      "id": "pipeline",
+      "document_id": "ACS-L1",
+      "name": "Five-stage pipeline",
+      "aliases": [
+        "instruction pipeline"
+      ],
+      "importance": "core",
+      "facts": [
+        "The stages are IF, ID, EX, MEM and WB.",
+        "Overlapping stages improves throughput."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 16,
+          "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "pipeline"
+    },
+    {
+      "id": "ideal-pipeline",
+      "document_id": "ACS-L1",
+      "name": "Ideal pipeline performance",
+      "aliases": [
+        "perfect pipeline"
+      ],
+      "importance": "core",
+      "facts": [
+        "N instructions take M+N-1 cycles in an M-stage pipeline.",
+        "This assumes no bubbles and one completion per cycle after filling."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 17,
+          "quote": "¡ Perfect Pipeline\n¡ One instruction completes per cycle after filling \nthe pipeline.\n¡ No bubbles and maximum throughput.\n¡ For N instructions and M stages:\n¡ Total Cycles = M + N – 1\n¡ Average throughput\n= N / (M + N - 1) instructions per cycle\n¡ Instruction throughput per second                    \nFrequency * N / (M + N - 1)\nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "ideal-pipeline"
+    },
+    {
+      "id": "hazard",
+      "document_id": "ACS-L1",
+      "name": "Pipeline hazards",
+      "aliases": [
+        "pipeline hazard"
+      ],
+      "importance": "core",
+      "facts": [
+        "Data hazards arise from dependencies.",
+        "Branches can cause control hazards.",
+        "Resource contention causes structural hazards."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 18,
+          "quote": "¡ Any condition that causes the pipeline to \nstall is called a hazard.\n¡\nResult: Much bubbles and degraded efficiency\n¡ Various types of hazards\n¡\nData Hazard: Stall due to dependencies of some \ndata\n¡\nRead-after-write (RAW)\n¡\nWrite-after-write (WAW)\n¡\nWrite-after-read (WAR)\n¡\nControl Hazard: Stall due to branch and \nsynchronization\n¡\nStructural hazard: Stall due to contention on \nhardware such as memory channel, cache slot, \nqueue, etc.\nCPU: Optimize Latency of a Small Number of Complex Threads\nWhy Pipeline Stalls: Hazards"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "hazard"
+    },
+    {
+      "id": "forwarding",
+      "document_id": "ACS-L1",
+      "name": "Data forwarding",
+      "aliases": [
+        "data forwarding"
+      ],
+      "importance": "core",
+      "facts": [
+        "A pipeline register can feed an ALU input directly.",
+        "Earlier consumption reduces stalls."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 22,
+          "quote": "¡ Enable Register-to-Register or Register-to-ALU Forwarding \n¡\nE.g., result is passed directly from pipeline register to ALU input. \n¡\nThe consumer can execute earlier ——> Fewer stalls and higher pipeline efficiency\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #1: Data Forwarding"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "forwarding"
+    },
+    {
+      "id": "ooo",
+      "document_id": "ACS-L1",
+      "name": "Out-of-order execution and register renaming",
+      "aliases": [
+        "out-of-order execution",
+        "OoO"
+      ],
+      "importance": "core",
+      "facts": [
+        "Distinguish program, execution and commit order.",
+        "Independent instructions can execute while others wait.",
+        "Register renaming removes false register dependencies."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 23,
+          "quote": "¡ Use more registers to decouple dependencies.\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #2: Register Renaming"
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 25,
+          "quote": "¡ Out-of-order execution separates:\n¡\nProgram order: order written by the programmer\n¡\nExecution order: order chosen by hardware\n¡\nCommit order: order that updates architectural state\n¡ Typically, the compiler would find independent instruction sets to enable OoO execution, reducing \nthe stall time of the instruction pipeline.\n¡ At runtime, CPU involves a controller to find independent instructions while some instructions are \nwaiting.\n¡\nPreempt current pipeline\n¡\nIssue independent instruction\n¡\nRestore preempted instruction when it finishes waiting\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #3: Out-of-Order (OoO) Execution"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "ooo"
+    },
+    {
+      "id": "superscalar",
+      "document_id": "ACS-L1",
+      "name": "Superscalar execution",
+      "aliases": [
+        "superscalar"
+      ],
+      "importance": "core",
+      "facts": [
+        "A core can execute multiple instructions per cycle.",
+        "Wide fetch/decode and multiple execution units support this."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 26,
+          "quote": "¡ Superscalar CPU: tries to execute multiple instructions every cycle.\n¡ Need a \"wide\" pipeline\n¡\nWide fetch \n¡\nWide decode \n¡\nMultiple execution units \n¡\nMultiple load/store paths \n¡\nWide writeback \n¡\nMulti-ported register file\n¡ Challenge: \n¡\nIf instruction pipeline can issue N instructions concurrently,\n¡\nThe CPU needs resolve O(N2) dependence complexity.\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #4: Superscalar"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "superscalar"
+    },
+    {
+      "id": "smt",
+      "document_id": "ACS-L1",
+      "name": "Simultaneous multithreading",
+      "aliases": [
+        "SMT",
+        "hyper-threading"
+      ],
+      "importance": "core",
+      "facts": [
+        "Multiple hardware threads share a physical core.",
+        "Architectural state is private while execution resources are shared."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 29,
+          "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #6: OoO Superscalar with Hyper-Threading\n¡ Problem: Even OoO superscalar cores have idle slot issues.\n¡ Reasons: \n¡\nCache miss, branch misprediction, dependency chain……\n¡ Hyper-threading introduces simultaneous multithreading (SMT)\n¡\nMultiple hardware threads share one physical core.\n¡\nEach logical thread has its own architectural state.\n¡\nExecution units, caches, queues, and predictors are shared.\n¡ The closest architecture to modern CPUs."
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "smt"
+    },
+    {
+      "id": "parallelism",
+      "document_id": "ACS-L1",
+      "name": "Data and task parallelism",
+      "aliases": [
+        "data parallelism",
+        "task parallelism"
+      ],
+      "importance": "core",
+      "facts": [
+        "Data parallelism applies operations to different data.",
+        "Task parallelism runs different tasks concurrently."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 33,
+          "quote": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ Parallelism: Do multiple jobs concurrently.\n¡\nJob: instructions, operations, tasks\n¡ Data Parallelism\n¡\nDifferent pieces of data can be operated in parallel\n¡\nVector processing and array processing\n¡ Task Parallelism\n¡\nDifferent tasks can be operated in parallel\n¡\nMultithreading \nMultiprocessors"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "parallelism"
+    },
+    {
+      "id": "sm",
+      "document_id": "ACS-L1",
+      "name": "Streaming multiprocessor",
+      "aliases": [
+        "SM",
+        "Streaming Multiprocessor"
+      ],
+      "importance": "core",
+      "facts": [
+        "An SM includes processing units, warp schedulers and shared memory.",
+        "A ready warp can run while another waits."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 35,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡\nHundreds of Streaming Multiprocessors\n(SM)s\n¡\nEach SM consists of:\n¡\nProcessing units, e.g., INT32, FP32, FP64, etc.\n¡\nSimplified pipelines compared to CPU cores.\n¡\nEach unit executes specific instructions that are \ndesigned to specific computing precision.\n¡\nWarp Scheduler\n¡\nWhen deploy multiple threads, GPU packages a \nbranch of threads into a warp.\n¡\nThe scheduler decides which warp would run at one \ntime slot, and these threads shard a register file.\n¡\nWhen one warp waits, schedule another ready warp.\n¡\nHigh-speed shared memory for intra-SM data \nexchange.\n¡\nTensor core: accelerator for matrix operations.\nChip Organization"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "sm"
+    },
+    {
+      "id": "warp",
+      "document_id": "ACS-L1",
+      "name": "Warps and SIMT",
+      "aliases": [
+        "warp",
+        "SIMT"
+      ],
+      "importance": "core",
+      "facts": [
+        "An NVIDIA warp in this lecture has 32 threads.",
+        "A thread block is assigned to one SM.",
+        "Fermi residency limits are architecture-specific."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 37,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "warp"
+    },
+    {
+      "id": "latency-hiding",
+      "document_id": "ACS-L1",
+      "name": "Latency hiding",
+      "aliases": [
+        "latency hiding"
+      ],
+      "importance": "core",
+      "facts": [
+        "Interleaving ready warps hides waiting time.",
+        "It does not shorten the latency of an individual memory access."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 41,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\nWarp Execution\n¡ Interleave execution among \"warps\" to hide latencies"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "latency-hiding"
+    },
+    {
+      "id": "divergence",
+      "document_id": "ACS-L1",
+      "name": "Branch divergence",
+      "aliases": [
+        "branch divergence",
+        "control divergence"
+      ],
+      "importance": "core",
+      "facts": [
+        "Threads within one warp can take different paths.",
+        "Partially active lanes reduce utilization."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 44,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A GPU uses a SIMD pipeline to save area on \ncontrol logic\n¡\nGroups scalar threads into warps\n¡ Branch Divergence\n¡\nOccurs when threads inside warps branch to \ndifferent execution path\n¡ Result: Only a subset of threads execute, \nwaste SIMD pipeline utilization\nIssue of SIMD Utilization: Control Divergence"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "divergence"
+    },
+    {
+      "id": "atomic",
+      "document_id": "ACS-L1",
+      "name": "Atomic operations",
+      "aliases": [
+        "atomicAdd",
+        "atomic operations"
+      ],
+      "importance": "core",
+      "facts": [
+        "Concurrent updates to the same location require appropriate synchronization.",
+        "Conflicting atomicAdd operations contend for the same address."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 49,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Atomic operations are required when threads update the value of the same memory location\n¡\nCUDA: int atomicAdd (int*, int);\n¡ Atomic conflicts: the number of threads in a warp that update the same memory position\nIssue of SIMD Utilization: Atomic Operations"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "atomic"
+    },
+    {
+      "id": "mutex",
+      "document_id": "ACS-L1",
+      "name": "Mutex",
+      "aliases": [
+        "mutex"
+      ],
+      "importance": "core",
+      "facts": [
+        "A mutex serializes access to a critical section protecting shared state.",
+        "Lock contention has a cost."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 58,
+          "quote": "CPU Multicore Programming: pThread\n¡ Mutex pattern:\nMutex: Protect Shared State\npthread_mutex_lock(&lock);\nsum += local_sum;\npthread_mutex_unlock(&lock);\n¡ The Mutex provides:\n¡ Serialized access to critical section \n¡ Race avoidance for protected \nshared state \n¡ Cost: Lock contention\nOnly one thread holds the mutex; others wait and the protected region is serialized"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "mutex"
+    },
+    {
+      "id": "cuda-execution",
+      "document_id": "ACS-L1",
+      "name": "CUDA host, device and thread execution model",
+      "aliases": [
+        "__syncthreads"
+      ],
+      "importance": "core",
+      "facts": [
+        "Host code manages device memory and launches kernels.",
+        "Thread and block indices select work within a kernel.",
+        "__syncthreads coordinates threads within one block, for example after loading shared memory."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 61,
+          "quote": "GPU Programming: CUDA\n¡ CUDA starts on the CPU: host code manages device memory, data movement, and kernel launch.\nCUDA Program Structure\nHost memory\nh_A, h_B, h_C\ncopy\nDevice memory\nd_A, d_B, d_C\nlaunch\nKernel execution\nvecAdd<<<...>>>\ncopy\nHost result\nh_C\ncudaMalloc(&d_A, bytes);\ncudaMemcpy(d_A, h_A, bytes, cudaMemcpyHostToDevice);\nvecAdd<<<numBlocks, blockSize>>>(d_A, d_B, d_C, n);\ncudaMemcpy(h_C, d_C, bytes, cudaMemcpyDeviceToHost);\ncudaFree(d_A);\nImportant detail\nKernel launch is asynchronous.\nUse cudaDeviceSynchronize() or a \nblocking copy/event when host \ncode needs the result."
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 62,
+          "quote": "GPU Programming: CUDA\n¡ Kernel Definition\n¡ Every CUDA thread runs the same kernel \ncode; built-in IDs select the data element.\nCUDA Kernel Definition and Thread Indexing\n__global__ void vecAdd(float *A, float *B,\nfloat *C, int n) {\nint i = blockIdx.x * blockDim.x + threadIdx.x;\nif (i < n) C[i] = A[i] + B[i];\n}\nblockIdx.x = 0\n0\n1\n2\n3\n4\n5\nblockIdx.x = 1\n0\n1\n2\n3\n4\n5\nblockIdx.x = 2\n0\n1\n2\n3\n4\n5\nblockDim.x is the number of threads per block. \nthreadIdx.x is the local index inside that block.\ni = blockIdx.x * blockDim.x + threadIdx.x"
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 63,
+          "quote": "GPU Programming: CUDA\n¡ __syncthreads()\n¡ Scope: One CUDA block\n¡ Use: Tile coordination in the shared \nmemory.\n¡ Kernel boundary\n¡ Scope: Whole threads\n¡ Use: Global phase between kernels\n¡ Achieved by launching separate kernels\nCUDA Synchronization \n__shared__ float tile[256];\ntile[threadIdx.x] = A[i];\n__syncthreads();\nuse(tile);\n¡ Load data from global memory to shared memory.\n¡ Wait until all threads in the block complete the \nshared-memory load."
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "cuda-execution"
+    },
+    {
+      "id": "amdahl",
+      "document_id": "ACS-L1",
+      "name": "Amdahl's law",
+      "aliases": [
+        "Amdahl law"
+      ],
+      "importance": "core",
+      "facts": [
+        "For a fixed problem size, S(p)=1/((1-f)+f/p).",
+        "f is the parallelizable fraction.",
+        "The serial fraction limits maximum speedup."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 66,
+          "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "amdahl"
+    },
+    {
+      "id": "roofline",
+      "document_id": "ACS-L1",
+      "name": "Roofline and arithmetic intensity",
+      "aliases": [
+        "roofline",
+        "arithmetic intensity"
+      ],
+      "importance": "core",
+      "facts": [
+        "Arithmetic intensity is FLOPs per byte moved from memory.",
+        "Bandwidth times arithmetic intensity bounds memory-bound performance.",
+        "Peak throughput is not guaranteed."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 67,
+          "quote": "Performance Models\n¡\nMemory wall: how much computation it performs for each byte moved.\n¡\nRoofline Model: Compute-Bound or Memory-Bound?\nRoofline Model\nArithmetic Intensity = FLOPs / Bytes moved from memory\nWhy peak is hard\n•\nmemory-bound: limited by bandwidth x \nintensity\n•\ncompute-bound: still needs vectorization, \ntensor cores, occupancy\n•\nreal ceilings fall with poor locality or pipeline \nutilization"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "roofline"
+    },
+    {
+      "id": "cpu-gpu",
+      "document_id": "ACS-L1",
+      "name": "CPU latency versus GPU throughput",
+      "aliases": [],
+      "importance": "core",
+      "facts": [
+        "CPUs use complex cores to reduce latency for a few threads.",
+        "GPUs exploit many parallel threads for throughput.",
+        "Parallel tensor operations in AI workloads benefit from GPU throughput."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 30,
+          "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nSummary\n¡ A modern CPU core spends many \ntransistors on\n¡\nData Forwarding\n¡\nRegister Renaming\n¡\nOoO Execution\n¡\nSuperscalar\n¡\nSpeculative Execution\n¡\n……\n¡ Answer: How can one or a few complex \nthreads make progress quickly?\n¡ Ideal Scenarios\n¡\nControl-heavy programs \n¡\nIrregular data structures \n¡\nOS and runtime services \n¡\nLow-latency request handling \n¡\n……\n¡ Much complex micro-\narchitecture and difficult to scale!"
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 43,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\nCPU vs GPU\n¡ CPU: A few out-of-order, superscalar, hyper-threading cores --- heavy cores\n¡ GPU: Many in-order, SIDM-pipeline cores --- light cores\n¡\nEnable 1,000 to 10,000 threads for parallel computing"
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 52,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Scaling laws made compute the bottleneck\nWhy AI Moved Toward GPU-Centric Computing?\n¡ Transformers made the computation massively data-parallel\nLINE 1: DEMAND\nScaling laws turn AI into sustained FLOP demand\nEmpirical loss improves predictably as compute, parameters, and data increase.\nScales model size and token count together.\nThe hardware target becomes high-throughput training, not low-latency single-\nthread execution.\ncompute\nmodel quality\nLINE 2: STRUCTURE\nTransformers expose SIMD/SIMT-friendly work\nMost expensive layers are dense tensor kernels:\ne.g., QKV projection, QK^T attention scores, AV product, FFN GEMM.\nParallel axes: batch, token, head, hidden dimension.\nControl flow is small; arithmetic intensity is high when tiled well.\nQKV \nGEMM\nQK^T\nSoftmax\nAV GEMM\nFFN \nGEMM\nGPU-centric execution\nmany simple threads + high bandwidth + tensor units\nCPU remains the host controller; GPU becomes the dominant floating-point compute engine."
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "cpu-gpu"
+    },
+    {
+      "id": "speculation",
+      "document_id": "ACS-L1",
+      "name": "Speculative execution and branch prediction",
+      "aliases": [],
+      "importance": "core",
+      "facts": [
+        "Prediction allows later work to begin before a branch is resolved.",
+        "A wrong prediction discards speculative work and incurs a penalty."
+      ],
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 27,
+          "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #5: Speculative Execution\n¡ Prediction for next instructions\n¡\nIssue risky instructions on the chance of considerable benefits.\n¡ Benefit\n¡\nQuick completion --- low latency\n¡\nKeep deep pipeline busy --- high throughput\n¡ Cost\n¡\nWrong-path work wastes energy and cycles.\n¡\nRecovery penalty grows with pipeline depth and speculation window."
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 28,
+          "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nSpeculative Execution: Branch Prediction\n¡ Naïve speculative execution: Static Prediction\n¡\nThe compiler resolves user’s codes and find the \nbranches that would not be taken.\n¡\nRemove corresponding instructions to avoid \ncontrol hazards.\n¡ Dynamic Branch Prediction\n¡\nLearn branch behavior autonomously, no \ncompiler analysis or profiling\n¡\nAdapt to changing branch behavior\nExample: Why branch is predictable"
+        }
+      ],
+      "review_status": "human_pending",
+      "split_group": "speculation"
+    }
+  ],
+  "relations": [
+    {
+      "id": "R01",
+      "source": "hazard",
+      "relation": "reduces_efficiency_of",
+      "target": "pipeline",
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 18,
+          "quote": "¡ Any condition that causes the pipeline to \nstall is called a hazard.\n¡\nResult: Much bubbles and degraded efficiency\n¡ Various types of hazards\n¡\nData Hazard: Stall due to dependencies of some \ndata\n¡\nRead-after-write (RAW)\n¡\nWrite-after-write (WAW)\n¡\nWrite-after-read (WAR)\n¡\nControl Hazard: Stall due to branch and \nsynchronization\n¡\nStructural hazard: Stall due to contention on \nhardware such as memory channel, cache slot, \nqueue, etc.\nCPU: Optimize Latency of a Small Number of Complex Threads\nWhy Pipeline Stalls: Hazards"
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 16,
+          "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+        }
+      ],
+      "support_type": "course_grounded",
+      "review_status": "human_pending"
+    },
+    {
+      "id": "R02",
+      "source": "forwarding",
+      "relation": "mitigates_stalls_in",
+      "target": "pipeline",
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 22,
+          "quote": "¡ Enable Register-to-Register or Register-to-ALU Forwarding \n¡\nE.g., result is passed directly from pipeline register to ALU input. \n¡\nThe consumer can execute earlier ——> Fewer stalls and higher pipeline efficiency\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #1: Data Forwarding"
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 16,
+          "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+        }
+      ],
+      "support_type": "course_grounded",
+      "review_status": "human_pending"
+    },
+    {
+      "id": "R03",
+      "source": "ooo",
+      "relation": "mitigates_stalls_in",
+      "target": "pipeline",
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 25,
+          "quote": "¡ Out-of-order execution separates:\n¡\nProgram order: order written by the programmer\n¡\nExecution order: order chosen by hardware\n¡\nCommit order: order that updates architectural state\n¡ Typically, the compiler would find independent instruction sets to enable OoO execution, reducing \nthe stall time of the instruction pipeline.\n¡ At runtime, CPU involves a controller to find independent instructions while some instructions are \nwaiting.\n¡\nPreempt current pipeline\n¡\nIssue independent instruction\n¡\nRestore preempted instruction when it finishes waiting\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #3: Out-of-Order (OoO) Execution"
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 16,
+          "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+        }
+      ],
+      "support_type": "course_grounded",
+      "review_status": "human_pending"
+    },
+    {
+      "id": "R04",
+      "source": "superscalar",
+      "relation": "widens",
+      "target": "pipeline",
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 26,
+          "quote": "¡ Superscalar CPU: tries to execute multiple instructions every cycle.\n¡ Need a \"wide\" pipeline\n¡\nWide fetch \n¡\nWide decode \n¡\nMultiple execution units \n¡\nMultiple load/store paths \n¡\nWide writeback \n¡\nMulti-ported register file\n¡ Challenge: \n¡\nIf instruction pipeline can issue N instructions concurrently,\n¡\nThe CPU needs resolve O(N2) dependence complexity.\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #4: Superscalar"
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 16,
+          "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+        }
+      ],
+      "support_type": "course_grounded",
+      "review_status": "human_pending"
+    },
+    {
+      "id": "R05",
+      "source": "sm",
+      "relation": "schedules",
+      "target": "warp",
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 35,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡\nHundreds of Streaming Multiprocessors\n(SM)s\n¡\nEach SM consists of:\n¡\nProcessing units, e.g., INT32, FP32, FP64, etc.\n¡\nSimplified pipelines compared to CPU cores.\n¡\nEach unit executes specific instructions that are \ndesigned to specific computing precision.\n¡\nWarp Scheduler\n¡\nWhen deploy multiple threads, GPU packages a \nbranch of threads into a warp.\n¡\nThe scheduler decides which warp would run at one \ntime slot, and these threads shard a register file.\n¡\nWhen one warp waits, schedule another ready warp.\n¡\nHigh-speed shared memory for intra-SM data \nexchange.\n¡\nTensor core: accelerator for matrix operations.\nChip Organization"
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 37,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+        }
+      ],
+      "support_type": "course_grounded",
+      "review_status": "human_pending"
+    },
+    {
+      "id": "R06",
+      "source": "latency-hiding",
+      "relation": "interleaves",
+      "target": "warp",
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 41,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\nWarp Execution\n¡ Interleave execution among \"warps\" to hide latencies"
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 37,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+        }
+      ],
+      "support_type": "course_grounded",
+      "review_status": "human_pending"
+    },
+    {
+      "id": "R07",
+      "source": "divergence",
+      "relation": "reduces_utilization_of",
+      "target": "warp",
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 44,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A GPU uses a SIMD pipeline to save area on \ncontrol logic\n¡\nGroups scalar threads into warps\n¡ Branch Divergence\n¡\nOccurs when threads inside warps branch to \ndifferent execution path\n¡ Result: Only a subset of threads execute, \nwaste SIMD pipeline utilization\nIssue of SIMD Utilization: Control Divergence"
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 37,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+        }
+      ],
+      "support_type": "course_grounded",
+      "review_status": "human_pending"
+    }
+  ],
+  "study_notes": [
+    {
+      "id": "N-hierarchy",
+      "title": "Computing abstraction hierarchy",
+      "required_points": [
+        {
+          "id": "hierarchy-P1",
+          "text": "The application defines the goal.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 6,
+              "quote": "Transformation Hierarchy of Computing\nAbstraction in System Design\nApplication / Problem\ngoal of the computation\nAlgorithm\nmethod, dependency, parallelism\nProgram / Language / Compiler\nmachine-facing expression\nSystem Software\norganize executable work\nOperating System\nmanage resources and protection\nMicroarchitecture\nexecute instructions and move data\nrefine\nexpress\ntranslate\ndeploy\nmanage\nDigital Logic\nexecute computation\nrealize as circuits\n¡\nApplication / Problem\n¡\nAI inference, training, web \nsearch, recommendation \n¡ Algorithm\n¡\nGEMM, attention, \noptimization, sampling \n¡ Program / Language\n¡\nPython, C++, CUDA, Go\n¡ System Software\n¡\nDistributed frameworks, \nlibraries, drivers, compilers, \nruntime\n¡\nOperating System\n¡\nProcess, thread, memory, \nscheduling, I/O \n¡ Microarchitecture\n¡\nCore, cache, RAM, pipeline, \nbus, controller\n¡ Digital Logic\n¡\nGates, registers, wires, \narithmetic units"
+            }
+          ]
+        },
+        {
+          "id": "hierarchy-P2",
+          "text": "The algorithm defines the method and parallelism.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 6,
+              "quote": "Transformation Hierarchy of Computing\nAbstraction in System Design\nApplication / Problem\ngoal of the computation\nAlgorithm\nmethod, dependency, parallelism\nProgram / Language / Compiler\nmachine-facing expression\nSystem Software\norganize executable work\nOperating System\nmanage resources and protection\nMicroarchitecture\nexecute instructions and move data\nrefine\nexpress\ntranslate\ndeploy\nmanage\nDigital Logic\nexecute computation\nrealize as circuits\n¡\nApplication / Problem\n¡\nAI inference, training, web \nsearch, recommendation \n¡ Algorithm\n¡\nGEMM, attention, \noptimization, sampling \n¡ Program / Language\n¡\nPython, C++, CUDA, Go\n¡ System Software\n¡\nDistributed frameworks, \nlibraries, drivers, compilers, \nruntime\n¡\nOperating System\n¡\nProcess, thread, memory, \nscheduling, I/O \n¡ Microarchitecture\n¡\nCore, cache, RAM, pipeline, \nbus, controller\n¡ Digital Logic\n¡\nGates, registers, wires, \narithmetic units"
+            }
+          ]
+        },
+        {
+          "id": "hierarchy-P3",
+          "text": "Microarchitecture executes instructions and moves data.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 6,
+              "quote": "Transformation Hierarchy of Computing\nAbstraction in System Design\nApplication / Problem\ngoal of the computation\nAlgorithm\nmethod, dependency, parallelism\nProgram / Language / Compiler\nmachine-facing expression\nSystem Software\norganize executable work\nOperating System\nmanage resources and protection\nMicroarchitecture\nexecute instructions and move data\nrefine\nexpress\ntranslate\ndeploy\nmanage\nDigital Logic\nexecute computation\nrealize as circuits\n¡\nApplication / Problem\n¡\nAI inference, training, web \nsearch, recommendation \n¡ Algorithm\n¡\nGEMM, attention, \noptimization, sampling \n¡ Program / Language\n¡\nPython, C++, CUDA, Go\n¡ System Software\n¡\nDistributed frameworks, \nlibraries, drivers, compilers, \nruntime\n¡\nOperating System\n¡\nProcess, thread, memory, \nscheduling, I/O \n¡ Microarchitecture\n¡\nCore, cache, RAM, pipeline, \nbus, controller\n¡ Digital Logic\n¡\nGates, registers, wires, \narithmetic units"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-pipeline",
+      "title": "Five-stage pipeline",
+      "required_points": [
+        {
+          "id": "pipeline-P1",
+          "text": "The stages are IF, ID, EX, MEM and WB.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 16,
+              "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+            }
+          ]
+        },
+        {
+          "id": "pipeline-P2",
+          "text": "Overlapping stages improves throughput.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 16,
+              "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-ideal-pipeline",
+      "title": "Ideal pipeline performance",
+      "required_points": [
+        {
+          "id": "ideal-pipeline-P1",
+          "text": "N instructions take M+N-1 cycles in an M-stage pipeline.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 17,
+              "quote": "¡ Perfect Pipeline\n¡ One instruction completes per cycle after filling \nthe pipeline.\n¡ No bubbles and maximum throughput.\n¡ For N instructions and M stages:\n¡ Total Cycles = M + N – 1\n¡ Average throughput\n= N / (M + N - 1) instructions per cycle\n¡ Instruction throughput per second                    \nFrequency * N / (M + N - 1)\nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+            }
+          ]
+        },
+        {
+          "id": "ideal-pipeline-P2",
+          "text": "This assumes no bubbles and one completion per cycle after filling.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 17,
+              "quote": "¡ Perfect Pipeline\n¡ One instruction completes per cycle after filling \nthe pipeline.\n¡ No bubbles and maximum throughput.\n¡ For N instructions and M stages:\n¡ Total Cycles = M + N – 1\n¡ Average throughput\n= N / (M + N - 1) instructions per cycle\n¡ Instruction throughput per second                    \nFrequency * N / (M + N - 1)\nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-hazard",
+      "title": "Pipeline hazards",
+      "required_points": [
+        {
+          "id": "hazard-P1",
+          "text": "Data hazards arise from dependencies.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 18,
+              "quote": "¡ Any condition that causes the pipeline to \nstall is called a hazard.\n¡\nResult: Much bubbles and degraded efficiency\n¡ Various types of hazards\n¡\nData Hazard: Stall due to dependencies of some \ndata\n¡\nRead-after-write (RAW)\n¡\nWrite-after-write (WAW)\n¡\nWrite-after-read (WAR)\n¡\nControl Hazard: Stall due to branch and \nsynchronization\n¡\nStructural hazard: Stall due to contention on \nhardware such as memory channel, cache slot, \nqueue, etc.\nCPU: Optimize Latency of a Small Number of Complex Threads\nWhy Pipeline Stalls: Hazards"
+            }
+          ]
+        },
+        {
+          "id": "hazard-P2",
+          "text": "Branches can cause control hazards.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 18,
+              "quote": "¡ Any condition that causes the pipeline to \nstall is called a hazard.\n¡\nResult: Much bubbles and degraded efficiency\n¡ Various types of hazards\n¡\nData Hazard: Stall due to dependencies of some \ndata\n¡\nRead-after-write (RAW)\n¡\nWrite-after-write (WAW)\n¡\nWrite-after-read (WAR)\n¡\nControl Hazard: Stall due to branch and \nsynchronization\n¡\nStructural hazard: Stall due to contention on \nhardware such as memory channel, cache slot, \nqueue, etc.\nCPU: Optimize Latency of a Small Number of Complex Threads\nWhy Pipeline Stalls: Hazards"
+            }
+          ]
+        },
+        {
+          "id": "hazard-P3",
+          "text": "Resource contention causes structural hazards.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 18,
+              "quote": "¡ Any condition that causes the pipeline to \nstall is called a hazard.\n¡\nResult: Much bubbles and degraded efficiency\n¡ Various types of hazards\n¡\nData Hazard: Stall due to dependencies of some \ndata\n¡\nRead-after-write (RAW)\n¡\nWrite-after-write (WAW)\n¡\nWrite-after-read (WAR)\n¡\nControl Hazard: Stall due to branch and \nsynchronization\n¡\nStructural hazard: Stall due to contention on \nhardware such as memory channel, cache slot, \nqueue, etc.\nCPU: Optimize Latency of a Small Number of Complex Threads\nWhy Pipeline Stalls: Hazards"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-forwarding",
+      "title": "Data forwarding",
+      "required_points": [
+        {
+          "id": "forwarding-P1",
+          "text": "A pipeline register can feed an ALU input directly.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 22,
+              "quote": "¡ Enable Register-to-Register or Register-to-ALU Forwarding \n¡\nE.g., result is passed directly from pipeline register to ALU input. \n¡\nThe consumer can execute earlier ——> Fewer stalls and higher pipeline efficiency\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #1: Data Forwarding"
+            }
+          ]
+        },
+        {
+          "id": "forwarding-P2",
+          "text": "Earlier consumption reduces stalls.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 22,
+              "quote": "¡ Enable Register-to-Register or Register-to-ALU Forwarding \n¡\nE.g., result is passed directly from pipeline register to ALU input. \n¡\nThe consumer can execute earlier ——> Fewer stalls and higher pipeline efficiency\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #1: Data Forwarding"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-ooo",
+      "title": "Out-of-order execution and register renaming",
+      "required_points": [
+        {
+          "id": "ooo-P1",
+          "text": "Distinguish program, execution and commit order.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 23,
+              "quote": "¡ Use more registers to decouple dependencies.\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #2: Register Renaming"
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 25,
+              "quote": "¡ Out-of-order execution separates:\n¡\nProgram order: order written by the programmer\n¡\nExecution order: order chosen by hardware\n¡\nCommit order: order that updates architectural state\n¡ Typically, the compiler would find independent instruction sets to enable OoO execution, reducing \nthe stall time of the instruction pipeline.\n¡ At runtime, CPU involves a controller to find independent instructions while some instructions are \nwaiting.\n¡\nPreempt current pipeline\n¡\nIssue independent instruction\n¡\nRestore preempted instruction when it finishes waiting\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #3: Out-of-Order (OoO) Execution"
+            }
+          ]
+        },
+        {
+          "id": "ooo-P2",
+          "text": "Independent instructions can execute while others wait.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 23,
+              "quote": "¡ Use more registers to decouple dependencies.\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #2: Register Renaming"
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 25,
+              "quote": "¡ Out-of-order execution separates:\n¡\nProgram order: order written by the programmer\n¡\nExecution order: order chosen by hardware\n¡\nCommit order: order that updates architectural state\n¡ Typically, the compiler would find independent instruction sets to enable OoO execution, reducing \nthe stall time of the instruction pipeline.\n¡ At runtime, CPU involves a controller to find independent instructions while some instructions are \nwaiting.\n¡\nPreempt current pipeline\n¡\nIssue independent instruction\n¡\nRestore preempted instruction when it finishes waiting\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #3: Out-of-Order (OoO) Execution"
+            }
+          ]
+        },
+        {
+          "id": "ooo-P3",
+          "text": "Register renaming removes false register dependencies.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 23,
+              "quote": "¡ Use more registers to decouple dependencies.\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #2: Register Renaming"
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 25,
+              "quote": "¡ Out-of-order execution separates:\n¡\nProgram order: order written by the programmer\n¡\nExecution order: order chosen by hardware\n¡\nCommit order: order that updates architectural state\n¡ Typically, the compiler would find independent instruction sets to enable OoO execution, reducing \nthe stall time of the instruction pipeline.\n¡ At runtime, CPU involves a controller to find independent instructions while some instructions are \nwaiting.\n¡\nPreempt current pipeline\n¡\nIssue independent instruction\n¡\nRestore preempted instruction when it finishes waiting\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #3: Out-of-Order (OoO) Execution"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-superscalar",
+      "title": "Superscalar execution",
+      "required_points": [
+        {
+          "id": "superscalar-P1",
+          "text": "A core can execute multiple instructions per cycle.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 26,
+              "quote": "¡ Superscalar CPU: tries to execute multiple instructions every cycle.\n¡ Need a \"wide\" pipeline\n¡\nWide fetch \n¡\nWide decode \n¡\nMultiple execution units \n¡\nMultiple load/store paths \n¡\nWide writeback \n¡\nMulti-ported register file\n¡ Challenge: \n¡\nIf instruction pipeline can issue N instructions concurrently,\n¡\nThe CPU needs resolve O(N2) dependence complexity.\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #4: Superscalar"
+            }
+          ]
+        },
+        {
+          "id": "superscalar-P2",
+          "text": "Wide fetch/decode and multiple execution units support this.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 26,
+              "quote": "¡ Superscalar CPU: tries to execute multiple instructions every cycle.\n¡ Need a \"wide\" pipeline\n¡\nWide fetch \n¡\nWide decode \n¡\nMultiple execution units \n¡\nMultiple load/store paths \n¡\nWide writeback \n¡\nMulti-ported register file\n¡ Challenge: \n¡\nIf instruction pipeline can issue N instructions concurrently,\n¡\nThe CPU needs resolve O(N2) dependence complexity.\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #4: Superscalar"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-smt",
+      "title": "Simultaneous multithreading",
+      "required_points": [
+        {
+          "id": "smt-P1",
+          "text": "Multiple hardware threads share a physical core.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 29,
+              "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #6: OoO Superscalar with Hyper-Threading\n¡ Problem: Even OoO superscalar cores have idle slot issues.\n¡ Reasons: \n¡\nCache miss, branch misprediction, dependency chain……\n¡ Hyper-threading introduces simultaneous multithreading (SMT)\n¡\nMultiple hardware threads share one physical core.\n¡\nEach logical thread has its own architectural state.\n¡\nExecution units, caches, queues, and predictors are shared.\n¡ The closest architecture to modern CPUs."
+            }
+          ]
+        },
+        {
+          "id": "smt-P2",
+          "text": "Architectural state is private while execution resources are shared.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 29,
+              "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #6: OoO Superscalar with Hyper-Threading\n¡ Problem: Even OoO superscalar cores have idle slot issues.\n¡ Reasons: \n¡\nCache miss, branch misprediction, dependency chain……\n¡ Hyper-threading introduces simultaneous multithreading (SMT)\n¡\nMultiple hardware threads share one physical core.\n¡\nEach logical thread has its own architectural state.\n¡\nExecution units, caches, queues, and predictors are shared.\n¡ The closest architecture to modern CPUs."
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-parallelism",
+      "title": "Data and task parallelism",
+      "required_points": [
+        {
+          "id": "parallelism-P1",
+          "text": "Data parallelism applies operations to different data.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 33,
+              "quote": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ Parallelism: Do multiple jobs concurrently.\n¡\nJob: instructions, operations, tasks\n¡ Data Parallelism\n¡\nDifferent pieces of data can be operated in parallel\n¡\nVector processing and array processing\n¡ Task Parallelism\n¡\nDifferent tasks can be operated in parallel\n¡\nMultithreading \nMultiprocessors"
+            }
+          ]
+        },
+        {
+          "id": "parallelism-P2",
+          "text": "Task parallelism runs different tasks concurrently.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 33,
+              "quote": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ Parallelism: Do multiple jobs concurrently.\n¡\nJob: instructions, operations, tasks\n¡ Data Parallelism\n¡\nDifferent pieces of data can be operated in parallel\n¡\nVector processing and array processing\n¡ Task Parallelism\n¡\nDifferent tasks can be operated in parallel\n¡\nMultithreading \nMultiprocessors"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-sm",
+      "title": "Streaming multiprocessor",
+      "required_points": [
+        {
+          "id": "sm-P1",
+          "text": "An SM includes processing units, warp schedulers and shared memory.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 35,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡\nHundreds of Streaming Multiprocessors\n(SM)s\n¡\nEach SM consists of:\n¡\nProcessing units, e.g., INT32, FP32, FP64, etc.\n¡\nSimplified pipelines compared to CPU cores.\n¡\nEach unit executes specific instructions that are \ndesigned to specific computing precision.\n¡\nWarp Scheduler\n¡\nWhen deploy multiple threads, GPU packages a \nbranch of threads into a warp.\n¡\nThe scheduler decides which warp would run at one \ntime slot, and these threads shard a register file.\n¡\nWhen one warp waits, schedule another ready warp.\n¡\nHigh-speed shared memory for intra-SM data \nexchange.\n¡\nTensor core: accelerator for matrix operations.\nChip Organization"
+            }
+          ]
+        },
+        {
+          "id": "sm-P2",
+          "text": "A ready warp can run while another waits.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 35,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡\nHundreds of Streaming Multiprocessors\n(SM)s\n¡\nEach SM consists of:\n¡\nProcessing units, e.g., INT32, FP32, FP64, etc.\n¡\nSimplified pipelines compared to CPU cores.\n¡\nEach unit executes specific instructions that are \ndesigned to specific computing precision.\n¡\nWarp Scheduler\n¡\nWhen deploy multiple threads, GPU packages a \nbranch of threads into a warp.\n¡\nThe scheduler decides which warp would run at one \ntime slot, and these threads shard a register file.\n¡\nWhen one warp waits, schedule another ready warp.\n¡\nHigh-speed shared memory for intra-SM data \nexchange.\n¡\nTensor core: accelerator for matrix operations.\nChip Organization"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-warp",
+      "title": "Warps and SIMT",
+      "required_points": [
+        {
+          "id": "warp-P1",
+          "text": "An NVIDIA warp in this lecture has 32 threads.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 37,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+            }
+          ]
+        },
+        {
+          "id": "warp-P2",
+          "text": "A thread block is assigned to one SM.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 37,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+            }
+          ]
+        },
+        {
+          "id": "warp-P3",
+          "text": "Fermi residency limits are architecture-specific.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 37,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-latency-hiding",
+      "title": "Latency hiding",
+      "required_points": [
+        {
+          "id": "latency-hiding-P1",
+          "text": "Interleaving ready warps hides waiting time.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 41,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\nWarp Execution\n¡ Interleave execution among \"warps\" to hide latencies"
+            }
+          ]
+        },
+        {
+          "id": "latency-hiding-P2",
+          "text": "It does not shorten the latency of an individual memory access.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 41,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\nWarp Execution\n¡ Interleave execution among \"warps\" to hide latencies"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-divergence",
+      "title": "Branch divergence",
+      "required_points": [
+        {
+          "id": "divergence-P1",
+          "text": "Threads within one warp can take different paths.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 44,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A GPU uses a SIMD pipeline to save area on \ncontrol logic\n¡\nGroups scalar threads into warps\n¡ Branch Divergence\n¡\nOccurs when threads inside warps branch to \ndifferent execution path\n¡ Result: Only a subset of threads execute, \nwaste SIMD pipeline utilization\nIssue of SIMD Utilization: Control Divergence"
+            }
+          ]
+        },
+        {
+          "id": "divergence-P2",
+          "text": "Partially active lanes reduce utilization.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 44,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A GPU uses a SIMD pipeline to save area on \ncontrol logic\n¡\nGroups scalar threads into warps\n¡ Branch Divergence\n¡\nOccurs when threads inside warps branch to \ndifferent execution path\n¡ Result: Only a subset of threads execute, \nwaste SIMD pipeline utilization\nIssue of SIMD Utilization: Control Divergence"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-atomic",
+      "title": "Atomic operations",
+      "required_points": [
+        {
+          "id": "atomic-P1",
+          "text": "Concurrent updates to the same location require appropriate synchronization.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 49,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Atomic operations are required when threads update the value of the same memory location\n¡\nCUDA: int atomicAdd (int*, int);\n¡ Atomic conflicts: the number of threads in a warp that update the same memory position\nIssue of SIMD Utilization: Atomic Operations"
+            }
+          ]
+        },
+        {
+          "id": "atomic-P2",
+          "text": "Conflicting atomicAdd operations contend for the same address.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 49,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Atomic operations are required when threads update the value of the same memory location\n¡\nCUDA: int atomicAdd (int*, int);\n¡ Atomic conflicts: the number of threads in a warp that update the same memory position\nIssue of SIMD Utilization: Atomic Operations"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-mutex",
+      "title": "Mutex",
+      "required_points": [
+        {
+          "id": "mutex-P1",
+          "text": "A mutex serializes access to a critical section protecting shared state.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 58,
+              "quote": "CPU Multicore Programming: pThread\n¡ Mutex pattern:\nMutex: Protect Shared State\npthread_mutex_lock(&lock);\nsum += local_sum;\npthread_mutex_unlock(&lock);\n¡ The Mutex provides:\n¡ Serialized access to critical section \n¡ Race avoidance for protected \nshared state \n¡ Cost: Lock contention\nOnly one thread holds the mutex; others wait and the protected region is serialized"
+            }
+          ]
+        },
+        {
+          "id": "mutex-P2",
+          "text": "Lock contention has a cost.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 58,
+              "quote": "CPU Multicore Programming: pThread\n¡ Mutex pattern:\nMutex: Protect Shared State\npthread_mutex_lock(&lock);\nsum += local_sum;\npthread_mutex_unlock(&lock);\n¡ The Mutex provides:\n¡ Serialized access to critical section \n¡ Race avoidance for protected \nshared state \n¡ Cost: Lock contention\nOnly one thread holds the mutex; others wait and the protected region is serialized"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-cuda-execution",
+      "title": "CUDA host, device and thread execution model",
+      "required_points": [
+        {
+          "id": "cuda-execution-P1",
+          "text": "Host code manages device memory and launches kernels.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 61,
+              "quote": "GPU Programming: CUDA\n¡ CUDA starts on the CPU: host code manages device memory, data movement, and kernel launch.\nCUDA Program Structure\nHost memory\nh_A, h_B, h_C\ncopy\nDevice memory\nd_A, d_B, d_C\nlaunch\nKernel execution\nvecAdd<<<...>>>\ncopy\nHost result\nh_C\ncudaMalloc(&d_A, bytes);\ncudaMemcpy(d_A, h_A, bytes, cudaMemcpyHostToDevice);\nvecAdd<<<numBlocks, blockSize>>>(d_A, d_B, d_C, n);\ncudaMemcpy(h_C, d_C, bytes, cudaMemcpyDeviceToHost);\ncudaFree(d_A);\nImportant detail\nKernel launch is asynchronous.\nUse cudaDeviceSynchronize() or a \nblocking copy/event when host \ncode needs the result."
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 62,
+              "quote": "GPU Programming: CUDA\n¡ Kernel Definition\n¡ Every CUDA thread runs the same kernel \ncode; built-in IDs select the data element.\nCUDA Kernel Definition and Thread Indexing\n__global__ void vecAdd(float *A, float *B,\nfloat *C, int n) {\nint i = blockIdx.x * blockDim.x + threadIdx.x;\nif (i < n) C[i] = A[i] + B[i];\n}\nblockIdx.x = 0\n0\n1\n2\n3\n4\n5\nblockIdx.x = 1\n0\n1\n2\n3\n4\n5\nblockIdx.x = 2\n0\n1\n2\n3\n4\n5\nblockDim.x is the number of threads per block. \nthreadIdx.x is the local index inside that block.\ni = blockIdx.x * blockDim.x + threadIdx.x"
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 63,
+              "quote": "GPU Programming: CUDA\n¡ __syncthreads()\n¡ Scope: One CUDA block\n¡ Use: Tile coordination in the shared \nmemory.\n¡ Kernel boundary\n¡ Scope: Whole threads\n¡ Use: Global phase between kernels\n¡ Achieved by launching separate kernels\nCUDA Synchronization \n__shared__ float tile[256];\ntile[threadIdx.x] = A[i];\n__syncthreads();\nuse(tile);\n¡ Load data from global memory to shared memory.\n¡ Wait until all threads in the block complete the \nshared-memory load."
+            }
+          ]
+        },
+        {
+          "id": "cuda-execution-P2",
+          "text": "Thread and block indices select work within a kernel.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 61,
+              "quote": "GPU Programming: CUDA\n¡ CUDA starts on the CPU: host code manages device memory, data movement, and kernel launch.\nCUDA Program Structure\nHost memory\nh_A, h_B, h_C\ncopy\nDevice memory\nd_A, d_B, d_C\nlaunch\nKernel execution\nvecAdd<<<...>>>\ncopy\nHost result\nh_C\ncudaMalloc(&d_A, bytes);\ncudaMemcpy(d_A, h_A, bytes, cudaMemcpyHostToDevice);\nvecAdd<<<numBlocks, blockSize>>>(d_A, d_B, d_C, n);\ncudaMemcpy(h_C, d_C, bytes, cudaMemcpyDeviceToHost);\ncudaFree(d_A);\nImportant detail\nKernel launch is asynchronous.\nUse cudaDeviceSynchronize() or a \nblocking copy/event when host \ncode needs the result."
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 62,
+              "quote": "GPU Programming: CUDA\n¡ Kernel Definition\n¡ Every CUDA thread runs the same kernel \ncode; built-in IDs select the data element.\nCUDA Kernel Definition and Thread Indexing\n__global__ void vecAdd(float *A, float *B,\nfloat *C, int n) {\nint i = blockIdx.x * blockDim.x + threadIdx.x;\nif (i < n) C[i] = A[i] + B[i];\n}\nblockIdx.x = 0\n0\n1\n2\n3\n4\n5\nblockIdx.x = 1\n0\n1\n2\n3\n4\n5\nblockIdx.x = 2\n0\n1\n2\n3\n4\n5\nblockDim.x is the number of threads per block. \nthreadIdx.x is the local index inside that block.\ni = blockIdx.x * blockDim.x + threadIdx.x"
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 63,
+              "quote": "GPU Programming: CUDA\n¡ __syncthreads()\n¡ Scope: One CUDA block\n¡ Use: Tile coordination in the shared \nmemory.\n¡ Kernel boundary\n¡ Scope: Whole threads\n¡ Use: Global phase between kernels\n¡ Achieved by launching separate kernels\nCUDA Synchronization \n__shared__ float tile[256];\ntile[threadIdx.x] = A[i];\n__syncthreads();\nuse(tile);\n¡ Load data from global memory to shared memory.\n¡ Wait until all threads in the block complete the \nshared-memory load."
+            }
+          ]
+        },
+        {
+          "id": "cuda-execution-P3",
+          "text": "__syncthreads coordinates threads within one block, for example after loading shared memory.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 61,
+              "quote": "GPU Programming: CUDA\n¡ CUDA starts on the CPU: host code manages device memory, data movement, and kernel launch.\nCUDA Program Structure\nHost memory\nh_A, h_B, h_C\ncopy\nDevice memory\nd_A, d_B, d_C\nlaunch\nKernel execution\nvecAdd<<<...>>>\ncopy\nHost result\nh_C\ncudaMalloc(&d_A, bytes);\ncudaMemcpy(d_A, h_A, bytes, cudaMemcpyHostToDevice);\nvecAdd<<<numBlocks, blockSize>>>(d_A, d_B, d_C, n);\ncudaMemcpy(h_C, d_C, bytes, cudaMemcpyDeviceToHost);\ncudaFree(d_A);\nImportant detail\nKernel launch is asynchronous.\nUse cudaDeviceSynchronize() or a \nblocking copy/event when host \ncode needs the result."
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 62,
+              "quote": "GPU Programming: CUDA\n¡ Kernel Definition\n¡ Every CUDA thread runs the same kernel \ncode; built-in IDs select the data element.\nCUDA Kernel Definition and Thread Indexing\n__global__ void vecAdd(float *A, float *B,\nfloat *C, int n) {\nint i = blockIdx.x * blockDim.x + threadIdx.x;\nif (i < n) C[i] = A[i] + B[i];\n}\nblockIdx.x = 0\n0\n1\n2\n3\n4\n5\nblockIdx.x = 1\n0\n1\n2\n3\n4\n5\nblockIdx.x = 2\n0\n1\n2\n3\n4\n5\nblockDim.x is the number of threads per block. \nthreadIdx.x is the local index inside that block.\ni = blockIdx.x * blockDim.x + threadIdx.x"
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 63,
+              "quote": "GPU Programming: CUDA\n¡ __syncthreads()\n¡ Scope: One CUDA block\n¡ Use: Tile coordination in the shared \nmemory.\n¡ Kernel boundary\n¡ Scope: Whole threads\n¡ Use: Global phase between kernels\n¡ Achieved by launching separate kernels\nCUDA Synchronization \n__shared__ float tile[256];\ntile[threadIdx.x] = A[i];\n__syncthreads();\nuse(tile);\n¡ Load data from global memory to shared memory.\n¡ Wait until all threads in the block complete the \nshared-memory load."
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-amdahl",
+      "title": "Amdahl's law",
+      "required_points": [
+        {
+          "id": "amdahl-P1",
+          "text": "For a fixed problem size, S(p)=1/((1-f)+f/p).",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 66,
+              "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+            }
+          ]
+        },
+        {
+          "id": "amdahl-P2",
+          "text": "f is the parallelizable fraction.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 66,
+              "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+            }
+          ]
+        },
+        {
+          "id": "amdahl-P3",
+          "text": "The serial fraction limits maximum speedup.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 66,
+              "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-roofline",
+      "title": "Roofline and arithmetic intensity",
+      "required_points": [
+        {
+          "id": "roofline-P1",
+          "text": "Arithmetic intensity is FLOPs per byte moved from memory.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 67,
+              "quote": "Performance Models\n¡\nMemory wall: how much computation it performs for each byte moved.\n¡\nRoofline Model: Compute-Bound or Memory-Bound?\nRoofline Model\nArithmetic Intensity = FLOPs / Bytes moved from memory\nWhy peak is hard\n•\nmemory-bound: limited by bandwidth x \nintensity\n•\ncompute-bound: still needs vectorization, \ntensor cores, occupancy\n•\nreal ceilings fall with poor locality or pipeline \nutilization"
+            }
+          ]
+        },
+        {
+          "id": "roofline-P2",
+          "text": "Bandwidth times arithmetic intensity bounds memory-bound performance.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 67,
+              "quote": "Performance Models\n¡\nMemory wall: how much computation it performs for each byte moved.\n¡\nRoofline Model: Compute-Bound or Memory-Bound?\nRoofline Model\nArithmetic Intensity = FLOPs / Bytes moved from memory\nWhy peak is hard\n•\nmemory-bound: limited by bandwidth x \nintensity\n•\ncompute-bound: still needs vectorization, \ntensor cores, occupancy\n•\nreal ceilings fall with poor locality or pipeline \nutilization"
+            }
+          ]
+        },
+        {
+          "id": "roofline-P3",
+          "text": "Peak throughput is not guaranteed.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 67,
+              "quote": "Performance Models\n¡\nMemory wall: how much computation it performs for each byte moved.\n¡\nRoofline Model: Compute-Bound or Memory-Bound?\nRoofline Model\nArithmetic Intensity = FLOPs / Bytes moved from memory\nWhy peak is hard\n•\nmemory-bound: limited by bandwidth x \nintensity\n•\ncompute-bound: still needs vectorization, \ntensor cores, occupancy\n•\nreal ceilings fall with poor locality or pipeline \nutilization"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-cpu-gpu",
+      "title": "CPU latency versus GPU throughput",
+      "required_points": [
+        {
+          "id": "cpu-gpu-P1",
+          "text": "CPUs use complex cores to reduce latency for a few threads.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 30,
+              "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nSummary\n¡ A modern CPU core spends many \ntransistors on\n¡\nData Forwarding\n¡\nRegister Renaming\n¡\nOoO Execution\n¡\nSuperscalar\n¡\nSpeculative Execution\n¡\n……\n¡ Answer: How can one or a few complex \nthreads make progress quickly?\n¡ Ideal Scenarios\n¡\nControl-heavy programs \n¡\nIrregular data structures \n¡\nOS and runtime services \n¡\nLow-latency request handling \n¡\n……\n¡ Much complex micro-\narchitecture and difficult to scale!"
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 43,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\nCPU vs GPU\n¡ CPU: A few out-of-order, superscalar, hyper-threading cores --- heavy cores\n¡ GPU: Many in-order, SIDM-pipeline cores --- light cores\n¡\nEnable 1,000 to 10,000 threads for parallel computing"
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 52,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Scaling laws made compute the bottleneck\nWhy AI Moved Toward GPU-Centric Computing?\n¡ Transformers made the computation massively data-parallel\nLINE 1: DEMAND\nScaling laws turn AI into sustained FLOP demand\nEmpirical loss improves predictably as compute, parameters, and data increase.\nScales model size and token count together.\nThe hardware target becomes high-throughput training, not low-latency single-\nthread execution.\ncompute\nmodel quality\nLINE 2: STRUCTURE\nTransformers expose SIMD/SIMT-friendly work\nMost expensive layers are dense tensor kernels:\ne.g., QKV projection, QK^T attention scores, AV product, FFN GEMM.\nParallel axes: batch, token, head, hidden dimension.\nControl flow is small; arithmetic intensity is high when tiled well.\nQKV \nGEMM\nQK^T\nSoftmax\nAV GEMM\nFFN \nGEMM\nGPU-centric execution\nmany simple threads + high bandwidth + tensor units\nCPU remains the host controller; GPU becomes the dominant floating-point compute engine."
+            }
+          ]
+        },
+        {
+          "id": "cpu-gpu-P2",
+          "text": "GPUs exploit many parallel threads for throughput.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 30,
+              "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nSummary\n¡ A modern CPU core spends many \ntransistors on\n¡\nData Forwarding\n¡\nRegister Renaming\n¡\nOoO Execution\n¡\nSuperscalar\n¡\nSpeculative Execution\n¡\n……\n¡ Answer: How can one or a few complex \nthreads make progress quickly?\n¡ Ideal Scenarios\n¡\nControl-heavy programs \n¡\nIrregular data structures \n¡\nOS and runtime services \n¡\nLow-latency request handling \n¡\n……\n¡ Much complex micro-\narchitecture and difficult to scale!"
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 43,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\nCPU vs GPU\n¡ CPU: A few out-of-order, superscalar, hyper-threading cores --- heavy cores\n¡ GPU: Many in-order, SIDM-pipeline cores --- light cores\n¡\nEnable 1,000 to 10,000 threads for parallel computing"
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 52,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Scaling laws made compute the bottleneck\nWhy AI Moved Toward GPU-Centric Computing?\n¡ Transformers made the computation massively data-parallel\nLINE 1: DEMAND\nScaling laws turn AI into sustained FLOP demand\nEmpirical loss improves predictably as compute, parameters, and data increase.\nScales model size and token count together.\nThe hardware target becomes high-throughput training, not low-latency single-\nthread execution.\ncompute\nmodel quality\nLINE 2: STRUCTURE\nTransformers expose SIMD/SIMT-friendly work\nMost expensive layers are dense tensor kernels:\ne.g., QKV projection, QK^T attention scores, AV product, FFN GEMM.\nParallel axes: batch, token, head, hidden dimension.\nControl flow is small; arithmetic intensity is high when tiled well.\nQKV \nGEMM\nQK^T\nSoftmax\nAV GEMM\nFFN \nGEMM\nGPU-centric execution\nmany simple threads + high bandwidth + tensor units\nCPU remains the host controller; GPU becomes the dominant floating-point compute engine."
+            }
+          ]
+        },
+        {
+          "id": "cpu-gpu-P3",
+          "text": "Parallel tensor operations in AI workloads benefit from GPU throughput.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 30,
+              "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nSummary\n¡ A modern CPU core spends many \ntransistors on\n¡\nData Forwarding\n¡\nRegister Renaming\n¡\nOoO Execution\n¡\nSuperscalar\n¡\nSpeculative Execution\n¡\n……\n¡ Answer: How can one or a few complex \nthreads make progress quickly?\n¡ Ideal Scenarios\n¡\nControl-heavy programs \n¡\nIrregular data structures \n¡\nOS and runtime services \n¡\nLow-latency request handling \n¡\n……\n¡ Much complex micro-\narchitecture and difficult to scale!"
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 43,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\nCPU vs GPU\n¡ CPU: A few out-of-order, superscalar, hyper-threading cores --- heavy cores\n¡ GPU: Many in-order, SIDM-pipeline cores --- light cores\n¡\nEnable 1,000 to 10,000 threads for parallel computing"
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 52,
+              "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Scaling laws made compute the bottleneck\nWhy AI Moved Toward GPU-Centric Computing?\n¡ Transformers made the computation massively data-parallel\nLINE 1: DEMAND\nScaling laws turn AI into sustained FLOP demand\nEmpirical loss improves predictably as compute, parameters, and data increase.\nScales model size and token count together.\nThe hardware target becomes high-throughput training, not low-latency single-\nthread execution.\ncompute\nmodel quality\nLINE 2: STRUCTURE\nTransformers expose SIMD/SIMT-friendly work\nMost expensive layers are dense tensor kernels:\ne.g., QKV projection, QK^T attention scores, AV product, FFN GEMM.\nParallel axes: batch, token, head, hidden dimension.\nControl flow is small; arithmetic intensity is high when tiled well.\nQKV \nGEMM\nQK^T\nSoftmax\nAV GEMM\nFFN \nGEMM\nGPU-centric execution\nmany simple threads + high bandwidth + tensor units\nCPU remains the host controller; GPU becomes the dominant floating-point compute engine."
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    },
+    {
+      "id": "N-speculation",
+      "title": "Speculative execution and branch prediction",
+      "required_points": [
+        {
+          "id": "speculation-P1",
+          "text": "Prediction allows later work to begin before a branch is resolved.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 27,
+              "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #5: Speculative Execution\n¡ Prediction for next instructions\n¡\nIssue risky instructions on the chance of considerable benefits.\n¡ Benefit\n¡\nQuick completion --- low latency\n¡\nKeep deep pipeline busy --- high throughput\n¡ Cost\n¡\nWrong-path work wastes energy and cycles.\n¡\nRecovery penalty grows with pipeline depth and speculation window."
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 28,
+              "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nSpeculative Execution: Branch Prediction\n¡ Naïve speculative execution: Static Prediction\n¡\nThe compiler resolves user’s codes and find the \nbranches that would not be taken.\n¡\nRemove corresponding instructions to avoid \ncontrol hazards.\n¡ Dynamic Branch Prediction\n¡\nLearn branch behavior autonomously, no \ncompiler analysis or profiling\n¡\nAdapt to changing branch behavior\nExample: Why branch is predictable"
+            }
+          ]
+        },
+        {
+          "id": "speculation-P2",
+          "text": "A wrong prediction discards speculative work and incurs a penalty.",
+          "max_score": 2,
+          "evidence": [
+            {
+              "document_id": "ACS-L1",
+              "page": 27,
+              "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #5: Speculative Execution\n¡ Prediction for next instructions\n¡\nIssue risky instructions on the chance of considerable benefits.\n¡ Benefit\n¡\nQuick completion --- low latency\n¡\nKeep deep pipeline busy --- high throughput\n¡ Cost\n¡\nWrong-path work wastes energy and cycles.\n¡\nRecovery penalty grows with pipeline depth and speculation window."
+            },
+            {
+              "document_id": "ACS-L1",
+              "page": 28,
+              "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nSpeculative Execution: Branch Prediction\n¡ Naïve speculative execution: Static Prediction\n¡\nThe compiler resolves user’s codes and find the \nbranches that would not be taken.\n¡\nRemove corresponding instructions to avoid \ncontrol hazards.\n¡ Dynamic Branch Prediction\n¡\nLearn branch behavior autonomously, no \ncompiler analysis or profiling\n¡\nAdapt to changing branch behavior\nExample: Why branch is predictable"
+            }
+          ]
+        }
+      ],
+      "review_status": "human_pending"
+    }
+  ]
+}

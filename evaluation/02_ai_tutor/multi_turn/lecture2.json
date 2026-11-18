@@ -1,0 +1,342 @@
+{
+  "version": "0.3",
+  "status": "human_review_pending",
+  "document_id": "ACS-L2",
+  "cases": [
+    {
+      "id": "L2-MT01",
+      "topic_family": "locality",
+      "turns": [
+        {
+          "turn": 1,
+          "input": {
+            "user_message": "解释时间局部性和空间局部性。"
+          },
+          "expected": {
+            "required_points": [
+              "时间=同数据复用",
+              "空间=邻近位置访问"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L2",
+                "page": 22,
+                "quote": "Spatial Locality\nThe neighbors of the current data \naccess tend to be accessed in the \nfuture.\nE.g., array\nTemporal Locality\nA piece of data is quickly reused \nin the future.\nE.g., Loops\nCPU Memory Hierarchy\nLocality: The Hot Feature Makes Caches Useful\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n22"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "input": {
+            "user_message": "反复读取同一个变量体现前者还是后者？"
+          },
+          "expected": {
+            "required_points": [
+              "前者指时间局部性",
+              "反复读取同一变量体现时间局部性"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L2",
+                "page": 22,
+                "quote": "Spatial Locality\nThe neighbors of the current data \naccess tend to be accessed in the \nfuture.\nE.g., array\nTemporal Locality\nA piece of data is quickly reused \nin the future.\nE.g., Loops\nCPU Memory Hierarchy\nLocality: The Hot Feature Makes Caches Useful\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n22"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 3,
+          "input": {
+            "user_message": "换成计算题：命中1周期，miss rate 10%，额外miss penalty 300周期，AMAT是多少？"
+          },
+          "expected": {
+            "required_points": [
+              "识别话题转为AMAT",
+              "1+.1*300=31周期"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L2",
+                "page": 26,
+                "quote": "AMAT = Hit time + Miss rate x Miss penalty\nMiss Penalty: time to fetch a block from lower memory \nlevel\nAccess Time: Latency for the memory to handle one access\nTransfer Time: Latency to transfer data block to higher level\nMiss penalty = access time + data size / bandwidth\nCPU Memory Hierarchy\nAverage Memory Access Time (AMAT)\nA cache helps when common hits remain fast and sufficiently few accesses pay \nthe miss penalty.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n26"
+              },
+              {
+                "document_id": "ACS-L2",
+                "page": 27,
+                "quote": "Average Memory Access Time (AMAT)\n= Hit Time + Miss rate * Miss Penalty\n= Thit(L1) + Miss%(L1) * T(memory)  \nExample: \nCache Hit = 1 cycle\nMiss rate = 10% = 0.1\nMiss penalty = 300 cycles\nAMAT = 1 + 0.1 * 300 = 31 cycles\nCan we improve it?\nMain\nMemory\n(DRAM)\nFirst-level\nCache\nHit Time\nMiss % * Miss penalty\n1 clk\n300 clks\nCPU Memory Hierarchy\nMemory Hierarchy Performance\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n27"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 4,
+          "input": {
+            "user_message": "只把刚才的未命中率改为5%，其余不变呢？请引用公式页。"
+          },
+          "expected": {
+            "required_points": [
+              "保持hit=1,penalty=300",
+              "1+.05*300=16周期",
+              "引用26或27页"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L2",
+                "page": 26,
+                "quote": "AMAT = Hit time + Miss rate x Miss penalty\nMiss Penalty: time to fetch a block from lower memory \nlevel\nAccess Time: Latency for the memory to handle one access\nTransfer Time: Latency to transfer data block to higher level\nMiss penalty = access time + data size / bandwidth\nCPU Memory Hierarchy\nAverage Memory Access Time (AMAT)\nA cache helps when common hits remain fast and sufficiently few accesses pay \nthe miss penalty.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n26"
+              },
+              {
+                "document_id": "ACS-L2",
+                "page": 27,
+                "quote": "Average Memory Access Time (AMAT)\n= Hit Time + Miss rate * Miss Penalty\n= Thit(L1) + Miss%(L1) * T(memory)  \nExample: \nCache Hit = 1 cycle\nMiss rate = 10% = 0.1\nMiss penalty = 300 cycles\nAMAT = 1 + 0.1 * 300 = 31 cycles\nCan we improve it?\nMain\nMemory\n(DRAM)\nFirst-level\nCache\nHit Time\nMiss % * Miss penalty\n1 clk\n300 clks\nCPU Memory Hierarchy\nMemory Hierarchy Performance\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n27"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "L2-MT02",
+      "topic_family": "gpu-memory",
+      "turns": [
+        {
+          "turn": 1,
+          "input": {
+            "user_message": "CUDA local memory 是线程私有还是所有线程共享？通常在哪里？"
+          },
+          "expected": {
+            "required_points": [
+              "线程私有",
+              "通常在设备DRAM，经过L1/L2"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L2",
+                "page": 46,
+                "quote": "GPU Memory Hierarchy\nEvery CUDA Memory Space Maps to a Physical Resource\nLocal memory is thread-private in scope but usually resides in device DRAM and \npasses through L1/L2.\n▪\nRegister and shared-memory allocations limit how many blocks and warps can \nreside on an SM.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n46"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "input": {
+            "user_message": "所以它名字里有local，就一定和寄存器一样快？"
+          },
+          "expected": {
+            "required_points": [
+              "它指local memory",
+              "不能由名称推断物理位置或保证寄存器级速度"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L2",
+                "page": 46,
+                "quote": "GPU Memory Hierarchy\nEvery CUDA Memory Space Maps to a Physical Resource\nLocal memory is thread-private in scope but usually resides in device DRAM and \npasses through L1/L2.\n▪\nRegister and shared-memory allocations limit how many blocks and warps can \nreside on an SM.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n46"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 3,
+          "input": {
+            "user_message": "换个问题：共享内存里同bank不同地址访问和同地址读取有什么区别？"
+          },
+          "expected": {
+            "required_points": [
+              "正确切换到共享内存",
+              "不同地址需要多个轮次，同地址读可广播"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L2",
+                "page": 51,
+                "quote": "GPU Memory Hierarchy\nAccess Memory: Bank Conflicts Serialize Otherwise Parallel \nAccesses\nTypical GPUs use 32 banks; the figure shows 8 for readability. Same-address \nreads can use broadcast.\n▪\nDifferent addresses in the same bank require multiple service rounds. This differs \nfrom global-memory coalescing.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n51"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 4,
+          "input": {
+            "user_message": "这与全局内存的coalescing是同一件事吗？给出处。"
+          },
+          "expected": {
+            "required_points": [
+              "这指共享内存bank冲突/广播",
+              "区分bank服务与warp地址合并事务",
+              "引用48和51页"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L2",
+                "page": 48,
+                "quote": "GPU Memory Hierarchy\nAccess Memory: Coalescing Packs Nearby Addresses into \nFewer Transactions\nCoalescing is evaluated for one warp memory instruction. Aligned, contiguous \naddresses touch fewer segments.\n▪\nMisalignment can cross extra boundaries. Strided accesses can touch many more \nsegments.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n48"
+              },
+              {
+                "document_id": "ACS-L2",
+                "page": 51,
+                "quote": "GPU Memory Hierarchy\nAccess Memory: Bank Conflicts Serialize Otherwise Parallel \nAccesses\nTypical GPUs use 32 banks; the figure shows 8 for readability. Same-address \nreads can use broadcast.\n▪\nDifferent addresses in the same bank require multiple service rounds. This differs \nfrom global-memory coalescing.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n51"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "L2-MT03",
+      "topic_family": "tiering",
+      "turns": [
+        {
+          "turn": 1,
+          "input": {
+            "user_message": "Grace的LPDDR扩展会让GPU的HBM本身变大吗？"
+          },
+          "expected": {
+            "required_points": [
+              "不会增大HBM本身",
+              "扩大可寻址容量"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L2",
+                "page": 68,
+                "quote": "SOTA Memory Technologies\nMemory Extension: LPDDR\nHopper retains local HBM. Grace connects LPDDR5X through the coherent \nNVLink-C2C CPU–GPU link.\n▪\nLPDDR extends the capacity the accelerator can address; it does not enlarge \nHBM itself.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n68"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "input": {
+            "user_message": "那热数据和冷数据应该分别放哪一层？"
+          },
+          "expected": {
+            "required_points": [
+              "承接HBM与LPDDR",
+              "热且延迟敏感/常复用放HBM，大且冷的数据可放LPDDR"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L2",
+                "page": 69,
+                "quote": "SOTA Memory Technologies\nTiered Memory Management Decides What Stays in HBM\nKeep hot, latency-critical, frequently reused data in HBM. Place large, cold objects \nin the LPDDR capacity tier.\n▪\nPromotion helps only when future reuse saves more than the transfer and \nbookkeeping cost.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n69"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 3,
+          "input": {
+            "user_message": "如果某块冷数据只访问一次，值得立即搬到前者吗？"
+          },
+          "expected": {
+            "required_points": [
+              "前者指HBM",
+              "不能保证值得，比较未来复用收益与搬运管理成本"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L2",
+                "page": 69,
+                "quote": "SOTA Memory Technologies\nTiered Memory Management Decides What Stays in HBM\nKeep hot, latency-critical, frequently reused data in HBM. Place large, cold objects \nin the LPDDR capacity tier.\n▪\nPromotion helps only when future reuse saves more than the transfer and \nbookkeeping cost.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n69"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 4,
+          "input": {
+            "user_message": "请给出支持刚才迁移判断的具体页码。"
+          },
+          "expected": {
+            "required_points": [
+              "指迁移成本收益判断",
+              "引用69页，不仅给介绍LPDDR的68页"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L2",
+                "page": 69,
+                "quote": "SOTA Memory Technologies\nTiered Memory Management Decides What Stays in HBM\nKeep hot, latency-critical, frequently reused data in HBM. Place large, cold objects \nin the LPDDR capacity tier.\n▪\nPromotion helps only when future reuse saves more than the transfer and \nbookkeeping cost.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n69"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

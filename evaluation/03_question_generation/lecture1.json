@@ -1,0 +1,291 @@
+{
+  "version": "0.3",
+  "status": "human_review_pending",
+  "document_id": "ACS-L1",
+  "cases": [
+    {
+      "id": "L1-GEN01",
+      "topic_family": "pipeline-family",
+      "input": {
+        "document_id": "ACS-L1",
+        "instruction": "仅依据当前课件PDF物理页[16, 17]。出一道简答题，要求解释五级流水线及吞吐率与单条指令延迟的区别。 每题给出题干、答案、逐点评分标准和支持答案的PDF物理页码。",
+        "question_type": "short_answer",
+        "difficulty": "understanding",
+        "required_count": 1
+      },
+      "evaluation": {
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 16,
+            "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+          },
+          {
+            "document_id": "ACS-L1",
+            "page": 17,
+            "quote": "¡ Perfect Pipeline\n¡ One instruction completes per cycle after filling \nthe pipeline.\n¡ No bubbles and maximum throughput.\n¡ For N instructions and M stages:\n¡ Total Cycles = M + N – 1\n¡ Average throughput\n= N / (M + N - 1) instructions per cycle\n¡ Instruction throughput per second                    \nFrequency * N / (M + N - 1)\nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+          }
+        ],
+        "warning": "不限制具体措辞或唯一题目；允许符合约束的不同题目。",
+        "core_gates": [
+          {
+            "id": "G1",
+            "name": "题干明确且条件充分"
+          },
+          {
+            "id": "G2",
+            "name": "当前讲义和显式条件足以回答"
+          },
+          {
+            "id": "G3",
+            "name": "参考答案正确；单选题唯一正确选项"
+          },
+          {
+            "id": "G4",
+            "name": "评分标准完整且可执行"
+          }
+        ],
+        "qualification_rule": "G1 AND G2 AND G3 AND G4",
+        "separate_checks": [
+          "scope_and_type",
+          "quantity",
+          "citation_support",
+          "difficulty",
+          "topic_coverage",
+          "duplicates"
+        ],
+        "strict_usable_rule": "core_gates AND scope_and_type AND difficulty AND sufficient_citations AND not_later_duplicate",
+        "target_topics": [
+          "pipeline-family"
+        ]
+      }
+    },
+    {
+      "id": "L1-GEN02",
+      "topic_family": "pipeline-family",
+      "input": {
+        "document_id": "ACS-L1",
+        "instruction": "仅依据当前课件PDF物理页[18, 22]。出一道四选一题，考查流水线冒险及数据转发；仅一个正确选项，并解释所有选项。 每题给出题干、答案、逐点评分标准和支持答案的PDF物理页码。",
+        "question_type": "multiple_choice",
+        "difficulty": "understanding",
+        "required_count": 1
+      },
+      "evaluation": {
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 18,
+            "quote": "¡ Any condition that causes the pipeline to \nstall is called a hazard.\n¡\nResult: Much bubbles and degraded efficiency\n¡ Various types of hazards\n¡\nData Hazard: Stall due to dependencies of some \ndata\n¡\nRead-after-write (RAW)\n¡\nWrite-after-write (WAW)\n¡\nWrite-after-read (WAR)\n¡\nControl Hazard: Stall due to branch and \nsynchronization\n¡\nStructural hazard: Stall due to contention on \nhardware such as memory channel, cache slot, \nqueue, etc.\nCPU: Optimize Latency of a Small Number of Complex Threads\nWhy Pipeline Stalls: Hazards"
+          },
+          {
+            "document_id": "ACS-L1",
+            "page": 22,
+            "quote": "¡ Enable Register-to-Register or Register-to-ALU Forwarding \n¡\nE.g., result is passed directly from pipeline register to ALU input. \n¡\nThe consumer can execute earlier ——> Fewer stalls and higher pipeline efficiency\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #1: Data Forwarding"
+          }
+        ],
+        "warning": "不限制具体措辞或唯一题目；允许符合约束的不同题目。",
+        "core_gates": [
+          {
+            "id": "G1",
+            "name": "题干明确且条件充分"
+          },
+          {
+            "id": "G2",
+            "name": "当前讲义和显式条件足以回答"
+          },
+          {
+            "id": "G3",
+            "name": "参考答案正确；单选题唯一正确选项"
+          },
+          {
+            "id": "G4",
+            "name": "评分标准完整且可执行"
+          }
+        ],
+        "qualification_rule": "G1 AND G2 AND G3 AND G4",
+        "separate_checks": [
+          "scope_and_type",
+          "quantity",
+          "citation_support",
+          "difficulty",
+          "topic_coverage",
+          "duplicates"
+        ],
+        "strict_usable_rule": "core_gates AND scope_and_type AND difficulty AND sufficient_citations AND not_later_duplicate",
+        "target_topics": [
+          "pipeline-family"
+        ]
+      }
+    },
+    {
+      "id": "L1-GEN03",
+      "topic_family": "amdahl",
+      "input": {
+        "document_id": "ACS-L1",
+        "instruction": "仅依据当前课件PDF物理页[66]。出一道 Amdahl 定律计算题，明确固定问题规模、可并行比例和处理器数量，要求有限处理器加速比及无限处理器上限。 每题给出题干、答案、逐点评分标准和支持答案的PDF物理页码。",
+        "question_type": "calculation",
+        "difficulty": "application",
+        "required_count": 1
+      },
+      "evaluation": {
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 66,
+            "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+          }
+        ],
+        "warning": "不限制具体措辞或唯一题目；允许符合约束的不同题目。",
+        "core_gates": [
+          {
+            "id": "G1",
+            "name": "题干明确且条件充分"
+          },
+          {
+            "id": "G2",
+            "name": "当前讲义和显式条件足以回答"
+          },
+          {
+            "id": "G3",
+            "name": "参考答案正确；单选题唯一正确选项"
+          },
+          {
+            "id": "G4",
+            "name": "评分标准完整且可执行"
+          }
+        ],
+        "qualification_rule": "G1 AND G2 AND G3 AND G4",
+        "separate_checks": [
+          "scope_and_type",
+          "quantity",
+          "citation_support",
+          "difficulty",
+          "topic_coverage",
+          "duplicates"
+        ],
+        "strict_usable_rule": "core_gates AND scope_and_type AND difficulty AND sufficient_citations AND not_later_duplicate",
+        "target_topics": [
+          "amdahl"
+        ]
+      }
+    },
+    {
+      "id": "L1-GEN04",
+      "topic_family": "divergence",
+      "input": {
+        "document_id": "ACS-L1",
+        "instruction": "仅依据当前课件PDF物理页[44]。构造同一个 warp 内线程选择不同分支的情境，出一道判断利用率影响并解释原因的题。 每题给出题干、答案、逐点评分标准和支持答案的PDF物理页码。",
+        "question_type": "short_answer",
+        "difficulty": "application",
+        "required_count": 1
+      },
+      "evaluation": {
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 44,
+            "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A GPU uses a SIMD pipeline to save area on \ncontrol logic\n¡\nGroups scalar threads into warps\n¡ Branch Divergence\n¡\nOccurs when threads inside warps branch to \ndifferent execution path\n¡ Result: Only a subset of threads execute, \nwaste SIMD pipeline utilization\nIssue of SIMD Utilization: Control Divergence"
+          }
+        ],
+        "warning": "不限制具体措辞或唯一题目；允许符合约束的不同题目。",
+        "core_gates": [
+          {
+            "id": "G1",
+            "name": "题干明确且条件充分"
+          },
+          {
+            "id": "G2",
+            "name": "当前讲义和显式条件足以回答"
+          },
+          {
+            "id": "G3",
+            "name": "参考答案正确；单选题唯一正确选项"
+          },
+          {
+            "id": "G4",
+            "name": "评分标准完整且可执行"
+          }
+        ],
+        "qualification_rule": "G1 AND G2 AND G3 AND G4",
+        "separate_checks": [
+          "scope_and_type",
+          "quantity",
+          "citation_support",
+          "difficulty",
+          "topic_coverage",
+          "duplicates"
+        ],
+        "strict_usable_rule": "core_gates AND scope_and_type AND difficulty AND sufficient_citations AND not_later_duplicate",
+        "target_topics": [
+          "divergence"
+        ]
+      }
+    },
+    {
+      "id": "L1-GEN05",
+      "topic_family": "parallelism",
+      "input": {
+        "document_id": "ACS-L1",
+        "instruction": "仅依据当前课件PDF物理页[29, 33, 58]。出三道不重复的简答题，分别考查 SMT、数据/任务并行、互斥锁。 每题给出题干、答案、逐点评分标准和支持答案的PDF物理页码。",
+        "question_type": "mixed",
+        "difficulty": "understanding",
+        "required_count": 3
+      },
+      "evaluation": {
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 29,
+            "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #6: OoO Superscalar with Hyper-Threading\n¡ Problem: Even OoO superscalar cores have idle slot issues.\n¡ Reasons: \n¡\nCache miss, branch misprediction, dependency chain……\n¡ Hyper-threading introduces simultaneous multithreading (SMT)\n¡\nMultiple hardware threads share one physical core.\n¡\nEach logical thread has its own architectural state.\n¡\nExecution units, caches, queues, and predictors are shared.\n¡ The closest architecture to modern CPUs."
+          },
+          {
+            "document_id": "ACS-L1",
+            "page": 33,
+            "quote": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ Parallelism: Do multiple jobs concurrently.\n¡\nJob: instructions, operations, tasks\n¡ Data Parallelism\n¡\nDifferent pieces of data can be operated in parallel\n¡\nVector processing and array processing\n¡ Task Parallelism\n¡\nDifferent tasks can be operated in parallel\n¡\nMultithreading \nMultiprocessors"
+          },
+          {
+            "document_id": "ACS-L1",
+            "page": 58,
+            "quote": "CPU Multicore Programming: pThread\n¡ Mutex pattern:\nMutex: Protect Shared State\npthread_mutex_lock(&lock);\nsum += local_sum;\npthread_mutex_unlock(&lock);\n¡ The Mutex provides:\n¡ Serialized access to critical section \n¡ Race avoidance for protected \nshared state \n¡ Cost: Lock contention\nOnly one thread holds the mutex; others wait and the protected region is serialized"
+          }
+        ],
+        "warning": "不限制具体措辞或唯一题目；允许符合约束的不同题目。",
+        "core_gates": [
+          {
+            "id": "G1",
+            "name": "题干明确且条件充分"
+          },
+          {
+            "id": "G2",
+            "name": "当前讲义和显式条件足以回答"
+          },
+          {
+            "id": "G3",
+            "name": "参考答案正确；单选题唯一正确选项"
+          },
+          {
+            "id": "G4",
+            "name": "评分标准完整且可执行"
+          }
+        ],
+        "qualification_rule": "G1 AND G2 AND G3 AND G4",
+        "separate_checks": [
+          "scope_and_type",
+          "quantity",
+          "citation_support",
+          "difficulty",
+          "topic_coverage",
+          "duplicates"
+        ],
+        "strict_usable_rule": "core_gates AND scope_and_type AND difficulty AND sufficient_citations AND not_later_duplicate",
+        "target_topics": [
+          "SMT",
+          "数据与任务并行",
+          "互斥锁"
+        ]
+      }
+    }
+  ],
+  "scoring_version": "1.0",
+  "scoring_guide": "../shared/scoring.md"
+}

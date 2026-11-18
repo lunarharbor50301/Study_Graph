@@ -1,0 +1,21 @@
+{
+  "exercise_id": "warp-feedback-dev-01",
+  "required_points": {
+    "K1": "不能直接消除原 warp 内的分支发散。",
+    "K2": "原 warp 内不同路径仍存在，执行某条路径时只有相应线程活跃。",
+    "K3": "其他就绪 warp 的调度可以帮助隐藏等待，不改变原 warp 的分支分布，也不保证性能提升。"
+  },
+  "verdict_rules": {
+    "correct": "K1–K3 均满足且无实质错误。",
+    "partially_correct": "有正确结论或机制，但缺重要解释或夹杂错误理由。",
+    "incorrect": "核心结论错误或整体机制与题目相反。"
+  },
+  "source_pages": [
+    37,
+    41,
+    44,
+    45,
+    46
+  ],
+  "source_chunk_ids": []
+}

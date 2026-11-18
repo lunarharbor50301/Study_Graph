@@ -1,0 +1,20 @@
+{
+  "status": "not_frozen",
+  "groups": [
+    {
+      "id": "lecture1-seed-family",
+      "document_id": "ACS-L1",
+      "assignment": "unassigned",
+      "scope": "该课件所有板块的初始条目",
+      "reason": "初始题目高度关联，套题连接多个主题；不得随机逐条划分。需要更细划分时先人工建立依赖图。"
+    },
+    {
+      "id": "lecture2-seed-family",
+      "document_id": "ACS-L2",
+      "assignment": "unassigned",
+      "scope": "该课件所有板块的初始条目",
+      "reason": "初始题目高度关联，套题连接多个主题；不得随机逐条划分。需要更细划分时先人工建立依赖图。"
+    }
+  ],
+  "instruction": "目前不是已冻结测试集。可按整课件分开发/保留集，或人工细分互不泄漏的知识家族后再冻结。"
+}

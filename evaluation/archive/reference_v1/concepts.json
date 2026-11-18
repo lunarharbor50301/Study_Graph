@@ -1,0 +1,872 @@
+[
+  {
+    "id": "hierarchy",
+    "document_id": "ACS-L1",
+    "name": "计算抽象层次",
+    "aliases": [
+      "transformation hierarchy"
+    ],
+    "importance": "core",
+    "facts": [
+      "应用问题确定目标",
+      "算法确定方法和并行性",
+      "微架构执行指令和移动数据"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 6,
+        "quote": "Transformation Hierarchy of Computing\nAbstraction in System Design\nApplication / Problem\ngoal of the computation\nAlgorithm\nmethod, dependency, parallelism\nProgram / Language / Compiler\nmachine-facing expression\nSystem Software\norganize executable work\nOperating System\nmanage resources and protection\nMicroarchitecture\nexecute instructions and move data\nrefine\nexpress\ntranslate\ndeploy\nmanage\nDigital Logic\nexecute computation\nrealize as circuits\n¡\nApplication / Problem\n¡\nAI inference, training, web \nsearch, recommendation \n¡ Algorithm\n¡\nGEMM, attention, \noptimization, sampling \n¡ Program / Language\n¡\nPython, C++, CUDA, Go\n¡ System Software\n¡\nDistributed frameworks, \nlibraries, drivers, compilers, \nruntime\n¡\nOperating System\n¡\nProcess, thread, memory, \nscheduling, I/O \n¡ Microarchitecture\n¡\nCore, cache, RAM, pipeline, \nbus, controller\n¡ Digital Logic\n¡\nGates, registers, wires, \narithmetic units"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "hierarchy"
+  },
+  {
+    "id": "pipeline",
+    "document_id": "ACS-L1",
+    "name": "五级流水线",
+    "aliases": [
+      "instruction pipeline"
+    ],
+    "importance": "core",
+    "facts": [
+      "五阶段为 IF、ID、EX、MEM、WB",
+      "通过阶段重叠提高吞吐"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 16,
+        "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "pipeline"
+  },
+  {
+    "id": "ideal-pipeline",
+    "document_id": "ACS-L1",
+    "name": "理想流水线性能",
+    "aliases": [
+      "perfect pipeline"
+    ],
+    "importance": "core",
+    "facts": [
+      "N 条指令、M 个阶段共需 M+N-1 周期",
+      "假设无气泡且填满后每周期完成一条"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 17,
+        "quote": "¡ Perfect Pipeline\n¡ One instruction completes per cycle after filling \nthe pipeline.\n¡ No bubbles and maximum throughput.\n¡ For N instructions and M stages:\n¡ Total Cycles = M + N – 1\n¡ Average throughput\n= N / (M + N - 1) instructions per cycle\n¡ Instruction throughput per second                    \nFrequency * N / (M + N - 1)\nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "ideal-pipeline"
+  },
+  {
+    "id": "hazard",
+    "document_id": "ACS-L1",
+    "name": "流水线冒险",
+    "aliases": [
+      "pipeline hazard"
+    ],
+    "importance": "core",
+    "facts": [
+      "数据冒险来自数据依赖",
+      "控制冒险来自分支等",
+      "结构冒险来自硬件资源争用"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 18,
+        "quote": "¡ Any condition that causes the pipeline to \nstall is called a hazard.\n¡\nResult: Much bubbles and degraded efficiency\n¡ Various types of hazards\n¡\nData Hazard: Stall due to dependencies of some \ndata\n¡\nRead-after-write (RAW)\n¡\nWrite-after-write (WAW)\n¡\nWrite-after-read (WAR)\n¡\nControl Hazard: Stall due to branch and \nsynchronization\n¡\nStructural hazard: Stall due to contention on \nhardware such as memory channel, cache slot, \nqueue, etc.\nCPU: Optimize Latency of a Small Number of Complex Threads\nWhy Pipeline Stalls: Hazards"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "hazard"
+  },
+  {
+    "id": "forwarding",
+    "document_id": "ACS-L1",
+    "name": "数据转发",
+    "aliases": [
+      "data forwarding"
+    ],
+    "importance": "core",
+    "facts": [
+      "结果可直接从流水线寄存器送至 ALU 输入",
+      "消费者更早执行并减少停顿"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 22,
+        "quote": "¡ Enable Register-to-Register or Register-to-ALU Forwarding \n¡\nE.g., result is passed directly from pipeline register to ALU input. \n¡\nThe consumer can execute earlier ——> Fewer stalls and higher pipeline efficiency\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #1: Data Forwarding"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "forwarding"
+  },
+  {
+    "id": "ooo",
+    "document_id": "ACS-L1",
+    "name": "乱序执行",
+    "aliases": [
+      "out-of-order execution",
+      "OoO"
+    ],
+    "importance": "core",
+    "facts": [
+      "区分程序顺序、执行顺序和提交顺序",
+      "硬件可以在其他指令等待时调度独立指令"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 25,
+        "quote": "¡ Out-of-order execution separates:\n¡\nProgram order: order written by the programmer\n¡\nExecution order: order chosen by hardware\n¡\nCommit order: order that updates architectural state\n¡ Typically, the compiler would find independent instruction sets to enable OoO execution, reducing \nthe stall time of the instruction pipeline.\n¡ At runtime, CPU involves a controller to find independent instructions while some instructions are \nwaiting.\n¡\nPreempt current pipeline\n¡\nIssue independent instruction\n¡\nRestore preempted instruction when it finishes waiting\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #3: Out-of-Order (OoO) Execution"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "ooo"
+  },
+  {
+    "id": "superscalar",
+    "document_id": "ACS-L1",
+    "name": "超标量",
+    "aliases": [
+      "superscalar"
+    ],
+    "importance": "core",
+    "facts": [
+      "尝试每周期执行多条指令",
+      "需要宽取指译码和多个执行单元"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 26,
+        "quote": "¡ Superscalar CPU: tries to execute multiple instructions every cycle.\n¡ Need a \"wide\" pipeline\n¡\nWide fetch \n¡\nWide decode \n¡\nMultiple execution units \n¡\nMultiple load/store paths \n¡\nWide writeback \n¡\nMulti-ported register file\n¡ Challenge: \n¡\nIf instruction pipeline can issue N instructions concurrently,\n¡\nThe CPU needs resolve O(N2) dependence complexity.\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #4: Superscalar"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "superscalar"
+  },
+  {
+    "id": "smt",
+    "document_id": "ACS-L1",
+    "name": "同时多线程",
+    "aliases": [
+      "SMT",
+      "hyper-threading"
+    ],
+    "importance": "core",
+    "facts": [
+      "多个硬件线程共享一个物理核",
+      "逻辑线程各有架构状态但共享执行单元等资源"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 29,
+        "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #6: OoO Superscalar with Hyper-Threading\n¡ Problem: Even OoO superscalar cores have idle slot issues.\n¡ Reasons: \n¡\nCache miss, branch misprediction, dependency chain……\n¡ Hyper-threading introduces simultaneous multithreading (SMT)\n¡\nMultiple hardware threads share one physical core.\n¡\nEach logical thread has its own architectural state.\n¡\nExecution units, caches, queues, and predictors are shared.\n¡ The closest architecture to modern CPUs."
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "smt"
+  },
+  {
+    "id": "parallelism",
+    "document_id": "ACS-L1",
+    "name": "数据与任务并行",
+    "aliases": [
+      "data parallelism",
+      "task parallelism"
+    ],
+    "importance": "core",
+    "facts": [
+      "数据并行处理不同数据",
+      "任务并行并发执行不同任务"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 33,
+        "quote": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ Parallelism: Do multiple jobs concurrently.\n¡\nJob: instructions, operations, tasks\n¡ Data Parallelism\n¡\nDifferent pieces of data can be operated in parallel\n¡\nVector processing and array processing\n¡ Task Parallelism\n¡\nDifferent tasks can be operated in parallel\n¡\nMultithreading \nMultiprocessors"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "parallelism"
+  },
+  {
+    "id": "sm",
+    "document_id": "ACS-L1",
+    "name": "流式多处理器",
+    "aliases": [
+      "SM",
+      "Streaming Multiprocessor"
+    ],
+    "importance": "core",
+    "facts": [
+      "包含处理单元、warp 调度器和共享内存等",
+      "一个 warp 等待时可以调度另一个就绪 warp"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 35,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡\nHundreds of Streaming Multiprocessors\n(SM)s\n¡\nEach SM consists of:\n¡\nProcessing units, e.g., INT32, FP32, FP64, etc.\n¡\nSimplified pipelines compared to CPU cores.\n¡\nEach unit executes specific instructions that are \ndesigned to specific computing precision.\n¡\nWarp Scheduler\n¡\nWhen deploy multiple threads, GPU packages a \nbranch of threads into a warp.\n¡\nThe scheduler decides which warp would run at one \ntime slot, and these threads shard a register file.\n¡\nWhen one warp waits, schedule another ready warp.\n¡\nHigh-speed shared memory for intra-SM data \nexchange.\n¡\nTensor core: accelerator for matrix operations.\nChip Organization"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "sm"
+  },
+  {
+    "id": "warp",
+    "document_id": "ACS-L1",
+    "name": "Warp 与 SIMT",
+    "aliases": [
+      "warp",
+      "SIMT"
+    ],
+    "importance": "core",
+    "facts": [
+      "课件中的 NVIDIA warp 包含 32 个线程",
+      "线程块分配至一个 SM",
+      "Fermi 的驻留上限是架构特定示例"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 37,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "warp"
+  },
+  {
+    "id": "latency-hiding",
+    "document_id": "ACS-L1",
+    "name": "延迟隐藏",
+    "aliases": [
+      "latency hiding"
+    ],
+    "importance": "core",
+    "facts": [
+      "交错执行不同 warp 隐藏等待延迟",
+      "不等于消除一次访存本身的延迟"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 41,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\nWarp Execution\n¡ Interleave execution among \"warps\" to hide latencies"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "latency-hiding"
+  },
+  {
+    "id": "divergence",
+    "document_id": "ACS-L1",
+    "name": "分支分歧",
+    "aliases": [
+      "branch divergence",
+      "control divergence"
+    ],
+    "importance": "core",
+    "facts": [
+      "同一 warp 内线程走不同执行路径",
+      "部分线程执行会降低 SIMD 利用率"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 44,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A GPU uses a SIMD pipeline to save area on \ncontrol logic\n¡\nGroups scalar threads into warps\n¡ Branch Divergence\n¡\nOccurs when threads inside warps branch to \ndifferent execution path\n¡ Result: Only a subset of threads execute, \nwaste SIMD pipeline utilization\nIssue of SIMD Utilization: Control Divergence"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "divergence"
+  },
+  {
+    "id": "atomic",
+    "document_id": "ACS-L1",
+    "name": "原子操作",
+    "aliases": [
+      "atomicAdd",
+      "atomic operations"
+    ],
+    "importance": "core",
+    "facts": [
+      "并发更新同一内存位置需要原子性等正确同步",
+      "课件展示 atomicAdd 和同址原子冲突"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 49,
+        "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Atomic operations are required when threads update the value of the same memory location\n¡\nCUDA: int atomicAdd (int*, int);\n¡ Atomic conflicts: the number of threads in a warp that update the same memory position\nIssue of SIMD Utilization: Atomic Operations"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "atomic"
+  },
+  {
+    "id": "mutex",
+    "document_id": "ACS-L1",
+    "name": "互斥锁",
+    "aliases": [
+      "mutex"
+    ],
+    "importance": "core",
+    "facts": [
+      "保护共享状态的临界区串行访问",
+      "锁竞争会产生代价"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 58,
+        "quote": "CPU Multicore Programming: pThread\n¡ Mutex pattern:\nMutex: Protect Shared State\npthread_mutex_lock(&lock);\nsum += local_sum;\npthread_mutex_unlock(&lock);\n¡ The Mutex provides:\n¡ Serialized access to critical section \n¡ Race avoidance for protected \nshared state \n¡ Cost: Lock contention\nOnly one thread holds the mutex; others wait and the protected region is serialized"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "mutex"
+  },
+  {
+    "id": "block-sync",
+    "document_id": "ACS-L1",
+    "name": "块内同步",
+    "aliases": [
+      "__syncthreads"
+    ],
+    "importance": "core",
+    "facts": [
+      "__syncthreads 作用域是一个 CUDA block",
+      "可用于共享内存装载后的线程协调"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 63,
+        "quote": "GPU Programming: CUDA\n¡ __syncthreads()\n¡ Scope: One CUDA block\n¡ Use: Tile coordination in the shared \nmemory.\n¡ Kernel boundary\n¡ Scope: Whole threads\n¡ Use: Global phase between kernels\n¡ Achieved by launching separate kernels\nCUDA Synchronization \n__shared__ float tile[256];\ntile[threadIdx.x] = A[i];\n__syncthreads();\nuse(tile);\n¡ Load data from global memory to shared memory.\n¡ Wait until all threads in the block complete the \nshared-memory load."
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "block-sync"
+  },
+  {
+    "id": "amdahl",
+    "document_id": "ACS-L1",
+    "name": "Amdahl 定律",
+    "aliases": [
+      "Amdahl law"
+    ],
+    "importance": "core",
+    "facts": [
+      "固定问题规模时 S(p)=1/((1-f)+f/p)",
+      "f 为可并行比例",
+      "串行部分限制最大加速比"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 66,
+        "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "amdahl"
+  },
+  {
+    "id": "roofline",
+    "document_id": "ACS-L1",
+    "name": "Roofline 与算术强度",
+    "aliases": [
+      "roofline",
+      "arithmetic intensity"
+    ],
+    "importance": "core",
+    "facts": [
+      "算术强度为 FLOPs 除以从内存搬运的字节数",
+      "内存受限时带宽乘算术强度构成性能上界",
+      "峰值不保证实际性能"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L1",
+        "page": 67,
+        "quote": "Performance Models\n¡\nMemory wall: how much computation it performs for each byte moved.\n¡\nRoofline Model: Compute-Bound or Memory-Bound?\nRoofline Model\nArithmetic Intensity = FLOPs / Bytes moved from memory\nWhy peak is hard\n•\nmemory-bound: limited by bandwidth x \nintensity\n•\ncompute-bound: still needs vectorization, \ntensor cores, occupancy\n•\nreal ceilings fall with poor locality or pipeline \nutilization"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "roofline"
+  },
+  {
+    "id": "memory-hierarchy",
+    "document_id": "ACS-L2",
+    "name": "存储层次",
+    "aliases": [
+      "memory hierarchy"
+    ],
+    "importance": "core",
+    "facts": [
+      "频繁访问数据适合快速小容量存储",
+      "低频数据适合较慢大容量存储"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 21,
+        "quote": "For frequent data: use fast but expensive and small memory (e.g., cache)\nFor not frequent data: use slow but cheap and large memory (e.g., main \nmemory, disk)\nCPU Memory Hierarchy\nMemory Hierarchy: Taking Advantage of Locality\nThe working set changes over time. The hierarchy is useful when a small, active \nsubset receives most accesses.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n21"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "memory-hierarchy"
+  },
+  {
+    "id": "locality",
+    "document_id": "ACS-L2",
+    "name": "局部性",
+    "aliases": [
+      "spatial locality",
+      "temporal locality"
+    ],
+    "importance": "core",
+    "facts": [
+      "空间局部性是邻近数据可能被访问",
+      "时间局部性是同一数据短期内被复用"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 22,
+        "quote": "Spatial Locality\nThe neighbors of the current data \naccess tend to be accessed in the \nfuture.\nE.g., array\nTemporal Locality\nA piece of data is quickly reused \nin the future.\nE.g., Loops\nCPU Memory Hierarchy\nLocality: The Hot Feature Makes Caches Useful\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n22"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "locality"
+  },
+  {
+    "id": "cache-hit",
+    "document_id": "ACS-L2",
+    "name": "缓存命中与未命中",
+    "aliases": [
+      "cache hit",
+      "cache miss"
+    ],
+    "importance": "core",
+    "facts": [
+      "命中要求当前缓存层存在有效匹配",
+      "miss rate=1-hit rate",
+      "未命中需要更低层服务"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 25,
+        "quote": "Hit: The requested memory block is \nfound in the current cache level, with \na valid tag match.\nHit Rate: Hits / Total Accesses\nCache Read/Write: Find the data on \ncache and then perform read/write\nMiss: The requested memory block \nis not present in the current cache \nlevel, so it must be retrieved from the \nnext lower level.\nMiss Rate: 1 - Hit Rate\nMiss Penalty: The additional time \nrequired to service a miss\nCPU Memory Hierarchy\nHit or Miss of Caches: Benefit vs. Penalty\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n25"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "cache-hit"
+  },
+  {
+    "id": "amat",
+    "document_id": "ACS-L2",
+    "name": "平均访存时间",
+    "aliases": [
+      "AMAT"
+    ],
+    "importance": "core",
+    "facts": [
+      "AMAT=hit time+miss rate×miss penalty",
+      "miss penalty 包含访问延迟和传输时间"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 26,
+        "quote": "AMAT = Hit time + Miss rate x Miss penalty\nMiss Penalty: time to fetch a block from lower memory \nlevel\nAccess Time: Latency for the memory to handle one access\nTransfer Time: Latency to transfer data block to higher level\nMiss penalty = access time + data size / bandwidth\nCPU Memory Hierarchy\nAverage Memory Access Time (AMAT)\nA cache helps when common hits remain fast and sufficiently few accesses pay \nthe miss penalty.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n26"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "amat"
+  },
+  {
+    "id": "tlb",
+    "document_id": "ACS-L2",
+    "name": "TLB 与缓存未命中",
+    "aliases": [
+      "TLB miss"
+    ],
+    "importance": "core",
+    "facts": [
+      "TLB miss 涉及地址翻译",
+      "cache miss 涉及从更低层获取数据",
+      "两者不同"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 30,
+        "quote": "CPU Memory Hierarchy\nEnd-to-End Load/Store Path: Address Resolution – TLB – Cache \nHierarchy – DRAM\nA TLB miss requires address translation work. A cache miss determines whether \nthe data must come from a lower level.\n▪\nOnly a miss through the cache hierarchy sends the data request to the memory \ncontroller and DRAM.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n30"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "tlb"
+  },
+  {
+    "id": "sram-dram",
+    "document_id": "ACS-L2",
+    "name": "SRAM 与 DRAM",
+    "aliases": [
+      "SRAM",
+      "DRAM"
+    ],
+    "importance": "core",
+    "facts": [
+      "SRAM 用稳定晶体管电路保存状态，常用于缓存和寄存器",
+      "DRAM 用电容保存数据，需要刷新和读取后恢复"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 32,
+        "quote": "SRAM --- Store data via stable transistor circuit\nRequires low power to retain bit (423mV for 45nm) \nRequires 6 transistors/bit --- expansive\nUsage: Caches, register files\nDRAM --- Store date via tiny capacitors (bit is represented as \ncharged and discharged)\nOne transistor/bit --- cheap\nMust be re-written after being read\nMust also be periodically refreshed\nEach row can be refreshed simultaneously\nAddress lines are multiplexed:\nUpper half of address: row access strobe (RAS)\nLower half of address: column access strobe (CAS)\nUsage: DDR / GDDR / HBM\nCPU Memory Hierarchy\nDRAM Behind Cache: SRAM vs. DRAM\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n32"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "sram-dram"
+  },
+  {
+    "id": "banks",
+    "document_id": "ACS-L2",
+    "name": "DRAM 多 bank",
+    "aliases": [
+      "DRAM bank"
+    ],
+    "importance": "core",
+    "facts": [
+      "独立 bank 的工作可以重叠",
+      "共享数据总线仍限制同时返回的数据量"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 36,
+        "quote": "Memory\nController\nData Bus\nChannel\nMulti-Banked DRAM Chip\nCPU Memory Hierarchy\nDRAM Behind Cache: Multi-Bank DRAM\nBanks provide independent storage arrays. Work in one bank can overlap \npreparation in another.\n▪\nThe shared data bus still limits how much data the channel can return at once.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n36\nAddr  and Cmd Bus"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "banks"
+  },
+  {
+    "id": "channels",
+    "document_id": "ACS-L2",
+    "name": "内存通道",
+    "aliases": [
+      "memory channel"
+    ],
+    "importance": "core",
+    "facts": [
+      "独立通道并发使用可增加带宽",
+      "DDR5 将 64 位分成两个 32 位子通道不会单独使总位宽翻倍"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 40,
+        "quote": "CPU Memory Hierarchy\nDRAM Behind Cache: Channel Bandwidth Grows Along Three\nAxes\nIndependent channels add bandwidth when requests use them concurrently. Bank \nscheduling improves bus utilization.\n▪\nDDR5 splits 64 data bits into two 32-bit subchannels. This split alone does not \ndouble total data width.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n40"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "channels"
+  },
+  {
+    "id": "gpu-memory",
+    "document_id": "ACS-L2",
+    "name": "GPU 存储层次",
+    "aliases": [
+      "GPU memory hierarchy"
+    ],
+    "importance": "core",
+    "facts": [
+      "寄存器按线程分配",
+      "共享内存与 L1 位于 SM 层",
+      "L2 为设备级共享",
+      "GDDR/HBM 是片外存储"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 43,
+        "quote": "Registers\nAllocated per thread, hardware \nmanaged\nShared Memory + L1 Cache\nPer SM explicit scratchpad, \nhardware cache\nL2 Cache\nDevice-wide, shared by all SMs\nDevice Memory: GDDR / HBM\nOff-chip physical memory serving \nthe global address space\nGPU Memory Hierarchy\nLarger Capacity, Longer Access Time\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n43"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "gpu-memory"
+  },
+  {
+    "id": "local-memory",
+    "document_id": "ACS-L2",
+    "name": "CUDA local memory",
+    "aliases": [
+      "local memory"
+    ],
+    "importance": "core",
+    "facts": [
+      "作用域是线程私有",
+      "通常位于设备 DRAM 并经过 L1/L2",
+      "不能因 local 名称就认为位于寄存器"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 46,
+        "quote": "GPU Memory Hierarchy\nEvery CUDA Memory Space Maps to a Physical Resource\nLocal memory is thread-private in scope but usually resides in device DRAM and \npasses through L1/L2.\n▪\nRegister and shared-memory allocations limit how many blocks and warps can \nreside on an SM.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n46"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "local-memory"
+  },
+  {
+    "id": "coalescing",
+    "document_id": "ACS-L2",
+    "name": "访存合并",
+    "aliases": [
+      "memory coalescing"
+    ],
+    "importance": "core",
+    "facts": [
+      "针对单个 warp 的一条访存指令",
+      "对齐连续地址通常减少事务",
+      "跨界或跨步访问可能增加事务"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 48,
+        "quote": "GPU Memory Hierarchy\nAccess Memory: Coalescing Packs Nearby Addresses into \nFewer Transactions\nCoalescing is evaluated for one warp memory instruction. Aligned, contiguous \naddresses touch fewer segments.\n▪\nMisalignment can cross extra boundaries. Strided accesses can touch many more \nsegments.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n48"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "coalescing"
+  },
+  {
+    "id": "shared-memory",
+    "document_id": "ACS-L2",
+    "name": "共享内存数据暂存",
+    "aliases": [
+      "shared memory",
+      "staging"
+    ],
+    "importance": "core",
+    "facts": [
+      "软件显式安排数据暂存和同步",
+      "片上重复复用可以减少 DRAM 流量并提高算术强度"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 50,
+        "quote": "GPU Memory Hierarchy\nAccess Memory: Shared Memory Creates an Explicit On-Chip \nData Stage\nSoftware explicitly chooses the data to stage in shared memory and when threads \nmust synchronize.\n▪\nOne off-chip load can support repeated on-chip reuse, reducing DRAM traffic and \nincreasing arithmetic intensity.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n50"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "shared-memory"
+  },
+  {
+    "id": "bank-conflict",
+    "document_id": "ACS-L2",
+    "name": "共享内存 bank 冲突",
+    "aliases": [
+      "bank conflict"
+    ],
+    "importance": "core",
+    "facts": [
+      "同 bank 不同地址需要多个服务轮次",
+      "同地址读取可以广播",
+      "与全局访存合并是不同问题"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 51,
+        "quote": "GPU Memory Hierarchy\nAccess Memory: Bank Conflicts Serialize Otherwise Parallel \nAccesses\nTypical GPUs use 32 banks; the figure shows 8 for readability. Same-address \nreads can use broadcast.\n▪\nDifferent addresses in the same bank require multiple service rounds. This differs \nfrom global-memory coalescing.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n51"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "bank-conflict"
+  },
+  {
+    "id": "hbm",
+    "document_id": "ACS-L2",
+    "name": "HBM 封装",
+    "aliases": [
+      "HBM",
+      "2.5D packaging"
+    ],
+    "importance": "core",
+    "facts": [
+      "HBM 通常在 interposer 上位于 XPU 旁边",
+      "高密度连接提高带宽和每比特能效但有封装等代价"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 57,
+        "quote": "GPU Memory Hierarchy\nFrom GDDR to HBM: 2.5D Packaging\nHBM commonly sits beside the XPU on an interposer, forming a 2.5D package.\n▪\nDense connections improve bandwidth and energy per bit, with costs in assembly, \nyield, cooling, and power delivery.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n57"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "hbm"
+  },
+  {
+    "id": "memory-tradeoff",
+    "document_id": "ACS-L2",
+    "name": "DDR/GDDR/HBM 权衡",
+    "aliases": [
+      "DDR",
+      "GDDR",
+      "HBM"
+    ],
+    "importance": "core",
+    "facts": [
+      "DDR 偏容量扩展和成本",
+      "GDDR 权衡引脚带宽和板级成本",
+      "HBM 偏封装带宽与能效"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 59,
+        "quote": "GPU Memory Hierarchy\nDDR, GDDR, and HBM Optimize Different Constraints\nDDR favors capacity, expandability, and cost per GB. GDDR balances pin \nbandwidth and board cost.\n▪\nHBM favors bandwidth per package and per watt. The choice depends on the \nworkload and system constraints.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n59"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "memory-tradeoff"
+  },
+  {
+    "id": "coherence",
+    "document_id": "ACS-L2",
+    "name": "缓存一致性",
+    "aliases": [
+      "cache coherence"
+    ],
+    "importance": "core",
+    "facts": [
+      "写传播要求其他处理器最终观察写入",
+      "写串行化要求对同一地址写入顺序一致"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 63,
+        "quote": "A write can make another core’s copy stale\nWrite Propagation: Other processors must eventually observe the write\nWrite Serialization: All processors must agree on one order for writes to the same \nlocation\nSOTA Memory Technologies\nMulticore Technologies: Coherence\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n63"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "coherence"
+  },
+  {
+    "id": "coherence-protocol",
+    "document_id": "ACS-L2",
+    "name": "侦听与目录",
+    "aliases": [
+      "snooping",
+      "directory",
+      "MESI"
+    ],
+    "importance": "core",
+    "facts": [
+      "侦听广播请求，目录记录拥有者和共享者以定向发送",
+      "MESI 描述权限而非消息路由方式"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 64,
+        "quote": "Coherence Protocols: Snooping and Directory\nSOTA Memory Technologies\nMulticore Technologies: Coherence\nSnooping broadcasts coherence requests. A directory tracks owners and sharers \nto target the messages.\n▪\nMESI describes permissions. Snooping and directory designs determine how \ncoherence messages reach the caches.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n64"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "coherence-protocol"
+  },
+  {
+    "id": "cxl",
+    "document_id": "ACS-L2",
+    "name": "CXL 扩容与池化",
+    "aliases": [
+      "CXL",
+      "pooling"
+    ],
+    "importance": "core",
+    "facts": [
+      "扩容为一个主机增加容量",
+      "池化将设备容量分配给不同主机",
+      "一致性共享不同于仅映射相同区域"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 67,
+        "quote": "SOTA Memory Technologies\nCXL Switches Enable Expansion, Pooling, and Sharing\nExpansion adds capacity to one host. Pooling assigns portions of memory devices \nto different hosts.\n▪\nCXL 3.0 coherent sharing differs from merely allowing several hosts to map the \nsame memory region.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n67"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "cxl"
+  },
+  {
+    "id": "lpddr",
+    "document_id": "ACS-L2",
+    "name": "LPDDR 容量扩展",
+    "aliases": [
+      "LPDDR",
+      "NVLink-C2C"
+    ],
+    "importance": "core",
+    "facts": [
+      "Grace 经 NVLink-C2C 连接 LPDDR5X",
+      "扩展加速器可寻址容量，不增大 HBM 本身"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 68,
+        "quote": "SOTA Memory Technologies\nMemory Extension: LPDDR\nHopper retains local HBM. Grace connects LPDDR5X through the coherent \nNVLink-C2C CPU–GPU link.\n▪\nLPDDR extends the capacity the accelerator can address; it does not enlarge \nHBM itself.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n68"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "lpddr"
+  },
+  {
+    "id": "tiering",
+    "document_id": "ACS-L2",
+    "name": "分层内存管理",
+    "aliases": [
+      "tiered memory"
+    ],
+    "importance": "core",
+    "facts": [
+      "热且延迟敏感的数据优先放 HBM",
+      "大且冷的数据可放 LPDDR",
+      "迁移收益必须超过搬运和管理成本"
+    ],
+    "evidence": [
+      {
+        "document_id": "ACS-L2",
+        "page": 69,
+        "quote": "SOTA Memory Technologies\nTiered Memory Management Decides What Stays in HBM\nKeep hot, latency-critical, frequently reused data in HBM. Place large, cold objects \nin the LPDDR capacity tier.\n▪\nPromotion helps only when future reuse saves more than the transfer and \nbookkeeping cost.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n69"
+      }
+    ],
+    "review_status": "agent_checked_human_pending",
+    "split_group": "tiering"
+  }
+]

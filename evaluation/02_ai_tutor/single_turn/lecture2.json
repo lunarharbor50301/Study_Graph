@@ -1,0 +1,30 @@
+{
+  "version": "0.3",
+  "status": "human_review_pending",
+  "document_id": "ACS-L2",
+  "question_ids": [
+    "L2-ANSWER12",
+    "L2-ANSWER13",
+    "L2-ANSWER14",
+    "L2-ANSWER15",
+    "L2-ANSWER16",
+    "L2-ANSWER17",
+    "L2-ANSWER18",
+    "L2-ANSWER19",
+    "L2-ANSWER20",
+    "L2-ANSWER21",
+    "L2-ANSWER22",
+    "L2-ANSWER23",
+    "L2-ANSWER24",
+    "L2-ANSWER26",
+    "L2-ANSWER27",
+    "L2-ANSWER28"
+  ],
+  "question_bank": "../../shared/question_bank.json",
+  "mode": "single_turn_tutor",
+  "additional_checks": [
+    "切题",
+    "引用支持",
+    "证据不足时不编造"
+  ]
+}

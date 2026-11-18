@@ -1,4 +1,4 @@
-"""Run from the repository root: python -m evaluation.retrieval PDF CASES.csv"""
+"""Run from the repository root: python -m evaluation.runners.retrieval PDF CASES.csv"""
 import argparse
 import csv
 import os

@@ -1,0 +1,39 @@
+{
+  "version": "0.1",
+  "split": "development",
+  "exercise_id": "warp-feedback-dev-01",
+  "question": "在 NVIDIA CUDA 中，如果同一个 warp 内的线程进入不同分支，仅增加启动的线程数量，能否直接消除这个 warp 内的分支发散？请解释原因，并说明它与通过调度其他就绪 warp 隐藏延迟有什么区别。",
+  "assumptions": "仅增加线程数，不改变原 warp 的数据分配、分支条件或代码；不推断固定性能加速倍数。",
+  "mode": "hint_first",
+  "document_binding": {
+    "filename": "lecture_sample.pdf",
+    "document_id": null,
+    "status": "requires_backend_binding"
+  },
+  "cases": [
+    {
+      "case_id": "A01",
+      "student_answer": "不能。原 warp 内线程的分支选择没有变化，执行一条路径时另一条路径上的线程不会做这条路径的有效工作。更多线程可能带来其他就绪 warp，以便在等待时切换执行，但不能消除原 warp 内的发散，也不保证性能一定提高。"
+    },
+    {
+      "case_id": "A02",
+      "student_answer": "不会直接消除。问题出在这组线程走了不同路径，不在于总线程数少。别的线程组可以在当前组等待时接着干活，但原来那组执行某个分支时仍只有部分成员活跃。"
+    },
+    {
+      "case_id": "A03",
+      "student_answer": "不能，增加线程数不等于消除分支发散。"
+    },
+    {
+      "case_id": "A04",
+      "student_answer": "能。线程足够多时，GPU 可以同时执行所有分支，把空闲资源填满，所以发散就消失了。"
+    },
+    {
+      "case_id": "A05",
+      "student_answer": "不能，因为 GPU 一次只能执行一个线程，其他线程都必须等待。"
+    },
+    {
+      "case_id": "A06",
+      "student_answer": "能。只要不同 warp 分别走不同分支，同一个 warp 内原有的发散也会自动消失。"
+    }
+  ]
+}

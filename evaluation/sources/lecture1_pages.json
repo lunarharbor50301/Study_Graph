@@ -1,0 +1,270 @@
+[
+  {
+    "page": 1,
+    "text": "Advanced AI Computing and Systems\nLecture 1: Processor Evolution — From CPU to GPU\nProf. Kai Chen\n"
+  },
+  {
+    "page": 2,
+    "text": "¡\nKey Question\n¡\nWhy did AI computing move from CPU-centric systems to GPU-centric systems?\n¡ Today’s Path\n1.\n[Review] \nHow code runs and completes computation?\n2.\n[Review] \nWhat a host machine looks like?\n3.\n[Core] \nCPU vs GPU microarchitecture.\n4.\n[Concept] \nParallel programming models.\n5.\n[Core] \nPerformance model for AI workloads.\n¡ Readings\n¡\nHennessy & Patterson, A New Golden Age for Computer Architecture, CACM 2019\n¡\nDally, Keckler & Kirk, Evolution of the Graphics Processing Unit, IEEE Micro 2021\n¡\nWilliams, Waterman & Patterson, Roofline: An Insightful Visual Performance Model for Multicore Architectures, \nCACM 2009\n¡\nDao et al., FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness, NeurIPS 2022\nSyllabus and Readings\n"
+  },
+  {
+    "page": 3,
+    "text": "¡\nWhen we write\n¡ Y = Model (X), what actually happens?\n¡ Step 1: Design an algorithm Model to solve a problem, with input data X.\n¡ Step 2: A program expresses the algorithm. \n¡ Step 3: System software turns the program into an executable, parallel, and robust task.\n¡ Step 4: Operating system schedules computing tasks and deploys them onto hardware for \nexecuting.\n¡ Step 4: Hardware executes instructions and moves data to get results.\n¡ Step 5: Computation is completed and result Y is returned to the application. \nTransformation Hierarchy of Computing\nWorkflow of Once Computation\n"
+  },
+  {
+    "page": 4,
+    "text": "¡\nWhen we write\n¡\nY = Model (X), what actually happens?\n¡\nStep 1: Design an algorithm Model to solve a problem, with input data X.\n¡\nStep 2: A program expresses the algorithm. \n¡\nStep 3: System software turns the program into an executable, parallel, and robust task.\n¡\nStep 4: Operating system schedules computing tasks and deploys them onto hardware for executing.\n¡\nStep 4: Hardware executes instructions and moves data to get results.\n¡\nStep 5: Computation is completed and result Y is returned to the application. \nTransformation Hierarchy of Computing\nWorkflow of Once Computation\n\"Computing\" is more than arithmetic, it is a full-stack process from problems to results.\nIn this course, we study how system software, operating systems, and hardware make \ncomputation faster, more efficient, and more scalable.\n"
+  },
+  {
+    "page": 5,
+    "text": "¡\nApplication / Problem\n¡\nAI inference, training, web \nsearch, recommendation \n¡ Algorithm\n¡\nGEMM, attention, \noptimization, sampling \n¡ Program / Language\n¡\nPython, C++, CUDA, Go\n¡ System Software\n¡\nDistributed frameworks, \nlibraries, drivers, compilers, \nruntime\nTransformation Hierarchy of Computing\nAbstraction in System Design\n¡\nOperating System\n¡\nProcess, thread, memory, \nscheduling, I/O \n¡ Microarchitecture\n¡\nCore, cache, RAM, pipeline, \nbus, controller\n¡ Digital Logic\n¡\nGates, registers, wires, \narithmetic units\nApplication / Problem\ngoal of the computation\nAlgorithm\nmethod, dependency, parallelism\nProgram / Language / Compiler\nmachine-facing expression\nSystem Software\norganize executable work\nOperating System\nmanage resources and protection\nMicroarchitecture\nexecute instructions and move data\nrefine\nexpress\ntranslate\ndeploy\nmanage\nDigital Logic\nexecute computation\nrealize as circuits\n"
+  },
+  {
+    "page": 6,
+    "text": "Transformation Hierarchy of Computing\nAbstraction in System Design\nApplication / Problem\ngoal of the computation\nAlgorithm\nmethod, dependency, parallelism\nProgram / Language / Compiler\nmachine-facing expression\nSystem Software\norganize executable work\nOperating System\nmanage resources and protection\nMicroarchitecture\nexecute instructions and move data\nrefine\nexpress\ntranslate\ndeploy\nmanage\nDigital Logic\nexecute computation\nrealize as circuits\n¡\nApplication / Problem\n¡\nAI inference, training, web \nsearch, recommendation \n¡ Algorithm\n¡\nGEMM, attention, \noptimization, sampling \n¡ Program / Language\n¡\nPython, C++, CUDA, Go\n¡ System Software\n¡\nDistributed frameworks, \nlibraries, drivers, compilers, \nruntime\n¡\nOperating System\n¡\nProcess, thread, memory, \nscheduling, I/O \n¡ Microarchitecture\n¡\nCore, cache, RAM, pipeline, \nbus, controller\n¡ Digital Logic\n¡\nGates, registers, wires, \narithmetic units\n"
+  },
+  {
+    "page": 7,
+    "text": "GPUs\nGPUs\nGPUs\nGPUs\nCPUs\nLast Level\nCache\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nMemory Controller\nNV-Link:\n450GB/s\nPCIe: PIX,\n5.0, 512Gbps\nCPUs\nLast Level\nCache\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nMemory Controller\n200Gbps\nPCIe: PIX,\n5.0, 512Gbps\nNV-Link:\n450GB/s\nPCIe Switch\nPCIe Switch\nDDRs\nDDRs\n¡ A modern host system connects:\n¡ CPU\n¡ DDR / DRAM\n¡ GPU / Accelerator\n¡ SSD / Storage\n¡ NIC / Network\n¡ PCIe / Interconnect\n¡ Key lesson: End-to-end \nperformance depends on the \ninterconnection.\nA Quick Review of Host Architecture\nFrom System Design to Execution Platform\n"
+  },
+  {
+    "page": 8,
+    "text": "A Quick Review of Host Architecture\nBuilding a Computer: Motherboard as the Integration Plane\n¡\nCPU\n¡\nDDR\n¡\nGPU\n¡\nNVLink\n¡\nSSD / NVMe\n¡\nNIC\n¡\nPCIe\n"
+  },
+  {
+    "page": 9,
+    "text": "GPUs\nGPUs\nGPUs\nGPUs\nCPUs\nLast Level\nCache\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nMemory Controller\nNV-Link:\n450GB/s\nPCIe: PIX,\n5.0, 512Gbps\nCPUs\nLast Level\nCache\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nMemory Controller\n200Gbps\nPCIe: PIX,\n5.0, 512Gbps\nNV-Link:\n450GB/s\nPCIe Switch\nPCIe Switch\nDDRs\nDDRs\n¡\nMain Function: Run the Operating System and \nSystem Software\n¡\nInstall Debian / CentOS to manage all devices\n¡\nE.g., Install file system, acts as the PCIe root, \nmonitors power and temperature, facilitate \ndata flow among devices, etc.\n¡\nDeploy system software and launch codes\n¡\nUsers launch python-based frameworks and \ncalls inference / training tasks.\n¡\nThe CPU prepares input data from \nSSD/DRAM and calls GPU kernels to dispatch \ncomplex matrix computation to multiple \nGPUs.\n¡\nMany services are deployed on CPUs such as \nchatbox, coding agents, webs, etc.\nA Quick Review of Host Architecture\nRoles in AI Computing --- CPU Package: the Host Controller\n"
+  },
+  {
+    "page": 10,
+    "text": "GPUs\nGPUs\nGPUs\nGPUs\nCPUs\nLast Level\nCache\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nMemory Controller\nNV-Link:\n450GB/s\nPCIe: PIX,\n5.0, 512Gbps\nCPUs\nLast Level\nCache\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nMemory Controller\n200Gbps\nPCIe: PIX,\n5.0, 512Gbps\nNV-Link:\n450GB/s\nPCIe Switch\nPCIe Switch\nDDRs\nDDRs\n¡ Main Function: Provide High-Throughput \nComputation\n¡\nResponsible for matrix and tensor \noperations and return results.\n¡\nPackage high-bandwidth memory (HBM) to \nmaximum computation efficiency.\n¡ Typically, a host server holds eight GPUs, \nlimited by power supply and heat \ndissipation.\nA Quick Review of Host Architecture\nRoles in AI Computing --- GPU Package: the Main Computing Power\n"
+  },
+  {
+    "page": 11,
+    "text": "GPUs\nGPUs\nGPUs\nGPUs\nCPUs\nLast Level\nCache\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nMemory Controller\nNV-Link:\n450GB/s\nPCIe: PIX,\n5.0, 512Gbps\nCPUs\nLast Level\nCache\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nMemory Controller\n200Gbps\nPCIe: PIX,\n5.0, 512Gbps\nNV-Link:\n450GB/s\nPCIe Switch\nPCIe Switch\nDDRs\nDDRs\n¡ Main Function: Scale Single Computing \nSystem for Distributed Computing\n¡\nConnect many hosts to execute the same \ntask.\n¡ E.g., 5D parallelism for AI training \n(Lecture 9).\n¡ A training task may involve thousands of \nservers, requiring a large network with \nhigh bandwidth (Lecture 5).\n¡\nPackage network stack to facilitate GPU-\nDirect-Networking, bypass CPU to avoid the \nbottleneck.\nA Quick Review of Host Architecture\nRoles in AI Computing --- NIC Package: the Host Scalable Input/Output\n"
+  },
+  {
+    "page": 12,
+    "text": "GPUs\nGPUs\nGPUs\nGPUs\nCPUs\nLast Level\nCache\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nMemory Controller\nNV-Link:\n450GB/s\nPCIe: PIX,\n5.0, 512Gbps\nCPUs\nLast Level\nCache\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nMemory Controller\n200Gbps\nPCIe: PIX,\n5.0, 512Gbps\nNV-Link:\n450GB/s\nPCIe Switch\nPCIe Switch\nDDRs\nDDRs\n¡ Host -> Device -> Network -> Device -> Host\n¡\nHost Side: \nCPU\n¡\nAllocate memory, copy data, launch kernels, \nsynchronization.\n¡\nDevice Side: \nGPU\n¡\nRun many threads to execute kernels.\n¡\nNetwork Side: \nNIC\n¡\nExecute collective communication for remote \nmemory access or copy.\nA Quick Review of Host Architecture\nCUDA Host-Device Execution Model\n"
+  },
+  {
+    "page": 13,
+    "text": "CPU Microarchitecture\nLecture 1: Processor Evolution — From CPU to GPU\n"
+  },
+  {
+    "page": 14,
+    "text": "¡ Instruction execution is the last step of computing.\n¡ Workflow\n¡\nLoad: \nfrom RAM to register file\n¡\nCompute: \nadd, mul among registers\n¡\nStore:\nfrom register file to RAM\n¡ The instruction efficiency decides to maximum computing \npower and speed\n¡ Motivate two types of PU micro-architecture\n¡\nCPU: optimize latency of a small number of complex threads.\n¡\nGPU: optimize throughput of a large number of simple threads.\nThe Bottom of Computing: Instruction Execution\nApplication / Problem\ngoal of the computation\nAlgorithm\nmethod, dependency, parallelism\nProgram / Language / Compiler\nmachine-facing expression\nSystem Software\norganize executable work\nOperating System\nmanage resources and protection\nMicroarchitecture\nexecute instructions and move data\nrefine\nexpress\ntranslate\ndeploy\nmanage\nDigital Logic\nexecute computation\nrealize as circuits\n"
+  },
+  {
+    "page": 15,
+    "text": "¡ Three Components in a Computing \nCore: \n¡\nALU for computing\n¡\nRegister file for data load/store\n¡\nInstruction memory for pipelining\nCPU: Optimize Latency of a Small Number of Complex Threads\nArchitecture Overview \n¡ Specification of Intel Xeon 6980P\n¡\n256 Threads --- decide parallelism\n¡\n3.2GHz --- decide the speed of ALU/instruction \nexecution\n¡\n504MB Cache --- decide the speed of data \nload/store\n"
+  },
+  {
+    "page": 16,
+    "text": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline\n"
+  },
+  {
+    "page": 17,
+    "text": "¡ Perfect Pipeline\n¡ One instruction completes per cycle after filling \nthe pipeline.\n¡ No bubbles and maximum throughput.\n¡ For N instructions and M stages:\n¡ Total Cycles = M + N – 1\n¡ Average throughput\n= N / (M + N - 1) instructions per cycle\n¡ Instruction throughput per second                    \nFrequency * N / (M + N - 1)\nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline\n"
+  },
+  {
+    "page": 18,
+    "text": "¡ Any condition that causes the pipeline to \nstall is called a hazard.\n¡\nResult: Much bubbles and degraded efficiency\n¡ Various types of hazards\n¡\nData Hazard: Stall due to dependencies of some \ndata\n¡\nRead-after-write (RAW)\n¡\nWrite-after-write (WAW)\n¡\nWrite-after-read (WAR)\n¡\nControl Hazard: Stall due to branch and \nsynchronization\n¡\nStructural hazard: Stall due to contention on \nhardware such as memory channel, cache slot, \nqueue, etc.\nCPU: Optimize Latency of a Small Number of Complex Threads\nWhy Pipeline Stalls: Hazards\n"
+  },
+  {
+    "page": 19,
+    "text": "CPU: Optimize Latency of a Small Number of Complex Threads\nData Hazards\n"
+  },
+  {
+    "page": 20,
+    "text": "¡\nCase #1: Deeper pipeline causes worser penalty\nCPU: Optimize Latency of a Small Number of Complex Threads\nControl Hazards\n"
+  },
+  {
+    "page": 21,
+    "text": "¡\nCase #2: Branches create uncertainty\nCPU: Optimize Latency of a Small Number of Complex Threads\nControl Hazards\nSource: D. Schall, M. Ďuračková, and B. Grot, “The Last-Level Branch Predictor Revisited,” HPCA ’26, Table I. / \nSource: D. Schall, A. Sandberg, and B. Grot, “The Last-Level Branch Predictor,” MICRO ’24, Fig. 1.\n"
+  },
+  {
+    "page": 22,
+    "text": "¡ Enable Register-to-Register or Register-to-ALU Forwarding \n¡\nE.g., result is passed directly from pipeline register to ALU input. \n¡\nThe consumer can execute earlier ——> Fewer stalls and higher pipeline efficiency\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #1: Data Forwarding\n"
+  },
+  {
+    "page": 23,
+    "text": "¡ Use more registers to decouple dependencies.\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #2: Register Renaming\n"
+  },
+  {
+    "page": 24,
+    "text": "CPU: Optimize Latency of a Small Number of Complex Threads\nExamples for Data Forwarding and Register Renaming\n"
+  },
+  {
+    "page": 25,
+    "text": "¡ Out-of-order execution separates:\n¡\nProgram order: order written by the programmer\n¡\nExecution order: order chosen by hardware\n¡\nCommit order: order that updates architectural state\n¡ Typically, the compiler would find independent instruction sets to enable OoO execution, reducing \nthe stall time of the instruction pipeline.\n¡ At runtime, CPU involves a controller to find independent instructions while some instructions are \nwaiting.\n¡\nPreempt current pipeline\n¡\nIssue independent instruction\n¡\nRestore preempted instruction when it finishes waiting\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #3: Out-of-Order (OoO) Execution\n"
+  },
+  {
+    "page": 26,
+    "text": "¡ Superscalar CPU: tries to execute multiple instructions every cycle.\n¡ Need a \"wide\" pipeline\n¡\nWide fetch \n¡\nWide decode \n¡\nMultiple execution units \n¡\nMultiple load/store paths \n¡\nWide writeback \n¡\nMulti-ported register file\n¡ Challenge: \n¡\nIf instruction pipeline can issue N instructions concurrently,\n¡\nThe CPU needs resolve O(N2) dependence complexity.\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #4: Superscalar\n"
+  },
+  {
+    "page": 27,
+    "text": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #5: Speculative Execution\n¡ Prediction for next instructions\n¡\nIssue risky instructions on the chance of considerable benefits.\n¡ Benefit\n¡\nQuick completion --- low latency\n¡\nKeep deep pipeline busy --- high throughput\n¡ Cost\n¡\nWrong-path work wastes energy and cycles.\n¡\nRecovery penalty grows with pipeline depth and speculation window.\n"
+  },
+  {
+    "page": 28,
+    "text": "CPU: Optimize Latency of a Small Number of Complex Threads\nSpeculative Execution: Branch Prediction\n¡ Naïve speculative execution: Static Prediction\n¡\nThe compiler resolves user’s codes and find the \nbranches that would not be taken.\n¡\nRemove corresponding instructions to avoid \ncontrol hazards.\n¡ Dynamic Branch Prediction\n¡\nLearn branch behavior autonomously, no \ncompiler analysis or profiling\n¡\nAdapt to changing branch behavior\nExample: Why branch is predictable\n"
+  },
+  {
+    "page": 29,
+    "text": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #6: OoO Superscalar with Hyper-Threading\n¡ Problem: Even OoO superscalar cores have idle slot issues.\n¡ Reasons: \n¡\nCache miss, branch misprediction, dependency chain……\n¡ Hyper-threading introduces simultaneous multithreading (SMT)\n¡\nMultiple hardware threads share one physical core.\n¡\nEach logical thread has its own architectural state.\n¡\nExecution units, caches, queues, and predictors are shared.\n¡ The closest architecture to modern CPUs.\n"
+  },
+  {
+    "page": 30,
+    "text": "CPU: Optimize Latency of a Small Number of Complex Threads\nSummary\n¡ A modern CPU core spends many \ntransistors on\n¡\nData Forwarding\n¡\nRegister Renaming\n¡\nOoO Execution\n¡\nSuperscalar\n¡\nSpeculative Execution\n¡\n……\n¡ Answer: How can one or a few complex \nthreads make progress quickly?\n¡ Ideal Scenarios\n¡\nControl-heavy programs \n¡\nIrregular data structures \n¡\nOS and runtime services \n¡\nLow-latency request handling \n¡\n……\n¡ Much complex micro-\narchitecture and difficult to scale! \n"
+  },
+  {
+    "page": 31,
+    "text": "GPU Microarchitecture\nLecture 1: Processor Evolution — From CPU to GPU\n"
+  },
+  {
+    "page": 32,
+    "text": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ Problem: How do we scale the throughput of a single core?\n¡\nWith many optimizations, a superscalar core achieves its ceiling --- High Frequency; Deep Pipeline; Minimal \nHazards.\n¡\nAnswer: Scale the number of superscalar cores with memory hierarchy, scale the number of servers with \nnetworking, and design parallelism.\nMultiprocessors\nCPUs\nLast Level\nCache\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nMemory Controller\nCPUs\nLast Level\nCache\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nC\nMemory Controller\nDDRs\nDDRs\n...\nNICs\nNICs\n¡ Memory Hierarchy (Lecture 3)\n¡\nMultiple cores share global memory \n(Caches and DRAM)\n¡\nTightly Coupled Multiprocessors\n¡ Networking (Lecture 4&5)\n¡\nNo shared global memory\n¡\nData exchange via networking\n¡\nLoosely Coupled Multiprocessors\n"
+  },
+  {
+    "page": 33,
+    "text": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ Parallelism: Do multiple jobs concurrently.\n¡\nJob: instructions, operations, tasks\n¡ Data Parallelism\n¡\nDifferent pieces of data can be operated in parallel\n¡\nVector processing and array processing\n¡ Task Parallelism\n¡\nDifferent tasks can be operated in parallel\n¡\nMultithreading \nMultiprocessors\n"
+  },
+  {
+    "page": 34,
+    "text": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ CPU’s Goal: Be general to complex tasks.\n¡\nHazards are easy to occur, forcing CPU microarchitecture to implement much optimizations.\n¡\n\"Control logic\" such as branches and dependencies in complex tasks incur many synchronization among \ncores.\n¡\nResult: Scale to hundreds of heavy cores.\n¡ GPU’s Goal: Be specific to tasks that are easy to parallel.\n¡\nControl logic is less, data parallelism is easy.\n¡\nExample: vector processing.\n¡\nResult: Scale to 1,000s to 10,000s of light cores.\n¡\n10x to 100x of computing power than CPU!\nDifference of Scaling Cores: Control vs. Compute\n"
+  },
+  {
+    "page": 35,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡\nHundreds of Streaming Multiprocessors\n(SM)s\n¡\nEach SM consists of:\n¡\nProcessing units, e.g., INT32, FP32, FP64, etc.\n¡\nSimplified pipelines compared to CPU cores.\n¡\nEach unit executes specific instructions that are \ndesigned to specific computing precision.\n¡\nWarp Scheduler\n¡\nWhen deploy multiple threads, GPU packages a \nbranch of threads into a warp.\n¡\nThe scheduler decides which warp would run at one \ntime slot, and these threads shard a register file.\n¡\nWhen one warp waits, schedule another ready warp.\n¡\nHigh-speed shared memory for intra-SM data \nexchange.\n¡\nTensor core: accelerator for matrix operations.\nChip Organization\n"
+  },
+  {
+    "page": 36,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Compute Unified Device Architecture (CUDA)\n¡\nA parallel computing framework developed by \nNVIDIA.\n¡ Kernel\n---\nGPU-Level Jobs\n¡ Thread Block ---\nSM-Level Jobs\n¡ Warp of Threads ---\nMinimal Executing Units\n¡ Thread\n---\nOperator\nCUDA Programming and Execution Model\n// Device code\n__global__ void VecAdd(int* A, int* B, \nint* C)\n{\nint i = blockDim.x * blockIdx.x + \nthreadIdx.x;\nC[i] = A[i] + B[i];\n}\n"
+  },
+  {
+    "page": 37,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks\n"
+  },
+  {
+    "page": 38,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ SIMD Pipeline\n¡ One instruction per thread, per clock\nMicroarchitecture: SMs are SIMD Units\n"
+  },
+  {
+    "page": 39,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Control Unit\n¡ Shared by multiple processing units / SIMD \npipelines\nMicroarchitecture: SMs are SIMD Units\n"
+  },
+  {
+    "page": 40,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\nWarp Execution\n"
+  },
+  {
+    "page": 41,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\nWarp Execution\n¡ Interleave execution among \"warps\" to hide latencies\n"
+  },
+  {
+    "page": 42,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\nA Summary of GPU Terms\nGeneric Term\nNVIDIA Term\nAMD Term\nComments\nVector length\nWarp size\nWavefront size\nNumber of threads that run in \nparallel on a SIMD unit\nPipelined unit / Scalar \npipeline\nCUDA core\n-\nFunctional unit that executes \ninstructions of one GPU thread\nSIMD unit / SIMD \npipeline\nGroup of N \nCUDA cores (e.g., \nN=16 in Fermi)\nVector ALU\nSIMD unit that executes \ninstructions for an entire warp\nGPU core\nSM\nCompute Unit\nContains one or more control \nunits (e.g., wrap scheduler) and \none or several SIMD pipelines\n"
+  },
+  {
+    "page": 43,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\nCPU vs GPU\n¡ CPU: A few out-of-order, superscalar, hyper-threading cores --- heavy cores\n¡ GPU: Many in-order, SIDM-pipeline cores --- light cores\n¡\nEnable 1,000 to 10,000 threads for parallel computing\n"
+  },
+  {
+    "page": 44,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A GPU uses a SIMD pipeline to save area on \ncontrol logic\n¡\nGroups scalar threads into warps\n¡ Branch Divergence\n¡\nOccurs when threads inside warps branch to \ndifferent execution path\n¡ Result: Only a subset of threads execute, \nwaste SIMD pipeline utilization\nIssue of SIMD Utilization: Control Divergence\n"
+  },
+  {
+    "page": 45,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Example: Intra-warp divergence\nIssue of SIMD Utilization: Control Divergence\nCompute(threadIdx.x);\nif (threadIdx.x % 2 == 0){\nDo_this(threadIdx.x);\n}\nelse{\nDo_that(threadIdx.x);\n}\n"
+  },
+  {
+    "page": 46,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡\nIncreasing SIMD utilization with divergence-free\nprograms.\nIssue of SIMD Utilization: Control Divergence\nCompute(threadIdx.x);\nif (threadIdx.x < 32){\nDo_this(threadIdx.x * 2);\n}\nelse{\nDo_that((threadIdx.x%32)*2+1);\n}\n"
+  },
+  {
+    "page": 47,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\nControl Divergence: Vector Reduction\n¡ Program with low SIMD utilization\n¡\nHigh divergence.\n__shared__ float partialSum[]\nunsigned int t = threadIdx.x;\nfor (int stride = 1; stride < blockDim.x; \nstride *= 2) {\n__syncthreads();\nif (t % (2*stride) == 0)\npartialSum[t] += partialSum[t + stride];\n}\n"
+  },
+  {
+    "page": 48,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\nControl Divergence: Vector Reduction\n¡ Optimized program\n¡\nAll active threads belong to the same \nwarp.\n__shared__ float partialSum[]\nunsigned int t = threadIdx.x;\nfor (int stride = blockDim.x; stride > 1; \nstride >> 1){\n__syncthreads();\nif (t < stride)\npartialSum[t] += partialSum[t + stride];\n}\n"
+  },
+  {
+    "page": 49,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Atomic operations are required when threads update the value of the same memory location\n¡\nCUDA: int atomicAdd (int*, int);\n¡ Atomic conflicts: the number of threads in a warp that update the same memory position\nIssue of SIMD Utilization: Atomic Operations\n"
+  },
+  {
+    "page": 50,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Histograms count the number of data instances in disjoint categories (bins)\nAtomic Operations: Histogram Calculation\n¡ Frequent conflicts in a natural images\nfor (each pixel i in image I) {\nPixel = I[i]              \n// Read pixel\nPixel‘ = Computation(Pixel) \n// Optional computation\nHistogram[Pixel‘]++        \n// Vote in histogram bin\n}\n"
+  },
+  {
+    "page": 51,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\nAtomic Operations: Histogram Calculation\n¡ Optimized histogram calculation: \nper-block sub-histograms\n"
+  },
+  {
+    "page": 52,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ Scaling laws made compute the bottleneck\nWhy AI Moved Toward GPU-Centric Computing?\n¡ Transformers made the computation massively data-parallel\nLINE 1: DEMAND\nScaling laws turn AI into sustained FLOP demand\nEmpirical loss improves predictably as compute, parameters, and data increase.\nScales model size and token count together.\nThe hardware target becomes high-throughput training, not low-latency single-\nthread execution.\ncompute\nmodel quality\nLINE 2: STRUCTURE\nTransformers expose SIMD/SIMT-friendly work\nMost expensive layers are dense tensor kernels:\ne.g., QKV projection, QK^T attention scores, AV product, FFN GEMM.\nParallel axes: batch, token, head, hidden dimension.\nControl flow is small; arithmetic intensity is high when tiled well.\nQKV \nGEMM\nQK^T\nSoftmax\nAV GEMM\nFFN \nGEMM\nGPU-centric execution\nmany simple threads + high bandwidth + tensor units\nCPU remains the host controller; GPU becomes the dominant floating-point compute engine.\n"
+  },
+  {
+    "page": 53,
+    "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\nWhy NVIDIA SM Outperforms Other GPUs for Transformer Kernels?\nStreaming \nMultiprocessor (SM)\nWarp schedulers\nselect ready warps; hide \nlatency\nRegisters\nper-thread state for many \nwarps\nShared memory / \nL1\nexplicit tiling and data reuse\nTensor Cores\nMMA path for GEMM / \nattention\nTRANSFORMER KERNELS\nDense GEMM\nQKV projection, FFN\nBatched GEMM\nQK^T and attention x V\nFused attention\nsoftmax, masking, dropout\nQuantized path\nFP16 / BF16 / TF32 / FP8\nFLASHATTENTION AS \nEXAMPLE\nIO-aware attention\nstandard\nmaterialize S x S scores in \nHBM\nFlashAttention tile Q/K/V through SRAM\nresult\nfuse softmax; reduce HBM \ntraffic\n"
+  },
+  {
+    "page": 54,
+    "text": "Parallel Programming Models: pThread and CUDA\nLecture 1: Processor Evolution — From CPU to GPU\n"
+  },
+  {
+    "page": 55,
+    "text": "CPU Multicore Programming: pThread\n¡ Break down a complex task into multiple lightweight sub-tasks.\n¡\nOne process contains multiple threads. \n¡\nThreads share the same virtual address space, global variables and heap objects are shared.\n¡\nSynchronization is the programmer’s responsibility. \nThread Parallelism with Shared Memory Programming Model\n"
+  },
+  {
+    "page": 56,
+    "text": "CPU Multicore Programming: pThread\n¡ POSIX threads, also known as pThread library.\n¡\nA standard for Unix-like operating systems.\n¡\nLinked with C/C++ programs.\n¡\nExample: parallel reduction with a fork-join pattern.\n¡\nPartition input into per-thread chunks.\n¡\nCompute local partial sums independently.\n¡\nJoin workers and reduce partial results.\nProgramming with POSIX threads\nsize_t chunk = (n + T - 1) / T;\nfor (int tid = 0; tid < T; ++tid) {\ntasks[tid] = (Task){\nx,\ntid * chunk,\nmin(n, (tid + 1) * chunk),\n0.0\n};\npthread_create(&threads[tid], NULL,\npartial_sum, &tasks[tid]);\n}\ndouble total = 0.0;\nfor (int tid = 0; tid < T; ++tid) {\npthread_join(threads[tid], NULL);\ntotal += tasks[tid].partial;\n}\nvoid *partial_sum(void *arg) {\nTask *t = (Task *)arg;\ndouble sum = 0.0;\nfor (size_t i = t->begin; i < t->end; ++i)\nsum += t->x[i];\nt->partial = sum;\nreturn NULL;\n}\n"
+  },
+  {
+    "page": 57,
+    "text": "CPU Multicore Programming: pThread\n¡\nExample\n¡ sum += local_sum;\n¡ For each thread\n¡ Load sum\n¡ Add local_sum\n¡ Store sum\n¡\nIf two threads execute concurrently\n¡ both may read the old value; \n¡ both compute new values; \n¡ one write overwrites the other. \n¡ Race Conditions: multiple threads access a \nshared resource and final result depends on \ntiming. \n¡ A critical section is code that must be \nexecuted by only one thread at a time.\nRace Condition and Critical Section\n"
+  },
+  {
+    "page": 58,
+    "text": "CPU Multicore Programming: pThread\n¡ Mutex pattern:\nMutex: Protect Shared State\npthread_mutex_lock(&lock);\nsum += local_sum;\npthread_mutex_unlock(&lock);\n¡ The Mutex provides:\n¡ Serialized access to critical section \n¡ Race avoidance for protected \nshared state \n¡ Cost: Lock contention\nOnly one thread holds the mutex; others wait and the protected region is serialized\n"
+  },
+  {
+    "page": 59,
+    "text": "CPU Multicore Programming: pThread\n¡ Barrier: All threads wait until everyone \nreaches the same point.\n¡\nUse cases: phase-based algorithms, \ndebugging, iterative solvers, etc.\nBarriers and Condition Variables\nbarrier\nThread 0\nThread 1\nThread 2\nThread 3\nNo thread executes until all participating threads \narrive.\n¡ Condition variable: A thread sleeps \nuntil a condition becomes true.\n¡\nUse cases: worker pools, event-driven \nscheduling, etc.\nProducer\nsignal\nConsumer\nqueue_empty == false\nA sleeping thread wakes only when another \nthread signals it.\n"
+  },
+  {
+    "page": 60,
+    "text": "CPU Multicore Programming: pThread\n¡ Both divide work across parallel workers, but CUDA makes the worker much smaller and more \nnumerous.\nFrom pThread to CUDA: Same Idea, Different Granularity\npThread on CPU\nT0\nT1\nT2\nT3\nfew OS threads, coarse tasks\nCUDA on GPU\nmany logical threads, data \nelements\nSame SIMD/SIMT pattern\nQuestion\npThread\nCUDA\nWork unit\nOS thread / task\nCUDA thread / data element\nLaunch API\npthread_create + pthread_join\nkernel<<<grid, block>>>()\nMemory model\nshared virtual address space\nhost memory + device memory\nSync style\nmutex, barrier, condition variable\nblock barrier + kernel boundary\n"
+  },
+  {
+    "page": 61,
+    "text": "GPU Programming: CUDA\n¡ CUDA starts on the CPU: host code manages device memory, data movement, and kernel launch.\nCUDA Program Structure\nHost memory\nh_A, h_B, h_C\ncopy\nDevice memory\nd_A, d_B, d_C\nlaunch\nKernel execution\nvecAdd<<<...>>>\ncopy\nHost result\nh_C\ncudaMalloc(&d_A, bytes);\ncudaMemcpy(d_A, h_A, bytes, cudaMemcpyHostToDevice);\nvecAdd<<<numBlocks, blockSize>>>(d_A, d_B, d_C, n);\ncudaMemcpy(h_C, d_C, bytes, cudaMemcpyDeviceToHost);\ncudaFree(d_A);\nImportant detail\nKernel launch is asynchronous.\nUse cudaDeviceSynchronize() or a \nblocking copy/event when host \ncode needs the result.\n"
+  },
+  {
+    "page": 62,
+    "text": "GPU Programming: CUDA\n¡ Kernel Definition\n¡ Every CUDA thread runs the same kernel \ncode; built-in IDs select the data element.\nCUDA Kernel Definition and Thread Indexing\n__global__ void vecAdd(float *A, float *B,\nfloat *C, int n) {\nint i = blockIdx.x * blockDim.x + threadIdx.x;\nif (i < n) C[i] = A[i] + B[i];\n}\nblockIdx.x = 0\n0\n1\n2\n3\n4\n5\nblockIdx.x = 1\n0\n1\n2\n3\n4\n5\nblockIdx.x = 2\n0\n1\n2\n3\n4\n5\nblockDim.x is the number of threads per block. \nthreadIdx.x is the local index inside that block.\ni = blockIdx.x * blockDim.x + threadIdx.x\n"
+  },
+  {
+    "page": 63,
+    "text": "GPU Programming: CUDA\n¡ __syncthreads()\n¡ Scope: One CUDA block\n¡ Use: Tile coordination in the shared \nmemory.\n¡ Kernel boundary\n¡ Scope: Whole threads\n¡ Use: Global phase between kernels\n¡ Achieved by launching separate kernels\nCUDA Synchronization \n__shared__ float tile[256];\ntile[threadIdx.x] = A[i];\n__syncthreads();\nuse(tile);\n¡ Load data from global memory to shared memory.\n¡ Wait until all threads in the block complete the \nshared-memory load.\n"
+  },
+  {
+    "page": 64,
+    "text": "Performance Models\nLecture 1: Processor Evolution — From CPU to GPU\n"
+  },
+  {
+    "page": 65,
+    "text": "Performance Models\n¡ Upper Bound: Hardware Throughput\n¡\nReal Performance: Limited by Load Imbalance, Pipeline Efficiency, and Memory Access\n¡ Speedup of a parallel program\n¡\nP = The number of cores\n¡\nT(1) = Serial running time\n¡\nT(P) = Parallel running time\n¡\nSpeedup = T(1) / T(P)\n¡ Efficiency = Speedup / P\nPerformance Is Not Peak FLOPs\n¡ Speedup and efficiency usually vary with problem \nsize and the number of involved cores\n"
+  },
+  {
+    "page": 66,
+    "text": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains.\n"
+  },
+  {
+    "page": 67,
+    "text": "Performance Models\n¡\nMemory wall: how much computation it performs for each byte moved.\n¡\nRoofline Model: Compute-Bound or Memory-Bound?\nRoofline Model\nArithmetic Intensity = FLOPs / Bytes moved from memory\nWhy peak is hard\n•\nmemory-bound: limited by bandwidth x \nintensity\n•\ncompute-bound: still needs vectorization, \ntensor cores, occupancy\n•\nreal ceilings fall with poor locality or pipeline \nutilization\n"
+  }
+]

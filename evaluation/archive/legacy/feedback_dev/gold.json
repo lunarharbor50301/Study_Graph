@@ -1,0 +1,42 @@
+{
+  "visibility": "reviewer_only_do_not_send_to_model",
+  "exercise_id": "warp-feedback-dev-01",
+  "cases": [
+    {
+      "case_id": "A01",
+      "expected_verdict": "correct",
+      "error_type": "none",
+      "feedback_expectation": "确认正确，不编造错因。"
+    },
+    {
+      "case_id": "A02",
+      "expected_verdict": "correct",
+      "error_type": "none",
+      "feedback_expectation": "接受通俗同义表达，不因缺专业术语扣分。"
+    },
+    {
+      "case_id": "A03",
+      "expected_verdict": "partially_correct",
+      "error_type": "missing_explanation",
+      "feedback_expectation": "邀请补充 K2、K3，不推断未表达的错误观念。"
+    },
+    {
+      "case_id": "A04",
+      "expected_verdict": "incorrect",
+      "error_type": "latency_hiding_vs_divergence",
+      "feedback_expectation": "指出增加总线程数不改变原 warp 内路径。"
+    },
+    {
+      "case_id": "A05",
+      "expected_verdict": "partially_correct",
+      "error_type": "incorrect_execution_model",
+      "feedback_expectation": "指出结论正确，但 GPU 并非一次只执行一个线程。"
+    },
+    {
+      "case_id": "A06",
+      "expected_verdict": "incorrect",
+      "error_type": "intra_vs_inter_warp",
+      "feedback_expectation": "区分 warp 间路径不同与原 warp 内发散。"
+    }
+  ]
+}

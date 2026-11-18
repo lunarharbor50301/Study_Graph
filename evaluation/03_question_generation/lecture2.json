@@ -1,0 +1,296 @@
+{
+  "version": "0.3",
+  "status": "human_review_pending",
+  "document_id": "ACS-L2",
+  "cases": [
+    {
+      "id": "L2-GEN01",
+      "topic_family": "locality",
+      "input": {
+        "document_id": "ACS-L2",
+        "instruction": "仅依据当前课件PDF物理页[22]。出一道比较空间与时间局部性的简答题，要求举例并解释。 每题给出题干、答案、逐点评分标准和支持答案的PDF物理页码。",
+        "question_type": "short_answer",
+        "difficulty": "understanding",
+        "required_count": 1
+      },
+      "evaluation": {
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 22,
+            "quote": "Spatial Locality\nThe neighbors of the current data \naccess tend to be accessed in the \nfuture.\nE.g., array\nTemporal Locality\nA piece of data is quickly reused \nin the future.\nE.g., Loops\nCPU Memory Hierarchy\nLocality: The Hot Feature Makes Caches Useful\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n22"
+          }
+        ],
+        "warning": "不限制具体措辞或唯一题目；允许符合约束的不同题目。",
+        "core_gates": [
+          {
+            "id": "G1",
+            "name": "题干明确且条件充分"
+          },
+          {
+            "id": "G2",
+            "name": "当前讲义和显式条件足以回答"
+          },
+          {
+            "id": "G3",
+            "name": "参考答案正确；单选题唯一正确选项"
+          },
+          {
+            "id": "G4",
+            "name": "评分标准完整且可执行"
+          }
+        ],
+        "qualification_rule": "G1 AND G2 AND G3 AND G4",
+        "separate_checks": [
+          "scope_and_type",
+          "quantity",
+          "citation_support",
+          "difficulty",
+          "topic_coverage",
+          "duplicates"
+        ],
+        "strict_usable_rule": "core_gates AND scope_and_type AND difficulty AND sufficient_citations AND not_later_duplicate",
+        "target_topics": [
+          "locality"
+        ]
+      }
+    },
+    {
+      "id": "L2-GEN02",
+      "topic_family": "gpu-memory-family",
+      "input": {
+        "document_id": "ACS-L2",
+        "instruction": "仅依据当前课件PDF物理页[43, 46]。出一道四选一题，考查 CUDA local memory 的作用域与物理位置；仅一个正确选项，并解释所有选项。 每题给出题干、答案、逐点评分标准和支持答案的PDF物理页码。",
+        "question_type": "multiple_choice",
+        "difficulty": "understanding",
+        "required_count": 1
+      },
+      "evaluation": {
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 43,
+            "quote": "Registers\nAllocated per thread, hardware \nmanaged\nShared Memory + L1 Cache\nPer SM explicit scratchpad, \nhardware cache\nL2 Cache\nDevice-wide, shared by all SMs\nDevice Memory: GDDR / HBM\nOff-chip physical memory serving \nthe global address space\nGPU Memory Hierarchy\nLarger Capacity, Longer Access Time\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n43"
+          },
+          {
+            "document_id": "ACS-L2",
+            "page": 46,
+            "quote": "GPU Memory Hierarchy\nEvery CUDA Memory Space Maps to a Physical Resource\nLocal memory is thread-private in scope but usually resides in device DRAM and \npasses through L1/L2.\n▪\nRegister and shared-memory allocations limit how many blocks and warps can \nreside on an SM.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n46"
+          }
+        ],
+        "warning": "不限制具体措辞或唯一题目；允许符合约束的不同题目。",
+        "core_gates": [
+          {
+            "id": "G1",
+            "name": "题干明确且条件充分"
+          },
+          {
+            "id": "G2",
+            "name": "当前讲义和显式条件足以回答"
+          },
+          {
+            "id": "G3",
+            "name": "参考答案正确；单选题唯一正确选项"
+          },
+          {
+            "id": "G4",
+            "name": "评分标准完整且可执行"
+          }
+        ],
+        "qualification_rule": "G1 AND G2 AND G3 AND G4",
+        "separate_checks": [
+          "scope_and_type",
+          "quantity",
+          "citation_support",
+          "difficulty",
+          "topic_coverage",
+          "duplicates"
+        ],
+        "strict_usable_rule": "core_gates AND scope_and_type AND difficulty AND sufficient_citations AND not_later_duplicate",
+        "target_topics": [
+          "gpu-memory-family"
+        ]
+      }
+    },
+    {
+      "id": "L2-GEN03",
+      "topic_family": "amat",
+      "input": {
+        "document_id": "ACS-L2",
+        "instruction": "仅依据当前课件PDF物理页[26, 27]。出一道 AMAT 计算题，明确 hit time、miss rate、额外 miss penalty 及单位，给出计算过程。 每题给出题干、答案、逐点评分标准和支持答案的PDF物理页码。",
+        "question_type": "calculation",
+        "difficulty": "application",
+        "required_count": 1
+      },
+      "evaluation": {
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 26,
+            "quote": "AMAT = Hit time + Miss rate x Miss penalty\nMiss Penalty: time to fetch a block from lower memory \nlevel\nAccess Time: Latency for the memory to handle one access\nTransfer Time: Latency to transfer data block to higher level\nMiss penalty = access time + data size / bandwidth\nCPU Memory Hierarchy\nAverage Memory Access Time (AMAT)\nA cache helps when common hits remain fast and sufficiently few accesses pay \nthe miss penalty.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n26"
+          },
+          {
+            "document_id": "ACS-L2",
+            "page": 27,
+            "quote": "Average Memory Access Time (AMAT)\n= Hit Time + Miss rate * Miss Penalty\n= Thit(L1) + Miss%(L1) * T(memory)  \nExample: \nCache Hit = 1 cycle\nMiss rate = 10% = 0.1\nMiss penalty = 300 cycles\nAMAT = 1 + 0.1 * 300 = 31 cycles\nCan we improve it?\nMain\nMemory\n(DRAM)\nFirst-level\nCache\nHit Time\nMiss % * Miss penalty\n1 clk\n300 clks\nCPU Memory Hierarchy\nMemory Hierarchy Performance\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n27"
+          }
+        ],
+        "warning": "不限制具体措辞或唯一题目；允许符合约束的不同题目。",
+        "core_gates": [
+          {
+            "id": "G1",
+            "name": "题干明确且条件充分"
+          },
+          {
+            "id": "G2",
+            "name": "当前讲义和显式条件足以回答"
+          },
+          {
+            "id": "G3",
+            "name": "参考答案正确；单选题唯一正确选项"
+          },
+          {
+            "id": "G4",
+            "name": "评分标准完整且可执行"
+          }
+        ],
+        "qualification_rule": "G1 AND G2 AND G3 AND G4",
+        "separate_checks": [
+          "scope_and_type",
+          "quantity",
+          "citation_support",
+          "difficulty",
+          "topic_coverage",
+          "duplicates"
+        ],
+        "strict_usable_rule": "core_gates AND scope_and_type AND difficulty AND sufficient_citations AND not_later_duplicate",
+        "target_topics": [
+          "amat"
+        ]
+      }
+    },
+    {
+      "id": "L2-GEN04",
+      "topic_family": "gpu-memory-family",
+      "input": {
+        "document_id": "ACS-L2",
+        "instruction": "仅依据当前课件PDF物理页[48, 51]。构造访存情境，要求区分全局访存合并与共享内存 bank 冲突；明确同地址读取可广播的情况。 每题给出题干、答案、逐点评分标准和支持答案的PDF物理页码。",
+        "question_type": "short_answer",
+        "difficulty": "application",
+        "required_count": 1
+      },
+      "evaluation": {
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 48,
+            "quote": "GPU Memory Hierarchy\nAccess Memory: Coalescing Packs Nearby Addresses into \nFewer Transactions\nCoalescing is evaluated for one warp memory instruction. Aligned, contiguous \naddresses touch fewer segments.\n▪\nMisalignment can cross extra boundaries. Strided accesses can touch many more \nsegments.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n48"
+          },
+          {
+            "document_id": "ACS-L2",
+            "page": 51,
+            "quote": "GPU Memory Hierarchy\nAccess Memory: Bank Conflicts Serialize Otherwise Parallel \nAccesses\nTypical GPUs use 32 banks; the figure shows 8 for readability. Same-address \nreads can use broadcast.\n▪\nDifferent addresses in the same bank require multiple service rounds. This differs \nfrom global-memory coalescing.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n51"
+          }
+        ],
+        "warning": "不限制具体措辞或唯一题目；允许符合约束的不同题目。",
+        "core_gates": [
+          {
+            "id": "G1",
+            "name": "题干明确且条件充分"
+          },
+          {
+            "id": "G2",
+            "name": "当前讲义和显式条件足以回答"
+          },
+          {
+            "id": "G3",
+            "name": "参考答案正确；单选题唯一正确选项"
+          },
+          {
+            "id": "G4",
+            "name": "评分标准完整且可执行"
+          }
+        ],
+        "qualification_rule": "G1 AND G2 AND G3 AND G4",
+        "separate_checks": [
+          "scope_and_type",
+          "quantity",
+          "citation_support",
+          "difficulty",
+          "topic_coverage",
+          "duplicates"
+        ],
+        "strict_usable_rule": "core_gates AND scope_and_type AND difficulty AND sufficient_citations AND not_later_duplicate",
+        "target_topics": [
+          "gpu-memory-family"
+        ]
+      }
+    },
+    {
+      "id": "L2-GEN05",
+      "topic_family": "tiering",
+      "input": {
+        "document_id": "ACS-L2",
+        "instruction": "仅依据当前课件PDF物理页[59, 68, 69]。出三道不重复的简答题，分别考查 DDR/GDDR/HBM 权衡、LPDDR 扩容、HBM 分层放置及迁移成本。 每题给出题干、答案、逐点评分标准和支持答案的PDF物理页码。",
+        "question_type": "mixed",
+        "difficulty": "understanding",
+        "required_count": 3
+      },
+      "evaluation": {
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 59,
+            "quote": "GPU Memory Hierarchy\nDDR, GDDR, and HBM Optimize Different Constraints\nDDR favors capacity, expandability, and cost per GB. GDDR balances pin \nbandwidth and board cost.\n▪\nHBM favors bandwidth per package and per watt. The choice depends on the \nworkload and system constraints.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n59"
+          },
+          {
+            "document_id": "ACS-L2",
+            "page": 68,
+            "quote": "SOTA Memory Technologies\nMemory Extension: LPDDR\nHopper retains local HBM. Grace connects LPDDR5X through the coherent \nNVLink-C2C CPU–GPU link.\n▪\nLPDDR extends the capacity the accelerator can address; it does not enlarge \nHBM itself.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n68"
+          },
+          {
+            "document_id": "ACS-L2",
+            "page": 69,
+            "quote": "SOTA Memory Technologies\nTiered Memory Management Decides What Stays in HBM\nKeep hot, latency-critical, frequently reused data in HBM. Place large, cold objects \nin the LPDDR capacity tier.\n▪\nPromotion helps only when future reuse saves more than the transfer and \nbookkeeping cost.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n69"
+          }
+        ],
+        "warning": "不限制具体措辞或唯一题目；允许符合约束的不同题目。",
+        "core_gates": [
+          {
+            "id": "G1",
+            "name": "题干明确且条件充分"
+          },
+          {
+            "id": "G2",
+            "name": "当前讲义和显式条件足以回答"
+          },
+          {
+            "id": "G3",
+            "name": "参考答案正确；单选题唯一正确选项"
+          },
+          {
+            "id": "G4",
+            "name": "评分标准完整且可执行"
+          }
+        ],
+        "qualification_rule": "G1 AND G2 AND G3 AND G4",
+        "separate_checks": [
+          "scope_and_type",
+          "quantity",
+          "citation_support",
+          "difficulty",
+          "topic_coverage",
+          "duplicates"
+        ],
+        "strict_usable_rule": "core_gates AND scope_and_type AND difficulty AND sufficient_citations AND not_later_duplicate",
+        "target_topics": [
+          "DDR/GDDR/HBM权衡",
+          "LPDDR扩容",
+          "HBM放置与迁移成本"
+        ]
+      }
+    }
+  ],
+  "scoring_version": "1.0",
+  "scoring_guide": "../shared/scoring.md"
+}

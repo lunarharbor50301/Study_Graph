@@ -1,0 +1,350 @@
+{
+  "version": "0.3",
+  "status": "human_review_pending",
+  "document_id": "ACS-L1",
+  "cases": [
+    {
+      "id": "L1-MT01",
+      "topic_family": "pipeline",
+      "turns": [
+        {
+          "turn": 1,
+          "input": {
+            "user_message": "解释五级流水线的五个阶段及作用。"
+          },
+          "expected": {
+            "required_points": [
+              "列出IF/ID/EX/MEM/WB",
+              "阶段重叠提高吞吐"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L1",
+                "page": 16,
+                "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "input": {
+            "user_message": "那它是不是让每条指令都只需要一个周期？"
+          },
+          "expected": {
+            "required_points": [
+              "它指五级流水线",
+              "区分完成速率与单条指令经过多个阶段；不能认同错误前提"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L1",
+                "page": 16,
+                "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+              },
+              {
+                "document_id": "ACS-L1",
+                "page": 17,
+                "quote": "¡ Perfect Pipeline\n¡ One instruction completes per cycle after filling \nthe pipeline.\n¡ No bubbles and maximum throughput.\n¡ For N instructions and M stages:\n¡ Total Cycles = M + N – 1\n¡ Average throughput\n= N / (M + N - 1) instructions per cycle\n¡ Instruction throughput per second                    \nFrequency * N / (M + N - 1)\nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 3,
+          "input": {
+            "user_message": "沿用这个理想五级流水线，执行10条指令需要多少周期？"
+          },
+          "expected": {
+            "required_points": [
+              "沿用M=5,N=10",
+              "无气泡理想条件下5+10-1=14周期"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L1",
+                "page": 17,
+                "quote": "¡ Perfect Pipeline\n¡ One instruction completes per cycle after filling \nthe pipeline.\n¡ No bubbles and maximum throughput.\n¡ For N instructions and M stages:\n¡ Total Cycles = M + N – 1\n¡ Average throughput\n= N / (M + N - 1) instructions per cycle\n¡ Instruction throughput per second                    \nFrequency * N / (M + N - 1)\nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 4,
+          "input": {
+            "user_message": "如果发生数据冒险，刚才的计算还一定成立吗？请给出依据页。"
+          },
+          "expected": {
+            "required_points": [
+              "刚才的计算指14周期理想结果",
+              "冒险可能产生停顿；转发可减少停顿但不保证所有情况仍为14",
+              "引用支持理想公式及冒险影响的页面"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L1",
+                "page": 17,
+                "quote": "¡ Perfect Pipeline\n¡ One instruction completes per cycle after filling \nthe pipeline.\n¡ No bubbles and maximum throughput.\n¡ For N instructions and M stages:\n¡ Total Cycles = M + N – 1\n¡ Average throughput\n= N / (M + N - 1) instructions per cycle\n¡ Instruction throughput per second                    \nFrequency * N / (M + N - 1)\nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+              },
+              {
+                "document_id": "ACS-L1",
+                "page": 18,
+                "quote": "¡ Any condition that causes the pipeline to \nstall is called a hazard.\n¡\nResult: Much bubbles and degraded efficiency\n¡ Various types of hazards\n¡\nData Hazard: Stall due to dependencies of some \ndata\n¡\nRead-after-write (RAW)\n¡\nWrite-after-write (WAW)\n¡\nWrite-after-read (WAR)\n¡\nControl Hazard: Stall due to branch and \nsynchronization\n¡\nStructural hazard: Stall due to contention on \nhardware such as memory channel, cache slot, \nqueue, etc.\nCPU: Optimize Latency of a Small Number of Complex Threads\nWhy Pipeline Stalls: Hazards"
+              },
+              {
+                "document_id": "ACS-L1",
+                "page": 22,
+                "quote": "¡ Enable Register-to-Register or Register-to-ALU Forwarding \n¡\nE.g., result is passed directly from pipeline register to ALU input. \n¡\nThe consumer can execute earlier ——> Fewer stalls and higher pipeline efficiency\nCPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #1: Data Forwarding"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "L1-MT02",
+      "topic_family": "parallelism",
+      "turns": [
+        {
+          "turn": 1,
+          "input": {
+            "user_message": "解释数据并行和任务并行的区别。"
+          },
+          "expected": {
+            "required_points": [
+              "分别解释不同数据与不同任务的并发"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L1",
+                "page": 33,
+                "quote": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ Parallelism: Do multiple jobs concurrently.\n¡\nJob: instructions, operations, tasks\n¡ Data Parallelism\n¡\nDifferent pieces of data can be operated in parallel\n¡\nVector processing and array processing\n¡ Task Parallelism\n¡\nDifferent tasks can be operated in parallel\n¡\nMultithreading \nMultiprocessors"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "input": {
+            "user_message": "前者适合对数组每个元素执行同一个操作吗？为什么？"
+          },
+          "expected": {
+            "required_points": [
+              "前者指数据并行",
+              "不同元素可并行处理"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L1",
+                "page": 33,
+                "quote": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ Parallelism: Do multiple jobs concurrently.\n¡\nJob: instructions, operations, tasks\n¡ Data Parallelism\n¡\nDifferent pieces of data can be operated in parallel\n¡\nVector processing and array processing\n¡ Task Parallelism\n¡\nDifferent tasks can be operated in parallel\n¡\nMultithreading \nMultiprocessors"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 3,
+          "input": {
+            "user_message": "那SMT是不是同一个概念？"
+          },
+          "expected": {
+            "required_points": [
+              "比较SMT与前文数据并行",
+              "SMT是多个硬件线程共享一个物理核，并非数据并行的同义词"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L1",
+                "page": 29,
+                "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #6: OoO Superscalar with Hyper-Threading\n¡ Problem: Even OoO superscalar cores have idle slot issues.\n¡ Reasons: \n¡\nCache miss, branch misprediction, dependency chain……\n¡ Hyper-threading introduces simultaneous multithreading (SMT)\n¡\nMultiple hardware threads share one physical core.\n¡\nEach logical thread has its own architectural state.\n¡\nExecution units, caches, queues, and predictors are shared.\n¡ The closest architecture to modern CPUs."
+              },
+              {
+                "document_id": "ACS-L1",
+                "page": 33,
+                "quote": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ Parallelism: Do multiple jobs concurrently.\n¡\nJob: instructions, operations, tasks\n¡ Data Parallelism\n¡\nDifferent pieces of data can be operated in parallel\n¡\nVector processing and array processing\n¡ Task Parallelism\n¡\nDifferent tasks can be operated in parallel\n¡\nMultithreading \nMultiprocessors"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 4,
+          "input": {
+            "user_message": "指出支持刚才这个区别的课件页码。"
+          },
+          "expected": {
+            "required_points": [
+              "刚才的区别指SMT与数据并行",
+              "给出29及33页或其他确实支持的页"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L1",
+                "page": 29,
+                "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #6: OoO Superscalar with Hyper-Threading\n¡ Problem: Even OoO superscalar cores have idle slot issues.\n¡ Reasons: \n¡\nCache miss, branch misprediction, dependency chain……\n¡ Hyper-threading introduces simultaneous multithreading (SMT)\n¡\nMultiple hardware threads share one physical core.\n¡\nEach logical thread has its own architectural state.\n¡\nExecution units, caches, queues, and predictors are shared.\n¡ The closest architecture to modern CPUs."
+              },
+              {
+                "document_id": "ACS-L1",
+                "page": 33,
+                "quote": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ Parallelism: Do multiple jobs concurrently.\n¡\nJob: instructions, operations, tasks\n¡ Data Parallelism\n¡\nDifferent pieces of data can be operated in parallel\n¡\nVector processing and array processing\n¡ Task Parallelism\n¡\nDifferent tasks can be operated in parallel\n¡\nMultithreading \nMultiprocessors"
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "L1-MT03",
+      "topic_family": "amdahl",
+      "turns": [
+        {
+          "turn": 1,
+          "input": {
+            "user_message": "固定规模程序90%可并行，10个处理器能加速多少？"
+          },
+          "expected": {
+            "required_points": [
+              "f=.9,p=10",
+              "S=100/19≈5.263"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L1",
+                "page": 66,
+                "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 2,
+          "input": {
+            "user_message": "如果增加到100个呢？"
+          },
+          "expected": {
+            "required_points": [
+              "保持f=.9及固定规模",
+              "S=1/(.1+.009)≈9.174"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L1",
+                "page": 66,
+                "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 3,
+          "input": {
+            "user_message": "所以继续增加就可以突破10倍，对吗？"
+          },
+          "expected": {
+            "required_points": [
+              "保持前文条件",
+              "纠正前提，有限p小于10且极限10"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L1",
+                "page": 66,
+                "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        },
+        {
+          "turn": 4,
+          "input": {
+            "user_message": "给我依据页，并说明这里的串行比例是多少。"
+          },
+          "expected": {
+            "required_points": [
+              "引用66页",
+              "串行比例为1-f=.1"
+            ],
+            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "evidence": [
+              {
+                "document_id": "ACS-L1",
+                "page": 66,
+                "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+              }
+            ],
+            "failure_conditions": [
+              "错误解析本轮指代或沿用条件",
+              "忽略用户明确话题切换",
+              "引用无法支持本轮结论"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

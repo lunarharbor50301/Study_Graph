@@ -1,0 +1,1011 @@
+{
+  "status": "human_review_pending",
+  "questions": [
+    {
+      "id": "L1-ANSWER01",
+      "topic_family": "pipeline-family",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "列出五级流水线阶段，并解释流水线的主要作用。",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "五阶段为 IF、ID、EX、MEM、WB；通过阶段重叠提高吞吐。",
+        "rubric": [
+          {
+            "id": "pipeline-P1",
+            "criterion": "五阶段为 IF、ID、EX、MEM、WB",
+            "max_score": 2
+          },
+          {
+            "id": "pipeline-P2",
+            "criterion": "通过阶段重叠提高吞吐",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 16,
+            "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER02",
+      "topic_family": "pipeline-family",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "理想流水线执行 N 条指令、具有 M 个阶段，共需多少周期？说明条件。",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "N 条指令、M 个阶段共需 M+N-1 周期；假设无气泡且填满后每周期完成一条。",
+        "rubric": [
+          {
+            "id": "ideal-pipeline-P1",
+            "criterion": "N 条指令、M 个阶段共需 M+N-1 周期",
+            "max_score": 2
+          },
+          {
+            "id": "ideal-pipeline-P2",
+            "criterion": "假设无气泡且填满后每周期完成一条",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 17,
+            "quote": "¡ Perfect Pipeline\n¡ One instruction completes per cycle after filling \nthe pipeline.\n¡ No bubbles and maximum throughput.\n¡ For N instructions and M stages:\n¡ Total Cycles = M + N – 1\n¡ Average throughput\n= N / (M + N - 1) instructions per cycle\n¡ Instruction throughput per second                    \nFrequency * N / (M + N - 1)\nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER03",
+      "topic_family": "pipeline-family",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "数据、控制和结构冒险有什么区别？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "数据冒险来自数据依赖；控制冒险来自分支等；结构冒险来自硬件资源争用。",
+        "rubric": [
+          {
+            "id": "hazard-P1",
+            "criterion": "数据冒险来自数据依赖",
+            "max_score": 2
+          },
+          {
+            "id": "hazard-P2",
+            "criterion": "控制冒险来自分支等",
+            "max_score": 2
+          },
+          {
+            "id": "hazard-P3",
+            "criterion": "结构冒险来自硬件资源争用",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 18,
+            "quote": "¡ Any condition that causes the pipeline to \nstall is called a hazard.\n¡\nResult: Much bubbles and degraded efficiency\n¡ Various types of hazards\n¡\nData Hazard: Stall due to dependencies of some \ndata\n¡\nRead-after-write (RAW)\n¡\nWrite-after-write (WAW)\n¡\nWrite-after-read (WAR)\n¡\nControl Hazard: Stall due to branch and \nsynchronization\n¡\nStructural hazard: Stall due to contention on \nhardware such as memory channel, cache slot, \nqueue, etc.\nCPU: Optimize Latency of a Small Number of Complex Threads\nWhy Pipeline Stalls: Hazards"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER04",
+      "topic_family": "smt",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "超线程是否等于增加一个完全独立的物理核？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "多个硬件线程共享一个物理核；逻辑线程各有架构状态但共享执行单元等资源。",
+        "rubric": [
+          {
+            "id": "smt-P1",
+            "criterion": "多个硬件线程共享一个物理核",
+            "max_score": 2
+          },
+          {
+            "id": "smt-P2",
+            "criterion": "逻辑线程各有架构状态但共享执行单元等资源",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 29,
+            "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #6: OoO Superscalar with Hyper-Threading\n¡ Problem: Even OoO superscalar cores have idle slot issues.\n¡ Reasons: \n¡\nCache miss, branch misprediction, dependency chain……\n¡ Hyper-threading introduces simultaneous multithreading (SMT)\n¡\nMultiple hardware threads share one physical core.\n¡\nEach logical thread has its own architectural state.\n¡\nExecution units, caches, queues, and predictors are shared.\n¡ The closest architecture to modern CPUs."
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER05",
+      "topic_family": "parallelism",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "比较数据并行与任务并行。",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "数据并行处理不同数据；任务并行并发执行不同任务。",
+        "rubric": [
+          {
+            "id": "parallelism-P1",
+            "criterion": "数据并行处理不同数据",
+            "max_score": 2
+          },
+          {
+            "id": "parallelism-P2",
+            "criterion": "任务并行并发执行不同任务",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 33,
+            "quote": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ Parallelism: Do multiple jobs concurrently.\n¡\nJob: instructions, operations, tasks\n¡ Data Parallelism\n¡\nDifferent pieces of data can be operated in parallel\n¡\nVector processing and array processing\n¡ Task Parallelism\n¡\nDifferent tasks can be operated in parallel\n¡\nMultithreading \nMultiprocessors"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER06",
+      "topic_family": "warp",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "所有 GPU 的 SM 都最多容纳 1536 个线程吗？请依据课件说明。",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "不能。1536个线程是课件中的Fermi SM示例，不能推广为所有GPU的统一上限。",
+        "rubric": [
+          {
+            "id": "scope",
+            "criterion": "指出1536属于Fermi示例，不能推广到所有GPU",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 37,
+            "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER07",
+      "topic_family": "divergence",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "什么是分支分歧，为什么会降低利用率？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "同一 warp 内线程走不同执行路径；部分线程执行会降低 SIMD 利用率。",
+        "rubric": [
+          {
+            "id": "divergence-P1",
+            "criterion": "同一 warp 内线程走不同执行路径",
+            "max_score": 2
+          },
+          {
+            "id": "divergence-P2",
+            "criterion": "部分线程执行会降低 SIMD 利用率",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 44,
+            "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A GPU uses a SIMD pipeline to save area on \ncontrol logic\n¡\nGroups scalar threads into warps\n¡ Branch Divergence\n¡\nOccurs when threads inside warps branch to \ndifferent execution path\n¡ Result: Only a subset of threads execute, \nwaste SIMD pipeline utilization\nIssue of SIMD Utilization: Control Divergence"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER08",
+      "topic_family": "block-sync",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "__syncthreads 能否同步不同 block？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "不能，__syncthreads仅同步同一个block中的线程。",
+        "rubric": [
+          {
+            "id": "scope",
+            "criterion": "明确不能跨block，并指出仅限同一block",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 63,
+            "quote": "GPU Programming: CUDA\n¡ __syncthreads()\n¡ Scope: One CUDA block\n¡ Use: Tile coordination in the shared \nmemory.\n¡ Kernel boundary\n¡ Scope: Whole threads\n¡ Use: Global phase between kernels\n¡ Achieved by launching separate kernels\nCUDA Synchronization \n__shared__ float tile[256];\ntile[threadIdx.x] = A[i];\n__syncthreads();\nuse(tile);\n¡ Load data from global memory to shared memory.\n¡ Wait until all threads in the block complete the \nshared-memory load."
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER09",
+      "topic_family": "amdahl",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "为什么固定规模程序不能靠无限增加处理器获得无限加速？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "固定问题规模时 S(p)=1/((1-f)+f/p)；f 为可并行比例；串行部分限制最大加速比。",
+        "rubric": [
+          {
+            "id": "amdahl-P1",
+            "criterion": "固定问题规模时 S(p)=1/((1-f)+f/p)",
+            "max_score": 2
+          },
+          {
+            "id": "amdahl-P2",
+            "criterion": "f 为可并行比例",
+            "max_score": 2
+          },
+          {
+            "id": "amdahl-P3",
+            "criterion": "串行部分限制最大加速比",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 66,
+            "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER10",
+      "topic_family": "roofline",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "什么是算术强度？内存带宽如何限制性能？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "算术强度为 FLOPs 除以从内存搬运的字节数；内存受限时带宽乘算术强度构成性能上界；峰值不保证实际性能。",
+        "rubric": [
+          {
+            "id": "roofline-P1",
+            "criterion": "算术强度为 FLOPs 除以从内存搬运的字节数",
+            "max_score": 2
+          },
+          {
+            "id": "roofline-P2",
+            "criterion": "内存受限时带宽乘算术强度构成性能上界",
+            "max_score": 2
+          },
+          {
+            "id": "roofline-P3",
+            "criterion": "峰值不保证实际性能",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 67,
+            "quote": "Performance Models\n¡\nMemory wall: how much computation it performs for each byte moved.\n¡\nRoofline Model: Compute-Bound or Memory-Bound?\nRoofline Model\nArithmetic Intensity = FLOPs / Bytes moved from memory\nWhy peak is hard\n•\nmemory-bound: limited by bandwidth x \nintensity\n•\ncompute-bound: still needs vectorization, \ntensor cores, occupancy\n•\nreal ceilings fall with poor locality or pipeline \nutilization"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER11",
+      "topic_family": "mutex",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "互斥锁如何保护共享状态，有什么代价？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "保护共享状态的临界区串行访问；锁竞争会产生代价。",
+        "rubric": [
+          {
+            "id": "mutex-P1",
+            "criterion": "保护共享状态的临界区串行访问",
+            "max_score": 2
+          },
+          {
+            "id": "mutex-P2",
+            "criterion": "锁竞争会产生代价",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 58,
+            "quote": "CPU Multicore Programming: pThread\n¡ Mutex pattern:\nMutex: Protect Shared State\npthread_mutex_lock(&lock);\nsum += local_sum;\npthread_mutex_unlock(&lock);\n¡ The Mutex provides:\n¡ Serialized access to critical section \n¡ Race avoidance for protected \nshared state \n¡ Cost: Lock contention\nOnly one thread holds the mutex; others wait and the protected region is serialized"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER25",
+      "topic_family": "amdahl",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "固定规模程序 f=0.9，使用 10 个处理器时的理论加速比是多少？处理器无限多时上限是多少？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "S(10)=1/(0.1+0.9/10)=100/19≈5.263；极限为 10。",
+        "rubric": [
+          {
+            "id": "amdahl-calc-0",
+            "criterion": "正确代入公式",
+            "max_score": 2
+          },
+          {
+            "id": "amdahl-calc-1",
+            "criterion": "有限处理器结果约 5.263",
+            "max_score": 2
+          },
+          {
+            "id": "amdahl-calc-2",
+            "criterion": "无限处理器上限为 10",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 66,
+            "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER27",
+      "topic_family": "unavailable-runtime",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "仅根据当前导入的这份课件，给出 yuxinye 当前 TACC 作业的实时 GPU 利用率。",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "unsupported",
+        "reference_answer": "课件没有运行时测量数据，无法据此给出数值；需要对应作业或服务的监控记录。",
+        "rubric": [
+          {
+            "id": "abstain",
+            "criterion": "说明证据不足，不编造数值",
+            "max_score": 2
+          },
+          {
+            "id": "needed-data",
+            "criterion": "指出需要实际监控或测量数据",
+            "max_score": 2
+          }
+        ],
+        "evidence": []
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER28",
+      "topic_family": "unavailable-runtime",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "仅根据当前导入的这份课件，给出本地 StudyGraph 服务今天的实际 P95 响应时间。",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "unsupported",
+        "reference_answer": "课件没有运行时测量数据，无法据此给出数值；需要对应作业或服务的监控记录。",
+        "rubric": [
+          {
+            "id": "abstain",
+            "criterion": "说明证据不足，不编造数值",
+            "max_score": 2
+          },
+          {
+            "id": "needed-data",
+            "criterion": "指出需要实际监控或测量数据",
+            "max_score": 2
+          }
+        ],
+        "evidence": []
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L2-ANSWER12",
+      "topic_family": "locality",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "区分空间局部性和时间局部性。",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "空间局部性是邻近数据可能被访问；时间局部性是同一数据短期内被复用。",
+        "rubric": [
+          {
+            "id": "locality-P1",
+            "criterion": "空间局部性是邻近数据可能被访问",
+            "max_score": 2
+          },
+          {
+            "id": "locality-P2",
+            "criterion": "时间局部性是同一数据短期内被复用",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 22,
+            "quote": "Spatial Locality\nThe neighbors of the current data \naccess tend to be accessed in the \nfuture.\nE.g., array\nTemporal Locality\nA piece of data is quickly reused \nin the future.\nE.g., Loops\nCPU Memory Hierarchy\nLocality: The Hot Feature Makes Caches Useful\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n22"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER13",
+      "topic_family": "amat",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "写出 AMAT 公式，并解释 miss penalty。",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "AMAT=hit time+miss rate×miss penalty；miss penalty 包含访问延迟和传输时间。",
+        "rubric": [
+          {
+            "id": "amat-P1",
+            "criterion": "AMAT=hit time+miss rate×miss penalty",
+            "max_score": 2
+          },
+          {
+            "id": "amat-P2",
+            "criterion": "miss penalty 包含访问延迟和传输时间",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 26,
+            "quote": "AMAT = Hit time + Miss rate x Miss penalty\nMiss Penalty: time to fetch a block from lower memory \nlevel\nAccess Time: Latency for the memory to handle one access\nTransfer Time: Latency to transfer data block to higher level\nMiss penalty = access time + data size / bandwidth\nCPU Memory Hierarchy\nAverage Memory Access Time (AMAT)\nA cache helps when common hits remain fast and sufficiently few accesses pay \nthe miss penalty.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n26"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER14",
+      "topic_family": "tlb",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "TLB miss 和 cache miss 是同一件事吗？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "TLB miss 涉及地址翻译；cache miss 涉及从更低层获取数据；两者不同。",
+        "rubric": [
+          {
+            "id": "tlb-P1",
+            "criterion": "TLB miss 涉及地址翻译",
+            "max_score": 2
+          },
+          {
+            "id": "tlb-P2",
+            "criterion": "cache miss 涉及从更低层获取数据",
+            "max_score": 2
+          },
+          {
+            "id": "tlb-P3",
+            "criterion": "两者不同",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 30,
+            "quote": "CPU Memory Hierarchy\nEnd-to-End Load/Store Path: Address Resolution – TLB – Cache \nHierarchy – DRAM\nA TLB miss requires address translation work. A cache miss determines whether \nthe data must come from a lower level.\n▪\nOnly a miss through the cache hierarchy sends the data request to the memory \ncontroller and DRAM.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n30"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER15",
+      "topic_family": "sram-dram",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "比较 SRAM 和 DRAM 的存储方式及典型用途。",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "SRAM 用稳定晶体管电路保存状态，常用于缓存和寄存器；DRAM 用电容保存数据，需要刷新和读取后恢复。",
+        "rubric": [
+          {
+            "id": "sram-dram-P1",
+            "criterion": "SRAM 用稳定晶体管电路保存状态，常用于缓存和寄存器",
+            "max_score": 2
+          },
+          {
+            "id": "sram-dram-P2",
+            "criterion": "DRAM 用电容保存数据，需要刷新和读取后恢复",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 32,
+            "quote": "SRAM --- Store data via stable transistor circuit\nRequires low power to retain bit (423mV for 45nm) \nRequires 6 transistors/bit --- expansive\nUsage: Caches, register files\nDRAM --- Store date via tiny capacitors (bit is represented as \ncharged and discharged)\nOne transistor/bit --- cheap\nMust be re-written after being read\nMust also be periodically refreshed\nEach row can be refreshed simultaneously\nAddress lines are multiplexed:\nUpper half of address: row access strobe (RAS)\nLower half of address: column access strobe (CAS)\nUsage: DDR / GDDR / HBM\nCPU Memory Hierarchy\nDRAM Behind Cache: SRAM vs. DRAM\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n32"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER16",
+      "topic_family": "banks",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "增加 bank 后，一个通道的返回带宽是否无限增长？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "独立 bank 的工作可以重叠；共享数据总线仍限制同时返回的数据量。",
+        "rubric": [
+          {
+            "id": "banks-P1",
+            "criterion": "独立 bank 的工作可以重叠",
+            "max_score": 2
+          },
+          {
+            "id": "banks-P2",
+            "criterion": "共享数据总线仍限制同时返回的数据量",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 36,
+            "quote": "Memory\nController\nData Bus\nChannel\nMulti-Banked DRAM Chip\nCPU Memory Hierarchy\nDRAM Behind Cache: Multi-Bank DRAM\nBanks provide independent storage arrays. Work in one bank can overlap \npreparation in another.\n▪\nThe shared data bus still limits how much data the channel can return at once.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n36\nAddr  and Cmd Bus"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER17",
+      "topic_family": "channels",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "DDR5 两个 32 位子通道是否意味着总位宽翻倍？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "独立通道并发使用可增加带宽；DDR5 将 64 位分成两个 32 位子通道不会单独使总位宽翻倍。",
+        "rubric": [
+          {
+            "id": "width",
+            "criterion": "不翻倍；两个32位子通道合计仍为64位",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 40,
+            "quote": "CPU Memory Hierarchy\nDRAM Behind Cache: Channel Bandwidth Grows Along Three\nAxes\nIndependent channels add bandwidth when requests use them concurrently. Bank \nscheduling improves bus utilization.\n▪\nDDR5 splits 64 data bits into two 32-bit subchannels. This split alone does not \ndouble total data width.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n40"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER18",
+      "topic_family": "gpu-memory-family",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "CUDA local memory 一定在片上吗？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "作用域是线程私有；通常位于设备 DRAM 并经过 L1/L2；不能因 local 名称就认为位于寄存器。",
+        "rubric": [
+          {
+            "id": "local-memory-P1",
+            "criterion": "作用域是线程私有",
+            "max_score": 2
+          },
+          {
+            "id": "local-memory-P2",
+            "criterion": "通常位于设备 DRAM 并经过 L1/L2",
+            "max_score": 2
+          },
+          {
+            "id": "local-memory-P3",
+            "criterion": "不能因 local 名称就认为位于寄存器",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 46,
+            "quote": "GPU Memory Hierarchy\nEvery CUDA Memory Space Maps to a Physical Resource\nLocal memory is thread-private in scope but usually resides in device DRAM and \npasses through L1/L2.\n▪\nRegister and shared-memory allocations limit how many blocks and warps can \nreside on an SM.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n46"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER19",
+      "topic_family": "gpu-memory-family",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "为什么对齐连续访问往往比跨步访问产生更少事务？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "针对单个 warp 的一条访存指令；对齐连续地址通常减少事务；跨界或跨步访问可能增加事务。",
+        "rubric": [
+          {
+            "id": "coalescing-P1",
+            "criterion": "针对单个 warp 的一条访存指令",
+            "max_score": 2
+          },
+          {
+            "id": "coalescing-P2",
+            "criterion": "对齐连续地址通常减少事务",
+            "max_score": 2
+          },
+          {
+            "id": "coalescing-P3",
+            "criterion": "跨界或跨步访问可能增加事务",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 48,
+            "quote": "GPU Memory Hierarchy\nAccess Memory: Coalescing Packs Nearby Addresses into \nFewer Transactions\nCoalescing is evaluated for one warp memory instruction. Aligned, contiguous \naddresses touch fewer segments.\n▪\nMisalignment can cross extra boundaries. Strided accesses can touch many more \nsegments.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n48"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER20",
+      "topic_family": "gpu-memory-family",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "同一个 bank 的所有访问都会发生冲突吗？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "同 bank 不同地址需要多个服务轮次；同地址读取可以广播；与全局访存合并是不同问题。",
+        "rubric": [
+          {
+            "id": "bank-conflict-P1",
+            "criterion": "同 bank 不同地址需要多个服务轮次",
+            "max_score": 2
+          },
+          {
+            "id": "bank-conflict-P2",
+            "criterion": "同地址读取可以广播",
+            "max_score": 2
+          },
+          {
+            "id": "bank-conflict-P3",
+            "criterion": "与全局访存合并是不同问题",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 51,
+            "quote": "GPU Memory Hierarchy\nAccess Memory: Bank Conflicts Serialize Otherwise Parallel \nAccesses\nTypical GPUs use 32 banks; the figure shows 8 for readability. Same-address \nreads can use broadcast.\n▪\nDifferent addresses in the same bank require multiple service rounds. This differs \nfrom global-memory coalescing.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n51"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER21",
+      "topic_family": "coherence-protocol",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "比较 snooping、directory 和 MESI 的角色。",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "侦听广播请求，目录记录拥有者和共享者以定向发送；MESI 描述权限而非消息路由方式。",
+        "rubric": [
+          {
+            "id": "coherence-protocol-P1",
+            "criterion": "侦听广播请求，目录记录拥有者和共享者以定向发送",
+            "max_score": 2
+          },
+          {
+            "id": "coherence-protocol-P2",
+            "criterion": "MESI 描述权限而非消息路由方式",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 64,
+            "quote": "Coherence Protocols: Snooping and Directory\nSOTA Memory Technologies\nMulticore Technologies: Coherence\nSnooping broadcasts coherence requests. A directory tracks owners and sharers \nto target the messages.\n▪\nMESI describes permissions. Snooping and directory designs determine how \ncoherence messages reach the caches.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n64"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER22",
+      "topic_family": "memory-tradeoff",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "为什么不能简单认为 HBM 对所有系统都是最佳选择？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "DDR 偏容量扩展和成本；GDDR 权衡引脚带宽和板级成本；HBM 偏封装带宽与能效。",
+        "rubric": [
+          {
+            "id": "memory-tradeoff-P1",
+            "criterion": "DDR 偏容量扩展和成本",
+            "max_score": 2
+          },
+          {
+            "id": "memory-tradeoff-P2",
+            "criterion": "GDDR 权衡引脚带宽和板级成本",
+            "max_score": 2
+          },
+          {
+            "id": "memory-tradeoff-P3",
+            "criterion": "HBM 偏封装带宽与能效",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 59,
+            "quote": "GPU Memory Hierarchy\nDDR, GDDR, and HBM Optimize Different Constraints\nDDR favors capacity, expandability, and cost per GB. GDDR balances pin \nbandwidth and board cost.\n▪\nHBM favors bandwidth per package and per watt. The choice depends on the \nworkload and system constraints.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n59"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER23",
+      "topic_family": "lpddr",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Grace 的 LPDDR 扩展是否增大了 GPU 的 HBM？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Grace 经 NVLink-C2C 连接 LPDDR5X；扩展加速器可寻址容量，不增大 HBM 本身。",
+        "rubric": [
+          {
+            "id": "lpddr-P1",
+            "criterion": "Grace 经 NVLink-C2C 连接 LPDDR5X",
+            "max_score": 2
+          },
+          {
+            "id": "lpddr-P2",
+            "criterion": "扩展加速器可寻址容量，不增大 HBM 本身",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 68,
+            "quote": "SOTA Memory Technologies\nMemory Extension: LPDDR\nHopper retains local HBM. Grace connects LPDDR5X through the coherent \nNVLink-C2C CPU–GPU link.\n▪\nLPDDR extends the capacity the accelerator can address; it does not enlarge \nHBM itself.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n68"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER24",
+      "topic_family": "tiering",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "哪些数据适合迁移至 HBM？迁移何时值得？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "热且延迟敏感的数据优先放 HBM；大且冷的数据可放 LPDDR；迁移收益必须超过搬运和管理成本。",
+        "rubric": [
+          {
+            "id": "tiering-P1",
+            "criterion": "热且延迟敏感的数据优先放 HBM",
+            "max_score": 2
+          },
+          {
+            "id": "tiering-P2",
+            "criterion": "大且冷的数据可放 LPDDR",
+            "max_score": 2
+          },
+          {
+            "id": "tiering-P3",
+            "criterion": "迁移收益必须超过搬运和管理成本",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 69,
+            "quote": "SOTA Memory Technologies\nTiered Memory Management Decides What Stays in HBM\nKeep hot, latency-critical, frequently reused data in HBM. Place large, cold objects \nin the LPDDR capacity tier.\n▪\nPromotion helps only when future reuse saves more than the transfer and \nbookkeeping cost.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n69"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER26",
+      "topic_family": "amat",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "命中耗时 1 周期、miss rate=10%、miss penalty=300 周期，AMAT 是多少？",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "1+0.1×300=31 cycles。",
+        "rubric": [
+          {
+            "id": "amat-calc-0",
+            "criterion": "使用额外 miss penalty 的公式",
+            "max_score": 2
+          },
+          {
+            "id": "amat-calc-1",
+            "criterion": "结果 31",
+            "max_score": 2
+          },
+          {
+            "id": "amat-calc-2",
+            "criterion": "单位 cycles",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 27,
+            "quote": "Average Memory Access Time (AMAT)\n= Hit Time + Miss rate * Miss Penalty\n= Thit(L1) + Miss%(L1) * T(memory)  \nExample: \nCache Hit = 1 cycle\nMiss rate = 10% = 0.1\nMiss penalty = 300 cycles\nAMAT = 1 + 0.1 * 300 = 31 cycles\nCan we improve it?\nMain\nMemory\n(DRAM)\nFirst-level\nCache\nHit Time\nMiss % * Miss penalty\n1 clk\n300 clks\nCPU Memory Hierarchy\nMemory Hierarchy Performance\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n27"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER27",
+      "topic_family": "unavailable-runtime",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "仅根据当前导入的这份课件，给出 yuxinye 当前 TACC 作业的实时 GPU 利用率。",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "unsupported",
+        "reference_answer": "课件没有运行时测量数据，无法据此给出数值；需要对应作业或服务的监控记录。",
+        "rubric": [
+          {
+            "id": "abstain",
+            "criterion": "说明证据不足，不编造数值",
+            "max_score": 2
+          },
+          {
+            "id": "needed-data",
+            "criterion": "指出需要实际监控或测量数据",
+            "max_score": 2
+          }
+        ],
+        "evidence": []
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER28",
+      "topic_family": "unavailable-runtime",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "仅根据当前导入的这份课件，给出本地 StudyGraph 服务今天的实际 P95 响应时间。",
+        "instruction": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。"
+      },
+      "expected": {
+        "answerability": "unsupported",
+        "reference_answer": "课件没有运行时测量数据，无法据此给出数值；需要对应作业或服务的监控记录。",
+        "rubric": [
+          {
+            "id": "abstain",
+            "criterion": "说明证据不足，不编造数值",
+            "max_score": 2
+          },
+          {
+            "id": "needed-data",
+            "criterion": "指出需要实际监控或测量数据",
+            "max_score": 2
+          }
+        ],
+        "evidence": []
+      },
+      "document_id": "ACS-L2"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "completed": [
+    "rules-stale",
+    "rules-metrics",
+    "rules-pass"
+  ],
+  "scoring_version": "1.0",
+  "scope": "仅三项规则统一已完成；人工审核、运行器、扩充样本仍未完成"
+}

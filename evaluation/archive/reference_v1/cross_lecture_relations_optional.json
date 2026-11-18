@@ -1,0 +1,69 @@
+{
+  "status": "excluded_from_single_document_evaluation",
+  "requires_documents": [
+    "ACS-L1",
+    "ACS-L2"
+  ],
+  "relations": [
+    {
+      "id": "R08",
+      "source": "block-sync",
+      "relation": "coordinates_access_to",
+      "target": "shared-memory",
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 63,
+          "quote": "GPU Programming: CUDA\n¡ __syncthreads()\n¡ Scope: One CUDA block\n¡ Use: Tile coordination in the shared \nmemory.\n¡ Kernel boundary\n¡ Scope: Whole threads\n¡ Use: Global phase between kernels\n¡ Achieved by launching separate kernels\nCUDA Synchronization \n__shared__ float tile[256];\ntile[threadIdx.x] = A[i];\n__syncthreads();\nuse(tile);\n¡ Load data from global memory to shared memory.\n¡ Wait until all threads in the block complete the \nshared-memory load."
+        },
+        {
+          "document_id": "ACS-L2",
+          "page": 50,
+          "quote": "GPU Memory Hierarchy\nAccess Memory: Shared Memory Creates an Explicit On-Chip \nData Stage\nSoftware explicitly chooses the data to stage in shared memory and when threads \nmust synchronize.\n▪\nOne off-chip load can support repeated on-chip reuse, reducing DRAM traffic and \nincreasing arithmetic intensity.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n50"
+        }
+      ],
+      "support_type": "synthesis",
+      "review_status": "human_pending"
+    },
+    {
+      "id": "R09",
+      "source": "roofline",
+      "relation": "depends_on_reuse_enabled_by",
+      "target": "shared-memory",
+      "evidence": [
+        {
+          "document_id": "ACS-L1",
+          "page": 67,
+          "quote": "Performance Models\n¡\nMemory wall: how much computation it performs for each byte moved.\n¡\nRoofline Model: Compute-Bound or Memory-Bound?\nRoofline Model\nArithmetic Intensity = FLOPs / Bytes moved from memory\nWhy peak is hard\n•\nmemory-bound: limited by bandwidth x \nintensity\n•\ncompute-bound: still needs vectorization, \ntensor cores, occupancy\n•\nreal ceilings fall with poor locality or pipeline \nutilization"
+        },
+        {
+          "document_id": "ACS-L2",
+          "page": 50,
+          "quote": "GPU Memory Hierarchy\nAccess Memory: Shared Memory Creates an Explicit On-Chip \nData Stage\nSoftware explicitly chooses the data to stage in shared memory and when threads \nmust synchronize.\n▪\nOne off-chip load can support repeated on-chip reuse, reducing DRAM traffic and \nincreasing arithmetic intensity.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n50"
+        }
+      ],
+      "support_type": "synthesis",
+      "review_status": "human_pending"
+    },
+    {
+      "id": "R15",
+      "source": "coalescing",
+      "relation": "optimizes_transactions_for",
+      "target": "warp",
+      "evidence": [
+        {
+          "document_id": "ACS-L2",
+          "page": 48,
+          "quote": "GPU Memory Hierarchy\nAccess Memory: Coalescing Packs Nearby Addresses into \nFewer Transactions\nCoalescing is evaluated for one warp memory instruction. Aligned, contiguous \naddresses touch fewer segments.\n▪\nMisalignment can cross extra boundaries. Strided accesses can touch many more \nsegments.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n48"
+        },
+        {
+          "document_id": "ACS-L1",
+          "page": 37,
+          "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+        }
+      ],
+      "support_type": "synthesis",
+      "review_status": "human_pending"
+    }
+  ]
+}

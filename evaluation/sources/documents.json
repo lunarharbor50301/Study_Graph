@@ -1,0 +1,21 @@
+{
+  "page_convention": "1-based physical PDF page",
+  "documents": [
+    {
+      "id": "ACS-L1",
+      "filename": "ACS_Lecture_1_2026F.pdf",
+      "source_path": "/Users/yushare/Desktop/hkust_it/CSIT6000V/ACS_Lecture_1_2026F.pdf",
+      "sha256": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+      "page_count": 67,
+      "page_convention": "1-based physical PDF page"
+    },
+    {
+      "id": "ACS-L2",
+      "filename": "ACS_lecture_2_2026F.pdf",
+      "source_path": "/Users/yushare/Desktop/hkust_it/CSIT6000V/ACS_lecture_2_2026F.pdf",
+      "sha256": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+      "page_count": 69,
+      "page_convention": "1-based physical PDF page"
+    }
+  ]
+}
