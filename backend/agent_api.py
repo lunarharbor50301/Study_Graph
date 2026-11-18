@@ -172,7 +172,7 @@ def maybe_summarize(key, previous_summary):
         raw = response["choices"][0]["message"]["content"].strip()
         try:
             parsed = json.loads(raw.removeprefix("```json").removesuffix("```").strip())
-            summary = parsed.get("summary", "") if isinstance(parsed, dict) else raw
+            summary = (parsed.get("summary") or raw) if isinstance(parsed, dict) else raw
         except (ValueError, TypeError):
             summary = raw
         summary = summary.strip()[:SUMMARY_MAX_CHARS]
