@@ -94,21 +94,6 @@ class StagedGuideTest(unittest.TestCase):
             "doc", "focus on the exam", generate=fake, provider_name="test",
             model="test", cache=False, concurrency=1, **kwargs)
 
-    def test_concepts_can_cite_multiple_evidence_pages(self):
-        self.seed({number: page_text(number) for number in range(1, 4)})
-        outline = {
-            "title": "Test map",
-            "topics": [{"title": "Topic", "concepts": [
-                {"title": "Alpha", "page": 1, "pages": [1, 2]},
-            ]}],
-        }
-        guide = self.build(FakeModel(outline))
-        note = guide.topics[0].notes[0]
-        self.assertEqual(note.page, 1)
-        self.assertEqual(note.pages, [1, 2])
-        self.assertIn(1, guide.sources)
-        self.assertIn(2, guide.sources)
-
     def test_no_node_cap(self):
         topics = [(f"Topic {topic}", [(f"Concept {topic}-{item}", topic * 5 + item + 1)
                                       for item in range(5)]) for topic in range(6)]

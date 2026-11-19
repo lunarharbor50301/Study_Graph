@@ -66,23 +66,6 @@
 
 ## 变更与实验记录
 
-## 2026-11-19 — 概念允许 1–3 页证据，减少“一页一卡”
-
-- **类型**：改动 / 实验
-- **范围**：`backend/concept_map.py`、`backend/knowledge_export.py`、`frontend/src/slideOutline.ts`、`backend/test_concept_map.py`。
-- **改动**：
-  - `OutlineConcept` 增加 `pages: list[int]`；`page` 作为主锚点，`pages` 最多 3 页证据。
-  - OUTLINE prompt 改为“概念是想法，不是幻灯片”，明确不按页拆卡、合并同一概念、每个 topic 优先 3–6 个概念。
-  - NOTES prompt 允许从任一证据页取 quote；`Note` 增加 `pages`，notes 使用全部证据页的正文。
-  - 分批、覆盖检查、`sources`、knowledge 导出和前端 `sourcePages` 都改为使用全部证据页。
-  - 缓存 VERSION 从 3 升到 4，旧缓存不会误用。
-- **实验设置**：DeepSeek `deepseek-flash`，ACS Lecture 2（69 页），默认 instructions，`STUDYGRAPH_CONCEPT_MAP_MODE=staged`，新缓存 key；生成耗时 14.7 秒。
-- **结果**：7 个 topic、34 个 notes，其中 18 个 note 有 2–3 页证据；不再出现“一页一卡”的 54 节点形态。未重新跑完整评测，不能直接与旧的 20/20、54/54 比较。
-- **对前端**：study-guide notes 新增可选 `pages`；前端映射为 `Concept.sourcePages`，MindMap 显示 “N pages · p. 主页面”，Study note 使用全部页请求。
-- **对测试**：新增多页概念用例；后端 38 个测试通过，前端 build 通过。
-- **局限/下一步**：多页证据仍由模型选择，可能漏页或把不相关页并入；需要人工抽查引用，并重新跑 L1/L2 评测后再下结论。
-- **产物**：生成结果仅本地 `.run/multipage-test.json`（未提交）；实现见 [backend/concept_map.py](../backend/concept_map.py)、[frontend/src/slideOutline.ts](../frontend/src/slideOutline.ts)。
-
 ## 2026-11-19 — 会话下拉合并新建与删除
 
 - **类型**：功能 / 界面

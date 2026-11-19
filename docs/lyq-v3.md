@@ -25,7 +25,6 @@ POST /api/documents/{doc}/study-guide
 特点：
 
 - 取消 5×4 节点上限，节点数随讲义规模；
-- 概念允许 1–3 页证据：`page` 是主页面，`pages` 是证据页；prompt 明确禁止“一页一个概念”，要求合并同一概念；
 - 总调用上限 18，总输出预算 24000 tokens；
 - 单次请求 600 秒、单次调用 180 秒；
 - 部分批次失败时保留已有节点；
@@ -78,7 +77,7 @@ POST   /api/config/generation-provider
 
 ## 5. 验证
 
-- 后端 38 个测试通过；
+- 后端 37 个测试通过；
 - `npm run build --prefix frontend` 通过；
 - V3 默认指令一次 54 节点结果：核心概念 20/20、Precision 54/54、笔记 96.25%（LLM judge，参考集仍待人工复核；同配置另一次 49 节点，波动未消）。
 

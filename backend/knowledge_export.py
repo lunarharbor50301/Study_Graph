@@ -14,9 +14,8 @@ def knowledge(doc: str, body: study_guide.StudyRequest):
     for i, topic in enumerate(guide.topics):
         for j, note in enumerate(topic.notes):
             cid = f"topic-{i}-note-{j}"
-            evidence = [{"document_id": doc, "page": page,
-                         "quote": documents.page(doc, page)["text"]}
-                        for page in (note.pages or [note.page])]
+            evidence = [{"document_id": doc, "page": note.page,
+                         "quote": documents.page(doc, note.page)["text"]}]
             facts = list(dict.fromkeys([note.summary, note.detail, *note.keyPoints,
                                        *([note.formula] if note.formula else [])]))
             concepts.append({"id": cid, "document_id": doc, "name": note.title,
