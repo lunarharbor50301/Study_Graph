@@ -5,7 +5,7 @@ import {Icon, Panel, SplitHandle} from './Layout'
 import { getMapTopics, MindMap, type MapTopic } from './MindMap'
 import React, { FormEvent, lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { demoUser, getProvider, listConversations, request, setProvider, streamAgent, streamEvents, withDemoUser, type ConversationSummary, type ProviderName } from './api'
+import { deleteConversation as deleteAgentConversation, demoUser, getProvider, listConversations, request, setProvider, streamAgent, streamEvents, withDemoUser, type ConversationSummary, type ProviderName } from './api'
 import { currentDocument, firstEntryPage, lectureName, useCourseStore, type CourseItem, type SavedMap, type SavedTest } from './courseStore'
 import { lecture as fallbackLecture, starterMessages } from './data'
 import type { ChatMessage, Concept, CourseQuestion, DocumentInfo, Lecture, Mode, QuestionProgress, TestQuestion } from './types'
@@ -301,18 +301,37 @@ function describeLookup(line: string) {
   return line
 }
 
-function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation }: {
+function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onDeleteConversation, onCitation }: {
   doc: DocumentInfo; page: number; mode: Mode; concept: Concept
   item: CourseItem
-  onAgentSession: (sessionId: string) => void; onCitation: (page: number, documentId?: string) => void
+  onAgentSession: (sessionId: string) => void
+  onDeleteConversation: (sessionId: string) => void
+  onCitation: (page: number, documentId?: string) => void
 }) {
   const [sessionId, setSessionId] = useState(() => item.agentSessionId ?? crypto.randomUUID())
   const [agentMessages, setAgentMessages] = useState<ChatMessage[]>([])
   const [conversations, setConversations] = useState<ConversationSummary[]>([])
+  const [conversationOpen, setConversationOpen] = useState(false)
   const [loadingHistory, setLoadingHistory] = useState(true)
   const [status, setStatus] = useState('')
   const abort = useRef<AbortController | null>(null)
+  const picker = useRef<HTMLDivElement>(null)
   useEffect(() => () => abort.current?.abort(), [])
+  useEffect(() => {
+    if (!conversationOpen) return
+    const close = (event: MouseEvent) => {
+      if (!picker.current?.contains(event.target as Node)) setConversationOpen(false)
+    }
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setConversationOpen(false)
+    }
+    document.addEventListener('mousedown', close)
+    document.addEventListener('keydown', escape)
+    return () => {
+      document.removeEventListener('mousedown', close)
+      document.removeEventListener('keydown', escape)
+    }
+  }, [conversationOpen])
   useEffect(() => {
     const controller = new AbortController()
     setLoadingHistory(true)
@@ -338,6 +357,41 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
       .then(data => setConversations(data.conversations))
       .catch(() => {})
   }
+  function startConversation() {
+    const next = crypto.randomUUID()
+    setStatus('')
+    setConversationOpen(false)
+    onAgentSession(next)
+    setSessionId(next)
+    setConversations(current => [
+      { id: next, title: 'New conversation', updated_at: new Date().toISOString(), turn_count: 0 },
+      ...current.filter(conversation => conversation.id !== next && conversation.turn_count > 0),
+    ])
+  }
+  function selectConversation(next: string) {
+    setConversationOpen(false)
+    setStatus('')
+    onAgentSession(next)
+    setSessionId(next)
+  }
+  async function removeConversation(id: string) {
+    try {
+      await deleteAgentConversation(id, doc.document_id)
+      const remaining = conversations.filter(conversation => conversation.id !== id)
+      setConversations(remaining)
+      onDeleteConversation(id)
+      setConversationOpen(false)
+      if (id === sessionId) {
+        const next = remaining[0]?.id ?? crypto.randomUUID()
+        onAgentSession(next)
+        setSessionId(next)
+        setStatus('')
+      }
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'Could not delete conversation.')
+    }
+  }
+  const currentTitle = conversations.find(conversation => conversation.id === sessionId)?.title ?? 'New conversation'
   const setupMessages = item.messages.filter(message =>
     message.sessionId ? message.sessionId === sessionId : sessionId === item.agentSessionId)
   const welcome: ChatMessage = { id: 'welcome', role: 'assistant', text: starterMessages[mode] }
@@ -391,30 +445,31 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
       setBusy(false)
     }
   }
-  const conversationOptions = conversations.some(conversation => conversation.id === sessionId)
-    ? conversations
-    : [{ id: sessionId, title: 'New conversation', updated_at: '', turn_count: 0 }, ...conversations]
   return <div className="chat-layout"><div className="chat-context">
     <span><Icon name={mode === 'learn' ? 'book' : 'test'} size={14}/>{contextLabel}</span>
-    <select className="chat-conversation" aria-label="Conversation history" value={sessionId}
-      disabled={busy} onChange={event => {
-        const next = event.target.value
-        setStatus('')
-        onAgentSession(next)
-        setSessionId(next)
-      }}>
-      {conversationOptions.map(conversation => <option key={conversation.id} value={conversation.id}>{conversation.title}</option>)}
-    </select>
-    {busy ? <button className="chat-new" onClick={() => abort.current?.abort()}>Stop</button> : <button className="chat-new" title="New conversation" aria-label="New conversation" onClick={() => {
-      const next = crypto.randomUUID()
-      setStatus('')
-      onAgentSession(next)
-      setSessionId(next)
-      setConversations(current => [
-        { id: next, title: 'New conversation', updated_at: new Date().toISOString(), turn_count: 0 },
-        ...current.filter(conversation => conversation.id !== next),
-      ])
-    }}>＋ New</button>}
+    <div className="conversation-picker" ref={picker}>
+      <button type="button" className="conversation-trigger" aria-label="Conversation history"
+        aria-haspopup="menu" aria-expanded={conversationOpen} disabled={busy}
+        onClick={() => setConversationOpen(open => !open)}>
+        <span>{currentTitle}</span><Icon name="chevron" size={12}/>
+      </button>
+      {conversationOpen && <div className="conversation-menu" role="menu">
+        <button type="button" className="conversation-new" role="menuitem" onClick={startConversation}>
+          <Icon name="plus" size={14}/> New conversation
+        </button>
+        {conversations.length ? conversations.map(conversation => <div
+          className={`conversation-option${conversation.id === sessionId ? ' active' : ''}`} key={conversation.id}>
+          <button type="button" className="conversation-option__select" role="menuitem"
+            onClick={() => selectConversation(conversation.id)}>
+            <span>{conversation.title}</span><small>{conversation.turn_count} {conversation.turn_count === 1 ? 'turn' : 'turns'}</small>
+          </button>
+          <button type="button" className="conversation-option__delete" title="Delete conversation"
+            aria-label={`Delete ${conversation.title}`} disabled={busy}
+            onClick={() => void removeConversation(conversation.id)}><Icon name="trash" size={13}/></button>
+        </div>) : <p className="conversation-empty">No saved conversations yet.</p>}
+      </div>}
+    </div>
+    {busy && <button className="chat-new" onClick={() => abort.current?.abort()}>Stop</button>}
     <small role="status">{loadingHistory ? 'Restoring conversation…' : status}</small>
   </div>
     <div className="chat-messages" aria-live="polite">{[welcome, ...setupMessages, ...agentMessages].map(message => <div key={message.id} className={`message message--${message.role}`}>
@@ -616,6 +671,11 @@ function App() {
           <ChatPanel key={`${item.id}:${activeDoc.document_id}`} item={item} doc={activeDoc} page={sourceDoc.document_id === activeDoc.document_id ? page : firstEntryPage(item)} mode={mode} concept={selected} onCitation={openCitation}
             onAgentSession={agentSessionId => course.update(item.id, entry => ({
               ...entry, agentSessionId,
+            }))}
+            onDeleteConversation={sessionId => course.update(item.id, entry => ({
+              ...entry,
+              messages: entry.messages.filter(message => message.sessionId !== sessionId),
+              agentSessionId: entry.agentSessionId === sessionId ? undefined : entry.agentSessionId,
             }))}/>
         </Panel>
       </main>

@@ -66,6 +66,21 @@
 
 ## 变更与实验记录
 
+## 2026-11-19 — 会话下拉合并新建与删除
+
+- **类型**：功能 / 界面
+- **范围**：`frontend/src/main.tsx`、`frontend/src/api.ts`、`frontend/src/Layout.tsx`、`frontend/src/style.css`、`backend/agent_api.py`、`backend/test_agent_history.py`。
+- **改动**：
+  - 删除聊天头部单独的 `＋ New` 按钮；会话下拉触发器内合并“New conversation”入口和已保存会话列表。
+  - 每个会话行右侧有垃圾桶按钮；点击调用 `DELETE /api/agent/conversations/{session_id}?document_id=...`，删除该会话的 `agent_turns` 和 `agent_conversations` 行，不影响其他会话。
+  - 删除当前会话时自动切到剩余最新会话；没有剩余则新建空会话。课程架里对应的 setup 消息也会清掉。
+  - 下拉支持点击外部或 Esc 关闭；删除按钮在回答进行中禁用。
+- **结果**：新增删除用例；后端 37 个测试通过；前端 build 通过。未做浏览器 E2E。
+- **对前端**：聊天头部不再有独立 New 按钮；会话菜单为自定义下拉，样式沿用现有配色。
+- **对测试**：`test_agent_history.test_delete_removes_one_thread_only` 覆盖单会话删除和重复删除返回 false。
+- **局限/下一步**：删除立即执行，没有二次确认；删除的是后端 Agent 会话，普通问答 setup 消息随课程架条目清理。
+- **产物**：[backend/agent_api.py](../backend/agent_api.py)、[frontend/src/main.tsx](../frontend/src/main.tsx)、[backend/test_agent_history.py](../backend/test_agent_history.py)
+
 ## 2026-11-19 — 公共 API / TACC provider 开关与 README
 
 - **类型**：配置 / 重构
@@ -80,7 +95,7 @@
   - 切 TACC 前请求 `QWEN_BASE_URL/models`（2.5 秒超时）；tutor 每轮开始前也做同样 preflight，TACC 不可用直接 503，避免等满 180 秒。可用 `STUDYGRAPH_PROVIDER_HEALTHCHECK=0` 关闭。
   - README 增加快速启动、环境变量表、DeepSeek/TACC 切换、TACC 1 小时限制；`.env.example` 同步。
 - **实验设置**：本机 `.env` 设 `STUDYGRAPH_LLM_PROVIDER=deepseek`；ACS Lecture 2（69 页）实际跑 DeepSeek tutor 两轮，其中一轮 2 次模型调用 + `search_lecture`/`read_page` 工具后完成；另一轮 3 次调用后返回 error（未保留完整错误，未计入通过）。`/api/ask` 的 general tutor 也返回 DeepSeek 答案。
-- **结果**：生成 provider 可切换；DeepSeek tutor（临时测试配置）和 TACC mock 均回归。新增 `test_llm_provider.py`，后端 36 个测试通过；前端新增上传页 Generation model 下拉，`npm run build --prefix frontend` 通过；`GET/POST /api/config/generation-provider` 实测可切到 tacc 再切回 deepseek。TACC 当前不可用时，切换在 0.52 秒内返回 503，provider 保持 deepseek。
+- **结果**：生成 provider 可切换；DeepSeek tutor（临时测试配置）和 TACC mock 均回归。新增 `test_llm_provider.py`，后端 37 个测试通过；前端新增侧栏 Generation model 下拉，`npm run build --prefix frontend` 通过；`GET/POST /api/config/generation-provider` 实测可切到 tacc 再切回 deepseek。TACC 当前不可用时，切换在 0.52 秒内返回 503，provider 保持 deepseek。
 - **对前端**：接口形状不变；`provider` 值可能从 `tacc` 变成 `deepseek`（仅生成）。侧栏新增 Generation model 下拉，值来自 `/api/config/generation-provider`；AI Tutor 头部不再有 provider 切换；切换失败时下拉保持旧值并显示后端错误。
 - **对测试**：`test_agent` 显式设 `STUDYGRAPH_TUTOR_PROVIDER=tacc`；`test_quiz`/`test_study_guide` 改为 patch `backend.llm_provider.deepseek_client.chat`；`test_llm_provider` 覆盖 env、运行时覆盖和未知 provider。全量命令不变。
 - **局限/下一步**：preflight 只证明 `/models` 可达，不保证排队/生成速度；TACC 在切换后挂掉时，生成类请求仍可能等到各自超时（tutor 有每轮 preflight）。前端开关是进程级全局状态，不适合多用户并发。DeepSeek tutor 一次 3 调用失败的原因未查；TACC 真实链路未重测；provider 选择不影响 V3 评分数据，不应用本次改动重算指标。

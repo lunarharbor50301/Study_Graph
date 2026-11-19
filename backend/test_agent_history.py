@@ -53,6 +53,19 @@ class ConversationStoreTest(unittest.TestCase):
         self.assertEqual([message["text"] for message in history["messages"]],
                          ["Question 1 about p. 1", "Answer 1", "Question 2 about p. 2", "Answer 2"])
 
+    def test_delete_removes_one_thread_only(self):
+        self.seed(2)
+        with documents.database() as db:
+            db.execute("INSERT INTO agent_turns(scope,data) VALUES (?,?)",
+                       ("other:doc", json.dumps(turn_data(9))))
+        self.assertTrue(agent_api.delete_conversation("session", "doc")["deleted"])
+        with documents.database() as db:
+            self.assertEqual(db.execute(
+                "SELECT COUNT(*) FROM agent_turns WHERE scope='session:doc'").fetchone()[0], 0)
+            self.assertEqual(db.execute(
+                "SELECT COUNT(*) FROM agent_turns WHERE scope='other:doc'").fetchone()[0], 1)
+        self.assertFalse(agent_api.delete_conversation("session", "doc")["deleted"])
+
     def test_summary_replaces_older_model_context_but_not_ui_history(self):
         self.seed(9)
         with patch.object(agent_api.deepseek_client, "chat", return_value={

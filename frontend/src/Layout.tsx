@@ -1,5 +1,5 @@
 import React, { ReactNode, useRef } from 'react'
-type IconName = 'book' | 'brain' | 'chat' | 'check' | 'chevron' | 'close' | 'expand' | 'file' | 'graph' | 'help' | 'home' | 'learn' | 'menu' | 'minus' | 'next' | 'previous' | 'sparkle' | 'test'
+type IconName = 'book' | 'brain' | 'chat' | 'check' | 'chevron' | 'close' | 'expand' | 'file' | 'graph' | 'help' | 'home' | 'learn' | 'menu' | 'minus' | 'next' | 'plus' | 'previous' | 'sparkle' | 'test' | 'trash'
 
 export function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
   const paths: Record<IconName, ReactNode> = {
@@ -13,9 +13,10 @@ export function Icon({ name, size = 18 }: { name: IconName; size?: number }) {
     help: <><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.4 2.4 0 1 1 3.5 2.2c-.8.4-1.2.9-1.2 1.8M12 17h.01"/></>,
     home: <><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10M9 20v-6h6v6"/></>,
     learn: <><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></>,
-    menu: <path d="M4 7h16M4 12h16M4 17h16"/>, minus: <path d="M5 12h14"/>, next: <path d="m9 18 6-6-6-6"/>, previous: <path d="m15 18-6-6 6-6"/>,
+    menu: <path d="M4 7h16M4 12h16M4 17h16"/>, minus: <path d="M5 12h14"/>, next: <path d="m9 18 6-6-6-6"/>, plus: <path d="M12 5v14M5 12h14"/>, previous: <path d="m15 18-6-6 6-6"/>,
     sparkle: <><path d="m12 3 1.1 3.2L16 8l-2.9 1.8L12 13l-1.1-3.2L8 8l2.9-1.8z"/><path d="m19 14 .7 2.1L22 17.5l-2.3 1.4L19 21l-.7-2.1-2.3-1.4 2.3-1.4zM5 13l.7 2L8 16.2l-2.3 1.3L5 20l-.7-2.5L2 16.2 4.3 15z"/></>,
     test: <><path d="M9 3h6l1 3h3v16H5V6h3z"/><path d="M9 6h6M9 12h6M9 16h4"/></>,
+    trash: <><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13"/><path d="M10 11v5M14 11v5"/></>,
   }
   return <svg className="icon" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{paths[name]}</svg>
 }

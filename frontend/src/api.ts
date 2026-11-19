@@ -71,6 +71,13 @@ export function listConversations(documentId: string) {
   return request<{ conversations: ConversationSummary[] }>(`agent/conversations?document_id=${encodeURIComponent(documentId)}`)
 }
 
+export function deleteConversation(sessionId: string, documentId: string) {
+  return request<{ deleted: boolean }>(
+    `agent/conversations/${encodeURIComponent(sessionId)}?document_id=${encodeURIComponent(documentId)}`,
+    { method: 'DELETE' },
+  )
+}
+
 export type ProviderName = 'deepseek' | 'tacc'
 
 export function getProvider() {

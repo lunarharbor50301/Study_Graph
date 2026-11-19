@@ -236,6 +236,20 @@ def conversations(document_id: str | None = None):
     } for row in rows]}
 
 
+@router.delete("/conversations/{session_id}")
+def delete_conversation(session_id: str, document_id: str):
+    """Delete one saved thread and its turns; other threads are untouched."""
+    documents.document(document_id)
+    key = session_id + ":" + document_id
+    with documents.database() as db:
+        _schema(db)
+        turns = db.execute("DELETE FROM agent_turns WHERE scope=?", (key,)).rowcount
+        conversation = db.execute(
+            "DELETE FROM agent_conversations WHERE session_id=? AND document_id=?",
+            (session_id, document_id)).rowcount
+    return {"deleted": bool(turns or conversation)}
+
+
 @router.get("/history")
 def conversation_history(session_id: str, document_id: str):
     """Return every saved turn for the thread, not just the model context window."""
