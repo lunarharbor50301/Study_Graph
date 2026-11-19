@@ -10,6 +10,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from backend import deepseek_client, documents
 from backend.demo_users import demo_user
+from backend.llm_provider import provider_for
 from backend.qwen_client import normalize_base_url
 
 router = APIRouter(prefix="/api/agent")
@@ -283,11 +284,12 @@ def tool(name, args, sources):
 
 @router.post("/stream")
 async def stream_turn(body: Turn):
-    endpoint = os.getenv("QWEN_BASE_URL")
-    if not endpoint:
-        raise HTTPException(503, "Configure a running TACC endpoint.")
-    if os.getenv("TACC_SSH_TARGET"):
-        raise HTTPException(503, "Use a persistent SSH tunnel for pi streaming.")
+    config = provider_for("STUDYGRAPH_TUTOR_PROVIDER", require=True, tutor=True)
+    endpoint = config.endpoint
+    if config.name == "tacc":
+        endpoint = normalize_base_url(endpoint)
+        if os.getenv("TACC_SSH_TARGET"):
+            raise HTTPException(503, "Use a persistent SSH tunnel for pi streaming.")
     sources = {doc_id: documents.document(doc_id)
                for doc_id in dict.fromkeys([body.document_id, *body.additional_document_ids])}
     node = shutil.which("node")
@@ -306,7 +308,9 @@ async def stream_turn(body: Turn):
                     node, str(Path(__file__).resolve().parents[1] / "agent/runner.mjs"),
                     stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE,
                     stderr=asyncio.subprocess.DEVNULL, limit=2**22)
-                proc.stdin.write((json.dumps({**body.model_dump(), **state, "endpoint": normalize_base_url(endpoint)})+"\n").encode())
+                proc.stdin.write((json.dumps({**body.model_dump(), **state, "endpoint": endpoint,
+                                              "provider": config.name, "model": config.model,
+                                              "api_key": config.api_key})+"\n").encode())
                 await proc.stdin.drain()
                 async with asyncio.timeout(180):
                     while line := await proc.stdout.readline():

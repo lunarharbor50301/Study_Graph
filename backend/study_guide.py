@@ -5,8 +5,9 @@ import os
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field, field_validator
 
-from backend import deepseek_client, documents
+from backend import documents
 from backend.concept_map import StudyGuide, build_study_guide
+from backend.llm_provider import provider_for
 
 router = APIRouter(prefix="/api/documents")
 
@@ -43,10 +44,8 @@ def single_call(doc: str, body: StudyRequest):
         ).fetchall()
     if not rows:
         raise HTTPException(422, "This lecture has no readable text.")
-    endpoint = os.getenv("DEEPSEEK_BASE_URL", deepseek_client.DEFAULT_BASE_URL)
-    if not os.getenv("DEEPSEEK_API_KEY", "").strip():
-        raise HTTPException(503, "Set DEEPSEEK_API_KEY to create a concept map.")
-
+    config = provider_for("STUDYGRAPH_GENERATION_PROVIDER", require=True)
+    endpoint = config.endpoint
     count = min(32, len(rows))
     sampled = (rows[index * len(rows) // count] for index in range(count))
     pages = {page: documents.normalize_pdf_math(text) for page, text in sampled}
@@ -72,7 +71,7 @@ def single_call(doc: str, body: StudyRequest):
         "If a requested topic is missing, do not make up material. Focus on the closest supported content."
     )
     try:
-        result = deepseek_client.chat([
+        result = config.chat([
             {"role": "system", "content": instruction},
             {"role": "user", "content": json.dumps(payload, ensure_ascii=False)},
         ], endpoint, temperature=0, max_tokens=4400)

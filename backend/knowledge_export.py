@@ -2,6 +2,7 @@
 import os
 from fastapi import APIRouter
 from backend import documents, study_guide
+from backend.llm_provider import provider_for
 
 router = APIRouter(prefix="/api/documents")
 
@@ -24,11 +25,12 @@ def knowledge(doc: str, body: study_guide.StudyRequest):
                           "required_points": [{"id": f"{cid}-P{k+1}", "text": fact,
                                                "max_score": 2, "evidence": evidence}
                                               for k, fact in enumerate(facts)]})
+    config = provider_for("STUDYGRAPH_GENERATION_PROVIDER", require=False)
     return {"version": "0.3", "status": "generated", "document_id": doc,
             "concepts": concepts, "relations": [], "study_notes": notes,
             "generation": {"path": "study-guide", "instructions": body.instructions,
-                           "provider": "deepseek",
-                           "model": os.getenv("DEEPSEEK_MODEL", "deepseek-flash"),
+                           "provider": config.name,
+                           "model": config.model,
                            "pipeline": os.getenv("STUDYGRAPH_CONCEPT_MAP_MODE", "staged"),
                            "limitations": ["Uses the study-guide endpoint; node count scales with the lecture.",
                                            "May return partial notes when the call/time budget is exhausted.",

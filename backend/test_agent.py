@@ -53,7 +53,7 @@ class PiFlow(unittest.TestCase):
             worker = threading.Thread(target=server.serve_forever, daemon=True)
             worker.start()
             try:
-                with patch.dict(os.environ, {"STUDYGRAPH_DATABASE":str(Path(tmp)/"test.sqlite3"), "QWEN_BASE_URL":f"http://127.0.0.1:{server.server_port}/v1"}):
+                with patch.dict(os.environ, {"STUDYGRAPH_DATABASE":str(Path(tmp)/"test.sqlite3"), "QWEN_BASE_URL":f"http://127.0.0.1:{server.server_port}/v1", "STUDYGRAPH_TUTOR_PROVIDER":"tacc"}):
                     with patch.dict(os.environ):
                         os.environ.pop("TACC_SSH_TARGET", None)
                         os.environ["STUDYGRAPH_AGENT_FOLLOWUP_EVIDENCE"] = "1"

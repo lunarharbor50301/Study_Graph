@@ -17,7 +17,8 @@ from typing import Annotated, Callable
 from fastapi import HTTPException
 from pydantic import BaseModel, Field, ValidationError
 
-from backend import deepseek_client, documents
+from backend import documents
+from backend.llm_provider import provider_for
 
 logger = logging.getLogger(__name__)
 
@@ -169,8 +170,9 @@ class Batch:
 @dataclass
 class Provider:
     name: str
-    endpoint: str | None
+    endpoint: str
     model: str
+    chat: Callable[..., dict]
 
 
 class _BudgetExhausted(Exception):
@@ -294,22 +296,18 @@ def _load_pages(doc: str) -> tuple[str, dict[int, str]]:
 
 
 def _resolve_provider() -> Provider:
-    endpoint = os.getenv("DEEPSEEK_BASE_URL", deepseek_client.DEFAULT_BASE_URL)
-    return Provider("deepseek", endpoint, deepseek_client.model_name())
+    config = provider_for("STUDYGRAPH_GENERATION_PROVIDER", require=False)
+    return Provider(config.name, config.endpoint, config.model, config.chat)
 
 
 def _require_provider(provider: Provider) -> None:
-    if provider.name == "deepseek":
-        if not os.getenv("DEEPSEEK_API_KEY", "").strip():
-            raise HTTPException(503, "Set DEEPSEEK_API_KEY to generate a concept map.")
-    elif not provider.endpoint:
-        raise HTTPException(503, "Connect a generation model to create a personalized concept map.")
+    provider_for("STUDYGRAPH_GENERATION_PROVIDER", require=True)
 
 
 def _default_generate(provider: Provider) -> Callable[..., str]:
     def generate(messages, max_tokens, timeout, temperature=0):
-        result = deepseek_client.chat(messages, provider.endpoint, temperature=temperature,
-                                      max_tokens=max_tokens, timeout=timeout)
+        result = provider.chat(messages, provider.endpoint, temperature=temperature,
+                               max_tokens=max_tokens, timeout=timeout)
         try:
             content = result["choices"][0]["message"]["content"]
         except (KeyError, IndexError, TypeError) as exc:

@@ -41,11 +41,11 @@ Remove-Item Env:TACC_SSH_TARGET -ErrorAction SilentlyContinue
 
 助教统一调用 POST /api/agent/stream，响应为逐行 JSON。单轮问答接口保留用于对照评测。Agent 会收到当前页、选中概念或题目，以及同一会话、同一讲义最近六轮成功的对话和更早对话的摘要。完整对话按会话存入本地 SQLite；失败和中止的轮次不进入后续上下文。超过预算时只压缩送入模型的历史，不删除用于界面恢复的完整记录。此开发服务使用单个 Uvicorn worker，同一会话串行执行。
 
-出题、流式学习笔记和个性化学习指南固定使用 DeepSeek；AI 学习助手通过 `QWEN_BASE_URL` 连接 TACC Qwen。上传页助教使用 `/api/ask`，学习和测验页面的助教使用流式 Agent。生成不再读取 `STUDYGRAPH_GENERATION_PROVIDER`，只需在仓库根目录的本地 `.env` 中设置 `DEEPSEEK_API_KEY` 和 `QWEN_BASE_URL`。官方服务默认使用 `https://api.deepseek.com` 和 `deepseek-flash`，可通过 `DEEPSEEK_BASE_URL` 与 `DEEPSEEK_MODEL` 指定。用 PowerShell 把这些配置加载到同一个终端，再运行上面的启动命令。
+概念图、流式学习笔记、出题和 AI 学习助手共用 `STUDYGRAPH_LLM_PROVIDER`，可选 `deepseek`（默认，公共 API）或 `tacc`（`QWEN_BASE_URL` + 隧道）。需要分开时用 `STUDYGRAPH_GENERATION_PROVIDER` 和 `STUDYGRAPH_TUTOR_PROVIDER` 覆盖。DeepSeek 需要 `DEEPSEEK_API_KEY`，TACC 需要 `QWEN_BASE_URL`（带 `/v1`）和 `QWEN_MODEL`（默认 `qwen3.8-27b`）。上传页助教使用 `/api/ask`，学习和测验页面的助教使用流式 Agent。用 PowerShell 把 `.env` 配置加载到同一个终端，再运行启动命令。
 
 ```powershell
 Get-Content .env | ForEach-Object {
-    if ($_ -match '^\s*(QWEN_BASE_URL|NO_PROXY|DEEPSEEK_API_KEY|DEEPSEEK_BASE_URL|DEEPSEEK_MODEL)\s*=\s*(.*?)\s*$') {
+    if ($_ -match '^\s*(STUDYGRAPH_LLM_PROVIDER|STUDYGRAPH_GENERATION_PROVIDER|STUDYGRAPH_TUTOR_PROVIDER|QWEN_BASE_URL|QWEN_MODEL|QWEN_API_KEY|NO_PROXY|DEEPSEEK_API_KEY|DEEPSEEK_BASE_URL|DEEPSEEK_MODEL)\s*=\s*(.*?)\s*$') {
         [Environment]::SetEnvironmentVariable($Matches[1], $Matches[2].Trim('"', "'"), 'Process')
     }
 }

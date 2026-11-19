@@ -1,7 +1,7 @@
 # 概念图 V3 后端进度
 
 最后更新：2026-11-19
-当前状态：V3 已移植到 yxy-2.0（V2.5）基线；默认指令、generated-only 前端、knowledge 导出和评测数据保留 yxy；V3 staged、无 5×4、生成固定 DeepSeek 保留我们的实现。V3 默认指令的一次 54 节点结果已用 v0.4-en + DeepSeek judge 评分：核心概念 20/20、Precision 54/54、笔记 96.25%；仍需人工复核和重复运行。AI tutor 的 New conversation 已改为新建线程并保留旧线程，完整对话入库，超过 8 轮时用摘要压缩送入模型的上下文。
+当前状态：V3 已移植到 yxy-2.0（V2.5）基线；默认指令、generated-only 前端、knowledge 导出和评测数据保留 yxy；V3 staged、无 5×4 保留我们的实现。模型不再写死：`STUDYGRAPH_LLM_PROVIDER=deepseek|tacc`，生成和 AI tutor 可分别覆盖，默认 DeepSeek 公共 API。V3 默认指令的一次 54 节点结果已用 v0.4-en + DeepSeek judge 评分：核心概念 20/20、Precision 54/54、笔记 96.25%；仍需人工复核和重复运行。AI tutor 的 New conversation 已改为新建线程并保留旧线程，完整对话入库，超过 8 轮时用摘要压缩送入模型的上下文。
 
 ## 给前端和测试的对接摘要
 
@@ -21,8 +21,15 @@
 
 | 环境变量 | 默认 | 说明 |
 |---|---|---|
-| `DEEPSEEK_API_KEY` | — | 概念图、笔记、出题必需 |
-| `QWEN_BASE_URL` | — | 只给 AI tutor 和流式 Agent |
+| `STUDYGRAPH_LLM_PROVIDER` | `deepseek` | 全局选择 `deepseek` 或 `tacc` |
+| `STUDYGRAPH_GENERATION_PROVIDER` | 空 | 覆盖概念图、笔记、出题；空则跟随全局 |
+| `STUDYGRAPH_TUTOR_PROVIDER` | 空 | 覆盖 AI tutor；空则跟随全局 |
+| `DEEPSEEK_API_KEY` | — | DeepSeek provider 必需 |
+| `DEEPSEEK_BASE_URL` | `https://api.deepseek.com` | DeepSeek provider |
+| `DEEPSEEK_MODEL` | `deepseek-flash` | DeepSeek provider |
+| `QWEN_BASE_URL` | — | TACC provider 必需，带 `/v1` |
+| `QWEN_MODEL` | `qwen3.8-27b` | TACC provider |
+| `QWEN_API_KEY` | `local` | 本地隧道可省略 |
 | `STUDYGRAPH_CONCEPT_MAP_MODE` | `staged` | `single` 回滚 |
 | `STUDYGRAPH_CONCEPT_MAP_CACHE` | `1` | 评测时设 `0` |
 | `STUDYGRAPH_CONCEPT_MAP_TIMEOUT` | `600` | 单次请求总时长，秒 |
@@ -35,7 +42,7 @@
 | `STUDYGRAPH_CONCEPT_MAP_GAP_GROUPS` | `4` | 覆盖检查组数 |
 | `STUDYGRAPH_CONCEPT_MAP_CONCURRENCY` | `4` | 分批并发 |
 
-`STUDYGRAPH_GENERATION_PROVIDER` 已不再参与生成选择。Qwen 的 V3 预设只用于实验对照，不是生产配置。
+`STUDYGRAPH_GENERATION_PROVIDER` / `STUDYGRAPH_TUTOR_PROVIDER` 是新的覆盖项；评审默认 DeepSeek，不依赖 TACC。TACC 作业通常 1 小时结束，隧道失效后需重新提交并更新 `QWEN_BASE_URL`。
 
 ### 已知限制
 
@@ -58,6 +65,24 @@
 - 设计计划：[docs/概念图V3后端修改计划.md](概念图V3后端修改计划.md)
 
 ## 变更与实验记录
+
+## 2026-11-19 — 公共 API / TACC provider 开关与 README
+
+- **类型**：配置 / 重构
+- **范围**：新增 `backend/llm_provider.py`；改 `backend/deepseek_client.py`、`concept_map.py`、`study_guide.py`、`study_notes.py`、`quiz.py`、`knowledge_export.py`、`agent_api.py`、`main.py`、`agent/runner.mjs`、`README.md`、`.env.example`、`backend/test_quiz.py`、`backend/test_study_guide.py`、`backend/test_agent.py`。
+- **改动**：
+  - `STUDYGRAPH_LLM_PROVIDER=deepseek|tacc` 统一选择；`STUDYGRAPH_GENERATION_PROVIDER`、`STUDYGRAPH_TUTOR_PROVIDER` 可分别覆盖。
+  - 默认改为 `deepseek` 公共 API，评审不需要 TACC 账号；TACC 仍可用 `QWEN_BASE_URL` + 隧道。
+  - `agent/runner.mjs` 的模型 id、显示名、endpoint、API key 从输入/环境变量读取；只有 TACC 请求附加 `chat_template_kwargs`。
+  - DeepSeek tutor 使用非 JSON 模式；生成仍使用 JSON 模式。概念图、单概念笔记、出题、knowledge 导出都走同一 provider 配置。
+  - `/api/ask` 和 `/api/agent/stream` 的 `provider` 字段返回实际 provider（`deepseek`/`tacc`），不再写死 `tacc`。
+  - README 增加快速启动、环境变量表、DeepSeek/TACC 切换、TACC 1 小时限制；`.env.example` 同步。
+- **实验设置**：本机 `.env` 设 `STUDYGRAPH_LLM_PROVIDER=deepseek`；ACS Lecture 2（69 页）实际跑 DeepSeek tutor 两轮，其中一轮 2 次模型调用 + `search_lecture`/`read_page` 工具后完成；另一轮 3 次调用后返回 error（未保留完整错误，未计入通过）。`/api/ask` 的 general tutor 也返回 DeepSeek 答案。
+- **结果**：DeepSeek tutor 工具调用和流式回答可用；TACC 路径仅用 mock server 回归（`test_agent`），未在本次切换后跑真实 TACC 全流程。新增 `test_llm_provider.py`，后端 34 个测试通过；前端未改，`npm run build --prefix frontend` 通过。
+- **对前端**：接口形状不变；`provider` 值可能从 `tacc` 变成 `deepseek`，前端未展示该字段，无需改动。README 是评审入口。
+- **对测试**：`test_agent` 显式设 `STUDYGRAPH_TUTOR_PROVIDER=tacc`；`test_quiz`/`test_study_guide` 改为 patch `backend.llm_provider.deepseek_client.chat`。全量命令不变。
+- **局限/下一步**：DeepSeek tutor 一次 3 调用失败的原因未查；TACC 真实链路未重测；provider 选择不影响 V3 评分数据，不应用本次改动重算指标。
+- **产物**：[backend/llm_provider.py](../backend/llm_provider.py)、[backend/test_llm_provider.py](../backend/test_llm_provider.py)、[README.md](../README.md)、[.env.example](../.env.example)
 
 ## 2026-11-19 — 对话线程保存与上下文压缩
 

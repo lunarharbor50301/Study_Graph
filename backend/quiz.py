@@ -1,12 +1,12 @@
 """Generate an English question set from document-scoped concept evidence."""
 import json
-import os
 from typing import Annotated, Literal
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field, StringConstraints
 
-from backend import deepseek_client, documents
+from backend import documents
+from backend.llm_provider import provider_for
 
 router = APIRouter(prefix="/api/documents")
 Concept = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=120)]
@@ -70,9 +70,8 @@ FORMATS = {
 
 
 def quiz_model():
-    if not os.getenv("DEEPSEEK_API_KEY", "").strip():
-        raise HTTPException(503, "Set DEEPSEEK_API_KEY to generate a practice test.")
-    return "deepseek", os.getenv("DEEPSEEK_BASE_URL", deepseek_client.DEFAULT_BASE_URL), deepseek_client.chat
+    config = provider_for("STUDYGRAPH_GENERATION_PROVIDER", require=True)
+    return config.name, config.endpoint, config.chat
 
 
 @router.post("/{doc}/practice-question", response_model=PracticeQuestion)

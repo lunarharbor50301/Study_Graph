@@ -16,7 +16,7 @@ def model_name():
     return os.getenv("DEEPSEEK_MODEL", "deepseek-flash")
 
 
-def completion_request(messages, base_url, max_tokens, temperature, *, stream=False):
+def completion_request(messages, base_url, max_tokens, temperature, *, stream=False, json_mode=True):
     base_url = base_url.strip().rstrip("/")
     try:
         parts = urlsplit(base_url)
@@ -34,19 +34,21 @@ def completion_request(messages, base_url, max_tokens, temperature, *, stream=Fa
         "messages": messages,
         "max_tokens": max_tokens,
         "temperature": temperature,
-        "response_format": {"type": "json_object"},
         "thinking": {"type": "disabled"},
         "stream": stream,
     }
+    if json_mode:
+        payload["response_format"] = {"type": "json_object"}
     request = Request(base_url + "/chat/completions", data=json.dumps(payload).encode("utf-8"),
                       headers={"Content-Type": "application/json"})
     request.add_unredirected_header("Authorization", f"Bearer {key}")
     return request
 
 
-def chat(messages, base_url, max_tokens=256, temperature=0, timeout=90):
+def chat(messages, base_url, max_tokens=256, temperature=0, timeout=90, json_mode=True):
     try:
-        with urlopen(completion_request(messages, base_url, max_tokens, temperature), timeout=timeout) as response:
+        with urlopen(completion_request(messages, base_url, max_tokens, temperature,
+                                        json_mode=json_mode), timeout=timeout) as response:
             return json.load(response)
     except HTTPError as exc:
         raise RuntimeError(f"DeepSeek returned HTTP {exc.code}.") from exc
@@ -56,6 +58,7 @@ def chat(messages, base_url, max_tokens=256, temperature=0, timeout=90):
         raise RuntimeError("The DeepSeek request failed or timed out.") from exc
 
 
-def stream_chat(messages, base_url, max_tokens=256, temperature=0):
-    request = completion_request(messages, base_url, max_tokens, temperature, stream=True)
+def stream_chat(messages, base_url, max_tokens=256, temperature=0, json_mode=True):
+    request = completion_request(messages, base_url, max_tokens, temperature,
+                                 stream=True, json_mode=json_mode)
     yield from stream_response(request)

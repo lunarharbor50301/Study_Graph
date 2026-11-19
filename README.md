@@ -1,24 +1,73 @@
 # Study-Graph
 
-V2 的 pi Agent 在 `lyq-v2` 分支开发。安装运行依赖时增加 `npm ci --prefix agent --ignore-scripts`。助教默认使用 Agent，支持多轮对话、工具检索和流式回答，运行配置见 [pi Agent 接入说明](docs/pi-agent.md)。
-
 StudyGraph 帮助学生从课程讲义的概念图出发，提问、回到原页核对解释，并在同一会话中练习、查看提示和重答。
 
-## 组员从这里开始
+## 评审快速开始
 
-第一次开会请用[25 分钟议程与演示步骤](docs/kickoff.md)。当前底座采用 React、TypeScript、FastAPI 和 SQLite。内置两页 Roofline 讲义，使用固定回答和规则评分。
+课程项目不评估界面体验，重点是可运行、结果可复现。默认配置使用 **DeepSeek 公共 API**，不需要 TACC 账号；也可以切到 TACC Qwen。
 
-在仓库根目录用 PowerShell 执行以下命令（Python 3.12、Node.js 24）。首次安装依赖需要联网。
+依赖：Python 3.12、Node.js 22.19+（建议 24）。首次安装需要联网。
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python -m pip install -r backend/requirements-lock.txt
 npm ci --prefix frontend
+npm ci --prefix agent --ignore-scripts
 npm run build --prefix frontend
-.\.venv\Scripts\python -m uvicorn backend.main:app --port 8000
 ```
 
-打开 http://127.0.0.1:8000 ，接口文档在 http://127.0.0.1:8000/docs 。前端开发可另开终端运行 `npm --prefix frontend run dev`，使用 Vite 打印的地址。后端检查运行 `.\.venv\Scripts\python -m unittest backend.test_smoke`。后续开会只需运行最后一条启动命令；前端有改动时先重新构建。
+在仓库根目录创建 `.env`（不要提交），最小配置：
+
+```text
+STUDYGRAPH_LLM_PROVIDER=deepseek
+DEEPSEEK_API_KEY=你的 key
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+DEEPSEEK_MODEL=deepseek-flash
+```
+
+启动后端和前端开发服务器：
+
+```powershell
+Get-Content .env | ForEach-Object {
+    if ($_ -match '^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*?)\s*$') {
+        [Environment]::SetEnvironmentVariable($Matches[1], $Matches[2].Trim('"', "'"), 'Process')
+    }
+}
+.\.venv\Scripts\python -m uvicorn backend.main:app --port 8000
+# 另一个终端
+npm run dev --prefix frontend
+```
+
+打开 Vite 打印的地址（默认 `http://127.0.0.1:5173/`）。接口文档在 `http://127.0.0.1:8000/docs`。
+
+### 切换模型供应商
+
+只改环境变量，不需要改代码：
+
+```text
+# 全局默认：deepseek 或 tacc
+STUDYGRAPH_LLM_PROVIDER=deepseek
+
+# 可选：分别覆盖生成和助教
+STUDYGRAPH_GENERATION_PROVIDER=deepseek
+STUDYGRAPH_TUTOR_PROVIDER=deepseek
+```
+
+- `deepseek`：使用 `DEEPSEEK_API_KEY`、`DEEPSEEK_BASE_URL`、`DEEPSEEK_MODEL`。
+- `tacc`：使用 `QWEN_BASE_URL`（必须带 `/v1`）、`QWEN_MODEL`（默认 `qwen3.8-27b`）、`QWEN_API_KEY`（本地服务可省略）；AI tutor 还需要持久 SSH 隧道。
+- 概念图、单概念笔记、出题和 AI tutor 共用这套选择；`STUDYGRAPH_GENERATION_PROVIDER` / `STUDYGRAPH_TUTOR_PROVIDER` 可分别覆盖。
+
+TACC 作业通常只有 1 小时时限，作业结束后隧道会失效，AI tutor 会报连接错误。评审和复现优先用 DeepSeek；需要 TACC 时按 [TACC 连接步骤](docs/tacc/live-qa.md)重新提交并更新 `QWEN_BASE_URL`。
+
+## 组员从这里开始
+
+第一次开会请用[25 分钟议程与演示步骤](docs/kickoff.md)。当前底座采用 React、TypeScript、FastAPI 和 SQLite；安装、启动和 provider 配置以上面的“评审快速开始”为准。后端检查运行：
+
+```powershell
+.\.venv\Scripts\python -m unittest discover -s backend -p 'test_*.py' -q
+```
+
+前端开发服务器用 `npm run dev --prefix frontend`；前端有改动时再跑 `npm run build --prefix frontend`。
 
 从 Learning 上传 PDF 或 PPTX，生成概念图后可在助教面板提问，点击引用打开讲义原页。Test 支持上传多份讲义，选题型和难度后生成练习。课程架保存概念图、测验和作答进度，也可以直接打开内置样例。浏览器保存课程架与普通问答，Agent 对话保存在后端。真实模型配置见 [TACC 连接步骤](docs/tacc/live-qa.md)和 [pi Agent 接入说明](docs/pi-agent.md)。
 

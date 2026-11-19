@@ -73,8 +73,11 @@ async function run(input) {
     tool('read_page', 'Read the full text of a physical page, including formulas and context missing from short search results.', schema({ document_id: text, page: { type: 'integer', minimum: 1 } })),
     tool('list_documents', 'List lecture IDs, names and page counts in the current workspace.', schema({})),
   ];
+  const providerName = input.provider || 'tacc';
   const model = {
-    id: process.env.QWEN_MODEL || 'qwen3.8-27b', name: 'TACC Qwen', api: 'openai-completions', provider: 'tacc',
+    id: input.model || process.env.QWEN_MODEL || 'qwen3.8-27b',
+    name: providerName === 'deepseek' ? 'DeepSeek' : 'TACC Qwen',
+    api: 'openai-completions', provider: providerName,
     baseUrl: input.endpoint, reasoning: false, input: ['text'], contextWindow: 32768, maxTokens: 1200,
     cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
     compat: { supportsDeveloperRole: false, supportsStore: false, supportsReasoningEffort: false, maxTokensField: 'max_tokens' },
@@ -107,9 +110,10 @@ Current document: ${input.document_id}. Current page: ${input.page ?? 'unknown'}
       modelTimings.push({ call: calls, started: performance.now(), first_text_ms: null });
       emit({ type: 'model_start', call: calls });
       return stream(m, context, {
-        ...options, apiKey: process.env.QWEN_API_KEY || 'local', temperature: 0, maxTokens: 1200,
+        ...options, apiKey: input.api_key || process.env.QWEN_API_KEY || 'local', temperature: 0, maxTokens: 1200,
         onPayload: payload => {
-          const request = { ...payload, chat_template_kwargs: { enable_thinking: false } };
+          const request = { ...payload };
+          if (providerName === 'tacc') request.chat_template_kwargs = { enable_thinking: false };
           if (priorSources.length && calls < 3) {
             const [system, ...history] = request.messages;
             const lastQuestion = history.findLastIndex(message => message.role === 'user');
