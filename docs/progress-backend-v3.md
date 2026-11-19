@@ -76,11 +76,12 @@
   - `agent/runner.mjs` 的模型 id、显示名、endpoint、API key 从输入/环境变量读取；只有 TACC 请求附加 `chat_template_kwargs`。
   - DeepSeek tutor 使用非 JSON 模式；生成仍使用 JSON 模式。概念图、单概念笔记、出题、knowledge 导出都走同一 provider 配置。
   - `/api/ask` 和 `/api/agent/stream` 的 `provider` 字段返回实际 provider（`deepseek`/`tacc`），不再写死 `tacc`。
+  - 新增 `GET/POST /api/config/provider`；聊天头部增加 **API / TACC** 下拉，切换只覆盖当前后端进程，重启回到 `.env`；API key 不下发前端。
   - README 增加快速启动、环境变量表、DeepSeek/TACC 切换、TACC 1 小时限制；`.env.example` 同步。
 - **实验设置**：本机 `.env` 设 `STUDYGRAPH_LLM_PROVIDER=deepseek`；ACS Lecture 2（69 页）实际跑 DeepSeek tutor 两轮，其中一轮 2 次模型调用 + `search_lecture`/`read_page` 工具后完成；另一轮 3 次调用后返回 error（未保留完整错误，未计入通过）。`/api/ask` 的 general tutor 也返回 DeepSeek 答案。
-- **结果**：DeepSeek tutor 工具调用和流式回答可用；TACC 路径仅用 mock server 回归（`test_agent`），未在本次切换后跑真实 TACC 全流程。新增 `test_llm_provider.py`，后端 34 个测试通过；前端未改，`npm run build --prefix frontend` 通过。
-- **对前端**：接口形状不变；`provider` 值可能从 `tacc` 变成 `deepseek`，前端未展示该字段，无需改动。README 是评审入口。
-- **对测试**：`test_agent` 显式设 `STUDYGRAPH_TUTOR_PROVIDER=tacc`；`test_quiz`/`test_study_guide` 改为 patch `backend.llm_provider.deepseek_client.chat`。全量命令不变。
+- **结果**：DeepSeek tutor 工具调用和流式回答可用；TACC 路径仅用 mock server 回归（`test_agent`），未在本次切换后跑真实 TACC 全流程。新增 `test_llm_provider.py`，后端 35 个测试通过；前端新增 provider 下拉，`npm run build --prefix frontend` 通过；`GET/POST /api/config/provider` 实测可切到 tacc 再切回 deepseek。
+- **对前端**：接口形状不变；`provider` 值可能从 `tacc` 变成 `deepseek`。聊天头部新增 API/TACC 下拉，值来自 `/api/config/provider`；切换失败时显示后端错误。
+- **对测试**：`test_agent` 显式设 `STUDYGRAPH_TUTOR_PROVIDER=tacc`；`test_quiz`/`test_study_guide` 改为 patch `backend.llm_provider.deepseek_client.chat`；`test_llm_provider` 覆盖 env、运行时覆盖和未知 provider。全量命令不变。
 - **局限/下一步**：DeepSeek tutor 一次 3 调用失败的原因未查；TACC 真实链路未重测；provider 选择不影响 V3 评分数据，不应用本次改动重算指标。
 - **产物**：[backend/llm_provider.py](../backend/llm_provider.py)、[backend/test_llm_provider.py](../backend/test_llm_provider.py)、[README.md](../README.md)、[.env.example](../.env.example)
 

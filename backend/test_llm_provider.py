@@ -5,10 +5,36 @@ from unittest.mock import patch
 
 from fastapi import HTTPException
 
-from backend.llm_provider import provider_for
+from backend.llm_provider import (
+    active_provider,
+    provider_for,
+    reset_runtime_provider,
+    set_runtime_provider,
+)
 
 
 class ProviderSwitchTest(unittest.TestCase):
+    def setUp(self):
+        reset_runtime_provider()
+
+    def tearDown(self):
+        reset_runtime_provider()
+
+    def test_runtime_switch_overrides_feature_env_until_reset(self):
+        env = {
+            "STUDYGRAPH_LLM_PROVIDER": "deepseek",
+            "STUDYGRAPH_GENERATION_PROVIDER": "deepseek",
+            "DEEPSEEK_API_KEY": "test",
+            "DEEPSEEK_BASE_URL": "https://example.test",
+            "QWEN_BASE_URL": "http://127.0.0.1:18029/v1",
+        }
+        with patch.dict(os.environ, env):
+            set_runtime_provider("tacc")
+            self.assertEqual(active_provider(), "tacc")
+            self.assertEqual(provider_for("STUDYGRAPH_GENERATION_PROVIDER").name, "tacc")
+            set_runtime_provider("deepseek")
+            self.assertEqual(provider_for("STUDYGRAPH_GENERATION_PROVIDER").name, "deepseek")
+
     def test_deepseek_is_the_default_and_can_be_overridden_per_feature(self):
         env = {
             "STUDYGRAPH_LLM_PROVIDER": "deepseek",

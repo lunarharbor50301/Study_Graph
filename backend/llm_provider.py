@@ -12,6 +12,7 @@ from backend import deepseek_client
 from backend.qwen_client import chat as qwen_chat, stream_chat as qwen_stream_chat
 
 DEFAULT_QWEN_MODEL = "qwen3.8-27b"
+_runtime_provider: str | None = None
 
 
 @dataclass(frozen=True)
@@ -24,12 +25,36 @@ class LLMProvider:
     stream: Callable[..., object] | None = None
 
 
-def _provider_name(feature_env: str) -> str:
-    value = os.getenv(feature_env) or os.getenv("STUDYGRAPH_LLM_PROVIDER") or "deepseek"
+def _valid_name(value: str) -> str:
     name = value.strip().lower()
     if name not in {"deepseek", "tacc"}:
         raise HTTPException(503, "Set STUDYGRAPH_LLM_PROVIDER to deepseek or tacc.")
     return name
+
+
+def _provider_name(feature_env: str) -> str:
+    return _valid_name(os.getenv(feature_env) or os.getenv("STUDYGRAPH_LLM_PROVIDER") or "deepseek")
+
+
+def active_provider() -> str:
+    """Return the provider selected by the current process, if any."""
+    if _runtime_provider:
+        return _runtime_provider
+    return _valid_name(os.getenv("STUDYGRAPH_LLM_PROVIDER") or "deepseek")
+
+
+def set_runtime_provider(name: str) -> str:
+    """Switch providers for this backend process; env remains the startup default."""
+    global _runtime_provider
+    name = _valid_name(name)
+    _build(name, require=True, tutor=False)  # validate before changing state
+    _runtime_provider = name
+    return name
+
+
+def reset_runtime_provider() -> None:
+    global _runtime_provider
+    _runtime_provider = None
 
 
 def _deepseek_tutor_chat(messages, base_url, max_tokens=256, temperature=0, timeout=90):
@@ -37,13 +62,7 @@ def _deepseek_tutor_chat(messages, base_url, max_tokens=256, temperature=0, time
                                 temperature=temperature, timeout=timeout, json_mode=False)
 
 
-def provider_for(feature_env: str, *, require: bool = True, tutor: bool = False) -> LLMProvider:
-    """Resolve a provider without leaking credentials into callers.
-
-    `require=False` is for cache-key construction: it returns the configured
-    provider/model even when the API key or endpoint is missing.
-    """
-    name = _provider_name(feature_env)
+def _build(name: str, *, require: bool, tutor: bool) -> LLMProvider:
     if name == "deepseek":
         endpoint = os.getenv("DEEPSEEK_BASE_URL", deepseek_client.DEFAULT_BASE_URL)
         key = os.getenv("DEEPSEEK_API_KEY", "").strip()
@@ -68,3 +87,14 @@ def provider_for(feature_env: str, *, require: bool = True, tutor: bool = False)
         chat=qwen_chat,
         stream=qwen_stream_chat,
     )
+
+
+def provider_for(feature_env: str, *, require: bool = True, tutor: bool = False) -> LLMProvider:
+    """Resolve a provider without leaking credentials into callers.
+
+    `require=False` is for cache-key construction: it returns the configured
+    provider/model even when the API key or endpoint is missing.
+    """
+    name = _runtime_provider or _provider_name(feature_env)
+    return _build(name, require=require, tutor=tutor)
+

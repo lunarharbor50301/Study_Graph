@@ -71,6 +71,20 @@ export function listConversations(documentId: string) {
   return request<{ conversations: ConversationSummary[] }>(`agent/conversations?document_id=${encodeURIComponent(documentId)}`)
 }
 
+export type ProviderName = 'deepseek' | 'tacc'
+
+export function getProvider() {
+  return request<{ provider: ProviderName }>('config/provider')
+}
+
+export function setProvider(provider: ProviderName) {
+  return request<{ provider: ProviderName }>('config/provider', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ provider }),
+  })
+}
+
 export async function streamEvents<T>(url: string, body: unknown, signal: AbortSignal, onEvent: (event: T) => void) {
   const response = await fetch(withDemoUser(url), {
     method:'POST', headers:{'Content-Type':'application/json'}, signal,

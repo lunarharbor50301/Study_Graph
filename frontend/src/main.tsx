@@ -5,7 +5,7 @@ import {Icon, Panel, SplitHandle} from './Layout'
 import { getMapTopics, MindMap, type MapTopic } from './MindMap'
 import React, { FormEvent, lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { demoUser, listConversations, request, streamAgent, streamEvents, withDemoUser, type ConversationSummary } from './api'
+import { demoUser, getProvider, listConversations, request, setProvider, streamAgent, streamEvents, withDemoUser, type ConversationSummary, type ProviderName } from './api'
 import { currentDocument, firstEntryPage, lectureName, useCourseStore, type CourseItem, type SavedMap, type SavedTest } from './courseStore'
 import { lecture as fallbackLecture, starterMessages } from './data'
 import type { ChatMessage, Concept, CourseQuestion, DocumentInfo, Lecture, Mode, QuestionProgress, TestQuestion } from './types'
@@ -277,6 +277,8 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
   const [sessionId, setSessionId] = useState(() => item.agentSessionId ?? crypto.randomUUID())
   const [agentMessages, setAgentMessages] = useState<ChatMessage[]>([])
   const [conversations, setConversations] = useState<ConversationSummary[]>([])
+  const [provider, setProviderName] = useState<ProviderName>('deepseek')
+  const [providerBusy, setProviderBusy] = useState(false)
   const [loadingHistory, setLoadingHistory] = useState(true)
   const [status, setStatus] = useState('')
   const abort = useRef<AbortController | null>(null)
@@ -301,10 +303,29 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
       .catch(() => {})
     return () => { cancelled = true }
   }, [doc.document_id])
+  useEffect(() => {
+    let cancelled = false
+    void getProvider()
+      .then(data => { if (!cancelled) setProviderName(data.provider) })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [])
   const refreshConversations = () => {
     void listConversations(doc.document_id)
       .then(data => setConversations(data.conversations))
       .catch(() => {})
+  }
+  async function changeProvider(next: ProviderName) {
+    setProviderBusy(true)
+    try {
+      const data = await setProvider(next)
+      setProviderName(data.provider)
+      setStatus(`Provider: ${data.provider === 'tacc' ? 'TACC Qwen' : 'DeepSeek API'}`)
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : 'Could not switch provider.')
+    } finally {
+      setProviderBusy(false)
+    }
   }
   const setupMessages = item.messages.filter(message =>
     message.sessionId ? message.sessionId === sessionId : sessionId === item.agentSessionId)
@@ -364,6 +385,11 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
     : [{ id: sessionId, title: 'New conversation', updated_at: '', turn_count: 0 }, ...conversations]
   return <div className="chat-layout"><div className="chat-context">
     <span><Icon name={mode === 'learn' ? 'book' : 'test'} size={14}/>{contextLabel}</span>
+    <select className="chat-provider" aria-label="Model provider" title="Switch between DeepSeek API and TACC Qwen"
+      value={provider} disabled={busy || providerBusy} onChange={event => void changeProvider(event.target.value as ProviderName)}>
+      <option value="deepseek">API</option>
+      <option value="tacc">TACC</option>
+    </select>
     <select className="chat-conversation" aria-label="Conversation history" value={sessionId}
       disabled={busy} onChange={event => {
         const next = event.target.value

@@ -12,7 +12,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from backend import documents
 from backend import agent_api, quiz, study_guide, study_notes, knowledge_export
-from backend.llm_provider import provider_for
+from backend.llm_provider import active_provider, provider_for, set_runtime_provider
 from backend.demo_users import database_path, select_demo_user
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,6 +26,20 @@ app.include_router(agent_api.router)
 app.include_router(study_notes.router)
 app.include_router(study_guide.router)
 app.include_router(knowledge_export.router)
+
+
+class ProviderChoice(BaseModel):
+    provider: Literal["deepseek", "tacc"]
+
+
+@app.get("/api/config/provider")
+def current_provider():
+    return {"provider": active_provider()}
+
+
+@app.post("/api/config/provider")
+def switch_provider(body: ProviderChoice):
+    return {"provider": set_runtime_provider(body.provider)}
 
 
 class TutorMessage(BaseModel):

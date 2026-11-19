@@ -57,6 +57,8 @@ STUDYGRAPH_TUTOR_PROVIDER=deepseek
 - `tacc`：使用 `QWEN_BASE_URL`（必须带 `/v1`）、`QWEN_MODEL`（默认 `qwen3.8-27b`）、`QWEN_API_KEY`（本地服务可省略）；AI tutor 还需要持久 SSH 隧道。
 - 概念图、单概念笔记、出题和 AI tutor 共用这套选择；`STUDYGRAPH_GENERATION_PROVIDER` / `STUDYGRAPH_TUTOR_PROVIDER` 可分别覆盖。
 
+聊天头部也提供 **API / TACC** 下拉，用于现场切换。它只改当前后端进程，重启后回到 `.env` 的配置；API key 始终留在后端。
+
 TACC 作业通常只有 1 小时时限，作业结束后隧道会失效，AI tutor 会报连接错误。评审和复现优先用 DeepSeek；需要 TACC 时按 [TACC 连接步骤](docs/tacc/live-qa.md)重新提交并更新 `QWEN_BASE_URL`。
 
 ## 组员从这里开始
