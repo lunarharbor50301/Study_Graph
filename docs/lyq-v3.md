@@ -87,3 +87,20 @@ POST   /api/config/generation-provider
 - TACC 作业通常 1 小时结束，隧道失效后 AI Tutor 会报连接错误，生成仍可用 DeepSeek；
 - 没有浏览器 E2E；会话删除立即执行，无二次确认；
 - 本分支没有修改 `team/yxy-2.0` / `lyq-v2` 分支本身，但共享后端文件按上述内容做了有意修改。
+
+## 7. Windows 一键启动
+
+安装一次：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-studygraph.ps1
+```
+
+新开 PowerShell 后输入：
+
+```powershell
+studygraph
+```
+
+会启动后端（由后端托管 `frontend/dist`），等待 TACC `/v1/models` 就绪，然后打开 `http://127.0.0.1:8000`。TACC 超时仍会打开页面，生成功能可继续用 DeepSeek。
+

@@ -45,6 +45,37 @@ npm run dev --prefix frontend
 
 打开 Vite 打印的地址（默认 `http://127.0.0.1:5173/`）。接口文档在 `http://127.0.0.1:8000/docs`。
 
+### 一键启动（Windows PowerShell）
+
+安装一次启动命令：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-studygraph.ps1
+```
+
+打开一个新的 PowerShell 窗口，输入：
+
+```powershell
+studygraph
+```
+
+它会：
+
+1. 读取 `.env`；
+2. 启动后端到 `http://127.0.0.1:8000`（前端 `dist` 由后端托管）；
+3. 最多等 5 分钟 TACC `/v1/models`，准备好后提示 `TACC model is ready.`；
+4. 打开 `http://127.0.0.1:8000`。
+
+TACC 没准备好时会在超时后提示并仍然打开页面，生成功能仍可用。可选参数：
+
+```powershell
+studygraph -NoTaccWait
+studygraph -TaccTimeoutSeconds 120
+studygraph -NoOpen
+```
+
+后端日志在 `.run/backend.out.log` 和 `.run/backend.err.log`。这个脚本不负责提交 TACC 作业，只等待已有的 TACC 服务/隧道。
+
 ### 模型供应商
 
 AI Tutor 固定使用 TACC Qwen；可切换的是**生成模型**（概念图、study note、练习题）。

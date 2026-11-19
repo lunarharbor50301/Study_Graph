@@ -7,6 +7,9 @@ dist/
 *.pem
 *.key
 
+# Local one-command launcher state
+.run/
+
 # Local course references and TACC run outputs
 /ACS_Lecture_1_2026F.pdf
 /project-release-private-vllm.zip
