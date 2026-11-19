@@ -373,7 +373,7 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
       }}>
       {conversationOptions.map(conversation => <option key={conversation.id} value={conversation.id}>{conversation.title}</option>)}
     </select>
-    {busy ? <button onClick={() => abort.current?.abort()}>Stop</button> : <button onClick={() => {
+    {busy ? <button className="chat-new" onClick={() => abort.current?.abort()}>Stop</button> : <button className="chat-new" title="New conversation" aria-label="New conversation" onClick={() => {
       const next = crypto.randomUUID()
       setStatus('')
       onAgentSession(next)
@@ -382,7 +382,7 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
         { id: next, title: 'New conversation', updated_at: new Date().toISOString(), turn_count: 0 },
         ...current.filter(conversation => conversation.id !== next),
       ])
-    }}>New conversation</button>}
+    }}>＋ New</button>}
     <small role="status">{loadingHistory ? 'Restoring conversation…' : status}</small>
   </div>
     <div className="chat-messages" aria-live="polite">{[welcome, ...setupMessages, ...agentMessages].map(message => <div key={message.id} className={`message message--${message.role}`}>
