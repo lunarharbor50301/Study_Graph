@@ -1,0 +1,467 @@
+{
+  "version": "0.3-en",
+  "status": "human_review_pending",
+  "document_id": "ACS-L1",
+  "questions": [
+    {
+      "id": "L1-ANSWER01",
+      "topic_family": "pipeline-family",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "List the five pipeline stages and explain the main purpose of pipelining.",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "The stages are IF, ID, EX, MEM and WB. Overlapping stages increases throughput.",
+        "rubric": [
+          {
+            "id": "pipeline-P1",
+            "criterion": "The stages are IF, ID, EX, MEM and WB.",
+            "max_score": 2
+          },
+          {
+            "id": "pipeline-P2",
+            "criterion": "Overlapping stages increases throughput.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 16,
+            "quote": "¡ Goal: Overlap time of data load/store\n¡ Fetch (IF)\n¡\nGet instructions from instruction memory/cache\n¡ Decode (ID)\n¡\nResolve opcode and operands\n¡ Execute (EX)\n¡\nALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n¡\nLoad/store data through cache or memory hierarchy\n¡\nWrite Back (WB)\n¡\nUpdate architectural state \nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER02",
+      "topic_family": "pipeline-family",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "How many cycles does an ideal M-stage pipeline need to execute N instructions? State the assumptions.",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "The total is M + N - 1 cycles. There are no bubbles and one instruction completes each cycle after the pipeline fills.",
+        "rubric": [
+          {
+            "id": "ideal-pipeline-P1",
+            "criterion": "The total is M + N - 1 cycles.",
+            "max_score": 2
+          },
+          {
+            "id": "ideal-pipeline-P2",
+            "criterion": "There are no bubbles and one instruction completes each cycle after the pipeline fills.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 17,
+            "quote": "¡ Perfect Pipeline\n¡ One instruction completes per cycle after filling \nthe pipeline.\n¡ No bubbles and maximum throughput.\n¡ For N instructions and M stages:\n¡ Total Cycles = M + N – 1\n¡ Average throughput\n= N / (M + N - 1) instructions per cycle\n¡ Instruction throughput per second                    \nFrequency * N / (M + N - 1)\nCPU: Optimize Latency of a Small Number of Complex Threads\nFive-Stage Instruction Pipeline"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER03",
+      "topic_family": "pipeline-family",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "How do data, control and structural hazards differ?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Data hazards arise from data dependencies. Control hazards arise from branches and other changes in control flow. Structural hazards arise from contention for hardware resources.",
+        "rubric": [
+          {
+            "id": "hazard-P1",
+            "criterion": "Data hazards arise from data dependencies.",
+            "max_score": 2
+          },
+          {
+            "id": "hazard-P2",
+            "criterion": "Control hazards arise from branches and other changes in control flow.",
+            "max_score": 2
+          },
+          {
+            "id": "hazard-P3",
+            "criterion": "Structural hazards arise from contention for hardware resources.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 18,
+            "quote": "¡ Any condition that causes the pipeline to \nstall is called a hazard.\n¡\nResult: Much bubbles and degraded efficiency\n¡ Various types of hazards\n¡\nData Hazard: Stall due to dependencies of some \ndata\n¡\nRead-after-write (RAW)\n¡\nWrite-after-write (WAW)\n¡\nWrite-after-read (WAR)\n¡\nControl Hazard: Stall due to branch and \nsynchronization\n¡\nStructural hazard: Stall due to contention on \nhardware such as memory channel, cache slot, \nqueue, etc.\nCPU: Optimize Latency of a Small Number of Complex Threads\nWhy Pipeline Stalls: Hazards"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER04",
+      "topic_family": "smt",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "Is hyper-threading equivalent to adding a fully independent physical core?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Multiple hardware threads share one physical core. Logical threads have separate architectural state but share resources such as execution units.",
+        "rubric": [
+          {
+            "id": "smt-P1",
+            "criterion": "Multiple hardware threads share one physical core.",
+            "max_score": 2
+          },
+          {
+            "id": "smt-P2",
+            "criterion": "Logical threads have separate architectural state but share resources such as execution units.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 29,
+            "quote": "CPU: Optimize Latency of a Small Number of Complex Threads\nOptimization #6: OoO Superscalar with Hyper-Threading\n¡ Problem: Even OoO superscalar cores have idle slot issues.\n¡ Reasons: \n¡\nCache miss, branch misprediction, dependency chain……\n¡ Hyper-threading introduces simultaneous multithreading (SMT)\n¡\nMultiple hardware threads share one physical core.\n¡\nEach logical thread has its own architectural state.\n¡\nExecution units, caches, queues, and predictors are shared.\n¡ The closest architecture to modern CPUs."
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER05",
+      "topic_family": "parallelism",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "Compare data parallelism and task parallelism.",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Data parallelism operates on different pieces of data. Task parallelism executes different tasks concurrently.",
+        "rubric": [
+          {
+            "id": "parallelism-P1",
+            "criterion": "Data parallelism operates on different pieces of data.",
+            "max_score": 2
+          },
+          {
+            "id": "parallelism-P2",
+            "criterion": "Task parallelism executes different tasks concurrently.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 33,
+            "quote": "From CPU to GPU: Parallelism for Huge Computing Power!\n¡ Parallelism: Do multiple jobs concurrently.\n¡\nJob: instructions, operations, tasks\n¡ Data Parallelism\n¡\nDifferent pieces of data can be operated in parallel\n¡\nVector processing and array processing\n¡ Task Parallelism\n¡\nDifferent tasks can be operated in parallel\n¡\nMultithreading \nMultiprocessors"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER06",
+      "topic_family": "warp",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "Do all GPU streaming multiprocessors support at most 1,536 resident threads? Explain using the lecture.",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "The 1,536-thread limit is a Fermi SM example and cannot be generalized to all GPUs.",
+        "rubric": [
+          {
+            "id": "scope",
+            "criterion": "The 1,536-thread limit is a Fermi SM example and cannot be generalized to all GPUs.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 37,
+            "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A thread block is assigned to one SM\n¡\nUp to 8 blocks to each SM\n¡\nFermi SM can take up to 1536 threads\n¡ Could be 256 * 6 blocks\n¡\nOr 512 * 3 blocks, etc.\n¡\nEach block is divided into 32-thread warps\n¡\nScheduling by the warp scheduler within a SM.\n¡\nSingle Instruction, Multiple Threads (SIMT) \nabstraction\n¡\nThreads in a wrap should execution same \ncodes/instructions.\n¡\nHowever, thread is allowed to execute different \nbranches.\nExample: Executing Thread Blocks"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER07",
+      "topic_family": "divergence",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "What is branch divergence, and why does it reduce utilization?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Threads in the same warp follow different execution paths. Executing with only a subset of active threads reduces SIMD utilization.",
+        "rubric": [
+          {
+            "id": "divergence-P1",
+            "criterion": "Threads in the same warp follow different execution paths.",
+            "max_score": 2
+          },
+          {
+            "id": "divergence-P2",
+            "criterion": "Executing with only a subset of active threads reduces SIMD utilization.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 44,
+            "quote": "GPU: Optimize Throughput of a Large Number of Simple Threads\n¡ A GPU uses a SIMD pipeline to save area on \ncontrol logic\n¡\nGroups scalar threads into warps\n¡ Branch Divergence\n¡\nOccurs when threads inside warps branch to \ndifferent execution path\n¡ Result: Only a subset of threads execute, \nwaste SIMD pipeline utilization\nIssue of SIMD Utilization: Control Divergence"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER08",
+      "topic_family": "block-sync",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "Can __syncthreads() synchronize threads in different blocks?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "It cannot synchronize across blocks and applies only within the same block.",
+        "rubric": [
+          {
+            "id": "scope",
+            "criterion": "It cannot synchronize across blocks and applies only within the same block.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 63,
+            "quote": "GPU Programming: CUDA\n¡ __syncthreads()\n¡ Scope: One CUDA block\n¡ Use: Tile coordination in the shared \nmemory.\n¡ Kernel boundary\n¡ Scope: Whole threads\n¡ Use: Global phase between kernels\n¡ Achieved by launching separate kernels\nCUDA Synchronization \n__shared__ float tile[256];\ntile[threadIdx.x] = A[i];\n__syncthreads();\nuse(tile);\n¡ Load data from global memory to shared memory.\n¡ Wait until all threads in the block complete the \nshared-memory load."
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER09",
+      "topic_family": "amdahl",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "Why does adding arbitrarily many processors fail to deliver unlimited speedup for a fixed-size program?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "For fixed problem size, S(p) = 1 / ((1-f) + f/p). f is the parallelizable fraction. The serial fraction limits maximum speedup.",
+        "rubric": [
+          {
+            "id": "amdahl-P1",
+            "criterion": "For fixed problem size, S(p) = 1 / ((1-f) + f/p).",
+            "max_score": 2
+          },
+          {
+            "id": "amdahl-P2",
+            "criterion": "f is the parallelizable fraction.",
+            "max_score": 2
+          },
+          {
+            "id": "amdahl-P3",
+            "criterion": "The serial fraction limits maximum speedup.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 66,
+            "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER10",
+      "topic_family": "roofline",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "What is arithmetic intensity? How does memory bandwidth limit performance?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Arithmetic intensity is FLOPs divided by bytes moved from memory. For a memory-bound workload, bandwidth times arithmetic intensity bounds performance. Peak performance is not guaranteed in practice.",
+        "rubric": [
+          {
+            "id": "roofline-P1",
+            "criterion": "Arithmetic intensity is FLOPs divided by bytes moved from memory.",
+            "max_score": 2
+          },
+          {
+            "id": "roofline-P2",
+            "criterion": "For a memory-bound workload, bandwidth times arithmetic intensity bounds performance.",
+            "max_score": 2
+          },
+          {
+            "id": "roofline-P3",
+            "criterion": "Peak performance is not guaranteed in practice.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 67,
+            "quote": "Performance Models\n¡\nMemory wall: how much computation it performs for each byte moved.\n¡\nRoofline Model: Compute-Bound or Memory-Bound?\nRoofline Model\nArithmetic Intensity = FLOPs / Bytes moved from memory\nWhy peak is hard\n•\nmemory-bound: limited by bandwidth x \nintensity\n•\ncompute-bound: still needs vectorization, \ntensor cores, occupancy\n•\nreal ceilings fall with poor locality or pipeline \nutilization"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER11",
+      "topic_family": "mutex",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "How does a mutex protect shared state, and what does it cost?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "A mutex serializes access to the critical section protecting shared state. Lock contention incurs overhead.",
+        "rubric": [
+          {
+            "id": "mutex-P1",
+            "criterion": "A mutex serializes access to the critical section protecting shared state.",
+            "max_score": 2
+          },
+          {
+            "id": "mutex-P2",
+            "criterion": "Lock contention incurs overhead.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 58,
+            "quote": "CPU Multicore Programming: pThread\n¡ Mutex pattern:\nMutex: Protect Shared State\npthread_mutex_lock(&lock);\nsum += local_sum;\npthread_mutex_unlock(&lock);\n¡ The Mutex provides:\n¡ Serialized access to critical section \n¡ Race avoidance for protected \nshared state \n¡ Cost: Lock contention\nOnly one thread holds the mutex; others wait and the protected region is serialized"
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER25",
+      "topic_family": "amdahl",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "For a fixed-size program with f = 0.9, what theoretical speedup is possible with ten processors? What is the limit with infinitely many processors?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Substitute into Amdahl's law: 1 / (0.1 + 0.9/10). The finite-processor result is approximately 5.263. The limiting speedup is 10.",
+        "rubric": [
+          {
+            "id": "amdahl-calc-0",
+            "criterion": "Substitute into Amdahl's law: 1 / (0.1 + 0.9/10).",
+            "max_score": 2
+          },
+          {
+            "id": "amdahl-calc-1",
+            "criterion": "The finite-processor result is approximately 5.263.",
+            "max_score": 2
+          },
+          {
+            "id": "amdahl-calc-2",
+            "criterion": "The limiting speedup is 10.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L1",
+            "page": 66,
+            "quote": "Performance Models\n¡ When problem size is fixed, even a small serial fraction caps total speedup\nAmdahl's Law: The Serial Fraction Wins\nS(p) = 1 / ((1 - f) + f / p)\nf: parallelizable fraction\n1 - f: serial fraction\np: number of processors / threads\nNUMERICAL INTUITION\nf = 0.90\nmax speedup -> 10x\nf = 0.99\nmax speedup -> 100x\nFIXED PROBLEM SIZE\nserial\nparallelizable work\nMore processors squeeze the blue part, but \nthe purple serial part remains."
+          }
+        ]
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER27",
+      "topic_family": "unavailable-runtime",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "Using only the currently imported lecture, give the real-time GPU utilization of yuxinye's current TACC job.",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "unsupported",
+        "reference_answer": "The lecture contains no live measurements. The requested value requires monitoring data for the corresponding job or service.",
+        "rubric": [
+          {
+            "id": "abstain",
+            "criterion": "Explain that the lecture provides insufficient evidence and do not invent a value.",
+            "max_score": 2
+          },
+          {
+            "id": "needed-data",
+            "criterion": "Identify the need for actual monitoring or measurement data.",
+            "max_score": 2
+          }
+        ],
+        "evidence": []
+      },
+      "document_id": "ACS-L1"
+    },
+    {
+      "id": "L1-ANSWER28",
+      "topic_family": "unavailable-runtime",
+      "input": {
+        "document_id": "ACS-L1",
+        "question": "Using only the currently imported lecture, give today's actual P95 response time for the local StudyGraph service.",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "unsupported",
+        "reference_answer": "The lecture contains no live measurements. The requested value requires monitoring data for the corresponding job or service.",
+        "rubric": [
+          {
+            "id": "abstain",
+            "criterion": "Explain that the lecture provides insufficient evidence and do not invent a value.",
+            "max_score": 2
+          },
+          {
+            "id": "needed-data",
+            "criterion": "Identify the need for actual monitoring or measurement data.",
+            "max_score": 2
+          }
+        ],
+        "evidence": []
+      },
+      "document_id": "ACS-L1"
+    }
+  ]
+}

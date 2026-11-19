@@ -1,0 +1,1513 @@
+{
+  "before": [
+    {
+      "id": "L1-ANSWER01",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [],
+      "evidence_found": true,
+      "pages": [],
+      "expected_pages": [
+        16
+      ],
+      "old": [],
+      "new": [
+        "S1",
+        "S2"
+      ],
+      "canonical_marker": false
+    },
+    {
+      "id": "L1-ANSWER02",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        17
+      ],
+      "expected_pages": [
+        17
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER03",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [],
+      "evidence_found": true,
+      "pages": [],
+      "expected_pages": [
+        18
+      ],
+      "old": [],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": false
+    },
+    {
+      "id": "L1-ANSWER04",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [],
+      "evidence_found": true,
+      "pages": [],
+      "expected_pages": [
+        29
+      ],
+      "old": [],
+      "new": [
+        "S1",
+        "S2"
+      ],
+      "canonical_marker": false
+    },
+    {
+      "id": "L1-ANSWER05",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [],
+      "evidence_found": true,
+      "pages": [],
+      "expected_pages": [
+        33
+      ],
+      "old": [],
+      "new": [
+        "S1",
+        "S2"
+      ],
+      "canonical_marker": false
+    },
+    {
+      "id": "L1-ANSWER06",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S2",
+        "S3"
+      ],
+      "evidence_found": true,
+      "pages": [
+        35,
+        37
+      ],
+      "expected_pages": [
+        37
+      ],
+      "old": [
+        "S2",
+        "S3"
+      ],
+      "new": [
+        "S2",
+        "S3"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER07",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "evidence_found": true,
+      "pages": [
+        44,
+        45,
+        46
+      ],
+      "expected_pages": [
+        44
+      ],
+      "old": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "new": [
+        "S1",
+        "S3",
+        "S2"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER08",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [],
+      "evidence_found": true,
+      "pages": [],
+      "expected_pages": [
+        63
+      ],
+      "old": [],
+      "new": [
+        "S2"
+      ],
+      "canonical_marker": false
+    },
+    {
+      "id": "L1-ANSWER09",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [],
+      "evidence_found": true,
+      "pages": [],
+      "expected_pages": [
+        66
+      ],
+      "old": [],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": false
+    },
+    {
+      "id": "L1-ANSWER10",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S6"
+      ],
+      "evidence_found": true,
+      "pages": [
+        67
+      ],
+      "expected_pages": [
+        67
+      ],
+      "old": [
+        "S1",
+        "S6"
+      ],
+      "new": [
+        "S1",
+        "S6"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER11",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S4"
+      ],
+      "evidence_found": true,
+      "pages": [
+        58
+      ],
+      "expected_pages": [
+        58
+      ],
+      "old": [
+        "S1",
+        "S4"
+      ],
+      "new": [
+        "S1",
+        "S4"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER25",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [],
+      "evidence_found": true,
+      "pages": [],
+      "expected_pages": [
+        66
+      ],
+      "old": [],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": false
+    },
+    {
+      "id": "L1-ANSWER27",
+      "status": "done",
+      "supported": false,
+      "saved_ids": [
+        "S1",
+        "S3",
+        "S2"
+      ],
+      "evidence_found": true,
+      "pages": [
+        33,
+        46,
+        67
+      ],
+      "expected_pages": [],
+      "old": [
+        "S1",
+        "S3",
+        "S2"
+      ],
+      "new": [
+        "S1",
+        "S3",
+        "S2"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER28",
+      "status": "done",
+      "supported": false,
+      "saved_ids": [
+        "S1",
+        "S3",
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "evidence_found": true,
+      "pages": [
+        2,
+        16,
+        25,
+        56,
+        57,
+        62,
+        64,
+        65
+      ],
+      "expected_pages": [],
+      "old": [
+        "S1",
+        "S3",
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "new": [
+        "S1",
+        "S3",
+        "S2",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER12",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "evidence_found": true,
+      "pages": [
+        22,
+        23,
+        24
+      ],
+      "expected_pages": [
+        22
+      ],
+      "old": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "new": [
+        "S3",
+        "S1",
+        "S2",
+        "S4"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER13",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "evidence_found": true,
+      "pages": [
+        25,
+        26,
+        27,
+        28
+      ],
+      "expected_pages": [
+        26
+      ],
+      "old": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "new": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER14",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S3"
+      ],
+      "evidence_found": true,
+      "pages": [
+        25,
+        30
+      ],
+      "expected_pages": [
+        30
+      ],
+      "old": [
+        "S1",
+        "S3"
+      ],
+      "new": [
+        "S1",
+        "S3"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER15",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "evidence_found": true,
+      "pages": [
+        31,
+        32,
+        34,
+        35
+      ],
+      "expected_pages": [
+        32
+      ],
+      "old": [
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ],
+      "new": [
+        "S3",
+        "S1",
+        "S2",
+        "S4"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER16",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [],
+      "evidence_found": true,
+      "pages": [],
+      "expected_pages": [
+        36
+      ],
+      "old": [],
+      "new": [
+        "S1",
+        "S3"
+      ],
+      "canonical_marker": false
+    },
+    {
+      "id": "L2-ANSWER17",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        40
+      ],
+      "expected_pages": [
+        40
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER18",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S2"
+      ],
+      "evidence_found": true,
+      "pages": [
+        44,
+        46
+      ],
+      "expected_pages": [
+        46
+      ],
+      "old": [
+        "S1",
+        "S2"
+      ],
+      "new": [
+        "S1",
+        "S2"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER19",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S4"
+      ],
+      "evidence_found": true,
+      "pages": [
+        47,
+        48
+      ],
+      "expected_pages": [
+        48
+      ],
+      "old": [
+        "S1",
+        "S4"
+      ],
+      "new": [
+        "S4",
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER20",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        51
+      ],
+      "expected_pages": [
+        51
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER21",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [],
+      "evidence_found": true,
+      "pages": [],
+      "expected_pages": [
+        64
+      ],
+      "old": [],
+      "new": [
+        "S1",
+        "S3"
+      ],
+      "canonical_marker": false
+    },
+    {
+      "id": "L2-ANSWER22",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        59
+      ],
+      "expected_pages": [
+        59
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER23",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S2"
+      ],
+      "evidence_found": true,
+      "pages": [
+        68,
+        69
+      ],
+      "expected_pages": [
+        68
+      ],
+      "old": [
+        "S1",
+        "S2"
+      ],
+      "new": [
+        "S1",
+        "S2"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER24",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        69
+      ],
+      "expected_pages": [
+        69
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER26",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S2",
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        26,
+        27
+      ],
+      "expected_pages": [
+        27
+      ],
+      "old": [
+        "S2",
+        "S1"
+      ],
+      "new": [
+        "S2",
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER27",
+      "status": "done",
+      "supported": false,
+      "saved_ids": [],
+      "evidence_found": true,
+      "pages": [],
+      "expected_pages": [],
+      "old": [],
+      "new": [],
+      "canonical_marker": false
+    },
+    {
+      "id": "L2-ANSWER28",
+      "status": "done",
+      "supported": false,
+      "saved_ids": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "evidence_found": true,
+      "pages": [
+        25,
+        26,
+        51
+      ],
+      "expected_pages": [],
+      "old": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "new": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "canonical_marker": true
+    }
+  ],
+  "after": [
+    {
+      "id": "L1-ANSWER01",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S7"
+      ],
+      "evidence_found": true,
+      "pages": [
+        16
+      ],
+      "expected_pages": [
+        16
+      ],
+      "old": [
+        "S1",
+        "S7"
+      ],
+      "new": [
+        "S1",
+        "S7"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER02",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        17
+      ],
+      "expected_pages": [
+        17
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER03",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S2"
+      ],
+      "evidence_found": true,
+      "pages": [
+        18,
+        20
+      ],
+      "expected_pages": [
+        18
+      ],
+      "old": [
+        "S1",
+        "S2"
+      ],
+      "new": [
+        "S1",
+        "S2"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER04",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        29
+      ],
+      "expected_pages": [
+        29
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER05",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        33
+      ],
+      "expected_pages": [
+        33
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER06",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S2",
+        "S3"
+      ],
+      "evidence_found": true,
+      "pages": [
+        35,
+        37
+      ],
+      "expected_pages": [
+        37
+      ],
+      "old": [
+        "S2",
+        "S3"
+      ],
+      "new": [
+        "S2",
+        "S3"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER07",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S3",
+        "S2"
+      ],
+      "evidence_found": true,
+      "pages": [
+        44,
+        45,
+        46
+      ],
+      "expected_pages": [
+        44
+      ],
+      "old": [
+        "S1",
+        "S3",
+        "S2"
+      ],
+      "new": [
+        "S1",
+        "S3",
+        "S2"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER08",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S2"
+      ],
+      "evidence_found": true,
+      "pages": [
+        63
+      ],
+      "expected_pages": [
+        63
+      ],
+      "old": [
+        "S2"
+      ],
+      "new": [
+        "S2"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER09",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        66
+      ],
+      "expected_pages": [
+        66
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER10",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S6",
+        "S4",
+        "S5"
+      ],
+      "evidence_found": true,
+      "pages": [
+        64,
+        65,
+        67
+      ],
+      "expected_pages": [
+        67
+      ],
+      "old": [
+        "S1",
+        "S6",
+        "S4",
+        "S5"
+      ],
+      "new": [
+        "S1",
+        "S6",
+        "S4",
+        "S5"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER11",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        58
+      ],
+      "expected_pages": [
+        58
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER25",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        66
+      ],
+      "expected_pages": [
+        66
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L1-ANSWER27",
+      "status": "done",
+      "supported": false,
+      "saved_ids": [],
+      "evidence_found": true,
+      "pages": [],
+      "expected_pages": [],
+      "old": [],
+      "new": [],
+      "canonical_marker": false
+    },
+    {
+      "id": "L1-ANSWER28",
+      "status": "done",
+      "supported": false,
+      "saved_ids": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8",
+        "S9"
+      ],
+      "evidence_found": true,
+      "pages": [
+        16,
+        19,
+        20,
+        24,
+        25,
+        56,
+        57,
+        62,
+        65
+      ],
+      "expected_pages": [],
+      "old": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8",
+        "S9"
+      ],
+      "new": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8",
+        "S9"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER12",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S3",
+        "S2"
+      ],
+      "evidence_found": true,
+      "pages": [
+        22,
+        23,
+        24
+      ],
+      "expected_pages": [
+        22
+      ],
+      "old": [
+        "S1",
+        "S3",
+        "S2"
+      ],
+      "new": [
+        "S1",
+        "S3",
+        "S2"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER13",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S2",
+        "S4",
+        "S3"
+      ],
+      "evidence_found": true,
+      "pages": [
+        25,
+        26,
+        27,
+        28
+      ],
+      "expected_pages": [
+        26
+      ],
+      "old": [
+        "S1",
+        "S2",
+        "S4",
+        "S3"
+      ],
+      "new": [
+        "S1",
+        "S2",
+        "S4",
+        "S3"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER14",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S6",
+        "S3"
+      ],
+      "evidence_found": true,
+      "pages": [
+        25,
+        30
+      ],
+      "expected_pages": [
+        30
+      ],
+      "old": [
+        "S1",
+        "S6",
+        "S3"
+      ],
+      "new": [
+        "S1",
+        "S6",
+        "S3"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER15",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S3",
+        "S2"
+      ],
+      "evidence_found": true,
+      "pages": [
+        31,
+        32,
+        35
+      ],
+      "expected_pages": [
+        32
+      ],
+      "old": [
+        "S1",
+        "S3",
+        "S2"
+      ],
+      "new": [
+        "S1",
+        "S3",
+        "S2"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER16",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S3"
+      ],
+      "evidence_found": true,
+      "pages": [
+        36,
+        39
+      ],
+      "expected_pages": [
+        36
+      ],
+      "old": [
+        "S1",
+        "S3"
+      ],
+      "new": [
+        "S1",
+        "S3"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER17",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        40
+      ],
+      "expected_pages": [
+        40
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER18",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S2"
+      ],
+      "evidence_found": true,
+      "pages": [
+        44,
+        46
+      ],
+      "expected_pages": [
+        46
+      ],
+      "old": [
+        "S1",
+        "S2"
+      ],
+      "new": [
+        "S1",
+        "S2"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER19",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S4",
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        47,
+        48
+      ],
+      "expected_pages": [
+        48
+      ],
+      "old": [
+        "S4",
+        "S1"
+      ],
+      "new": [
+        "S4",
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER20",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        51
+      ],
+      "expected_pages": [
+        51
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER21",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S4",
+        "S3"
+      ],
+      "evidence_found": true,
+      "pages": [
+        63,
+        64
+      ],
+      "expected_pages": [
+        64
+      ],
+      "old": [
+        "S1",
+        "S4",
+        "S3"
+      ],
+      "new": [
+        "S1",
+        "S4",
+        "S3"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER22",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S6"
+      ],
+      "evidence_found": true,
+      "pages": [
+        59
+      ],
+      "expected_pages": [
+        59
+      ],
+      "old": [
+        "S1",
+        "S6"
+      ],
+      "new": [
+        "S1",
+        "S6"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER23",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1",
+        "S2"
+      ],
+      "evidence_found": true,
+      "pages": [
+        68,
+        69
+      ],
+      "expected_pages": [
+        68
+      ],
+      "old": [
+        "S1",
+        "S2"
+      ],
+      "new": [
+        "S1",
+        "S2"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER24",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        69
+      ],
+      "expected_pages": [
+        69
+      ],
+      "old": [
+        "S1"
+      ],
+      "new": [
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER26",
+      "status": "done",
+      "supported": true,
+      "saved_ids": [
+        "S2",
+        "S1"
+      ],
+      "evidence_found": true,
+      "pages": [
+        26,
+        27
+      ],
+      "expected_pages": [
+        27
+      ],
+      "old": [
+        "S2",
+        "S1"
+      ],
+      "new": [
+        "S2",
+        "S1"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER27",
+      "status": "done",
+      "supported": false,
+      "saved_ids": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "evidence_found": true,
+      "pages": [
+        40,
+        47,
+        65
+      ],
+      "expected_pages": [],
+      "old": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "new": [
+        "S1",
+        "S2",
+        "S3"
+      ],
+      "canonical_marker": true
+    },
+    {
+      "id": "L2-ANSWER28",
+      "status": "done",
+      "supported": false,
+      "saved_ids": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ],
+      "evidence_found": true,
+      "pages": [
+        10,
+        25,
+        26,
+        27,
+        51
+      ],
+      "expected_pages": [],
+      "old": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ],
+      "new": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S5"
+      ],
+      "canonical_marker": true
+    }
+  ]
+}

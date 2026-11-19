@@ -1,0 +1,2465 @@
+{
+  "id": "L2-ANSWER15",
+  "input": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "session_id": "single-ccf896a2bfef484d8cc9c1867ce817a7",
+    "question": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly.\nCompare how SRAM and DRAM store data and describe their typical uses."
+  },
+  "events": [
+    {
+      "type": "model_start",
+      "call": 1
+    },
+    {
+      "type": "answer_start"
+    },
+    {
+      "type": "model_end",
+      "call": 1,
+      "first_text_ms": null,
+      "duration_ms": 5583,
+      "stop_reason": "toolUse",
+      "output_tokens": 195
+    },
+    {
+      "type": "tool_start",
+      "tool": "search_lecture",
+      "args": {
+        "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+        "query": "SRAM DRAM data storage difference"
+      }
+    },
+    {
+      "type": "tool_result",
+      "tool": "search_lecture",
+      "args": {
+        "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+        "query": "SRAM DRAM data storage difference"
+      },
+      "pages": [
+        31,
+        35,
+        32
+      ],
+      "duration_ms": 1,
+      "model_call": 1
+    },
+    {
+      "type": "tool_start",
+      "tool": "search_lecture",
+      "args": {
+        "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+        "query": "DRAM capacitor refresh SRAM transistor"
+      }
+    },
+    {
+      "type": "tool_result",
+      "tool": "search_lecture",
+      "args": {
+        "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+        "query": "DRAM capacitor refresh SRAM transistor"
+      },
+      "pages": [
+        32,
+        34,
+        31
+      ],
+      "duration_ms": 1,
+      "model_call": 1
+    },
+    {
+      "type": "model_start",
+      "call": 2
+    },
+    {
+      "type": "answer_start"
+    },
+    {
+      "type": "delta",
+      "text": "Based"
+    },
+    {
+      "type": "delta",
+      "text": " on"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " current"
+    },
+    {
+      "type": "delta",
+      "text": " lecture"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " here"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " how"
+    },
+    {
+      "type": "delta",
+      "text": " SR"
+    },
+    {
+      "type": "delta",
+      "text": "AM"
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " DR"
+    },
+    {
+      "type": "delta",
+      "text": "AM"
+    },
+    {
+      "type": "delta",
+      "text": " differ"
+    },
+    {
+      "type": "delta",
+      "text": " in"
+    },
+    {
+      "type": "delta",
+      "text": " data"
+    },
+    {
+      "type": "delta",
+      "text": " storage"
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " their"
+    },
+    {
+      "type": "delta",
+      "text": " typical"
+    },
+    {
+      "type": "delta",
+      "text": " uses"
+    },
+    {
+      "type": "delta",
+      "text": ":"
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "##"
+    },
+    {
+      "type": "delta",
+      "text": " How"
+    },
+    {
+      "type": "delta",
+      "text": " They"
+    },
+    {
+      "type": "delta",
+      "text": " Store"
+    },
+    {
+      "type": "delta",
+      "text": " Data"
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "**"
+    },
+    {
+      "type": "delta",
+      "text": "SR"
+    },
+    {
+      "type": "delta",
+      "text": "AM"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "Static"
+    },
+    {
+      "type": "delta",
+      "text": " RAM"
+    },
+    {
+      "type": "delta",
+      "text": ")**"
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "-"
+    },
+    {
+      "type": "delta",
+      "text": " Stores"
+    },
+    {
+      "type": "delta",
+      "text": " data"
+    },
+    {
+      "type": "delta",
+      "text": " via"
+    },
+    {
+      "type": "delta",
+      "text": " a"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "stable"
+    },
+    {
+      "type": "delta",
+      "text": " transistor"
+    },
+    {
+      "type": "delta",
+      "text": " circuit"
+    },
+    {
+      "type": "delta",
+      "text": "**"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "a"
+    },
+    {
+      "type": "delta",
+      "text": " bist"
+    },
+    {
+      "type": "delta",
+      "text": "able"
+    },
+    {
+      "type": "delta",
+      "text": " latch"
+    },
+    {
+      "type": "delta",
+      "text": ")."
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "-"
+    },
+    {
+      "type": "delta",
+      "text": " Requires"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "6"
+    },
+    {
+      "type": "delta",
+      "text": " trans"
+    },
+    {
+      "type": "delta",
+      "text": "ist"
+    },
+    {
+      "type": "delta",
+      "text": "ors"
+    },
+    {
+      "type": "delta",
+      "text": " per"
+    },
+    {
+      "type": "delta",
+      "text": " bit"
+    },
+    {
+      "type": "delta",
+      "text": "**,"
+    },
+    {
+      "type": "delta",
+      "text": " making"
+    },
+    {
+      "type": "delta",
+      "text": " it"
+    },
+    {
+      "type": "delta",
+      "text": " \""
+    },
+    {
+      "type": "delta",
+      "text": "exp"
+    },
+    {
+      "type": "delta",
+      "text": "ans"
+    },
+    {
+      "type": "delta",
+      "text": "ive"
+    },
+    {
+      "type": "delta",
+      "text": "\""
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "larg"
+    },
+    {
+      "type": "delta",
+      "text": "er"
+    },
+    {
+      "type": "delta",
+      "text": " area"
+    },
+    {
+      "type": "delta",
+      "text": " per"
+    },
+    {
+      "type": "delta",
+      "text": " bit"
+    },
+    {
+      "type": "delta",
+      "text": ")."
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "-"
+    },
+    {
+      "type": "delta",
+      "text": " Needs"
+    },
+    {
+      "type": "delta",
+      "text": " a"
+    },
+    {
+      "type": "delta",
+      "text": " small"
+    },
+    {
+      "type": "delta",
+      "text": " amount"
+    },
+    {
+      "type": "delta",
+      "text": " of"
+    },
+    {
+      "type": "delta",
+      "text": " power"
+    },
+    {
+      "type": "delta",
+      "text": " to"
+    },
+    {
+      "type": "delta",
+      "text": " retain"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " bit"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "e"
+    },
+    {
+      "type": "delta",
+      "text": ".g"
+    },
+    {
+      "type": "delta",
+      "text": ".,"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "4"
+    },
+    {
+      "type": "delta",
+      "text": "2"
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": " m"
+    },
+    {
+      "type": "delta",
+      "text": "V"
+    },
+    {
+      "type": "delta",
+      "text": " for"
+    },
+    {
+      "type": "delta",
+      "text": " a"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "4"
+    },
+    {
+      "type": "delta",
+      "text": "5"
+    },
+    {
+      "type": "delta",
+      "text": " nm"
+    },
+    {
+      "type": "delta",
+      "text": " process"
+    },
+    {
+      "type": "delta",
+      "text": ")."
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "-"
+    },
+    {
+      "type": "delta",
+      "text": " Reading"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "non"
+    },
+    {
+      "type": "delta",
+      "text": "-destruct"
+    },
+    {
+      "type": "delta",
+      "text": "ive"
+    },
+    {
+      "type": "delta",
+      "text": "**:"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " cell"
+    },
+    {
+      "type": "delta",
+      "text": " pulls"
+    },
+    {
+      "type": "delta",
+      "text": " one"
+    },
+    {
+      "type": "delta",
+      "text": " of"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " bit"
+    },
+    {
+      "type": "delta",
+      "text": " lines"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " a"
+    },
+    {
+      "type": "delta",
+      "text": " sense"
+    },
+    {
+      "type": "delta",
+      "text": " amplifier"
+    },
+    {
+      "type": "delta",
+      "text": " on"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " column"
+    },
+    {
+      "type": "delta",
+      "text": " detects"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " difference"
+    },
+    {
+      "type": "delta",
+      "text": " between"
+    },
+    {
+      "type": "delta",
+      "text": " `"
+    },
+    {
+      "type": "delta",
+      "text": "bit"
+    },
+    {
+      "type": "delta",
+      "text": "`"
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " `"
+    },
+    {
+      "type": "delta",
+      "text": "bit"
+    },
+    {
+      "type": "delta",
+      "text": "bar"
+    },
+    {
+      "type": "delta",
+      "text": "`"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "pre"
+    },
+    {
+      "type": "delta",
+      "text": "charged"
+    },
+    {
+      "type": "delta",
+      "text": " to"
+    },
+    {
+      "type": "delta",
+      "text": " V"
+    },
+    {
+      "type": "delta",
+      "text": "dd"
+    },
+    {
+      "type": "delta",
+      "text": ")."
+    },
+    {
+      "type": "delta",
+      "text": " No"
+    },
+    {
+      "type": "delta",
+      "text": " rewrite"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " needed"
+    },
+    {
+      "type": "delta",
+      "text": " after"
+    },
+    {
+      "type": "delta",
+      "text": " a"
+    },
+    {
+      "type": "delta",
+      "text": " read"
+    },
+    {
+      "type": "delta",
+      "text": "."
+    },
+    {
+      "type": "delta",
+      "text": " See"
+    },
+    {
+      "type": "delta",
+      "text": " page"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": "]"
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " page"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "2"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "**"
+    },
+    {
+      "type": "delta",
+      "text": "DRAM"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "Dynamic"
+    },
+    {
+      "type": "delta",
+      "text": " RAM"
+    },
+    {
+      "type": "delta",
+      "text": ")**"
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "-"
+    },
+    {
+      "type": "delta",
+      "text": " Stores"
+    },
+    {
+      "type": "delta",
+      "text": " data"
+    },
+    {
+      "type": "delta",
+      "text": " as"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "tiny"
+    },
+    {
+      "type": "delta",
+      "text": " capacitor"
+    },
+    {
+      "type": "delta",
+      "text": " charges"
+    },
+    {
+      "type": "delta",
+      "text": "**"
+    },
+    {
+      "type": "delta",
+      "text": " —"
+    },
+    {
+      "type": "delta",
+      "text": " a"
+    },
+    {
+      "type": "delta",
+      "text": " bit"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " represented"
+    },
+    {
+      "type": "delta",
+      "text": " as"
+    },
+    {
+      "type": "delta",
+      "text": " charged"
+    },
+    {
+      "type": "delta",
+      "text": " vs"
+    },
+    {
+      "type": "delta",
+      "text": "."
+    },
+    {
+      "type": "delta",
+      "text": " discharged"
+    },
+    {
+      "type": "delta",
+      "text": "."
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "-"
+    },
+    {
+      "type": "delta",
+      "text": " Uses"
+    },
+    {
+      "type": "delta",
+      "text": " only"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "one"
+    },
+    {
+      "type": "delta",
+      "text": " transistor"
+    },
+    {
+      "type": "delta",
+      "text": " per"
+    },
+    {
+      "type": "delta",
+      "text": " bit"
+    },
+    {
+      "type": "delta",
+      "text": "**,"
+    },
+    {
+      "type": "delta",
+      "text": " making"
+    },
+    {
+      "type": "delta",
+      "text": " it"
+    },
+    {
+      "type": "delta",
+      "text": " cheap"
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " dense"
+    },
+    {
+      "type": "delta",
+      "text": "."
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "-"
+    },
+    {
+      "type": "delta",
+      "text": " The"
+    },
+    {
+      "type": "delta",
+      "text": " stored"
+    },
+    {
+      "type": "delta",
+      "text": " charge"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " weak"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " so"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " sense"
+    },
+    {
+      "type": "delta",
+      "text": " amplifier"
+    },
+    {
+      "type": "delta",
+      "text": " must"
+    },
+    {
+      "type": "delta",
+      "text": " detect"
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " amplify"
+    },
+    {
+      "type": "delta",
+      "text": " a"
+    },
+    {
+      "type": "delta",
+      "text": " very"
+    },
+    {
+      "type": "delta",
+      "text": " small"
+    },
+    {
+      "type": "delta",
+      "text": " voltage"
+    },
+    {
+      "type": "delta",
+      "text": " change"
+    },
+    {
+      "type": "delta",
+      "text": " into"
+    },
+    {
+      "type": "delta",
+      "text": " a"
+    },
+    {
+      "type": "delta",
+      "text": " full"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "0"
+    },
+    {
+      "type": "delta",
+      "text": "/"
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": " value"
+    },
+    {
+      "type": "delta",
+      "text": "."
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "-"
+    },
+    {
+      "type": "delta",
+      "text": " Reading"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "destruct"
+    },
+    {
+      "type": "delta",
+      "text": "ive"
+    },
+    {
+      "type": "delta",
+      "text": "**:"
+    },
+    {
+      "type": "delta",
+      "text": " reading"
+    },
+    {
+      "type": "delta",
+      "text": " distur"
+    },
+    {
+      "type": "delta",
+      "text": "bs"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " stored"
+    },
+    {
+      "type": "delta",
+      "text": " charge"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " so"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " data"
+    },
+    {
+      "type": "delta",
+      "text": " must"
+    },
+    {
+      "type": "delta",
+      "text": " be"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "re"
+    },
+    {
+      "type": "delta",
+      "text": "-written"
+    },
+    {
+      "type": "delta",
+      "text": " after"
+    },
+    {
+      "type": "delta",
+      "text": " every"
+    },
+    {
+      "type": "delta",
+      "text": " row"
+    },
+    {
+      "type": "delta",
+      "text": " activation"
+    },
+    {
+      "type": "delta",
+      "text": "**."
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "-"
+    },
+    {
+      "type": "delta",
+      "text": " Because"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " capacitor"
+    },
+    {
+      "type": "delta",
+      "text": " leaks"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " DR"
+    },
+    {
+      "type": "delta",
+      "text": "AM"
+    },
+    {
+      "type": "delta",
+      "text": " must"
+    },
+    {
+      "type": "delta",
+      "text": " also"
+    },
+    {
+      "type": "delta",
+      "text": " be"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "period"
+    },
+    {
+      "type": "delta",
+      "text": "ically"
+    },
+    {
+      "type": "delta",
+      "text": " refreshed"
+    },
+    {
+      "type": "delta",
+      "text": "**"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "each"
+    },
+    {
+      "type": "delta",
+      "text": " row"
+    },
+    {
+      "type": "delta",
+      "text": " can"
+    },
+    {
+      "type": "delta",
+      "text": " be"
+    },
+    {
+      "type": "delta",
+      "text": " refreshed"
+    },
+    {
+      "type": "delta",
+      "text": " simultaneously"
+    },
+    {
+      "type": "delta",
+      "text": ")."
+    },
+    {
+      "type": "delta",
+      "text": " See"
+    },
+    {
+      "type": "delta",
+      "text": " page"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "2"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "]"
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " page"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "5"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "2"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "-"
+    },
+    {
+      "type": "delta",
+      "text": " Address"
+    },
+    {
+      "type": "delta",
+      "text": " lines"
+    },
+    {
+      "type": "delta",
+      "text": " are"
+    },
+    {
+      "type": "delta",
+      "text": " multip"
+    },
+    {
+      "type": "delta",
+      "text": "lex"
+    },
+    {
+      "type": "delta",
+      "text": "ed"
+    },
+    {
+      "type": "delta",
+      "text": ":"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " upper"
+    },
+    {
+      "type": "delta",
+      "text": " half"
+    },
+    {
+      "type": "delta",
+      "text": " of"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " address"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "row"
+    },
+    {
+      "type": "delta",
+      "text": " access"
+    },
+    {
+      "type": "delta",
+      "text": " stro"
+    },
+    {
+      "type": "delta",
+      "text": "be"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "RAS"
+    },
+    {
+      "type": "delta",
+      "text": ")**"
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " lower"
+    },
+    {
+      "type": "delta",
+      "text": " half"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "column"
+    },
+    {
+      "type": "delta",
+      "text": " access"
+    },
+    {
+      "type": "delta",
+      "text": " stro"
+    },
+    {
+      "type": "delta",
+      "text": "be"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "CAS"
+    },
+    {
+      "type": "delta",
+      "text": ")**."
+    },
+    {
+      "type": "delta",
+      "text": " See"
+    },
+    {
+      "type": "delta",
+      "text": " page"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "2"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "##"
+    },
+    {
+      "type": "delta",
+      "text": " Typical"
+    },
+    {
+      "type": "delta",
+      "text": " Uses"
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "-"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "SR"
+    },
+    {
+      "type": "delta",
+      "text": "AM"
+    },
+    {
+      "type": "delta",
+      "text": ":**"
+    },
+    {
+      "type": "delta",
+      "text": " used"
+    },
+    {
+      "type": "delta",
+      "text": " for"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "c"
+    },
+    {
+      "type": "delta",
+      "text": "aches"
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " register"
+    },
+    {
+      "type": "delta",
+      "text": " files"
+    },
+    {
+      "type": "delta",
+      "text": "**"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "fast"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " on"
+    },
+    {
+      "type": "delta",
+      "text": "-ch"
+    },
+    {
+      "type": "delta",
+      "text": "ip"
+    },
+    {
+      "type": "delta",
+      "text": " memory"
+    },
+    {
+      "type": "delta",
+      "text": ")."
+    },
+    {
+      "type": "delta",
+      "text": " See"
+    },
+    {
+      "type": "delta",
+      "text": " page"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "2"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "-"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "DRAM"
+    },
+    {
+      "type": "delta",
+      "text": ":**"
+    },
+    {
+      "type": "delta",
+      "text": " used"
+    },
+    {
+      "type": "delta",
+      "text": " for"
+    },
+    {
+      "type": "delta",
+      "text": " main"
+    },
+    {
+      "type": "delta",
+      "text": " memory"
+    },
+    {
+      "type": "delta",
+      "text": " technologies"
+    },
+    {
+      "type": "delta",
+      "text": " such"
+    },
+    {
+      "type": "delta",
+      "text": " as"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "DDR"
+    },
+    {
+      "type": "delta",
+      "text": " /"
+    },
+    {
+      "type": "delta",
+      "text": " G"
+    },
+    {
+      "type": "delta",
+      "text": "DDR"
+    },
+    {
+      "type": "delta",
+      "text": " /"
+    },
+    {
+      "type": "delta",
+      "text": " H"
+    },
+    {
+      "type": "delta",
+      "text": "BM"
+    },
+    {
+      "type": "delta",
+      "text": "**."
+    },
+    {
+      "type": "delta",
+      "text": " See"
+    },
+    {
+      "type": "delta",
+      "text": " page"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "2"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "##"
+    },
+    {
+      "type": "delta",
+      "text": " Why"
+    },
+    {
+      "type": "delta",
+      "text": " DR"
+    },
+    {
+      "type": "delta",
+      "text": "AM"
+    },
+    {
+      "type": "delta",
+      "text": " Is"
+    },
+    {
+      "type": "delta",
+      "text": " Sl"
+    },
+    {
+      "type": "delta",
+      "text": "ower"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "context"
+    },
+    {
+      "type": "delta",
+      "text": ")"
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "The"
+    },
+    {
+      "type": "delta",
+      "text": " lecture"
+    },
+    {
+      "type": "delta",
+      "text": " notes"
+    },
+    {
+      "type": "delta",
+      "text": " that"
+    },
+    {
+      "type": "delta",
+      "text": " DR"
+    },
+    {
+      "type": "delta",
+      "text": "AM"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " slow"
+    },
+    {
+      "type": "delta",
+      "text": " because"
+    },
+    {
+      "type": "delta",
+      "text": " of"
+    },
+    {
+      "type": "delta",
+      "text": " its"
+    },
+    {
+      "type": "delta",
+      "text": " weak"
+    },
+    {
+      "type": "delta",
+      "text": " storage"
+    },
+    {
+      "type": "delta",
+      "text": " signal"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " time"
+    },
+    {
+      "type": "delta",
+      "text": " needed"
+    },
+    {
+      "type": "delta",
+      "text": " to"
+    },
+    {
+      "type": "delta",
+      "text": " sense"
+    },
+    {
+      "type": "delta",
+      "text": "/am"
+    },
+    {
+      "type": "delta",
+      "text": "pl"
+    },
+    {
+      "type": "delta",
+      "text": "ify"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " small"
+    },
+    {
+      "type": "delta",
+      "text": " voltage"
+    },
+    {
+      "type": "delta",
+      "text": " change"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " destructive"
+    },
+    {
+      "type": "delta",
+      "text": " read"
+    },
+    {
+      "type": "delta",
+      "text": " requiring"
+    },
+    {
+      "type": "delta",
+      "text": " restore"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " large"
+    },
+    {
+      "type": "delta",
+      "text": " dense"
+    },
+    {
+      "type": "delta",
+      "text": " arrays"
+    },
+    {
+      "type": "delta",
+      "text": " with"
+    },
+    {
+      "type": "delta",
+      "text": " long"
+    },
+    {
+      "type": "delta",
+      "text": " bit"
+    },
+    {
+      "type": "delta",
+      "text": "lines"
+    },
+    {
+      "type": "delta",
+      "text": " that"
+    },
+    {
+      "type": "delta",
+      "text": " have"
+    },
+    {
+      "type": "delta",
+      "text": " higher"
+    },
+    {
+      "type": "delta",
+      "text": " RC"
+    },
+    {
+      "type": "delta",
+      "text": " delay"
+    },
+    {
+      "type": "delta",
+      "text": "."
+    },
+    {
+      "type": "delta",
+      "text": " See"
+    },
+    {
+      "type": "delta",
+      "text": " page"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "5"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "2"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "**"
+    },
+    {
+      "type": "delta",
+      "text": "Summary"
+    },
+    {
+      "type": "delta",
+      "text": " of"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " key"
+    },
+    {
+      "type": "delta",
+      "text": " contrast"
+    },
+    {
+      "type": "delta",
+      "text": ":**"
+    },
+    {
+      "type": "delta",
+      "text": " SR"
+    },
+    {
+      "type": "delta",
+      "text": "AM"
+    },
+    {
+      "type": "delta",
+      "text": " uses"
+    },
+    {
+      "type": "delta",
+      "text": " a"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "6"
+    },
+    {
+      "type": "delta",
+      "text": "-trans"
+    },
+    {
+      "type": "delta",
+      "text": "istor"
+    },
+    {
+      "type": "delta",
+      "text": " stable"
+    },
+    {
+      "type": "delta",
+      "text": " circuit"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "non"
+    },
+    {
+      "type": "delta",
+      "text": "-destruct"
+    },
+    {
+      "type": "delta",
+      "text": "ive"
+    },
+    {
+      "type": "delta",
+      "text": " read"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " no"
+    },
+    {
+      "type": "delta",
+      "text": " refresh"
+    },
+    {
+      "type": "delta",
+      "text": ")"
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " used"
+    },
+    {
+      "type": "delta",
+      "text": " for"
+    },
+    {
+      "type": "delta",
+      "text": " caches"
+    },
+    {
+      "type": "delta",
+      "text": "/register"
+    },
+    {
+      "type": "delta",
+      "text": " files"
+    },
+    {
+      "type": "delta",
+      "text": ";"
+    },
+    {
+      "type": "delta",
+      "text": " DR"
+    },
+    {
+      "type": "delta",
+      "text": "AM"
+    },
+    {
+      "type": "delta",
+      "text": " uses"
+    },
+    {
+      "type": "delta",
+      "text": " a"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": "-trans"
+    },
+    {
+      "type": "delta",
+      "text": "istor"
+    },
+    {
+      "type": "delta",
+      "text": " +"
+    },
+    {
+      "type": "delta",
+      "text": " capacitor"
+    },
+    {
+      "type": "delta",
+      "text": " cell"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "destruct"
+    },
+    {
+      "type": "delta",
+      "text": "ive"
+    },
+    {
+      "type": "delta",
+      "text": " read"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " periodic"
+    },
+    {
+      "type": "delta",
+      "text": " refresh"
+    },
+    {
+      "type": "delta",
+      "text": ")"
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " used"
+    },
+    {
+      "type": "delta",
+      "text": " for"
+    },
+    {
+      "type": "delta",
+      "text": " main"
+    },
+    {
+      "type": "delta",
+      "text": " memory"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "DDR"
+    },
+    {
+      "type": "delta",
+      "text": "/G"
+    },
+    {
+      "type": "delta",
+      "text": "DDR"
+    },
+    {
+      "type": "delta",
+      "text": "/H"
+    },
+    {
+      "type": "delta",
+      "text": "BM"
+    },
+    {
+      "type": "delta",
+      "text": ")."
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "]"
+    },
+    {
+      "type": "model_end",
+      "call": 2,
+      "first_text_ms": 2038,
+      "duration_ms": 16619,
+      "stop_reason": "stop",
+      "output_tokens": 579
+    },
+    {
+      "type": "done",
+      "answer": "Based on the current lecture, here is how SRAM and DRAM differ in data storage and their typical uses:\n\n## How They Store Data\n\n**SRAM (Static RAM)**\n- Stores data via a **stable transistor circuit** (a bistable latch).\n- Requires **6 transistors per bit**, making it \"expansive\" (larger area per bit).\n- Needs a small amount of power to retain the bit (e.g., 423 mV for a 45 nm process).\n- Reading is **non-destructive**: the cell pulls one of the bit lines, and a sense amplifier on the column detects the difference between `bit` and `bitbar` (precharged to Vdd). No rewrite is needed after a read. See page 31 [S1] and page 32 [S3].\n\n**DRAM (Dynamic RAM)**\n- Stores data as **tiny capacitor charges** — a bit is represented as charged vs. discharged.\n- Uses only **one transistor per bit**, making it cheap and dense.\n- The stored charge is weak, so the sense amplifier must detect and amplify a very small voltage change into a full 0/1 value.\n- Reading is **destructive**: reading disturbs the stored charge, so the data must be **re-written after every row activation**.\n- Because the capacitor leaks, DRAM must also be **periodically refreshed** (each row can be refreshed simultaneously). See page 32 [S3] and page 35 [S2].\n- Address lines are multiplexed: the upper half of the address is the **row access strobe (RAS)** and the lower half is the **column access strobe (CAS)**. See page 32 [S3].\n\n## Typical Uses\n\n- **SRAM:** used for **caches and register files** (fast, on-chip memory). See page 32 [S3].\n- **DRAM:** used for main memory technologies such as **DDR / GDDR / HBM**. See page 32 [S3].\n\n## Why DRAM Is Slower (context)\nThe lecture notes that DRAM is slow because of its weak storage signal, the time needed to sense/amplify the small voltage change, the destructive read requiring restore, and large dense arrays with long bitlines that have higher RC delay. See page 35 [S2].\n\n**Summary of the key contrast:** SRAM uses a 6-transistor stable circuit (non-destructive read, no refresh) and is used for caches/register files; DRAM uses a 1-transistor + capacitor cell (destructive read, periodic refresh) and is used for main memory (DDR/GDDR/HBM). [S3]",
+      "citations": [
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p31-1",
+          "page": 31,
+          "text": "CPU Memory Hierarchy\n\nDRAM Behind Cache: SRAM vs. DRAM\n\n  Static Random-Access\n Memory (SRAM)\n    Write\n     Drive bit lines (bit=1,\n     bitbar=0)\n     Select row\n   Read\n     Precharge bit and bitbar to\n    Vdd\n     Select row\n      Cell pulls one line row\n    Sense amp on column                              Adapted from: Princeton COS375, “Memory,”\n     detects difference between                                                  2015.\n       bit and bitbar\n\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        31",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/31/preview",
+          "source": "S1"
+        },
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p32-1",
+          "page": 32,
+          "text": "CPU Memory Hierarchy\n\nDRAM Behind Cache: SRAM vs. DRAM\n SRAM --- Store data via stable transistor circuit\n    Requires low power to retain bit (423mV for 45nm)\n    Requires 6 transistors/bit --- expansive\n    Usage: Caches, register files\n DRAM --- Store date via tiny capacitors (bit is represented as\n  charged and discharged)\n   One transistor/bit --- cheap\n    Must be re-written after being read\n    Must also be periodically refreshed\n     Each row can be refreshed simultaneously\n    Address lines are multiplexed:\n     Upper half of address: row access strobe (RAS)\n     Lower half of address: column access strobe (CAS)\n    Usage: DDR / GDDR / HBM\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        32",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/32/preview",
+          "source": "S3"
+        },
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p35-1",
+          "page": 35,
+          "text": "CPU Memory Hierarchy\n\nDRAM Behind Cache: Why DRAM is Slow?\n  Weak storage signal\n DRAM stores bits as tiny capacitor charges, producing only a small voltage\n  difference on long bitlines.\n  Sensing takes time\n  The sense amplifier must detect and amplify a very small voltage change\n   into a full 0/1 value.\n  Destructive read\n  Reading a DRAM cell disturbs its stored charge, so the data must be\n  restored after every row activation.\n  Large dense arrays\n DRAM prioritizes capacity and cost per bit, so rows/bitlines are long and\n  have higher RC delay.\n  Solution: Multi-Bank, Multi-Rank DRAM\n\n\n\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        35",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/35/preview",
+          "source": "S2"
+        }
+      ],
+      "trace": [
+        {
+          "tool": "search_lecture",
+          "args": {
+            "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+            "query": "SRAM DRAM data storage difference"
+          },
+          "pages": [
+            31,
+            35,
+            32
+          ],
+          "duration_ms": 1,
+          "model_call": 1
+        },
+        {
+          "tool": "search_lecture",
+          "args": {
+            "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+            "query": "DRAM capacitor refresh SRAM transistor"
+          },
+          "pages": [
+            32,
+            34,
+            31
+          ],
+          "duration_ms": 1,
+          "model_call": 1
+        }
+      ],
+      "model_calls": 2,
+      "timing_ms": {
+        "generation": 22202,
+        "total": 22210
+      }
+    }
+  ],
+  "status": "done",
+  "elapsed_s": 22.36
+}

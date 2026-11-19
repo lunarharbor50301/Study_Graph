@@ -44,7 +44,8 @@ class PiFlow(unittest.TestCase):
                     delta = {"role": "assistant", "tool_calls": [{"index": 0, "id": f"call{index}", "type": "function", "function": function}]}
                     stop = "tool_calls"
                 else:
-                    answer = "Amdahl's law limits speedup (S3, p. 2). (S1, p. 9)" if index == 6 else "Bandwidth limits performance [S1, S2]."
+                    answer = "Amdahl's law limits speedup (S3, p. 2). (S1, p. 9)" if index == 6 else (
+                        "Bandwidth limits performance [S1, p. 1][S2, p. 1]." if index == 4 else "Bandwidth limits performance [S1, S2].")
                     delta = {"role": "assistant", "content": answer}
                     stop = "stop"
                 self.send_response(200)

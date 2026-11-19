@@ -1,0 +1,1920 @@
+{
+ "id": "L2-ANSWER21",
+ "input": {
+  "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+  "session_id": "single-fee01e898fb84f39a62b6fa36ce83ad8",
+  "question": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly.\nCompare the roles of snooping, directories and MESI."
+ },
+ "events": [
+  {
+   "type": "model_start",
+   "call": 1
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "model_end",
+   "call": 1,
+   "first_text_ms": null,
+   "duration_ms": 4473,
+   "stop_reason": "toolUse",
+   "output_tokens": 100
+  },
+  {
+   "type": "tool_start",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "query": "snooping directories MESI cache coherence protocol"
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "query": "snooping directories MESI cache coherence protocol"
+   },
+   "pages": [
+    64,
+    60,
+    63
+   ],
+   "duration_ms": 2,
+   "model_call": 1
+  },
+  {
+   "type": "model_start",
+   "call": 2
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "model_end",
+   "call": 2,
+   "first_text_ms": null,
+   "duration_ms": 7040,
+   "stop_reason": "toolUse",
+   "output_tokens": 192
+  },
+  {
+   "type": "tool_start",
+   "tool": "read_page",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "page": 64
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "read_page",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "page": 64
+   },
+   "pages": [
+    64
+   ],
+   "duration_ms": 3,
+   "model_call": 2
+  },
+  {
+   "type": "tool_start",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "query": "MESI Modified Exclusive Shared Invalid states permissions"
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "query": "MESI Modified Exclusive Shared Invalid states permissions"
+   },
+   "pages": [
+    64,
+    61,
+    43
+   ],
+   "duration_ms": 2,
+   "model_call": 2
+  },
+  {
+   "type": "model_start",
+   "call": 3
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "delta",
+   "text": "Based"
+  },
+  {
+   "type": "delta",
+   "text": " on"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " provided"
+  },
+  {
+   "type": "delta",
+   "text": " lecture"
+  },
+  {
+   "type": "delta",
+   "text": " evidence"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " here"
+  },
+  {
+   "type": "delta",
+   "text": " is"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " comparison"
+  },
+  {
+   "type": "delta",
+   "text": " of"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " roles"
+  },
+  {
+   "type": "delta",
+   "text": " of"
+  },
+  {
+   "type": "delta",
+   "text": " sno"
+  },
+  {
+   "type": "delta",
+   "text": "oping"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " directories"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " and"
+  },
+  {
+   "type": "delta",
+   "text": " MES"
+  },
+  {
+   "type": "delta",
+   "text": "I"
+  },
+  {
+   "type": "delta",
+   "text": " in"
+  },
+  {
+   "type": "delta",
+   "text": " multic"
+  },
+  {
+   "type": "delta",
+   "text": "ore"
+  },
+  {
+   "type": "delta",
+   "text": " coherence"
+  },
+  {
+   "type": "delta",
+   "text": ":"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " MES"
+  },
+  {
+   "type": "delta",
+   "text": "I"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "Permissions"
+  },
+  {
+   "type": "delta",
+   "text": "/"
+  },
+  {
+   "type": "delta",
+   "text": "State"
+  },
+  {
+   "type": "delta",
+   "text": ")**"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "Role"
+  },
+  {
+   "type": "delta",
+   "text": ":**"
+  },
+  {
+   "type": "delta",
+   "text": " MES"
+  },
+  {
+   "type": "delta",
+   "text": "I"
+  },
+  {
+   "type": "delta",
+   "text": " describes"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "permissions"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " or"
+  },
+  {
+   "type": "delta",
+   "text": " states"
+  },
+  {
+   "type": "delta",
+   "text": " of"
+  },
+  {
+   "type": "delta",
+   "text": " cache"
+  },
+  {
+   "type": "delta",
+   "text": " lines"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " It"
+  },
+  {
+   "type": "delta",
+   "text": " defines"
+  },
+  {
+   "type": "delta",
+   "text": " what"
+  },
+  {
+   "type": "delta",
+   "text": " a"
+  },
+  {
+   "type": "delta",
+   "text": " cache"
+  },
+  {
+   "type": "delta",
+   "text": " is"
+  },
+  {
+   "type": "delta",
+   "text": " allowed"
+  },
+  {
+   "type": "delta",
+   "text": " to"
+  },
+  {
+   "type": "delta",
+   "text": " do"
+  },
+  {
+   "type": "delta",
+   "text": " with"
+  },
+  {
+   "type": "delta",
+   "text": " a"
+  },
+  {
+   "type": "delta",
+   "text": " data"
+  },
+  {
+   "type": "delta",
+   "text": " block"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "e"
+  },
+  {
+   "type": "delta",
+   "text": ".g"
+  },
+  {
+   "type": "delta",
+   "text": ".,"
+  },
+  {
+   "type": "delta",
+   "text": " whether"
+  },
+  {
+   "type": "delta",
+   "text": " it"
+  },
+  {
+   "type": "delta",
+   "text": " is"
+  },
+  {
+   "type": "delta",
+   "text": " Modified"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " Exclusive"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " Shared"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " or"
+  },
+  {
+   "type": "delta",
+   "text": " Invalid"
+  },
+  {
+   "type": "delta",
+   "text": ")."
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "Evidence"
+  },
+  {
+   "type": "delta",
+   "text": ":**"
+  },
+  {
+   "type": "delta",
+   "text": " The"
+  },
+  {
+   "type": "delta",
+   "text": " lecture"
+  },
+  {
+   "type": "delta",
+   "text": " states"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " \""
+  },
+  {
+   "type": "delta",
+   "text": "MES"
+  },
+  {
+   "type": "delta",
+   "text": "I"
+  },
+  {
+   "type": "delta",
+   "text": " describes"
+  },
+  {
+   "type": "delta",
+   "text": " permissions"
+  },
+  {
+   "type": "delta",
+   "text": ".\""
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " p"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "6"
+  },
+  {
+   "type": "delta",
+   "text": "4"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " Sno"
+  },
+  {
+   "type": "delta",
+   "text": "oping"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "Broadcast"
+  },
+  {
+   "type": "delta",
+   "text": " Mechan"
+  },
+  {
+   "type": "delta",
+   "text": "ism"
+  },
+  {
+   "type": "delta",
+   "text": ")**"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "Role"
+  },
+  {
+   "type": "delta",
+   "text": ":**"
+  },
+  {
+   "type": "delta",
+   "text": " Sno"
+  },
+  {
+   "type": "delta",
+   "text": "oping"
+  },
+  {
+   "type": "delta",
+   "text": " is"
+  },
+  {
+   "type": "delta",
+   "text": " a"
+  },
+  {
+   "type": "delta",
+   "text": " design"
+  },
+  {
+   "type": "delta",
+   "text": " approach"
+  },
+  {
+   "type": "delta",
+   "text": " that"
+  },
+  {
+   "type": "delta",
+   "text": " determines"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "how"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " coherence"
+  },
+  {
+   "type": "delta",
+   "text": " messages"
+  },
+  {
+   "type": "delta",
+   "text": " reach"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " caches"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " Specifically"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " it"
+  },
+  {
+   "type": "delta",
+   "text": " works"
+  },
+  {
+   "type": "delta",
+   "text": " by"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "broadcast"
+  },
+  {
+   "type": "delta",
+   "text": "ing"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " coherence"
+  },
+  {
+   "type": "delta",
+   "text": " requests"
+  },
+  {
+   "type": "delta",
+   "text": " to"
+  },
+  {
+   "type": "delta",
+   "text": " all"
+  },
+  {
+   "type": "delta",
+   "text": " caches"
+  },
+  {
+   "type": "delta",
+   "text": " in"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " system"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "Evidence"
+  },
+  {
+   "type": "delta",
+   "text": ":**"
+  },
+  {
+   "type": "delta",
+   "text": " The"
+  },
+  {
+   "type": "delta",
+   "text": " lecture"
+  },
+  {
+   "type": "delta",
+   "text": " states"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " \""
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "no"
+  },
+  {
+   "type": "delta",
+   "text": "oping"
+  },
+  {
+   "type": "delta",
+   "text": " broadcasts"
+  },
+  {
+   "type": "delta",
+   "text": " coherence"
+  },
+  {
+   "type": "delta",
+   "text": " requests"
+  },
+  {
+   "type": "delta",
+   "text": ".\""
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " p"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "6"
+  },
+  {
+   "type": "delta",
+   "text": "4"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " Direct"
+  },
+  {
+   "type": "delta",
+   "text": "ories"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "Target"
+  },
+  {
+   "type": "delta",
+   "text": "ed"
+  },
+  {
+   "type": "delta",
+   "text": " Mechan"
+  },
+  {
+   "type": "delta",
+   "text": "ism"
+  },
+  {
+   "type": "delta",
+   "text": ")**"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "Role"
+  },
+  {
+   "type": "delta",
+   "text": ":**"
+  },
+  {
+   "type": "delta",
+   "text": " A"
+  },
+  {
+   "type": "delta",
+   "text": " directory"
+  },
+  {
+   "type": "delta",
+   "text": " is"
+  },
+  {
+   "type": "delta",
+   "text": " an"
+  },
+  {
+   "type": "delta",
+   "text": " alternative"
+  },
+  {
+   "type": "delta",
+   "text": " design"
+  },
+  {
+   "type": "delta",
+   "text": " approach"
+  },
+  {
+   "type": "delta",
+   "text": " that"
+  },
+  {
+   "type": "delta",
+   "text": " determines"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "how"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " coherence"
+  },
+  {
+   "type": "delta",
+   "text": " messages"
+  },
+  {
+   "type": "delta",
+   "text": " reach"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " caches"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " Instead"
+  },
+  {
+   "type": "delta",
+   "text": " of"
+  },
+  {
+   "type": "delta",
+   "text": " broadcasting"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " a"
+  },
+  {
+   "type": "delta",
+   "text": " directory"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "tracks"
+  },
+  {
+   "type": "delta",
+   "text": " owners"
+  },
+  {
+   "type": "delta",
+   "text": " and"
+  },
+  {
+   "type": "delta",
+   "text": " shar"
+  },
+  {
+   "type": "delta",
+   "text": "ers"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " of"
+  },
+  {
+   "type": "delta",
+   "text": " a"
+  },
+  {
+   "type": "delta",
+   "text": " cache"
+  },
+  {
+   "type": "delta",
+   "text": " line"
+  },
+  {
+   "type": "delta",
+   "text": " so"
+  },
+  {
+   "type": "delta",
+   "text": " that"
+  },
+  {
+   "type": "delta",
+   "text": " coherence"
+  },
+  {
+   "type": "delta",
+   "text": " messages"
+  },
+  {
+   "type": "delta",
+   "text": " can"
+  },
+  {
+   "type": "delta",
+   "text": " be"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "target"
+  },
+  {
+   "type": "delta",
+   "text": "ed"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " only"
+  },
+  {
+   "type": "delta",
+   "text": " to"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " relevant"
+  },
+  {
+   "type": "delta",
+   "text": " caches"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "Evidence"
+  },
+  {
+   "type": "delta",
+   "text": ":**"
+  },
+  {
+   "type": "delta",
+   "text": " The"
+  },
+  {
+   "type": "delta",
+   "text": " lecture"
+  },
+  {
+   "type": "delta",
+   "text": " states"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " \""
+  },
+  {
+   "type": "delta",
+   "text": "A"
+  },
+  {
+   "type": "delta",
+   "text": " directory"
+  },
+  {
+   "type": "delta",
+   "text": " tracks"
+  },
+  {
+   "type": "delta",
+   "text": " owners"
+  },
+  {
+   "type": "delta",
+   "text": " and"
+  },
+  {
+   "type": "delta",
+   "text": " shar"
+  },
+  {
+   "type": "delta",
+   "text": "ers"
+  },
+  {
+   "type": "delta",
+   "text": " to"
+  },
+  {
+   "type": "delta",
+   "text": " target"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " messages"
+  },
+  {
+   "type": "delta",
+   "text": ".\""
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " p"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "6"
+  },
+  {
+   "type": "delta",
+   "text": "4"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "Summary"
+  },
+  {
+   "type": "delta",
+   "text": " of"
+  },
+  {
+   "type": "delta",
+   "text": " Dist"
+  },
+  {
+   "type": "delta",
+   "text": "inction"
+  },
+  {
+   "type": "delta",
+   "text": ":**"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "MES"
+  },
+  {
+   "type": "delta",
+   "text": "I"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " defines"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " *"
+  },
+  {
+   "type": "delta",
+   "text": "rules"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "permissions"
+  },
+  {
+   "type": "delta",
+   "text": "/st"
+  },
+  {
+   "type": "delta",
+   "text": "ates"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " for"
+  },
+  {
+   "type": "delta",
+   "text": " coherence"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "no"
+  },
+  {
+   "type": "delta",
+   "text": "oping"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " and"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "Directories"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " are"
+  },
+  {
+   "type": "delta",
+   "text": " two"
+  },
+  {
+   "type": "delta",
+   "text": " different"
+  },
+  {
+   "type": "delta",
+   "text": " *"
+  },
+  {
+   "type": "delta",
+   "text": "mechan"
+  },
+  {
+   "type": "delta",
+   "text": "isms"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": " for"
+  },
+  {
+   "type": "delta",
+   "text": " delivering"
+  },
+  {
+   "type": "delta",
+   "text": " coherence"
+  },
+  {
+   "type": "delta",
+   "text": " messages"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " Sno"
+  },
+  {
+   "type": "delta",
+   "text": "oping"
+  },
+  {
+   "type": "delta",
+   "text": " uses"
+  },
+  {
+   "type": "delta",
+   "text": " a"
+  },
+  {
+   "type": "delta",
+   "text": " broadcast"
+  },
+  {
+   "type": "delta",
+   "text": " approach"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " while"
+  },
+  {
+   "type": "delta",
+   "text": " directories"
+  },
+  {
+   "type": "delta",
+   "text": " use"
+  },
+  {
+   "type": "delta",
+   "text": " a"
+  },
+  {
+   "type": "delta",
+   "text": " targeted"
+  },
+  {
+   "type": "delta",
+   "text": " approach"
+  },
+  {
+   "type": "delta",
+   "text": " based"
+  },
+  {
+   "type": "delta",
+   "text": " on"
+  },
+  {
+   "type": "delta",
+   "text": " tracking"
+  },
+  {
+   "type": "delta",
+   "text": " who"
+  },
+  {
+   "type": "delta",
+   "text": " holds"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " data"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " p"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "6"
+  },
+  {
+   "type": "delta",
+   "text": "4"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "Context"
+  },
+  {
+   "type": "delta",
+   "text": " from"
+  },
+  {
+   "type": "delta",
+   "text": " Lecture"
+  },
+  {
+   "type": "delta",
+   "text": ":**"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "These"
+  },
+  {
+   "type": "delta",
+   "text": " concepts"
+  },
+  {
+   "type": "delta",
+   "text": " are"
+  },
+  {
+   "type": "delta",
+   "text": " part"
+  },
+  {
+   "type": "delta",
+   "text": " of"
+  },
+  {
+   "type": "delta",
+   "text": " \""
+  },
+  {
+   "type": "delta",
+   "text": "Mult"
+  },
+  {
+   "type": "delta",
+   "text": "ic"
+  },
+  {
+   "type": "delta",
+   "text": "ore"
+  },
+  {
+   "type": "delta",
+   "text": " Technologies"
+  },
+  {
+   "type": "delta",
+   "text": ":"
+  },
+  {
+   "type": "delta",
+   "text": " Co"
+  },
+  {
+   "type": "delta",
+   "text": "herence"
+  },
+  {
+   "type": "delta",
+   "text": ",\""
+  },
+  {
+   "type": "delta",
+   "text": " which"
+  },
+  {
+   "type": "delta",
+   "text": " addresses"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " problem"
+  },
+  {
+   "type": "delta",
+   "text": " that"
+  },
+  {
+   "type": "delta",
+   "text": " \""
+  },
+  {
+   "type": "delta",
+   "text": "a"
+  },
+  {
+   "type": "delta",
+   "text": " write"
+  },
+  {
+   "type": "delta",
+   "text": " can"
+  },
+  {
+   "type": "delta",
+   "text": " make"
+  },
+  {
+   "type": "delta",
+   "text": " another"
+  },
+  {
+   "type": "delta",
+   "text": " core"
+  },
+  {
+   "type": "delta",
+   "text": "’s"
+  },
+  {
+   "type": "delta",
+   "text": " copy"
+  },
+  {
+   "type": "delta",
+   "text": " stale"
+  },
+  {
+   "type": "delta",
+   "text": "\""
+  },
+  {
+   "type": "delta",
+   "text": " and"
+  },
+  {
+   "type": "delta",
+   "text": " requires"
+  },
+  {
+   "type": "delta",
+   "text": " \""
+  },
+  {
+   "type": "delta",
+   "text": "Write"
+  },
+  {
+   "type": "delta",
+   "text": " Prop"
+  },
+  {
+   "type": "delta",
+   "text": "agation"
+  },
+  {
+   "type": "delta",
+   "text": "\""
+  },
+  {
+   "type": "delta",
+   "text": " and"
+  },
+  {
+   "type": "delta",
+   "text": " \""
+  },
+  {
+   "type": "delta",
+   "text": "Write"
+  },
+  {
+   "type": "delta",
+   "text": " Serialization"
+  },
+  {
+   "type": "delta",
+   "text": ".\""
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " p"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "6"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "model_end",
+   "call": 3,
+   "first_text_ms": 880,
+   "duration_ms": 12404,
+   "stop_reason": "stop",
+   "output_tokens": 437
+  },
+  {
+   "type": "done",
+   "answer": "Based on the provided lecture evidence, here is the comparison of the roles of snooping, directories, and MESI in multicore coherence:\n\n**1. MESI (Permissions/State)**\n*   **Role:** MESI describes the **permissions** or states of cache lines. It defines what a cache is allowed to do with a data block (e.g., whether it is Modified, Exclusive, Shared, or Invalid).\n*   **Evidence:** The lecture states, \"MESI describes permissions.\" [S1, p. 64]\n\n**2. Snooping (Broadcast Mechanism)**\n*   **Role:** Snooping is a design approach that determines **how** coherence messages reach the caches. Specifically, it works by **broadcasting** coherence requests to all caches in the system.\n*   **Evidence:** The lecture states, \"Snooping broadcasts coherence requests.\" [S1, p. 64]\n\n**3. Directories (Targeted Mechanism)**\n*   **Role:** A directory is an alternative design approach that determines **how** coherence messages reach the caches. Instead of broadcasting, a directory **tracks owners and sharers** of a cache line so that coherence messages can be **targeted** only to the relevant caches.\n*   **Evidence:** The lecture states, \"A directory tracks owners and sharers to target the messages.\" [S1, p. 64]\n\n**Summary of Distinction:**\n*   **MESI** defines the *rules* (permissions/states) for coherence.\n*   **Snooping** and **Directories** are two different *mechanisms* for delivering coherence messages. Snooping uses a broadcast approach, while directories use a targeted approach based on tracking who holds the data. [S1, p. 64]\n\n**Context from Lecture:**\nThese concepts are part of \"Multicore Technologies: Coherence,\" which addresses the problem that \"a write can make another core’s copy stale\" and requires \"Write Propagation\" and \"Write Serialization.\" [S3, p. 63]",
+   "citations": [],
+   "trace": [
+    {
+     "tool": "search_lecture",
+     "args": {
+      "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+      "query": "snooping directories MESI cache coherence protocol"
+     },
+     "pages": [
+      64,
+      60,
+      63
+     ],
+     "duration_ms": 2,
+     "model_call": 1
+    },
+    {
+     "tool": "read_page",
+     "args": {
+      "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+      "page": 64
+     },
+     "pages": [
+      64
+     ],
+     "duration_ms": 3,
+     "model_call": 2
+    },
+    {
+     "tool": "search_lecture",
+     "args": {
+      "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+      "query": "MESI Modified Exclusive Shared Invalid states permissions"
+     },
+     "pages": [
+      64,
+      61,
+      43
+     ],
+     "duration_ms": 2,
+     "model_call": 2
+    }
+   ],
+   "model_calls": 3,
+   "timing_ms": {
+    "generation": 23917,
+    "total": 23931
+   }
+  }
+ ],
+ "status": "done",
+ "elapsed_s": 24.08
+}

@@ -1,0 +1,677 @@
+{
+  "id": "L1-ANSWER11",
+  "input": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "session_id": "single-d05e70edc4a04bb485cfc7d8f51a7ba4",
+    "question": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly.\nHow does a mutex protect shared state, and what does it cost?"
+  },
+  "events": [
+    {
+      "type": "model_start",
+      "call": 1
+    },
+    {
+      "type": "answer_start"
+    },
+    {
+      "type": "model_end",
+      "call": 1,
+      "first_text_ms": null,
+      "duration_ms": 5016,
+      "stop_reason": "toolUse",
+      "output_tokens": 204
+    },
+    {
+      "type": "tool_start",
+      "tool": "search_lecture",
+      "args": {
+        "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+        "query": "mutex lock shared state cost"
+      }
+    },
+    {
+      "type": "tool_result",
+      "tool": "search_lecture",
+      "args": {
+        "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+        "query": "mutex lock shared state cost"
+      },
+      "pages": [
+        58,
+        60,
+        29
+      ],
+      "duration_ms": 2,
+      "model_call": 1
+    },
+    {
+      "type": "tool_start",
+      "tool": "search_lecture",
+      "args": {
+        "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+        "query": "mutual exclusion lock overhead"
+      }
+    },
+    {
+      "type": "tool_result",
+      "tool": "search_lecture",
+      "args": {
+        "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+        "query": "mutual exclusion lock overhead"
+      },
+      "pages": [
+        58
+      ],
+      "duration_ms": 1,
+      "model_call": 1
+    },
+    {
+      "type": "model_start",
+      "call": 2
+    },
+    {
+      "type": "answer_start"
+    },
+    {
+      "type": "model_end",
+      "call": 2,
+      "first_text_ms": null,
+      "duration_ms": 3352,
+      "stop_reason": "toolUse",
+      "output_tokens": 99
+    },
+    {
+      "type": "tool_start",
+      "tool": "read_page",
+      "args": {
+        "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+        "page": 58
+      }
+    },
+    {
+      "type": "tool_result",
+      "tool": "read_page",
+      "args": {
+        "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+        "page": 58
+      },
+      "pages": [
+        58
+      ],
+      "duration_ms": 2,
+      "model_call": 2
+    },
+    {
+      "type": "model_start",
+      "call": 3
+    },
+    {
+      "type": "answer_start"
+    },
+    {
+      "type": "delta",
+      "text": "A"
+    },
+    {
+      "type": "delta",
+      "text": " mutex"
+    },
+    {
+      "type": "delta",
+      "text": " protects"
+    },
+    {
+      "type": "delta",
+      "text": " shared"
+    },
+    {
+      "type": "delta",
+      "text": " state"
+    },
+    {
+      "type": "delta",
+      "text": " by"
+    },
+    {
+      "type": "delta",
+      "text": " providing"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "serialized"
+    },
+    {
+      "type": "delta",
+      "text": " access"
+    },
+    {
+      "type": "delta",
+      "text": " to"
+    },
+    {
+      "type": "delta",
+      "text": " a"
+    },
+    {
+      "type": "delta",
+      "text": " critical"
+    },
+    {
+      "type": "delta",
+      "text": " section"
+    },
+    {
+      "type": "delta",
+      "text": "**,"
+    },
+    {
+      "type": "delta",
+      "text": " which"
+    },
+    {
+      "type": "delta",
+      "text": " ensures"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "race"
+    },
+    {
+      "type": "delta",
+      "text": " avoidance"
+    },
+    {
+      "type": "delta",
+      "text": "**"
+    },
+    {
+      "type": "delta",
+      "text": " for"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " protected"
+    },
+    {
+      "type": "delta",
+      "text": " shared"
+    },
+    {
+      "type": "delta",
+      "text": " state"
+    },
+    {
+      "type": "delta",
+      "text": "."
+    },
+    {
+      "type": "delta",
+      "text": " In"
+    },
+    {
+      "type": "delta",
+      "text": " practice"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " only"
+    },
+    {
+      "type": "delta",
+      "text": " one"
+    },
+    {
+      "type": "delta",
+      "text": " thread"
+    },
+    {
+      "type": "delta",
+      "text": " holds"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " mutex"
+    },
+    {
+      "type": "delta",
+      "text": " at"
+    },
+    {
+      "type": "delta",
+      "text": " a"
+    },
+    {
+      "type": "delta",
+      "text": " time"
+    },
+    {
+      "type": "delta",
+      "text": ";"
+    },
+    {
+      "type": "delta",
+      "text": " other"
+    },
+    {
+      "type": "delta",
+      "text": " threads"
+    },
+    {
+      "type": "delta",
+      "text": " must"
+    },
+    {
+      "type": "delta",
+      "text": " wait"
+    },
+    {
+      "type": "delta",
+      "text": " until"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " lock"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " released"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " thereby"
+    },
+    {
+      "type": "delta",
+      "text": " serial"
+    },
+    {
+      "type": "delta",
+      "text": "izing"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " execution"
+    },
+    {
+      "type": "delta",
+      "text": " of"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " protected"
+    },
+    {
+      "type": "delta",
+      "text": " region"
+    },
+    {
+      "type": "delta",
+      "text": "."
+    },
+    {
+      "type": "delta",
+      "text": " The"
+    },
+    {
+      "type": "delta",
+      "text": " standard"
+    },
+    {
+      "type": "delta",
+      "text": " pattern"
+    },
+    {
+      "type": "delta",
+      "text": " involves"
+    },
+    {
+      "type": "delta",
+      "text": " calling"
+    },
+    {
+      "type": "delta",
+      "text": " `"
+    },
+    {
+      "type": "delta",
+      "text": "pthread"
+    },
+    {
+      "type": "delta",
+      "text": "_mutex"
+    },
+    {
+      "type": "delta",
+      "text": "_lock"
+    },
+    {
+      "type": "delta",
+      "text": "(&"
+    },
+    {
+      "type": "delta",
+      "text": "lock"
+    },
+    {
+      "type": "delta",
+      "text": ")`"
+    },
+    {
+      "type": "delta",
+      "text": " before"
+    },
+    {
+      "type": "delta",
+      "text": " accessing"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " shared"
+    },
+    {
+      "type": "delta",
+      "text": " state"
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " `"
+    },
+    {
+      "type": "delta",
+      "text": "pthread"
+    },
+    {
+      "type": "delta",
+      "text": "_mutex"
+    },
+    {
+      "type": "delta",
+      "text": "_unlock"
+    },
+    {
+      "type": "delta",
+      "text": "(&"
+    },
+    {
+      "type": "delta",
+      "text": "lock"
+    },
+    {
+      "type": "delta",
+      "text": ")`"
+    },
+    {
+      "type": "delta",
+      "text": " after"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " access"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " complete"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "The"
+    },
+    {
+      "type": "delta",
+      "text": " cost"
+    },
+    {
+      "type": "delta",
+      "text": " of"
+    },
+    {
+      "type": "delta",
+      "text": " using"
+    },
+    {
+      "type": "delta",
+      "text": " a"
+    },
+    {
+      "type": "delta",
+      "text": " mutex"
+    },
+    {
+      "type": "delta",
+      "text": " is"
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "lock"
+    },
+    {
+      "type": "delta",
+      "text": " contention"
+    },
+    {
+      "type": "delta",
+      "text": "**"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "**"
+    },
+    {
+      "type": "delta",
+      "text": "Source"
+    },
+    {
+      "type": "delta",
+      "text": ":**"
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "-"
+    },
+    {
+      "type": "delta",
+      "text": " Page"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "5"
+    },
+    {
+      "type": "delta",
+      "text": "8"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": "]"
+    },
+    {
+      "type": "model_end",
+      "call": 3,
+      "first_text_ms": 793,
+      "duration_ms": 3251,
+      "stop_reason": "stop",
+      "output_tokens": 125
+    },
+    {
+      "type": "done",
+      "answer": "A mutex protects shared state by providing **serialized access to a critical section**, which ensures **race avoidance** for the protected shared state. In practice, only one thread holds the mutex at a time; other threads must wait until the lock is released, thereby serializing the execution of the protected region. The standard pattern involves calling `pthread_mutex_lock(&lock)` before accessing the shared state and `pthread_mutex_unlock(&lock)` after the access is complete [S1].\n\nThe cost of using a mutex is **lock contention** [S1].\n\n**Source:**\n- Page 58 [S1]",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p58-1",
+          "page": 58,
+          "text": "CPU Multicore Programming: pThread\n  Mutex: Protect Shared State\n\n                                              ¡ The Mutex provides:\n¡ Mutex pattern:\n                                                ¡  Serialized access to critical section\n      pthread_mutex_lock(&lock);\n                                                ¡ Race avoidance for protected     sum += local_sum;\n                                                         shared state      pthread_mutex_unlock(&lock);\n                                              ¡  Cost: Lock contention\n\n\n\n\n\n      Only one thread holds the mutex; others wait and the protected region is serialized",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/58/preview",
+          "source": "S1"
+        }
+      ],
+      "trace": [
+        {
+          "tool": "search_lecture",
+          "args": {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "query": "mutex lock shared state cost"
+          },
+          "pages": [
+            58,
+            60,
+            29
+          ],
+          "duration_ms": 2,
+          "model_call": 1
+        },
+        {
+          "tool": "search_lecture",
+          "args": {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "query": "mutual exclusion lock overhead"
+          },
+          "pages": [
+            58
+          ],
+          "duration_ms": 1,
+          "model_call": 1
+        },
+        {
+          "tool": "read_page",
+          "args": {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "page": 58
+          },
+          "pages": [
+            58
+          ],
+          "duration_ms": 2,
+          "model_call": 2
+        }
+      ],
+      "model_calls": 3,
+      "timing_ms": {
+        "generation": 11619,
+        "total": 11631
+      }
+    }
+  ],
+  "status": "done",
+  "elapsed_s": 11.78
+}

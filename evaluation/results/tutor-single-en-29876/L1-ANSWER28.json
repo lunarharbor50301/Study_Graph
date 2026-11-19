@@ -1,0 +1,1009 @@
+{
+ "id": "L1-ANSWER28",
+ "input": {
+  "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+  "session_id": "single-7065778c3f284f33a50c685f769dd329",
+  "question": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly.\nUsing only the currently imported lecture, give today's actual P95 response time for the local StudyGraph service."
+ },
+ "events": [
+  {
+   "type": "model_start",
+   "call": 1
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "model_end",
+   "call": 1,
+   "first_text_ms": null,
+   "duration_ms": 3821,
+   "stop_reason": "toolUse",
+   "output_tokens": 120
+  },
+  {
+   "type": "tool_start",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "query": "P95 response time local StudyGraph service"
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "query": "P95 response time local StudyGraph service"
+   },
+   "pages": [
+    57,
+    62,
+    56
+   ],
+   "duration_ms": 2,
+   "model_call": 1
+  },
+  {
+   "type": "tool_start",
+   "tool": "list_documents",
+   "args": {}
+  },
+  {
+   "type": "tool_result",
+   "tool": "list_documents",
+   "args": {},
+   "pages": [],
+   "duration_ms": 0,
+   "model_call": 1
+  },
+  {
+   "type": "model_start",
+   "call": 2
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "model_end",
+   "call": 2,
+   "first_text_ms": null,
+   "duration_ms": 7149,
+   "stop_reason": "toolUse",
+   "output_tokens": 206
+  },
+  {
+   "type": "tool_start",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "query": "response time latency milliseconds service"
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "query": "response time latency milliseconds service"
+   },
+   "pages": [
+    16,
+    25,
+    65
+   ],
+   "duration_ms": 6,
+   "model_call": 2
+  },
+  {
+   "type": "tool_start",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "query": "percentile 95 performance benchmark"
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "query": "percentile 95 performance benchmark"
+   },
+   "pages": [
+    64,
+    65,
+    2
+   ],
+   "duration_ms": 4,
+   "model_call": 2
+  },
+  {
+   "type": "model_start",
+   "call": 3
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "delta",
+   "text": "The"
+  },
+  {
+   "type": "delta",
+   "text": " currently"
+  },
+  {
+   "type": "delta",
+   "text": " imported"
+  },
+  {
+   "type": "delta",
+   "text": " lecture"
+  },
+  {
+   "type": "delta",
+   "text": " does"
+  },
+  {
+   "type": "delta",
+   "text": " not"
+  },
+  {
+   "type": "delta",
+   "text": " contain"
+  },
+  {
+   "type": "delta",
+   "text": " any"
+  },
+  {
+   "type": "delta",
+   "text": " information"
+  },
+  {
+   "type": "delta",
+   "text": " about"
+  },
+  {
+   "type": "delta",
+   "text": " a"
+  },
+  {
+   "type": "delta",
+   "text": " \""
+  },
+  {
+   "type": "delta",
+   "text": "local"
+  },
+  {
+   "type": "delta",
+   "text": " Study"
+  },
+  {
+   "type": "delta",
+   "text": "Graph"
+  },
+  {
+   "type": "delta",
+   "text": " service"
+  },
+  {
+   "type": "delta",
+   "text": ",\""
+  },
+  {
+   "type": "delta",
+   "text": " its"
+  },
+  {
+   "type": "delta",
+   "text": " response"
+  },
+  {
+   "type": "delta",
+   "text": " times"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " or"
+  },
+  {
+   "type": "delta",
+   "text": " P"
+  },
+  {
+   "type": "delta",
+   "text": "9"
+  },
+  {
+   "type": "delta",
+   "text": "5"
+  },
+  {
+   "type": "delta",
+   "text": " latency"
+  },
+  {
+   "type": "delta",
+   "text": " metrics"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "The"
+  },
+  {
+   "type": "delta",
+   "text": " lecture"
+  },
+  {
+   "type": "delta",
+   "text": " material"
+  },
+  {
+   "type": "delta",
+   "text": " provided"
+  },
+  {
+   "type": "delta",
+   "text": " focuses"
+  },
+  {
+   "type": "delta",
+   "text": " on"
+  },
+  {
+   "type": "delta",
+   "text": " computer"
+  },
+  {
+   "type": "delta",
+   "text": " architecture"
+  },
+  {
+   "type": "delta",
+   "text": " and"
+  },
+  {
+   "type": "delta",
+   "text": " parallel"
+  },
+  {
+   "type": "delta",
+   "text": " computing"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " specifically"
+  },
+  {
+   "type": "delta",
+   "text": " covering"
+  },
+  {
+   "type": "delta",
+   "text": ":"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " CPU"
+  },
+  {
+   "type": "delta",
+   "text": " multic"
+  },
+  {
+   "type": "delta",
+   "text": "ore"
+  },
+  {
+   "type": "delta",
+   "text": " programming"
+  },
+  {
+   "type": "delta",
+   "text": " with"
+  },
+  {
+   "type": "delta",
+   "text": " p"
+  },
+  {
+   "type": "delta",
+   "text": "Threads"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "race"
+  },
+  {
+   "type": "delta",
+   "text": " conditions"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " critical"
+  },
+  {
+   "type": "delta",
+   "text": " sections"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " S"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "]."
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " CUDA"
+  },
+  {
+   "type": "delta",
+   "text": " thread"
+  },
+  {
+   "type": "delta",
+   "text": " indexing"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "]."
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " CPU"
+  },
+  {
+   "type": "delta",
+   "text": " instruction"
+  },
+  {
+   "type": "delta",
+   "text": " pipelines"
+  },
+  {
+   "type": "delta",
+   "text": " and"
+  },
+  {
+   "type": "delta",
+   "text": " out"
+  },
+  {
+   "type": "delta",
+   "text": "-of"
+  },
+  {
+   "type": "delta",
+   "text": "-order"
+  },
+  {
+   "type": "delta",
+   "text": " execution"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "4"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " S"
+  },
+  {
+   "type": "delta",
+   "text": "5"
+  },
+  {
+   "type": "delta",
+   "text": "]."
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " Performance"
+  },
+  {
+   "type": "delta",
+   "text": " models"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "Speed"
+  },
+  {
+   "type": "delta",
+   "text": "up"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " Efficiency"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "6"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " S"
+  },
+  {
+   "type": "delta",
+   "text": "7"
+  },
+  {
+   "type": "delta",
+   "text": "]."
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " The"
+  },
+  {
+   "type": "delta",
+   "text": " evolution"
+  },
+  {
+   "type": "delta",
+   "text": " from"
+  },
+  {
+   "type": "delta",
+   "text": " CPU"
+  },
+  {
+   "type": "delta",
+   "text": " to"
+  },
+  {
+   "type": "delta",
+   "text": " GPU"
+  },
+  {
+   "type": "delta",
+   "text": "-centric"
+  },
+  {
+   "type": "delta",
+   "text": " systems"
+  },
+  {
+   "type": "delta",
+   "text": " for"
+  },
+  {
+   "type": "delta",
+   "text": " AI"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "8"
+  },
+  {
+   "type": "delta",
+   "text": "]."
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "There"
+  },
+  {
+   "type": "delta",
+   "text": " is"
+  },
+  {
+   "type": "delta",
+   "text": " no"
+  },
+  {
+   "type": "delta",
+   "text": " data"
+  },
+  {
+   "type": "delta",
+   "text": " regarding"
+  },
+  {
+   "type": "delta",
+   "text": " service"
+  },
+  {
+   "type": "delta",
+   "text": "-level"
+  },
+  {
+   "type": "delta",
+   "text": " objectives"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "LO"
+  },
+  {
+   "type": "delta",
+   "text": "s"
+  },
+  {
+   "type": "delta",
+   "text": "),"
+  },
+  {
+   "type": "delta",
+   "text": " network"
+  },
+  {
+   "type": "delta",
+   "text": " latency"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " or"
+  },
+  {
+   "type": "delta",
+   "text": " specific"
+  },
+  {
+   "type": "delta",
+   "text": " application"
+  },
+  {
+   "type": "delta",
+   "text": " performance"
+  },
+  {
+   "type": "delta",
+   "text": " metrics"
+  },
+  {
+   "type": "delta",
+   "text": " for"
+  },
+  {
+   "type": "delta",
+   "text": " a"
+  },
+  {
+   "type": "delta",
+   "text": " \""
+  },
+  {
+   "type": "delta",
+   "text": "Study"
+  },
+  {
+   "type": "delta",
+   "text": "Graph"
+  },
+  {
+   "type": "delta",
+   "text": " service"
+  },
+  {
+   "type": "delta",
+   "text": "\""
+  },
+  {
+   "type": "delta",
+   "text": " in"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " provided"
+  },
+  {
+   "type": "delta",
+   "text": " pages"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " Therefore"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " I"
+  },
+  {
+   "type": "delta",
+   "text": " cannot"
+  },
+  {
+   "type": "delta",
+   "text": " provide"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " P"
+  },
+  {
+   "type": "delta",
+   "text": "9"
+  },
+  {
+   "type": "delta",
+   "text": "5"
+  },
+  {
+   "type": "delta",
+   "text": " response"
+  },
+  {
+   "type": "delta",
+   "text": " time"
+  },
+  {
+   "type": "delta",
+   "text": " as"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " material"
+  },
+  {
+   "type": "delta",
+   "text": " is"
+  },
+  {
+   "type": "delta",
+   "text": " insufficient"
+  },
+  {
+   "type": "delta",
+   "text": " to"
+  },
+  {
+   "type": "delta",
+   "text": " answer"
+  },
+  {
+   "type": "delta",
+   "text": " this"
+  },
+  {
+   "type": "delta",
+   "text": " question"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "model_end",
+   "call": 3,
+   "first_text_ms": 1300,
+   "duration_ms": 5579,
+   "stop_reason": "stop",
+   "output_tokens": 187
+  },
+  {
+   "type": "done",
+   "answer": "The currently imported lecture does not contain any information about a \"local StudyGraph service,\" its response times, or P95 latency metrics.\n\nThe lecture material provided focuses on computer architecture and parallel computing, specifically covering:\n*   CPU multicore programming with pThreads (race conditions, critical sections) [S1, S3].\n*   CUDA thread indexing [S2].\n*   CPU instruction pipelines and out-of-order execution [S4, S5].\n*   Performance models (Speedup, Efficiency) [S6, S7].\n*   The evolution from CPU to GPU-centric systems for AI [S8].\n\nThere is no data regarding service-level objectives (SLOs), network latency, or specific application performance metrics for a \"StudyGraph service\" in the provided pages. Therefore, I cannot provide the P95 response time as the material is insufficient to answer this question.",
+   "citations": [
+    {
+     "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+     "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p57-1",
+     "page": 57,
+     "text": "CPU Multicore Programming: pThread\n  Race Condition and Critical Section\n¡  Example\n   ¡ sum += local_sum;\n   ¡  For each thread\n     ¡ Load sum\n     ¡ Add local_sum\n     ¡ Store sum\n   ¡   If two threads execute concurrently\n     ¡ both may read the old value;\n     ¡ both compute new values;\n     ¡ one write overwrites the other.\n\n\n\n   ¡ Race Conditions: multiple threads access a\n      shared resource and final result depends on\n      timing.\n   ¡ A critical section is code that must be\n     executed by only one thread at a time.",
+     "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/57/preview",
+     "source": "S1"
+    },
+    {
+     "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+     "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p56-2",
+     "page": 56,
+     "text": "                                                             };\n   ¡  Partition input into per-thread chunks.\n                                                                      pthread_create(&threads[tid], NULL,\n   ¡ Compute local partial sums independently.                         partial_sum, &tasks[tid]);\n                                                                    }\n   ¡  Join workers and reduce partial results.                                                                    double total = 0.0;\n                                                                    for (int tid = 0; tid < T; ++tid) {\n                                                                      pthread_join(threads[tid], NULL);\n                                                                      total += tasks[tid].partial;\n                                                                    }\n\n    ",
+     "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/56/preview",
+     "source": "S3"
+    },
+    {
+     "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+     "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p62-2",
+     "page": 62,
+     "text": "                                                           blockDim.x is the number of threads per block.\n                                                                             threadIdx.x is the local index inside that block.\n\n¡ Every CUDA thread runs the same kernel\n  code; built-in IDs select the data element.\n\n                                  i = blockIdx.x * blockDim.x + threadIdx.x",
+     "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/62/preview",
+     "source": "S2"
+    },
+    {
+     "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+     "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p16-1",
+     "page": 16,
+     "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Five-Stage Instruction Pipeline\n\n¡  Goal: Overlap time of data load/store\n\n¡  Fetch (IF)\n\n   ¡  Get instructions from instruction memory/cache\n\n¡ Decode (ID)\n\n   ¡  Resolve opcode and operands\n¡  Execute (EX)\n\n   ¡  ALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n\n   ¡  Load/store data through cache or memory hierarchy\n¡  Write Back (WB)\n\n   ¡  Update architectural state",
+     "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/16/preview",
+     "source": "S4"
+    },
+    {
+     "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+     "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p25-1",
+     "page": 25,
+     "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Optimization #3: Out-of-Order (OoO) Execution\n¡  Out-of-order execution separates:\n\n   ¡ Program order: order written by the programmer\n\n   ¡  Execution order: order chosen by hardware\n   ¡ Commit order: order that updates architectural state\n\n\n¡  Typically, the compiler would find independent instruction sets to enable OoO execution, reducing\n   the stall time of the instruction pipeline.\n\n¡ At runtime, CPU involves a controller to find independent instructions while some instructions are\n   waiting.\n\n   ¡  Preempt current pipeline\n\n   ¡  Issue independent instruction\n\n   ¡  Restore preempted instruction when it finishes waiting",
+     "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/25/preview",
+     "source": "S5"
+    },
+    {
+     "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+     "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p65-1",
+     "page": 65,
+     "text": "Performance Models\n  Performance Is Not Peak FLOPs\n\n¡ Upper Bound: Hardware Throughput\n\n   ¡  Real Performance: Limited by Load Imbalance, Pipeline Efficiency, and Memory Access\n\n\n¡ Speedup of a parallel program\n\n   ¡  P = The number of cores\n\n   ¡  T(1) = Serial running time\n\n   ¡  T(P) = Parallel running time\n\n   ¡  Speedup = T(1) / T(P)\n\n\n¡  Efficiency = Speedup / P\n\n                                        ¡ Speedup and efficiency usually vary with problem\n                                                        size and the number of involved cores",
+     "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/65/preview",
+     "source": "S6"
+    },
+    {
+     "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+     "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p64-1",
+     "page": 64,
+     "text": "Performance Models\n\n\nLecture 1: Processor Evolution — From CPU to GPU",
+     "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/64/preview",
+     "source": "S7"
+    },
+    {
+     "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+     "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p2-1",
+     "page": 2,
+     "text": "Syllabus and Readings\n\n¡  Key Question\n   ¡ Why did AI computing move from CPU-centric systems to GPU-centric systems?\n¡  Today’s Path\n    1.  [Review]   How code runs and completes computation?\n    2.  [Review]   What a host machine looks like?\n    3.  [Core]    CPU vs GPU microarchitecture.\n    4.  [Concept]   Parallel programming models.\n    5.  [Core]      Performance model for AI workloads.\n¡  Readings\n   ¡  Hennessy & Patterson, A New Golden Age for Computer Architecture, CACM 2019\n   ¡  Dally, Keckler & Kirk, Evolution of the Graphics Processing Unit, IEEE Micro 2021\n   ¡  Williams, Waterman & Patterson, Roofline: An Insightful Visual Performance Model for Multicore Architectures,\n    CACM 2009\n   ¡  Dao et al., FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness, NeurIPS 2022",
+     "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/2/preview",
+     "source": "S8"
+    }
+   ],
+   "trace": [
+    {
+     "tool": "search_lecture",
+     "args": {
+      "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+      "query": "P95 response time local StudyGraph service"
+     },
+     "pages": [
+      57,
+      62,
+      56
+     ],
+     "duration_ms": 2,
+     "model_call": 1
+    },
+    {
+     "tool": "list_documents",
+     "args": {},
+     "pages": [],
+     "duration_ms": 0,
+     "model_call": 1
+    },
+    {
+     "tool": "search_lecture",
+     "args": {
+      "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+      "query": "response time latency milliseconds service"
+     },
+     "pages": [
+      16,
+      25,
+      65
+     ],
+     "duration_ms": 6,
+     "model_call": 2
+    },
+    {
+     "tool": "search_lecture",
+     "args": {
+      "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+      "query": "percentile 95 performance benchmark"
+     },
+     "pages": [
+      64,
+      65,
+      2
+     ],
+     "duration_ms": 4,
+     "model_call": 2
+    }
+   ],
+   "model_calls": 3,
+   "timing_ms": {
+    "generation": 16549,
+    "total": 16567
+   }
+  }
+ ],
+ "status": "done",
+ "elapsed_s": 16.71
+}

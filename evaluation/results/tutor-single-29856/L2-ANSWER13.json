@@ -1,0 +1,2625 @@
+{
+ "id": "L2-ANSWER13",
+ "input": {
+  "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+  "session_id": "single-f92c3a6e57e74a869d3e4a4374255d87",
+  "question": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。\n写出 AMAT 公式，并解释 miss penalty。"
+ },
+ "events": [
+  {
+   "type": "model_start",
+   "call": 1
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "model_end",
+   "call": 1,
+   "first_text_ms": null,
+   "duration_ms": 4769,
+   "stop_reason": "toolUse",
+   "output_tokens": 195
+  },
+  {
+   "type": "tool_start",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "query": "AMAT average memory access time miss penalty"
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "query": "AMAT average memory access time miss penalty"
+   },
+   "pages": [
+    26,
+    27,
+    28
+   ],
+   "duration_ms": 2,
+   "model_call": 1
+  },
+  {
+   "type": "tool_start",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "query": "miss penalty cache hit time"
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "query": "miss penalty cache hit time"
+   },
+   "pages": [
+    27,
+    26,
+    25
+   ],
+   "duration_ms": 1,
+   "model_call": 1
+  },
+  {
+   "type": "model_start",
+   "call": 2
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "delta",
+   "text": "根据"
+  },
+  {
+   "type": "delta",
+   "text": "当前"
+  },
+  {
+   "type": "delta",
+   "text": "课件"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "PDF"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "物理"
+  },
+  {
+   "type": "delta",
+   "text": "页"
+  },
+  {
+   "type": "delta",
+   "text": "码"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "5"
+  },
+  {
+   "type": "delta",
+   "text": "、"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "6"
+  },
+  {
+   "type": "delta",
+   "text": "、"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "7"
+  },
+  {
+   "type": "delta",
+   "text": "、"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "8"
+  },
+  {
+   "type": "delta",
+   "text": "），"
+  },
+  {
+   "type": "delta",
+   "text": "AM"
+  },
+  {
+   "type": "delta",
+   "text": "AT"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "公式"
+  },
+  {
+   "type": "delta",
+   "text": "与"
+  },
+  {
+   "type": "delta",
+   "text": " miss"
+  },
+  {
+   "type": "delta",
+   "text": " penalty"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "解释"
+  },
+  {
+   "type": "delta",
+   "text": "如下"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "##"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " AM"
+  },
+  {
+   "type": "delta",
+   "text": "AT"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "公式"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "基本"
+  },
+  {
+   "type": "delta",
+   "text": "形式"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "单层"
+  },
+  {
+   "type": "delta",
+   "text": "缓存"
+  },
+  {
+   "type": "delta",
+   "text": "）**"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "]["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "```"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "AM"
+  },
+  {
+   "type": "delta",
+   "text": "AT"
+  },
+  {
+   "type": "delta",
+   "text": " ="
+  },
+  {
+   "type": "delta",
+   "text": " Hit"
+  },
+  {
+   "type": "delta",
+   "text": " time"
+  },
+  {
+   "type": "delta",
+   "text": " +"
+  },
+  {
+   "type": "delta",
+   "text": " Miss"
+  },
+  {
+   "type": "delta",
+   "text": " rate"
+  },
+  {
+   "type": "delta",
+   "text": " ×"
+  },
+  {
+   "type": "delta",
+   "text": " Miss"
+  },
+  {
+   "type": "delta",
+   "text": " penalty"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "    "
+  },
+  {
+   "type": "delta",
+   "text": " ="
+  },
+  {
+   "type": "delta",
+   "text": " T"
+  },
+  {
+   "type": "delta",
+   "text": "_hit"
+  },
+  {
+   "type": "delta",
+   "text": "(L"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " +"
+  },
+  {
+   "type": "delta",
+   "text": " Miss"
+  },
+  {
+   "type": "delta",
+   "text": "%("
+  },
+  {
+   "type": "delta",
+   "text": "L"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " ×"
+  },
+  {
+   "type": "delta",
+   "text": " T"
+  },
+  {
+   "type": "delta",
+   "text": "(memory"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "```"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "-"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "Hit"
+  },
+  {
+   "type": "delta",
+   "text": " time"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "命中"
+  },
+  {
+   "type": "delta",
+   "text": "时"
+  },
+  {
+   "type": "delta",
+   "text": "在当前"
+  },
+  {
+   "type": "delta",
+   "text": "缓存"
+  },
+  {
+   "type": "delta",
+   "text": "层"
+  },
+  {
+   "type": "delta",
+   "text": "取"
+  },
+  {
+   "type": "delta",
+   "text": "数据"
+  },
+  {
+   "type": "delta",
+   "text": "的时间"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "例如"
+  },
+  {
+   "type": "delta",
+   "text": " L"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "为"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": " cycle"
+  },
+  {
+   "type": "delta",
+   "text": "）。"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "-"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "Miss"
+  },
+  {
+   "type": "delta",
+   "text": " rate"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "未"
+  },
+  {
+   "type": "delta",
+   "text": "命中率"
+  },
+  {
+   "type": "delta",
+   "text": " ="
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": " −"
+  },
+  {
+   "type": "delta",
+   "text": " Hit"
+  },
+  {
+   "type": "delta",
+   "text": " rate"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "4"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "-"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "Miss"
+  },
+  {
+   "type": "delta",
+   "text": " penalty"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "未"
+  },
+  {
+   "type": "delta",
+   "text": "命中"
+  },
+  {
+   "type": "delta",
+   "text": "时"
+  },
+  {
+   "type": "delta",
+   "text": "从"
+  },
+  {
+   "type": "delta",
+   "text": "更低"
+  },
+  {
+   "type": "delta",
+   "text": "一级"
+  },
+  {
+   "type": "delta",
+   "text": "内存"
+  },
+  {
+   "type": "delta",
+   "text": "取"
+  },
+  {
+   "type": "delta",
+   "text": "回"
+  },
+  {
+   "type": "delta",
+   "text": "一个"
+  },
+  {
+   "type": "delta",
+   "text": " block"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "所需"
+  },
+  {
+   "type": "delta",
+   "text": "的时间"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "多级"
+  },
+  {
+   "type": "delta",
+   "text": "缓存"
+  },
+  {
+   "type": "delta",
+   "text": "形式"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "L"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "→"
+  },
+  {
+   "type": "delta",
+   "text": "L"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "→"
+  },
+  {
+   "type": "delta",
+   "text": "L"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "→"
+  },
+  {
+   "type": "delta",
+   "text": "主"
+  },
+  {
+   "type": "delta",
+   "text": "存"
+  },
+  {
+   "type": "delta",
+   "text": "）**"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "```"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "AM"
+  },
+  {
+   "type": "delta",
+   "text": "AT"
+  },
+  {
+   "type": "delta",
+   "text": " ="
+  },
+  {
+   "type": "delta",
+   "text": " T"
+  },
+  {
+   "type": "delta",
+   "text": "_hit"
+  },
+  {
+   "type": "delta",
+   "text": "(L"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " +"
+  },
+  {
+   "type": "delta",
+   "text": " Miss"
+  },
+  {
+   "type": "delta",
+   "text": "%("
+  },
+  {
+   "type": "delta",
+   "text": "L"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " ×"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": " T"
+  },
+  {
+   "type": "delta",
+   "text": "_hit"
+  },
+  {
+   "type": "delta",
+   "text": "(L"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "       "
+  },
+  {
+   "type": "delta",
+   "text": " +"
+  },
+  {
+   "type": "delta",
+   "text": " Miss"
+  },
+  {
+   "type": "delta",
+   "text": "%("
+  },
+  {
+   "type": "delta",
+   "text": "L"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " ×"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": " T"
+  },
+  {
+   "type": "delta",
+   "text": "_hit"
+  },
+  {
+   "type": "delta",
+   "text": "(L"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " +"
+  },
+  {
+   "type": "delta",
+   "text": " Miss"
+  },
+  {
+   "type": "delta",
+   "text": "%("
+  },
+  {
+   "type": "delta",
+   "text": "L"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " ×"
+  },
+  {
+   "type": "delta",
+   "text": " T"
+  },
+  {
+   "type": "delta",
+   "text": "(memory"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " )"
+  },
+  {
+   "type": "delta",
+   "text": " )"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "```"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "课件"
+  },
+  {
+   "type": "delta",
+   "text": "给出的"
+  },
+  {
+   "type": "delta",
+   "text": "数值"
+  },
+  {
+   "type": "delta",
+   "text": "示例"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "L"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "="
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": " clk"
+  },
+  {
+   "type": "delta",
+   "text": "、"
+  },
+  {
+   "type": "delta",
+   "text": "L"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "="
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "0"
+  },
+  {
+   "type": "delta",
+   "text": " clk"
+  },
+  {
+   "type": "delta",
+   "text": "、"
+  },
+  {
+   "type": "delta",
+   "text": "L"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "="
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "0"
+  },
+  {
+   "type": "delta",
+   "text": " clk"
+  },
+  {
+   "type": "delta",
+   "text": "、"
+  },
+  {
+   "type": "delta",
+   "text": "主"
+  },
+  {
+   "type": "delta",
+   "text": "存"
+  },
+  {
+   "type": "delta",
+   "text": "="
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "0"
+  },
+  {
+   "type": "delta",
+   "text": "0"
+  },
+  {
+   "type": "delta",
+   "text": " clk"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "算"
+  },
+  {
+   "type": "delta",
+   "text": "得"
+  },
+  {
+   "type": "delta",
+   "text": " AM"
+  },
+  {
+   "type": "delta",
+   "text": "AT"
+  },
+  {
+   "type": "delta",
+   "text": " ≈"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "5"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "相比"
+  },
+  {
+   "type": "delta",
+   "text": "无"
+  },
+  {
+   "type": "delta",
+   "text": "多级"
+  },
+  {
+   "type": "delta",
+   "text": "缓存"
+  },
+  {
+   "type": "delta",
+   "text": "的"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "约"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "4"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "7"
+  },
+  {
+   "type": "delta",
+   "text": "×"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "加速"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "##"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " Miss"
+  },
+  {
+   "type": "delta",
+   "text": " penalty"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "的解释"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "课件"
+  },
+  {
+   "type": "delta",
+   "text": "对"
+  },
+  {
+   "type": "delta",
+   "text": " miss"
+  },
+  {
+   "type": "delta",
+   "text": " penalty"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "的定义"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "]["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "4"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "-"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "含义"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "当"
+  },
+  {
+   "type": "delta",
+   "text": "请求"
+  },
+  {
+   "type": "delta",
+   "text": "的"
+  },
+  {
+   "type": "delta",
+   "text": " block"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "不在"
+  },
+  {
+   "type": "delta",
+   "text": "当前"
+  },
+  {
+   "type": "delta",
+   "text": "缓存"
+  },
+  {
+   "type": "delta",
+   "text": "层"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "miss"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "时"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "需要从"
+  },
+  {
+   "type": "delta",
+   "text": "下一级"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "更低"
+  },
+  {
+   "type": "delta",
+   "text": "一级"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "内存"
+  },
+  {
+   "type": "delta",
+   "text": "取"
+  },
+  {
+   "type": "delta",
+   "text": "回"
+  },
+  {
+   "type": "delta",
+   "text": "该"
+  },
+  {
+   "type": "delta",
+   "text": " block"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "所"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "额外"
+  },
+  {
+   "type": "delta",
+   "text": "花费"
+  },
+  {
+   "type": "delta",
+   "text": "的时间"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "4"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "-"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "构成"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": " ```"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": " Miss"
+  },
+  {
+   "type": "delta",
+   "text": " penalty"
+  },
+  {
+   "type": "delta",
+   "text": " ="
+  },
+  {
+   "type": "delta",
+   "text": " Access"
+  },
+  {
+   "type": "delta",
+   "text": " time"
+  },
+  {
+   "type": "delta",
+   "text": " +"
+  },
+  {
+   "type": "delta",
+   "text": " data"
+  },
+  {
+   "type": "delta",
+   "text": " size"
+  },
+  {
+   "type": "delta",
+   "text": " /"
+  },
+  {
+   "type": "delta",
+   "text": " bandwidth"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": " ```"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": " -"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "Access"
+  },
+  {
+   "type": "delta",
+   "text": " time"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "内存"
+  },
+  {
+   "type": "delta",
+   "text": "处理"
+  },
+  {
+   "type": "delta",
+   "text": "一次"
+  },
+  {
+   "type": "delta",
+   "text": "访问"
+  },
+  {
+   "type": "delta",
+   "text": "的"
+  },
+  {
+   "type": "delta",
+   "text": "延迟"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "lat"
+  },
+  {
+   "type": "delta",
+   "text": "ency"
+  },
+  {
+   "type": "delta",
+   "text": "）。"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": " -"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "Transfer"
+  },
+  {
+   "type": "delta",
+   "text": " time"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "把"
+  },
+  {
+   "type": "delta",
+   "text": "数据"
+  },
+  {
+   "type": "delta",
+   "text": "块"
+  },
+  {
+   "type": "delta",
+   "text": "传输"
+  },
+  {
+   "type": "delta",
+   "text": "到"
+  },
+  {
+   "type": "delta",
+   "text": "上一"
+  },
+  {
+   "type": "delta",
+   "text": "级"
+  },
+  {
+   "type": "delta",
+   "text": "所需"
+  },
+  {
+   "type": "delta",
+   "text": "时间"
+  },
+  {
+   "type": "delta",
+   "text": " ="
+  },
+  {
+   "type": "delta",
+   "text": " data"
+  },
+  {
+   "type": "delta",
+   "text": " size"
+  },
+  {
+   "type": "delta",
+   "text": " /"
+  },
+  {
+   "type": "delta",
+   "text": " bandwidth"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "##"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "计算"
+  },
+  {
+   "type": "delta",
+   "text": "示例"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "课件"
+  },
+  {
+   "type": "delta",
+   "text": " p"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "7"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "-"
+  },
+  {
+   "type": "delta",
+   "text": " Cache"
+  },
+  {
+   "type": "delta",
+   "text": " Hit"
+  },
+  {
+   "type": "delta",
+   "text": " ="
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": " cycle"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "-"
+  },
+  {
+   "type": "delta",
+   "text": " Miss"
+  },
+  {
+   "type": "delta",
+   "text": " rate"
+  },
+  {
+   "type": "delta",
+   "text": " ="
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "0"
+  },
+  {
+   "type": "delta",
+   "text": "%"
+  },
+  {
+   "type": "delta",
+   "text": " ="
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "0"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "-"
+  },
+  {
+   "type": "delta",
+   "text": " Miss"
+  },
+  {
+   "type": "delta",
+   "text": " penalty"
+  },
+  {
+   "type": "delta",
+   "text": " ="
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "0"
+  },
+  {
+   "type": "delta",
+   "text": "0"
+  },
+  {
+   "type": "delta",
+   "text": " cycles"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "```"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "AM"
+  },
+  {
+   "type": "delta",
+   "text": "AT"
+  },
+  {
+   "type": "delta",
+   "text": " ="
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": " +"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "0"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": " ×"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "0"
+  },
+  {
+   "type": "delta",
+   "text": "0"
+  },
+  {
+   "type": "delta",
+   "text": " ="
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": " cycles"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "```"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "##"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "页"
+  },
+  {
+   "type": "delta",
+   "text": "码"
+  },
+  {
+   "type": "delta",
+   "text": "汇总"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "-"
+  },
+  {
+   "type": "delta",
+   "text": " p"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "5"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "Hit"
+  },
+  {
+   "type": "delta",
+   "text": "/M"
+  },
+  {
+   "type": "delta",
+   "text": "iss"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "定义"
+  },
+  {
+   "type": "delta",
+   "text": "、"
+  },
+  {
+   "type": "delta",
+   "text": "Miss"
+  },
+  {
+   "type": "delta",
+   "text": " penalty"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "概念"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "4"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "-"
+  },
+  {
+   "type": "delta",
+   "text": " p"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "6"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "AM"
+  },
+  {
+   "type": "delta",
+   "text": "AT"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "公式"
+  },
+  {
+   "type": "delta",
+   "text": "、"
+  },
+  {
+   "type": "delta",
+   "text": "miss"
+  },
+  {
+   "type": "delta",
+   "text": " penalty"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "构成"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "-"
+  },
+  {
+   "type": "delta",
+   "text": " p"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "7"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "单层"
+  },
+  {
+   "type": "delta",
+   "text": " AM"
+  },
+  {
+   "type": "delta",
+   "text": "AT"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "计算"
+  },
+  {
+   "type": "delta",
+   "text": "示例"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "-"
+  },
+  {
+   "type": "delta",
+   "text": " p"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "8"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "多级"
+  },
+  {
+   "type": "delta",
+   "text": "缓存"
+  },
+  {
+   "type": "delta",
+   "text": " AM"
+  },
+  {
+   "type": "delta",
+   "text": "AT"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "公式"
+  },
+  {
+   "type": "delta",
+   "text": "与"
+  },
+  {
+   "type": "delta",
+   "text": "加速"
+  },
+  {
+   "type": "delta",
+   "text": "比"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "以上"
+  },
+  {
+   "type": "delta",
+   "text": "均"
+  },
+  {
+   "type": "delta",
+   "text": "直接"
+  },
+  {
+   "type": "delta",
+   "text": "来自"
+  },
+  {
+   "type": "delta",
+   "text": "当前"
+  },
+  {
+   "type": "delta",
+   "text": "课件"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "无"
+  },
+  {
+   "type": "delta",
+   "text": "额外"
+  },
+  {
+   "type": "delta",
+   "text": "补充"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "model_end",
+   "call": 2,
+   "first_text_ms": 1806,
+   "duration_ms": 18757,
+   "stop_reason": "stop",
+   "output_tokens": 617
+  },
+  {
+   "type": "done",
+   "answer": "根据当前课件（PDF 物理页码 25、26、27、28），AMAT 公式与 miss penalty 解释如下。\n\n## 1. AMAT 公式\n\n**基本形式（单层缓存）** [S1][S2]：\n\n```\nAMAT = Hit time + Miss rate × Miss penalty\n     = T_hit(L1) + Miss%(L1) × T(memory)\n```\n\n- **Hit time**：命中时在当前缓存层取数据的时间（例如 L1 为 1 cycle）。\n- **Miss rate**：未命中率 = 1 − Hit rate [S4]。\n- **Miss penalty**：未命中时从更低一级内存取回一个 block 所需的时间 [S1]。\n\n**多级缓存形式（L1→L2→L3→主存）** [S3]：\n\n```\nAMAT = T_hit(L1) + Miss%(L1) × ( T_hit(L2)\n        + Miss%(L2) × ( T_hit(L3) + Miss%(L3) × T(memory) ) )\n```\n\n课件给出的数值示例：L1=1 clk、L2=10 clk、L3=20 clk、主存=300 clk，算得 AMAT ≈ 2.115，相比无多级缓存的 31 约 14.7× 加速 [S3]。\n\n## 2. Miss penalty 的解释\n\n课件对 miss penalty 的定义 [S1][S4]：\n\n- **含义**：当请求的 block 不在当前缓存层（miss）时，需要从下一级（更低一级）内存取回该 block 所**额外花费的时间** [S4]。\n- **构成** [S1]：\n  ```\n  Miss penalty = Access time + data size / bandwidth\n  ```\n  - **Access time**：内存处理一次访问的延迟（latency）。\n  - **Transfer time**：把数据块传输到上一级所需时间 = data size / bandwidth。\n\n## 3. 计算示例（课件 p.27）[S2]\n\n- Cache Hit = 1 cycle\n- Miss rate = 10% = 0.1\n- Miss penalty = 300 cycles\n\n```\nAMAT = 1 + 0.1 × 300 = 31 cycles\n```\n\n## 页码汇总\n- p.25：Hit/Miss 定义、Miss penalty 概念 [S4]\n- p.26：AMAT 公式、miss penalty 构成 [S1]\n- p.27：单层 AMAT 计算示例 [S2]\n- p.28：多级缓存 AMAT 公式与加速比 [S3]\n\n以上均直接来自当前课件，无额外补充。",
+   "citations": [
+    {
+     "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+     "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p26-1",
+     "page": 26,
+     "text": "CPU Memory Hierarchy\n\nAverage Memory Access Time (AMAT)\n\n  AMAT = Hit time + Miss rate x Miss penalty\n  Miss Penalty: time to fetch a block from lower memory\n  level\n   Access Time: Latency for the memory to handle one access\n    Transfer Time: Latency to transfer data block to higher level\n   Miss penalty = access time + data size / bandwidth\n\n\n\n\n\n A cache helps when common hits remain fast and sufficiently few accesses pay\n▪\n  the miss penalty.\n\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        26",
+     "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/26/preview",
+     "source": "S1"
+    },
+    {
+     "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+     "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p27-1",
+     "page": 27,
+     "text": "CPU Memory Hierarchy\n\nMemory Hierarchy Performance\n\n\n      1 clk                                 300 clks\n                    First-level                                  Main\n               Cache                               Memory\n      Hit Time              Miss % * Miss penalty                                                  (DRAM)\n\n  Average Memory Access Time (AMAT)\n    = Hit Time + Miss rate * Miss Penalty\n    = Thit(L1) + Miss%(L1) * T(memory)\n  Example:\n    Cache Hit = 1 cycle\n    Miss rate = 10% = 0.1\n    Miss penalty = 300 cycles\n   AMAT = 1 + 0.1 * 300 = 31 cycles\n  Can we improve it?\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        27",
+     "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/27/preview",
+     "source": "S2"
+    },
+    {
+     "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+     "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p25-1",
+     "page": 25,
+     "text": "CPU Memory Hierarchy\n\nHit or Miss of Caches: Benefit vs. Penalty\n   Hit: The requested memory block is       Miss: The requested memory block\n  found in the current cache level, with         is not present in the current cache\n  a valid tag match.                              level, so it must be retrieved from the\n                                           next lower level.    Hit Rate: Hits / Total Accesses\n                                          Miss Rate: 1 - Hit Rate   Cache Read/Write: Find the data on\n   cache and then perform read/write        Miss Penalty: The additional time\n                                              required to service a miss\n\n\n\n\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        25",
+     "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/25/preview",
+     "source": "S4"
+    },
+    {
+     "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+     "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p28-1",
+     "page": 28,
+     "text": "CPU Memory Hierarchy\n\nReducing Penalty: Multi-Level Cache\n\n\n 1 clk          10 clks         20 clks          300 clks                       Second            Third\n           First-level                                                           Main                            Level            Level\n        Cache                                                    Memory                       Cache         Cache\n                                                    (DRAM)\n          L1             L2             L3\n\n                        On-die\n\n Average Memory Access Time (AMAT)\n = Thit(L1) + Miss%(L1)* (Thit(L2)\n + Miss%(L2)* (Thit(L3) + Miss%(L3)*T(memory) ) )\n\n AMAT = ?\n    2.115 (compare to 31 with no multi-levels)\n    14.7x Speed Up\n\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        28",
+     "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/28/preview",
+     "source": "S3"
+    }
+   ],
+   "trace": [
+    {
+     "tool": "search_lecture",
+     "args": {
+      "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+      "query": "AMAT average memory access time miss penalty"
+     },
+     "pages": [
+      26,
+      27,
+      28
+     ],
+     "duration_ms": 2,
+     "model_call": 1
+    },
+    {
+     "tool": "search_lecture",
+     "args": {
+      "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+      "query": "miss penalty cache hit time"
+     },
+     "pages": [
+      27,
+      26,
+      25
+     ],
+     "duration_ms": 1,
+     "model_call": 1
+    }
+   ],
+   "model_calls": 2,
+   "timing_ms": {
+    "generation": 23526,
+    "total": 23535
+   }
+  }
+ ],
+ "status": "done",
+ "elapsed_s": 23.69
+}

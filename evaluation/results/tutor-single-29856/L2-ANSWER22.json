@@ -1,0 +1,1621 @@
+{
+ "id": "L2-ANSWER22",
+ "input": {
+  "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+  "session_id": "single-7de8e4c491574dd19f65774e57c1618c",
+  "question": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。\n为什么不能简单认为 HBM 对所有系统都是最佳选择？"
+ },
+ "events": [
+  {
+   "type": "model_start",
+   "call": 1
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "model_end",
+   "call": 1,
+   "first_text_ms": null,
+   "duration_ms": 3046,
+   "stop_reason": "toolUse",
+   "output_tokens": 100
+  },
+  {
+   "type": "tool_start",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "query": "HBM high bandwidth memory best choice all systems"
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "query": "HBM high bandwidth memory best choice all systems"
+   },
+   "pages": [
+    59,
+    57,
+    56
+   ],
+   "duration_ms": 2,
+   "model_call": 1
+  },
+  {
+   "type": "model_start",
+   "call": 2
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "model_end",
+   "call": 2,
+   "first_text_ms": null,
+   "duration_ms": 5960,
+   "stop_reason": "toolUse",
+   "output_tokens": 186
+  },
+  {
+   "type": "tool_start",
+   "tool": "read_page",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "page": 59
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "read_page",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "page": 59
+   },
+   "pages": [
+    59
+   ],
+   "duration_ms": 1,
+   "model_call": 2
+  },
+  {
+   "type": "tool_start",
+   "tool": "read_page",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "page": 57
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "read_page",
+   "args": {
+    "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+    "page": 57
+   },
+   "pages": [
+    57
+   ],
+   "duration_ms": 1,
+   "model_call": 2
+  },
+  {
+   "type": "model_start",
+   "call": 3
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "delta",
+   "text": "不能"
+  },
+  {
+   "type": "delta",
+   "text": "简单"
+  },
+  {
+   "type": "delta",
+   "text": "认为"
+  },
+  {
+   "type": "delta",
+   "text": " H"
+  },
+  {
+   "type": "delta",
+   "text": "BM"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "对所有"
+  },
+  {
+   "type": "delta",
+   "text": "系统"
+  },
+  {
+   "type": "delta",
+   "text": "都是"
+  },
+  {
+   "type": "delta",
+   "text": "最佳"
+  },
+  {
+   "type": "delta",
+   "text": "选择"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "因为"
+  },
+  {
+   "type": "delta",
+   "text": "不同"
+  },
+  {
+   "type": "delta",
+   "text": "内存"
+  },
+  {
+   "type": "delta",
+   "text": "类型"
+  },
+  {
+   "type": "delta",
+   "text": "针对"
+  },
+  {
+   "type": "delta",
+   "text": "不同的"
+  },
+  {
+   "type": "delta",
+   "text": "系统"
+  },
+  {
+   "type": "delta",
+   "text": "约束"
+  },
+  {
+   "type": "delta",
+   "text": "进行了"
+  },
+  {
+   "type": "delta",
+   "text": "优化"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "选择"
+  },
+  {
+   "type": "delta",
+   "text": "取决于"
+  },
+  {
+   "type": "delta",
+   "text": "具体"
+  },
+  {
+   "type": "delta",
+   "text": "工作"
+  },
+  {
+   "type": "delta",
+   "text": "负载"
+  },
+  {
+   "type": "delta",
+   "text": "和"
+  },
+  {
+   "type": "delta",
+   "text": "系统"
+  },
+  {
+   "type": "delta",
+   "text": "限制"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "根据"
+  },
+  {
+   "type": "delta",
+   "text": "课件"
+  },
+  {
+   "type": "delta",
+   "text": "内容"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "具体"
+  },
+  {
+   "type": "delta",
+   "text": "原因"
+  },
+  {
+   "type": "delta",
+   "text": "如下"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "优化"
+  },
+  {
+   "type": "delta",
+   "text": "目标"
+  },
+  {
+   "type": "delta",
+   "text": "不同"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "   "
+  },
+  {
+   "type": "delta",
+   "text": " *"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "DDR"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "侧重于"
+  },
+  {
+   "type": "delta",
+   "text": "容量"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "capacity"
+  },
+  {
+   "type": "delta",
+   "text": "）、"
+  },
+  {
+   "type": "delta",
+   "text": "可扩展"
+  },
+  {
+   "type": "delta",
+   "text": "性"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "expand"
+  },
+  {
+   "type": "delta",
+   "text": "ability"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "和"
+  },
+  {
+   "type": "delta",
+   "text": "每"
+  },
+  {
+   "type": "delta",
+   "text": " GB"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "成本"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "cost"
+  },
+  {
+   "type": "delta",
+   "text": " per"
+  },
+  {
+   "type": "delta",
+   "text": " GB"
+  },
+  {
+   "type": "delta",
+   "text": "）。"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "   "
+  },
+  {
+   "type": "delta",
+   "text": " *"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "G"
+  },
+  {
+   "type": "delta",
+   "text": "DDR"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "在"
+  },
+  {
+   "type": "delta",
+   "text": "引脚"
+  },
+  {
+   "type": "delta",
+   "text": "带宽"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "pin"
+  },
+  {
+   "type": "delta",
+   "text": " bandwidth"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "和"
+  },
+  {
+   "type": "delta",
+   "text": "板"
+  },
+  {
+   "type": "delta",
+   "text": "级"
+  },
+  {
+   "type": "delta",
+   "text": "成本"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "board"
+  },
+  {
+   "type": "delta",
+   "text": " cost"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "之间"
+  },
+  {
+   "type": "delta",
+   "text": "取得"
+  },
+  {
+   "type": "delta",
+   "text": "平衡"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "   "
+  },
+  {
+   "type": "delta",
+   "text": " *"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "H"
+  },
+  {
+   "type": "delta",
+   "text": "BM"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "侧重于"
+  },
+  {
+   "type": "delta",
+   "text": "每"
+  },
+  {
+   "type": "delta",
+   "text": "封装"
+  },
+  {
+   "type": "delta",
+   "text": "带宽"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "band"
+  },
+  {
+   "type": "delta",
+   "text": "width"
+  },
+  {
+   "type": "delta",
+   "text": " per"
+  },
+  {
+   "type": "delta",
+   "text": " package"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "和"
+  },
+  {
+   "type": "delta",
+   "text": "每"
+  },
+  {
+   "type": "delta",
+   "text": "瓦"
+  },
+  {
+   "type": "delta",
+   "text": "特"
+  },
+  {
+   "type": "delta",
+   "text": "带宽"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "band"
+  },
+  {
+   "type": "delta",
+   "text": "width"
+  },
+  {
+   "type": "delta",
+   "text": " per"
+  },
+  {
+   "type": "delta",
+   "text": " watt"
+  },
+  {
+   "type": "delta",
+   "text": "）。"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "   "
+  },
+  {
+   "type": "delta",
+   "text": " *"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "因此"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "如果"
+  },
+  {
+   "type": "delta",
+   "text": "系统"
+  },
+  {
+   "type": "delta",
+   "text": "更"
+  },
+  {
+   "type": "delta",
+   "text": "看重"
+  },
+  {
+   "type": "delta",
+   "text": "容量"
+  },
+  {
+   "type": "delta",
+   "text": "或"
+  },
+  {
+   "type": "delta",
+   "text": "成本"
+  },
+  {
+   "type": "delta",
+   "text": "而非"
+  },
+  {
+   "type": "delta",
+   "text": "极致"
+  },
+  {
+   "type": "delta",
+   "text": "带宽"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "DDR"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "或"
+  },
+  {
+   "type": "delta",
+   "text": " G"
+  },
+  {
+   "type": "delta",
+   "text": "DDR"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "可能是"
+  },
+  {
+   "type": "delta",
+   "text": "更"
+  },
+  {
+   "type": "delta",
+   "text": "合适的"
+  },
+  {
+   "type": "delta",
+   "text": "选择"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "H"
+  },
+  {
+   "type": "delta",
+   "text": "BM"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "存在"
+  },
+  {
+   "type": "delta",
+   "text": "额外的"
+  },
+  {
+   "type": "delta",
+   "text": "成本"
+  },
+  {
+   "type": "delta",
+   "text": "与"
+  },
+  {
+   "type": "delta",
+   "text": "复杂性"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "   "
+  },
+  {
+   "type": "delta",
+   "text": " *"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " H"
+  },
+  {
+   "type": "delta",
+   "text": "BM"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "通常"
+  },
+  {
+   "type": "delta",
+   "text": "采用"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": "5"
+  },
+  {
+   "type": "delta",
+   "text": "D"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "封装"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "与"
+  },
+  {
+   "type": "delta",
+   "text": " X"
+  },
+  {
+   "type": "delta",
+   "text": "PU"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "一起"
+  },
+  {
+   "type": "delta",
+   "text": "放置在"
+  },
+  {
+   "type": "delta",
+   "text": "中介"
+  },
+  {
+   "type": "delta",
+   "text": "层"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "inter"
+  },
+  {
+   "type": "delta",
+   "text": "poser"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "上"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "   "
+  },
+  {
+   "type": "delta",
+   "text": " *"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "虽然"
+  },
+  {
+   "type": "delta",
+   "text": "这种"
+  },
+  {
+   "type": "delta",
+   "text": "密集"
+  },
+  {
+   "type": "delta",
+   "text": "连接"
+  },
+  {
+   "type": "delta",
+   "text": "提高了"
+  },
+  {
+   "type": "delta",
+   "text": "带宽"
+  },
+  {
+   "type": "delta",
+   "text": "和"
+  },
+  {
+   "type": "delta",
+   "text": "每"
+  },
+  {
+   "type": "delta",
+   "text": "比特"
+  },
+  {
+   "type": "delta",
+   "text": "能耗"
+  },
+  {
+   "type": "delta",
+   "text": "效率"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "但"
+  },
+  {
+   "type": "delta",
+   "text": "带来了"
+  },
+  {
+   "type": "delta",
+   "text": "组装"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "assembly"
+  },
+  {
+   "type": "delta",
+   "text": "）、"
+  },
+  {
+   "type": "delta",
+   "text": "良"
+  },
+  {
+   "type": "delta",
+   "text": "率"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "yield"
+  },
+  {
+   "type": "delta",
+   "text": "）、"
+  },
+  {
+   "type": "delta",
+   "text": "冷却"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "cool"
+  },
+  {
+   "type": "delta",
+   "text": "ing"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "和"
+  },
+  {
+   "type": "delta",
+   "text": "电源"
+  },
+  {
+   "type": "delta",
+   "text": "分配"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "power"
+  },
+  {
+   "type": "delta",
+   "text": " delivery"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "方面的"
+  },
+  {
+   "type": "delta",
+   "text": "成本"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "结论"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "内存"
+  },
+  {
+   "type": "delta",
+   "text": "类型的"
+  },
+  {
+   "type": "delta",
+   "text": "选择"
+  },
+  {
+   "type": "delta",
+   "text": "取决于"
+  },
+  {
+   "type": "delta",
+   "text": "工作"
+  },
+  {
+   "type": "delta",
+   "text": "负载"
+  },
+  {
+   "type": "delta",
+   "text": "和"
+  },
+  {
+   "type": "delta",
+   "text": "系统"
+  },
+  {
+   "type": "delta",
+   "text": "约束"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "The"
+  },
+  {
+   "type": "delta",
+   "text": " choice"
+  },
+  {
+   "type": "delta",
+   "text": " depends"
+  },
+  {
+   "type": "delta",
+   "text": " on"
+  },
+  {
+   "type": "delta",
+   "text": " the"
+  },
+  {
+   "type": "delta",
+   "text": " workload"
+  },
+  {
+   "type": "delta",
+   "text": " and"
+  },
+  {
+   "type": "delta",
+   "text": " system"
+  },
+  {
+   "type": "delta",
+   "text": " constraints"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "H"
+  },
+  {
+   "type": "delta",
+   "text": "BM"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "并非"
+  },
+  {
+   "type": "delta",
+   "text": "在所有"
+  },
+  {
+   "type": "delta",
+   "text": "场景"
+  },
+  {
+   "type": "delta",
+   "text": "下"
+  },
+  {
+   "type": "delta",
+   "text": "都"
+  },
+  {
+   "type": "delta",
+   "text": "优于"
+  },
+  {
+   "type": "delta",
+   "text": "其他"
+  },
+  {
+   "type": "delta",
+   "text": "类型"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "特别是在"
+  },
+  {
+   "type": "delta",
+   "text": "对"
+  },
+  {
+   "type": "delta",
+   "text": "成本"
+  },
+  {
+   "type": "delta",
+   "text": "敏感"
+  },
+  {
+   "type": "delta",
+   "text": "或"
+  },
+  {
+   "type": "delta",
+   "text": "需要"
+  },
+  {
+   "type": "delta",
+   "text": "大容量"
+  },
+  {
+   "type": "delta",
+   "text": "而非"
+  },
+  {
+   "type": "delta",
+   "text": "高"
+  },
+  {
+   "type": "delta",
+   "text": "带宽"
+  },
+  {
+   "type": "delta",
+   "text": "的"
+  },
+  {
+   "type": "delta",
+   "text": "系统中"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "PDF"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "物理"
+  },
+  {
+   "type": "delta",
+   "text": "页"
+  },
+  {
+   "type": "delta",
+   "text": "码"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "对应"
+  },
+  {
+   "type": "delta",
+   "text": "第"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "5"
+  },
+  {
+   "type": "delta",
+   "text": "9"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "页"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "对应"
+  },
+  {
+   "type": "delta",
+   "text": "第"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "5"
+  },
+  {
+   "type": "delta",
+   "text": "7"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "页"
+  },
+  {
+   "type": "model_end",
+   "call": 3,
+   "first_text_ms": 738,
+   "duration_ms": 9406,
+   "stop_reason": "stop",
+   "output_tokens": 359
+  },
+  {
+   "type": "done",
+   "answer": "不能简单认为 HBM 对所有系统都是最佳选择，因为不同内存类型针对不同的系统约束进行了优化，选择取决于具体工作负载和系统限制。\n\n根据课件内容，具体原因如下：\n\n1.  **优化目标不同**：\n    *   **DDR** 侧重于容量（capacity）、可扩展性（expandability）和每 GB 成本（cost per GB）。\n    *   **GDDR** 在引脚带宽（pin bandwidth）和板级成本（board cost）之间取得平衡。\n    *   **HBM** 侧重于每封装带宽（bandwidth per package）和每瓦特带宽（bandwidth per watt）。\n    *   因此，如果系统更看重容量或成本而非极致带宽，DDR 或 GDDR 可能是更合适的选择 [S1]。\n\n2.  **HBM 存在额外的成本与复杂性**：\n    *   HBM 通常采用 2.5D 封装，与 XPU 一起放置在中介层（interposer）上。\n    *   虽然这种密集连接提高了带宽和每比特能耗效率，但带来了组装（assembly）、良率（yield）、冷却（cooling）和电源分配（power delivery）方面的成本 [S2]。\n\n**结论**：内存类型的选择取决于工作负载和系统约束（The choice depends on the workload and system constraints）[S1]。HBM 并非在所有场景下都优于其他类型，特别是在对成本敏感或需要大容量而非高带宽的系统中。\n\n**PDF 物理页码**：\n*   [S1] 对应第 59 页\n*   [S2] 对应第 57 页",
+   "citations": [
+    {
+     "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+     "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p59-1",
+     "page": 59,
+     "text": "GPU Memory Hierarchy\n\nDDR, GDDR, and HBM Optimize Different Constraints\n\n\n\n\n\n▪ DDR favors capacity, expandability, and cost per GB. GDDR balances pin\n  bandwidth and board cost.\n▪ HBM favors bandwidth per package and per watt. The choice depends on the\n  workload and system constraints.\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        59",
+     "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/59/preview",
+     "source": "S1"
+    },
+    {
+     "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+     "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p57-1",
+     "page": 57,
+     "text": "GPU Memory Hierarchy\n\nFrom GDDR to HBM: 2.5D Packaging\n\n\n\n\n\n▪ HBM commonly sits beside the XPU on an interposer, forming a 2.5D package.\n\n▪ Dense connections improve bandwidth and energy per bit, with costs in assembly,\n  yield, cooling, and power delivery.\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        57",
+     "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/57/preview",
+     "source": "S2"
+    }
+   ],
+   "trace": [
+    {
+     "tool": "search_lecture",
+     "args": {
+      "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+      "query": "HBM high bandwidth memory best choice all systems"
+     },
+     "pages": [
+      59,
+      57,
+      56
+     ],
+     "duration_ms": 2,
+     "model_call": 1
+    },
+    {
+     "tool": "read_page",
+     "args": {
+      "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+      "page": 59
+     },
+     "pages": [
+      59
+     ],
+     "duration_ms": 1,
+     "model_call": 2
+    },
+    {
+     "tool": "read_page",
+     "args": {
+      "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+      "page": 57
+     },
+     "pages": [
+      57
+     ],
+     "duration_ms": 1,
+     "model_call": 2
+    }
+   ],
+   "model_calls": 3,
+   "timing_ms": {
+    "generation": 18412,
+    "total": 18424
+   }
+  }
+ ],
+ "status": "done",
+ "elapsed_s": 18.57
+}
