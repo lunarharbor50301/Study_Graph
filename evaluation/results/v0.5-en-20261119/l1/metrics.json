@@ -1,0 +1,187 @@
+{
+  "concepts": {
+    "precision": {
+      "numerator": 24,
+      "denominator": 24,
+      "value": 1.0,
+      "status": "measured"
+    },
+    "core_recall": {
+      "numerator": 17,
+      "denominator": 17,
+      "value": 1.0,
+      "status": "measured"
+    },
+    "missing_core_ids": [],
+    "raw_count": 24,
+    "deduplicated_count": 24
+  },
+  "relations": {
+    "precision": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null,
+      "status": "not_applicable"
+    },
+    "core_recall": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null,
+      "status": "not_applicable"
+    },
+    "missing_core_ids": [],
+    "raw_count": 0,
+    "deduplicated_count": 0
+  },
+  "study_notes": {
+    "mean_point_score": {
+      "numerator": 16.333333333333332,
+      "denominator": 17,
+      "value": 0.9607843137254901,
+      "status": "measured"
+    },
+    "micro_point_score": {
+      "numerator": 91,
+      "denominator": 94,
+      "value": 0.9680851063829787,
+      "status": "measured"
+    },
+    "fully_covered_points": {
+      "numerator": 44,
+      "denominator": 47,
+      "value": 0.9361702127659575,
+      "status": "measured"
+    },
+    "items": [
+      {
+        "id": "N-from-an-algorithm-to-instruction-execution",
+        "numerator": 3,
+        "denominator": 4,
+        "value": 0.75,
+        "status": "measured"
+      },
+      {
+        "id": "N-host-organization-and-accelerator-offload",
+        "numerator": 10,
+        "denominator": 10,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-instruction-execution-and-pipeline-throughput",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-pipeline-hazards-and-stalls",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-forwarding-and-register-renaming",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-out-of-order-and-superscalar-execution",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-speculation-and-latency-hiding-on-a-cpu",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-scaling-throughput-with-parallel-hardware",
+        "numerator": 8,
+        "denominator": 8,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-from-cuda-blocks-to-warp-execution",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-simd-utilization-and-warp-divergence",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-atomic-updates-and-histogram-contention",
+        "numerator": 5,
+        "denominator": 6,
+        "value": 0.8333333333333334,
+        "status": "measured"
+      },
+      {
+        "id": "N-why-transformer-workloads-favor-gpus",
+        "numerator": 3,
+        "denominator": 4,
+        "value": 0.75,
+        "status": "measured"
+      },
+      {
+        "id": "N-shared-memory-parallelism-with-posix-threads",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-protecting-shared-state-and-coordinating-threads",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-launching-indexing-and-synchronizing-cuda-work",
+        "numerator": 8,
+        "denominator": 8,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-achievable-speedup-and-the-serial-fraction",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-roofline-and-arithmetic-intensity",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      }
+    ]
+  },
+  "review_type": "llm_judge",
+  "reference_status": "human_review_pending",
+  "limitations": [
+    "Semantic decisions require human verification, especially LLM judge decisions.",
+    "Reference set is non-exhaustive; valid extra concepts count toward precision.",
+    "Fact point coverage is not a measurement of all generated factual claims.",
+    "Relations require semantic/direction/endpoint review; layout edges are not relations."
+  ],
+  "reference_sha256": "7641081c3fb1d10900aee60e81eb0f511b75bec58730f900fab81447c118eace",
+  "prediction_sha256": "9b2f08829e89b47ce12341db5e384db6eb35d66966e7e2af7dddf932a61d5614"
+}

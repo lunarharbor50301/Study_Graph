@@ -1,0 +1,911 @@
+{
+  "reference_sha256": "c94af170600f6616e95d8a750094f41631b9e99e10cd2b739232f6bed3394a27",
+  "prediction_sha256": "171f3b6c12795e6ad9232af657e71c3809a31f0f7f167ca564baf2f2e612709e",
+  "reviewer": "deepseek-flash",
+  "review_date": "2026-11-19T11:45:44.555776+00:00",
+  "review_type": "llm_judge",
+  "concepts": [
+    {
+      "id": "topic-0-note-0",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Accurately describes Von Neumann fetch-execute workflow and the memory wall from page 3; correct and in scope, no reference concept covers it."
+    },
+    {
+      "id": "topic-0-note-1",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "memory-wall"
+      ],
+      "reason": "Covers the processor-DRAM gap and that faster processors alone do not guarantee faster applications, matching the memory-wall concept's processor-memory gap fact."
+    },
+    {
+      "id": "topic-0-note-2",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "memory-wall"
+      ],
+      "reason": "Covers scaling laws and post-Dennard widening of the memory wall, matching the memory-wall concept's compute-vs-memory growth facts."
+    },
+    {
+      "id": "topic-0-note-3",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "memory-wall"
+      ],
+      "reason": "Covers capacity per core falling as compute grows faster than memory capacity, matching memory-wall-P3."
+    },
+    {
+      "id": "topic-0-note-4",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "memory-wall"
+      ],
+      "reason": "Covers worsening bandwidth and latency trends, matching the memory-wall concept's bandwidth/latency facts."
+    },
+    {
+      "id": "topic-1-note-0",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes registers/caches reducing dependence on main memory and data reuse; valid extra concept."
+    },
+    {
+      "id": "topic-1-note-1",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes private and shared caches with AMD Barcelona example; valid extra concept."
+    },
+    {
+      "id": "topic-1-note-2",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes AMD Zen 3 L3 growth from 32 MB to 96 MB via stacked cache die; valid extra concept."
+    },
+    {
+      "id": "topic-2-note-0",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "memory-hierarchy"
+      ],
+      "reason": "Covers frequent data in fast small memory and infrequent data in slow large memory plus working-set condition, matching both memory-hierarchy facts."
+    },
+    {
+      "id": "topic-2-note-1",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "locality"
+      ],
+      "reason": "Covers temporal and spatial locality definitions with loop/array examples, matching both locality facts."
+    },
+    {
+      "id": "topic-2-note-2",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "cache-hit"
+      ],
+      "reason": "Covers hit with valid tag match, miss requiring lower level, and miss rate = 1 - hit rate, matching all cache-hit facts."
+    },
+    {
+      "id": "topic-2-note-3",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "amat"
+      ],
+      "reason": "Covers AMAT formula and miss penalty = access time + data size/bandwidth, matching both amat facts."
+    },
+    {
+      "id": "topic-2-note-4",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes multi-level cache hierarchy and latencies from page 28; valid extra concept."
+    },
+    {
+      "id": "topic-2-note-5",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes blocking/tiling versus column-wise traversal from page 29; valid extra concept."
+    },
+    {
+      "id": "topic-2-note-6",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "tlb"
+      ],
+      "reason": "Covers TLB miss requiring translation work, cache miss determining lower-level fetch, and only cache-hierarchy miss reaching DRAM, matching all tlb facts."
+    },
+    {
+      "id": "topic-3-note-0",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes SRAM read/write operation from page 31; valid extra concept, though it does not cover the SRAM-vs-DRAM comparison facts."
+    },
+    {
+      "id": "topic-3-note-1",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes DRAM refresh and unavailability calculation from page 34; valid extra concept."
+    },
+    {
+      "id": "topic-3-note-2",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes why DRAM is slow from page 35; valid extra concept."
+    },
+    {
+      "id": "topic-3-note-3",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "banks"
+      ],
+      "reason": "Covers independent banks overlapping work and shared data bus limiting returns, matching both banks facts."
+    },
+    {
+      "id": "topic-3-note-4",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes rank organization from page 37; valid extra concept."
+    },
+    {
+      "id": "topic-3-note-5",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes memory controller buffering and scheduling from page 38; valid extra concept."
+    },
+    {
+      "id": "topic-3-note-6",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "channels"
+      ],
+      "reason": "Covers one controller port per channel and peak bandwidth formula; partially covers channels concept but does not state the DDR5 subchannel fact, so not a full match."
+    },
+    {
+      "id": "topic-3-note-7",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes DDR1-DDR5 bandwidth growth and throughput levers from page 41; valid extra concept."
+    },
+    {
+      "id": "topic-4-note-0",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "gpu-memory"
+      ],
+      "reason": "Covers per-thread registers, per-SM shared memory+L1, device-wide L2, and off-chip GDDR/HBM, matching all gpu-memory facts."
+    },
+    {
+      "id": "topic-4-note-1",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "cuda-spaces"
+      ],
+      "reason": "Covers scope/lifetime definitions and __syncthreads block-only behavior, matching cuda-spaces-P1."
+    },
+    {
+      "id": "topic-4-note-2",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "cuda-spaces"
+      ],
+      "reason": "Covers local memory thread-private but in device DRAM through L1/L2, matching cuda-spaces-P2 and P3."
+    },
+    {
+      "id": "topic-4-note-3",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "coalescing"
+      ],
+      "reason": "Covers one warp instruction generating up to 32 addresses and coalescer grouping, matching coalescing-P1."
+    },
+    {
+      "id": "topic-4-note-4",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "coalescing"
+      ],
+      "reason": "Covers aligned contiguous addresses touching fewer segments and strided/misaligned accesses touching more, matching coalescing-P2 and P3."
+    },
+    {
+      "id": "topic-4-note-5",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes data layout and useful bandwidth from page 49; valid extra concept."
+    },
+    {
+      "id": "topic-4-note-6",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "shared-memory"
+      ],
+      "reason": "Covers software staging/synchronization and on-chip reuse reducing DRAM traffic and raising arithmetic intensity, matching both shared-memory facts."
+    },
+    {
+      "id": "topic-4-note-7",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "bank-conflict"
+      ],
+      "reason": "Covers 32 banks, broadcast, multiple service rounds for same-bank addresses, and distinction from coalescing, matching all bank-conflict facts."
+    },
+    {
+      "id": "topic-5-note-0",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes DDR DIMM vs GDDR from page 52; valid extra concept."
+    },
+    {
+      "id": "topic-5-note-1",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes GDDR channels and signaling costs from page 53; valid extra concept."
+    },
+    {
+      "id": "topic-5-note-2",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes GDDR6X PAM4 and GDDR7 PAM3 from page 54; valid extra concept."
+    },
+    {
+      "id": "topic-5-note-3",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes HBM wide interface per stack from page 55; valid extra concept."
+    },
+    {
+      "id": "topic-5-note-4",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes HBM stacked-die overview from page 56; valid extra concept."
+    },
+    {
+      "id": "topic-5-note-5",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "hbm"
+      ],
+      "reason": "Covers HBM beside XPU on interposer and dense connections improving bandwidth/energy per bit at packaging cost, matching both hbm facts."
+    },
+    {
+      "id": "topic-5-note-6",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes HBM1-HBM4 scaling and constraints from page 58; valid extra concept."
+    },
+    {
+      "id": "topic-5-note-7",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "memory-tradeoff"
+      ],
+      "reason": "Covers DDR/GDDR/HBM trade-offs, matching all memory-tradeoff facts."
+    },
+    {
+      "id": "topic-6-note-0",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes banked shared LLC from page 61; valid extra concept."
+    },
+    {
+      "id": "topic-6-note-1",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "coherence"
+      ],
+      "reason": "Covers write propagation and write serialization definitions, matching both coherence facts."
+    },
+    {
+      "id": "topic-6-note-2",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "coherence-protocol"
+      ],
+      "reason": "Covers snooping broadcast, directory tracking, and MESI as permissions, matching both coherence-protocol facts."
+    },
+    {
+      "id": "topic-6-note-3",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes KV-cache capacity wall case study from page 65; valid extra concept."
+    },
+    {
+      "id": "topic-6-note-4",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [],
+      "reason": "Correctly describes CXL unified address map from page 66; valid extra concept."
+    },
+    {
+      "id": "topic-6-note-5",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "cxl"
+      ],
+      "reason": "Covers expansion, pooling, and coherent sharing differing from mapping same region, matching all cxl facts."
+    },
+    {
+      "id": "topic-6-note-6",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "tiering"
+      ],
+      "reason": "Covers Grace LPDDR5X over NVLink-C2C without enlarging HBM, matching tiering-P4."
+    },
+    {
+      "id": "topic-6-note-7",
+      "correct": true,
+      "duplicate_of": null,
+      "matches": [
+        "tiering"
+      ],
+      "reason": "Covers hot data in HBM, cold objects in LPDDR, and promotion cost condition, matching tiering-P1, P2, P3."
+    }
+  ],
+  "relations": [],
+  "study_notes": [
+    {
+      "id": "N-memory-hierarchy",
+      "points": [
+        {
+          "id": "memory-hierarchy-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-2-note-0"
+          ],
+          "reason": "topic-2-note-0 states frequent data uses fast, expensive, small memory such as cache."
+        },
+        {
+          "id": "memory-hierarchy-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-2-note-0"
+          ],
+          "reason": "topic-2-note-0 states infrequent data uses slow, cheap, large memory such as main memory and disk."
+        }
+      ]
+    },
+    {
+      "id": "N-locality",
+      "points": [
+        {
+          "id": "locality-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-2-note-1"
+          ],
+          "reason": "topic-2-note-1 defines spatial locality as neighbors of current access being accessed in the future."
+        },
+        {
+          "id": "locality-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-2-note-1"
+          ],
+          "reason": "topic-2-note-1 defines temporal locality as data quickly reused in the future."
+        }
+      ]
+    },
+    {
+      "id": "N-cache-hit",
+      "points": [
+        {
+          "id": "cache-hit-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-2-note-2"
+          ],
+          "reason": "topic-2-note-2 states a hit is found in current level with valid tag match."
+        },
+        {
+          "id": "cache-hit-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-2-note-2"
+          ],
+          "reason": "topic-2-note-2 states miss rate = 1 - hit rate."
+        },
+        {
+          "id": "cache-hit-P3",
+          "score": 2,
+          "prediction_ids": [
+            "topic-2-note-2"
+          ],
+          "reason": "topic-2-note-2 states a miss must be retrieved from the next lower level."
+        }
+      ]
+    },
+    {
+      "id": "N-amat",
+      "points": [
+        {
+          "id": "amat-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-2-note-3"
+          ],
+          "reason": "topic-2-note-3 gives AMAT = hit time + miss rate × miss penalty."
+        },
+        {
+          "id": "amat-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-2-note-3"
+          ],
+          "reason": "topic-2-note-3 gives miss penalty = access time + data size/bandwidth with access and transfer time definitions."
+        }
+      ]
+    },
+    {
+      "id": "N-tlb",
+      "points": [
+        {
+          "id": "tlb-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-2-note-6"
+          ],
+          "reason": "topic-2-note-6 states a TLB miss requires address translation work."
+        },
+        {
+          "id": "tlb-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-2-note-6"
+          ],
+          "reason": "topic-2-note-6 states a cache miss determines whether data comes from a lower level."
+        },
+        {
+          "id": "tlb-P3",
+          "score": 1,
+          "prediction_ids": [
+            "topic-2-note-6"
+          ],
+          "reason": "topic-2-note-6 distinguishes TLB and cache misses implicitly but does not explicitly state they are distinct events."
+        }
+      ]
+    },
+    {
+      "id": "N-sram-dram",
+      "points": [
+        {
+          "id": "sram-dram-P1",
+          "score": 0,
+          "prediction_ids": [],
+          "reason": "No generated note states SRAM uses a stable transistor circuit and is used in caches/registers; topic-3-note-0 only describes SRAM read/write operation."
+        },
+        {
+          "id": "sram-dram-P2",
+          "score": 0,
+          "prediction_ids": [],
+          "reason": "No generated note states DRAM stores charge in capacitors, needs refresh, and restores after read; topic-3-note-1 covers refresh only."
+        }
+      ]
+    },
+    {
+      "id": "N-banks",
+      "points": [
+        {
+          "id": "banks-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-3-note-3"
+          ],
+          "reason": "topic-3-note-3 states banks are independent arrays and work in one can overlap another."
+        },
+        {
+          "id": "banks-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-3-note-3"
+          ],
+          "reason": "topic-3-note-3 states the shared data bus limits how much data the channel returns at once."
+        }
+      ]
+    },
+    {
+      "id": "N-channels",
+      "points": [
+        {
+          "id": "channels-P1",
+          "score": 1,
+          "prediction_ids": [
+            "topic-3-note-6",
+            "topic-5-note-1"
+          ],
+          "reason": "topic-3-note-6 states one controller port per channel and topic-5-note-1 states aggregate bandwidth sums across independent channels, but neither explicitly states independent channels increase bandwidth when used concurrently."
+        },
+        {
+          "id": "channels-P2",
+          "score": 0,
+          "prediction_ids": [],
+          "reason": "No generated note mentions DDR5 splitting 64 bits into two 32-bit subchannels not doubling width."
+        }
+      ]
+    },
+    {
+      "id": "N-gpu-memory",
+      "points": [
+        {
+          "id": "gpu-memory-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-0"
+          ],
+          "reason": "topic-4-note-0 states registers are allocated per thread and hardware managed."
+        },
+        {
+          "id": "gpu-memory-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-0"
+          ],
+          "reason": "topic-4-note-0 states shared memory + L1 is per SM."
+        },
+        {
+          "id": "gpu-memory-P3",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-0"
+          ],
+          "reason": "topic-4-note-0 states L2 is device-wide and shared by all SMs."
+        },
+        {
+          "id": "gpu-memory-P4",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-0"
+          ],
+          "reason": "topic-4-note-0 states device memory GDDR/HBM is off-chip serving global address space."
+        }
+      ]
+    },
+    {
+      "id": "N-cuda-spaces",
+      "points": [
+        {
+          "id": "cuda-spaces-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-1"
+          ],
+          "reason": "topic-4-note-1 states scope identifies which threads access data and lifetime how long it exists."
+        },
+        {
+          "id": "cuda-spaces-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-2"
+          ],
+          "reason": "topic-4-note-2 states local memory is thread-private but resides in device DRAM through L1/L2."
+        },
+        {
+          "id": "cuda-spaces-P3",
+          "score": 1,
+          "prediction_ids": [
+            "topic-4-note-2"
+          ],
+          "reason": "topic-4-note-2 implies thread-private local memory is in DRAM, but does not explicitly state thread-private scope does not imply register placement."
+        }
+      ]
+    },
+    {
+      "id": "N-coalescing",
+      "points": [
+        {
+          "id": "coalescing-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-3",
+            "topic-4-note-4"
+          ],
+          "reason": "topic-4-note-3 and topic-4-note-4 state coalescing is evaluated for one warp memory instruction."
+        },
+        {
+          "id": "coalescing-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-4"
+          ],
+          "reason": "topic-4-note-4 states aligned contiguous addresses touch fewer segments."
+        },
+        {
+          "id": "coalescing-P3",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-4"
+          ],
+          "reason": "topic-4-note-4 states misalignment crosses extra boundaries and strided accesses touch more segments."
+        }
+      ]
+    },
+    {
+      "id": "N-shared-memory",
+      "points": [
+        {
+          "id": "shared-memory-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-6"
+          ],
+          "reason": "topic-4-note-6 states software explicitly chooses data to stage and when threads synchronize."
+        },
+        {
+          "id": "shared-memory-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-6"
+          ],
+          "reason": "topic-4-note-6 states one off-chip load supports reuse, reducing DRAM traffic and increasing arithmetic intensity."
+        }
+      ]
+    },
+    {
+      "id": "N-bank-conflict",
+      "points": [
+        {
+          "id": "bank-conflict-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-7"
+          ],
+          "reason": "topic-4-note-7 states different addresses in same bank require multiple service rounds."
+        },
+        {
+          "id": "bank-conflict-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-7"
+          ],
+          "reason": "topic-4-note-7 states same-address reads can use broadcast."
+        },
+        {
+          "id": "bank-conflict-P3",
+          "score": 2,
+          "prediction_ids": [
+            "topic-4-note-7"
+          ],
+          "reason": "topic-4-note-7 states this differs from global-memory coalescing."
+        }
+      ]
+    },
+    {
+      "id": "N-hbm",
+      "points": [
+        {
+          "id": "hbm-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-5-note-5"
+          ],
+          "reason": "topic-5-note-5 states HBM sits beside XPU on an interposer forming 2.5D package."
+        },
+        {
+          "id": "hbm-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-5-note-5"
+          ],
+          "reason": "topic-5-note-5 states dense connections improve bandwidth and energy per bit with assembly/yield/cooling/power costs."
+        }
+      ]
+    },
+    {
+      "id": "N-memory-tradeoff",
+      "points": [
+        {
+          "id": "memory-tradeoff-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-5-note-7"
+          ],
+          "reason": "topic-5-note-7 states DDR favors capacity, expandability, cost per GB."
+        },
+        {
+          "id": "memory-tradeoff-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-5-note-7"
+          ],
+          "reason": "topic-5-note-7 states GDDR balances pin bandwidth and board cost."
+        },
+        {
+          "id": "memory-tradeoff-P3",
+          "score": 2,
+          "prediction_ids": [
+            "topic-5-note-7"
+          ],
+          "reason": "topic-5-note-7 states HBM favors bandwidth per package and per watt."
+        }
+      ]
+    },
+    {
+      "id": "N-coherence",
+      "points": [
+        {
+          "id": "coherence-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-6-note-1"
+          ],
+          "reason": "topic-6-note-1 states write propagation means others must eventually observe the write."
+        },
+        {
+          "id": "coherence-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-6-note-1"
+          ],
+          "reason": "topic-6-note-1 states write serialization means one agreed order for writes to same location."
+        }
+      ]
+    },
+    {
+      "id": "N-coherence-protocol",
+      "points": [
+        {
+          "id": "coherence-protocol-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-6-note-2"
+          ],
+          "reason": "topic-6-note-2 states snooping broadcasts and directory tracks owners/sharers to target messages."
+        },
+        {
+          "id": "coherence-protocol-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-6-note-2"
+          ],
+          "reason": "topic-6-note-2 states MESI describes permissions while snooping/directory determine message delivery."
+        }
+      ]
+    },
+    {
+      "id": "N-cxl",
+      "points": [
+        {
+          "id": "cxl-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-6-note-5"
+          ],
+          "reason": "topic-6-note-5 states expansion adds capacity to one host."
+        },
+        {
+          "id": "cxl-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-6-note-5"
+          ],
+          "reason": "topic-6-note-5 states pooling assigns portions of devices to different hosts."
+        },
+        {
+          "id": "cxl-P3",
+          "score": 2,
+          "prediction_ids": [
+            "topic-6-note-5"
+          ],
+          "reason": "topic-6-note-5 states CXL 3.0 coherent sharing differs from merely mapping the same region."
+        }
+      ]
+    },
+    {
+      "id": "N-memory-wall",
+      "points": [
+        {
+          "id": "memory-wall-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-0-note-0",
+            "topic-0-note-1"
+          ],
+          "reason": "topic-0-note-0 states PU executes far faster than memory access; topic-0-note-1 states faster processors alone do not guarantee faster applications."
+        },
+        {
+          "id": "memory-wall-P2",
+          "score": 1,
+          "prediction_ids": [
+            "topic-0-note-4"
+          ],
+          "reason": "topic-0-note-4 states bandwidth and latency trends worsen but does not define bandwidth vs latency limits."
+        },
+        {
+          "id": "memory-wall-P3",
+          "score": 2,
+          "prediction_ids": [
+            "topic-0-note-3"
+          ],
+          "reason": "topic-0-note-3 states memory capacity per core drops 30% every two years as cores outpace DRAM capacity."
+        }
+      ]
+    },
+    {
+      "id": "N-tiering",
+      "points": [
+        {
+          "id": "tiering-P1",
+          "score": 2,
+          "prediction_ids": [
+            "topic-6-note-7"
+          ],
+          "reason": "topic-6-note-7 states hot, latency-critical, frequently reused data stays in HBM."
+        },
+        {
+          "id": "tiering-P2",
+          "score": 2,
+          "prediction_ids": [
+            "topic-6-note-7"
+          ],
+          "reason": "topic-6-note-7 states large, cold objects go to LPDDR capacity tier."
+        },
+        {
+          "id": "tiering-P3",
+          "score": 2,
+          "prediction_ids": [
+            "topic-6-note-7"
+          ],
+          "reason": "topic-6-note-7 states promotion pays off only if future reuse exceeds transfer and bookkeeping cost."
+        },
+        {
+          "id": "tiering-P4",
+          "score": 2,
+          "prediction_ids": [
+            "topic-6-note-6"
+          ],
+          "reason": "topic-6-note-6 states Grace connects LPDDR5X via NVLink-C2C while Hopper retains HBM, extending addressable capacity not HBM size."
+        }
+      ]
+    }
+  ],
+  "judge_configuration": {
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "temperature": 0,
+    "max_tokens": 16000,
+    "prompt_version": 2
+  }
+}

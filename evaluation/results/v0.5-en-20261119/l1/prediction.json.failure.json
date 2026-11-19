@@ -1,0 +1,6 @@
+{
+  "execution_status": "failed",
+  "error": "Backend HTTP 502: {\"detail\":\"Concept map is incomplete. Missing lecture pages: [13, 31, 54, 64]. Please retry.\"}",
+  "dataset_id": "ACS-L1",
+  "timestamp": "2026-11-19T13:22:11.214410+00:00"
+}

@@ -1,0 +1,201 @@
+{
+  "concepts": {
+    "precision": {
+      "numerator": 29,
+      "denominator": 29,
+      "value": 1.0,
+      "status": "measured"
+    },
+    "core_recall": {
+      "numerator": 19,
+      "denominator": 19,
+      "value": 1.0,
+      "status": "measured"
+    },
+    "missing_core_ids": [],
+    "raw_count": 29,
+    "deduplicated_count": 29
+  },
+  "relations": {
+    "precision": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null,
+      "status": "not_applicable"
+    },
+    "core_recall": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null,
+      "status": "not_applicable"
+    },
+    "missing_core_ids": [],
+    "raw_count": 0,
+    "deduplicated_count": 0
+  },
+  "study_notes": {
+    "mean_point_score": {
+      "numerator": 18.333333333333332,
+      "denominator": 19,
+      "value": 0.9649122807017543,
+      "status": "measured"
+    },
+    "micro_point_score": {
+      "numerator": 110,
+      "denominator": 114,
+      "value": 0.9649122807017544,
+      "status": "measured"
+    },
+    "fully_covered_points": {
+      "numerator": 53,
+      "denominator": 57,
+      "value": 0.9298245614035088,
+      "status": "measured"
+    },
+    "items": [
+      {
+        "id": "N-where-computation-gets-its-data",
+        "numerator": 8,
+        "denominator": 8,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-the-processor-memory-performance-gap",
+        "numerator": 8,
+        "denominator": 8,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-why-processors-invest-in-deeper-and-larger-caches",
+        "numerator": 5,
+        "denominator": 6,
+        "value": 0.8333333333333334,
+        "status": "measured"
+      },
+      {
+        "id": "N-locality-and-the-working-set",
+        "numerator": 5,
+        "denominator": 6,
+        "value": 0.8333333333333334,
+        "status": "measured"
+      },
+      {
+        "id": "N-cache-misses-amat-and-locality-optimization",
+        "numerator": 8,
+        "denominator": 8,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-address-translation-and-the-load-store-path",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-sram-and-dram-cells-refresh-and-latency",
+        "numerator": 8,
+        "denominator": 8,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-scheduling-banks-and-ranks",
+        "numerator": 5,
+        "denominator": 6,
+        "value": 0.8333333333333334,
+        "status": "measured"
+      },
+      {
+        "id": "N-channel-bandwidth-and-ddr-evolution",
+        "numerator": 5,
+        "denominator": 6,
+        "value": 0.8333333333333334,
+        "status": "measured"
+      },
+      {
+        "id": "N-cuda-memory-spaces-and-physical-placement",
+        "numerator": 8,
+        "denominator": 8,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-warp-coalescing-and-useful-bandwidth",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-shared-memory-staging-and-bank-conflicts",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-gddr-bandwidth-on-a-graphics-board",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-hbm-packaging-and-memory-technology-trade-offs",
+        "numerator": 8,
+        "denominator": 8,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-distributed-slices-of-a-shared-last-level-cache",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-coherence-requirements-and-protocol-choices",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-kv-cache-capacity-in-llm-inference",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-cxl-expansion-pooling-and-sharing",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-placement-and-migration-across-hbm-and-lpddr",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      }
+    ]
+  },
+  "review_type": "llm_judge",
+  "reference_status": "human_review_pending",
+  "limitations": [
+    "Semantic decisions require human verification, especially LLM judge decisions.",
+    "Reference set is non-exhaustive; valid extra concepts count toward precision.",
+    "Fact point coverage is not a measurement of all generated factual claims.",
+    "Relations require semantic/direction/endpoint review; layout edges are not relations."
+  ],
+  "reference_sha256": "20e7e15c9f6f18b37fc316ad3720436f02f4c224fc3005f152961bfaec792740",
+  "prediction_sha256": "6f4198c68614b5948d90e25f65f7bdb46c31fa71a6ff15c1a1a9e597ec34dd45"
+}

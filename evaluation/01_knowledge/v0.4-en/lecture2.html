@@ -1,0 +1,2168 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ACS-L2 · Memory systems concept map</title><style>
+*{box-sizing:border-box}body{margin:0;color:#183336;background:#f5f7f3;font:16px/1.5 system-ui,sans-serif}header,main{max-width:1440px;margin:auto;padding:24px clamp(16px,4vw,64px)}header{border-bottom:1px solid #bbcfc8}h1,h2,h3,p{margin:0}h1{font:clamp(32px,4vw,56px)/1.12 Georgia,serif;margin:7px 0}header p,small{color:#49665e}main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(290px,1fr);gap:4vw;align-items:start}.group{display:grid;grid-template-columns:32% 1fr;align-items:center;margin:0 0 22px}.branch{border-left:2px solid #88a99b;padding-left:20px;display:grid;gap:7px}.group h2{font-size:17px;line-height:1.3;padding-right:16px}.node{display:block;position:relative;padding:8px 13px;border:1px solid #bdcec6;border-radius:8px;text-decoration:none;color:inherit;background:white}.node:before{content:"";position:absolute;left:-22px;width:21px;top:50%;border-top:2px solid #88a99b}.node:hover,.node[aria-current=true]{background:#16544c;color:white}aside{position:sticky;top:16px;max-height:94vh;overflow:auto;background:#fff;border:1px solid #c3d3ca;border-radius:14px;padding:24px}article{display:none}article.active,article:target{display:block}article h2{font:30px/1.15 Georgia,serif;margin:8px 0 20px}h3{font-size:16px;margin:20px 0 8px}li{margin-bottom:9px}ul{padding-left:20px}summary{cursor:pointer;color:#185c50}blockquote{white-space:pre-line;margin:8px 0;padding:10px 14px;border-left:3px solid #98b5a8;background:#f3f6f2}a{color:#146557}details{margin:8px 0}@media(max-width:780px){main{display:block}aside{position:static;max-height:none}.group{grid-template-columns:30% 1fr}} </style>
+<header><small>ACS-L2 · English reference v0.4 · Pending human review</small><h1>Memory systems</h1><p>20 core concepts · 52 reference note points. Select a concept to inspect its lecture evidence.</p></header><main><nav aria-label="Concepts grouped by topic">
+<section class="group"><h2>Memory hierarchy &amp; caching</h2><div class="branch"><a class="node" href="#memory-wall">Memory wall and system bottlenecks</a><a class="node" href="#memory-hierarchy">Memory hierarchy</a><a class="node" href="#locality">Locality</a><a class="node" href="#cache-hit">Cache hits and misses</a><a class="node" href="#amat">Average memory access time</a><a class="node" href="#tlb">TLB misses versus cache misses</a></div></section>
+<section class="group"><h2>DRAM organization</h2><div class="branch"><a class="node" href="#sram-dram">SRAM versus DRAM</a><a class="node" href="#banks">DRAM bank parallelism</a><a class="node" href="#channels">Memory channels</a></div></section>
+<section class="group"><h2>GPU memory &amp; access</h2><div class="branch"><a class="node" href="#gpu-memory">GPU memory hierarchy</a><a class="node" href="#cuda-spaces">CUDA memory spaces, scope and physical placement</a><a class="node" href="#coalescing">Memory coalescing</a><a class="node" href="#shared-memory">Shared-memory staging</a><a class="node" href="#bank-conflict">Shared-memory bank conflicts</a></div></section>
+<section class="group"><h2>Interfaces &amp; packaging</h2><div class="branch"><a class="node" href="#hbm">HBM packaging</a><a class="node" href="#memory-tradeoff">DDR, GDDR and HBM trade-offs</a></div></section>
+<section class="group"><h2>Coherence &amp; capacity</h2><div class="branch"><a class="node" href="#coherence">Cache coherence</a><a class="node" href="#coherence-protocol">Snooping and directory protocols</a><a class="node" href="#cxl">CXL expansion, pooling and sharing</a><a class="node" href="#tiering">Tiered memory management</a></div></section>
+</nav><aside aria-label="Selected concept">
+<article id="memory-hierarchy"><small>Core concept · memory-hierarchy</small><h2>Memory hierarchy</h2><h3>Concept facts</h3><ul><li>Frequently accessed data benefits from small fast storage.</li><li>Less frequently accessed data can occupy larger slower storage.</li></ul><details><summary>Lecture evidence · p. 21</summary><blockquote>For frequent data: use fast but expensive and small memory (e.g., cache)
+For not frequent data: use slow but cheap and large memory (e.g., main 
+memory, disk)
+CPU Memory Hierarchy
+Memory Hierarchy: Taking Advantage of Locality
+The working set changes over time. The hierarchy is useful when a small, active 
+subset receives most accesses.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+21</blockquote></details><h3>Reference note points</h3><ol>
+<li>Frequently accessed data benefits from small fast storage. <small>(2 pts)</small><details><summary>Lecture evidence · p. 21</summary><blockquote>For frequent data: use fast but expensive and small memory (e.g., cache)
+For not frequent data: use slow but cheap and large memory (e.g., main 
+memory, disk)
+CPU Memory Hierarchy
+Memory Hierarchy: Taking Advantage of Locality
+The working set changes over time. The hierarchy is useful when a small, active 
+subset receives most accesses.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+21</blockquote></details></li>
+<li>Less frequently accessed data can occupy larger slower storage. <small>(2 pts)</small><details><summary>Lecture evidence · p. 21</summary><blockquote>For frequent data: use fast but expensive and small memory (e.g., cache)
+For not frequent data: use slow but cheap and large memory (e.g., main 
+memory, disk)
+CPU Memory Hierarchy
+Memory Hierarchy: Taking Advantage of Locality
+The working set changes over time. The hierarchy is useful when a small, active 
+subset receives most accesses.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+21</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (2)</summary>
+<p><a href="#memory-hierarchy">Memory hierarchy</a> → exploits → <a href="#locality">Locality</a></p><details><summary>Lecture evidence · p. 21</summary><blockquote>For frequent data: use fast but expensive and small memory (e.g., cache)
+For not frequent data: use slow but cheap and large memory (e.g., main 
+memory, disk)
+CPU Memory Hierarchy
+Memory Hierarchy: Taking Advantage of Locality
+The working set changes over time. The hierarchy is useful when a small, active 
+subset receives most accesses.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+21</blockquote></details><details><summary>Lecture evidence · p. 22</summary><blockquote>Spatial Locality
+The neighbors of the current data 
+access tend to be accessed in the 
+future.
+E.g., array
+Temporal Locality
+A piece of data is quickly reused 
+in the future.
+E.g., Loops
+CPU Memory Hierarchy
+Locality: The Hot Feature Makes Caches Useful
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+22</blockquote></details>
+<p><a href="#sram-dram">SRAM versus DRAM</a> → provides_storage_technologies_for → <a href="#memory-hierarchy">Memory hierarchy</a></p><details><summary>Lecture evidence · p. 32</summary><blockquote>SRAM --- Store data via stable transistor circuit
+Requires low power to retain bit (423mV for 45nm) 
+Requires 6 transistors/bit --- expansive
+Usage: Caches, register files
+DRAM --- Store date via tiny capacitors (bit is represented as 
+charged and discharged)
+One transistor/bit --- cheap
+Must be re-written after being read
+Must also be periodically refreshed
+Each row can be refreshed simultaneously
+Address lines are multiplexed:
+Upper half of address: row access strobe (RAS)
+Lower half of address: column access strobe (CAS)
+Usage: DDR / GDDR / HBM
+CPU Memory Hierarchy
+DRAM Behind Cache: SRAM vs. DRAM
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+32</blockquote></details><details><summary>Lecture evidence · p. 21</summary><blockquote>For frequent data: use fast but expensive and small memory (e.g., cache)
+For not frequent data: use slow but cheap and large memory (e.g., main 
+memory, disk)
+CPU Memory Hierarchy
+Memory Hierarchy: Taking Advantage of Locality
+The working set changes over time. The hierarchy is useful when a small, active 
+subset receives most accesses.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+21</blockquote></details>
+</details>
+</article>
+<article id="locality"><small>Core concept · locality</small><h2>Locality</h2><h3>Concept facts</h3><ul><li>Spatial locality means nearby data tends to be accessed.</li><li>Temporal locality means the same data tends to be reused soon.</li></ul><details><summary>Lecture evidence · p. 22</summary><blockquote>Spatial Locality
+The neighbors of the current data 
+access tend to be accessed in the 
+future.
+E.g., array
+Temporal Locality
+A piece of data is quickly reused 
+in the future.
+E.g., Loops
+CPU Memory Hierarchy
+Locality: The Hot Feature Makes Caches Useful
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+22</blockquote></details><h3>Reference note points</h3><ol>
+<li>Spatial locality means nearby data tends to be accessed. <small>(2 pts)</small><details><summary>Lecture evidence · p. 22</summary><blockquote>Spatial Locality
+The neighbors of the current data 
+access tend to be accessed in the 
+future.
+E.g., array
+Temporal Locality
+A piece of data is quickly reused 
+in the future.
+E.g., Loops
+CPU Memory Hierarchy
+Locality: The Hot Feature Makes Caches Useful
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+22</blockquote></details></li>
+<li>Temporal locality means the same data tends to be reused soon. <small>(2 pts)</small><details><summary>Lecture evidence · p. 22</summary><blockquote>Spatial Locality
+The neighbors of the current data 
+access tend to be accessed in the 
+future.
+E.g., array
+Temporal Locality
+A piece of data is quickly reused 
+in the future.
+E.g., Loops
+CPU Memory Hierarchy
+Locality: The Hot Feature Makes Caches Useful
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+22</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#memory-hierarchy">Memory hierarchy</a> → exploits → <a href="#locality">Locality</a></p><details><summary>Lecture evidence · p. 21</summary><blockquote>For frequent data: use fast but expensive and small memory (e.g., cache)
+For not frequent data: use slow but cheap and large memory (e.g., main 
+memory, disk)
+CPU Memory Hierarchy
+Memory Hierarchy: Taking Advantage of Locality
+The working set changes over time. The hierarchy is useful when a small, active 
+subset receives most accesses.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+21</blockquote></details><details><summary>Lecture evidence · p. 22</summary><blockquote>Spatial Locality
+The neighbors of the current data 
+access tend to be accessed in the 
+future.
+E.g., array
+Temporal Locality
+A piece of data is quickly reused 
+in the future.
+E.g., Loops
+CPU Memory Hierarchy
+Locality: The Hot Feature Makes Caches Useful
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+22</blockquote></details>
+</details>
+</article>
+<article id="cache-hit"><small>Core concept · cache-hit</small><h2>Cache hits and misses</h2><h3>Concept facts</h3><ul><li>A hit requires a valid matching block at this cache level.</li><li>Miss rate equals one minus hit rate.</li><li>A miss requires service from a lower level.</li></ul><details><summary>Lecture evidence · p. 25</summary><blockquote>Hit: The requested memory block is 
+found in the current cache level, with 
+a valid tag match.
+Hit Rate: Hits / Total Accesses
+Cache Read/Write: Find the data on 
+cache and then perform read/write
+Miss: The requested memory block 
+is not present in the current cache 
+level, so it must be retrieved from the 
+next lower level.
+Miss Rate: 1 - Hit Rate
+Miss Penalty: The additional time 
+required to service a miss
+CPU Memory Hierarchy
+Hit or Miss of Caches: Benefit vs. Penalty
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+25</blockquote></details><h3>Reference note points</h3><ol>
+<li>A hit requires a valid matching block at this cache level. <small>(2 pts)</small><details><summary>Lecture evidence · p. 25</summary><blockquote>Hit: The requested memory block is 
+found in the current cache level, with 
+a valid tag match.
+Hit Rate: Hits / Total Accesses
+Cache Read/Write: Find the data on 
+cache and then perform read/write
+Miss: The requested memory block 
+is not present in the current cache 
+level, so it must be retrieved from the 
+next lower level.
+Miss Rate: 1 - Hit Rate
+Miss Penalty: The additional time 
+required to service a miss
+CPU Memory Hierarchy
+Hit or Miss of Caches: Benefit vs. Penalty
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+25</blockquote></details></li>
+<li>Miss rate equals one minus hit rate. <small>(2 pts)</small><details><summary>Lecture evidence · p. 25</summary><blockquote>Hit: The requested memory block is 
+found in the current cache level, with 
+a valid tag match.
+Hit Rate: Hits / Total Accesses
+Cache Read/Write: Find the data on 
+cache and then perform read/write
+Miss: The requested memory block 
+is not present in the current cache 
+level, so it must be retrieved from the 
+next lower level.
+Miss Rate: 1 - Hit Rate
+Miss Penalty: The additional time 
+required to service a miss
+CPU Memory Hierarchy
+Hit or Miss of Caches: Benefit vs. Penalty
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+25</blockquote></details></li>
+<li>A miss requires service from a lower level. <small>(2 pts)</small><details><summary>Lecture evidence · p. 25</summary><blockquote>Hit: The requested memory block is 
+found in the current cache level, with 
+a valid tag match.
+Hit Rate: Hits / Total Accesses
+Cache Read/Write: Find the data on 
+cache and then perform read/write
+Miss: The requested memory block 
+is not present in the current cache 
+level, so it must be retrieved from the 
+next lower level.
+Miss Rate: 1 - Hit Rate
+Miss Penalty: The additional time 
+required to service a miss
+CPU Memory Hierarchy
+Hit or Miss of Caches: Benefit vs. Penalty
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+25</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#cache-hit">Cache hits and misses</a> → determines_miss_rate_in → <a href="#amat">Average memory access time</a></p><details><summary>Lecture evidence · p. 25</summary><blockquote>Hit: The requested memory block is 
+found in the current cache level, with 
+a valid tag match.
+Hit Rate: Hits / Total Accesses
+Cache Read/Write: Find the data on 
+cache and then perform read/write
+Miss: The requested memory block 
+is not present in the current cache 
+level, so it must be retrieved from the 
+next lower level.
+Miss Rate: 1 - Hit Rate
+Miss Penalty: The additional time 
+required to service a miss
+CPU Memory Hierarchy
+Hit or Miss of Caches: Benefit vs. Penalty
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+25</blockquote></details><details><summary>Lecture evidence · p. 26</summary><blockquote>AMAT = Hit time + Miss rate x Miss penalty
+Miss Penalty: time to fetch a block from lower memory 
+level
+Access Time: Latency for the memory to handle one access
+Transfer Time: Latency to transfer data block to higher level
+Miss penalty = access time + data size / bandwidth
+CPU Memory Hierarchy
+Average Memory Access Time (AMAT)
+A cache helps when common hits remain fast and sufficiently few accesses pay 
+the miss penalty.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+26</blockquote></details>
+</details>
+</article>
+<article id="amat"><small>Core concept · amat</small><h2>Average memory access time</h2><h3>Concept facts</h3><ul><li>AMAT = hit time + miss rate times miss penalty.</li><li>Miss penalty includes access latency and transfer time.</li></ul><details><summary>Lecture evidence · p. 26</summary><blockquote>AMAT = Hit time + Miss rate x Miss penalty
+Miss Penalty: time to fetch a block from lower memory 
+level
+Access Time: Latency for the memory to handle one access
+Transfer Time: Latency to transfer data block to higher level
+Miss penalty = access time + data size / bandwidth
+CPU Memory Hierarchy
+Average Memory Access Time (AMAT)
+A cache helps when common hits remain fast and sufficiently few accesses pay 
+the miss penalty.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+26</blockquote></details><h3>Reference note points</h3><ol>
+<li>AMAT = hit time + miss rate times miss penalty. <small>(2 pts)</small><details><summary>Lecture evidence · p. 26</summary><blockquote>AMAT = Hit time + Miss rate x Miss penalty
+Miss Penalty: time to fetch a block from lower memory 
+level
+Access Time: Latency for the memory to handle one access
+Transfer Time: Latency to transfer data block to higher level
+Miss penalty = access time + data size / bandwidth
+CPU Memory Hierarchy
+Average Memory Access Time (AMAT)
+A cache helps when common hits remain fast and sufficiently few accesses pay 
+the miss penalty.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+26</blockquote></details></li>
+<li>Miss penalty includes access latency and transfer time. <small>(2 pts)</small><details><summary>Lecture evidence · p. 26</summary><blockquote>AMAT = Hit time + Miss rate x Miss penalty
+Miss Penalty: time to fetch a block from lower memory 
+level
+Access Time: Latency for the memory to handle one access
+Transfer Time: Latency to transfer data block to higher level
+Miss penalty = access time + data size / bandwidth
+CPU Memory Hierarchy
+Average Memory Access Time (AMAT)
+A cache helps when common hits remain fast and sufficiently few accesses pay 
+the miss penalty.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+26</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#cache-hit">Cache hits and misses</a> → determines_miss_rate_in → <a href="#amat">Average memory access time</a></p><details><summary>Lecture evidence · p. 25</summary><blockquote>Hit: The requested memory block is 
+found in the current cache level, with 
+a valid tag match.
+Hit Rate: Hits / Total Accesses
+Cache Read/Write: Find the data on 
+cache and then perform read/write
+Miss: The requested memory block 
+is not present in the current cache 
+level, so it must be retrieved from the 
+next lower level.
+Miss Rate: 1 - Hit Rate
+Miss Penalty: The additional time 
+required to service a miss
+CPU Memory Hierarchy
+Hit or Miss of Caches: Benefit vs. Penalty
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+25</blockquote></details><details><summary>Lecture evidence · p. 26</summary><blockquote>AMAT = Hit time + Miss rate x Miss penalty
+Miss Penalty: time to fetch a block from lower memory 
+level
+Access Time: Latency for the memory to handle one access
+Transfer Time: Latency to transfer data block to higher level
+Miss penalty = access time + data size / bandwidth
+CPU Memory Hierarchy
+Average Memory Access Time (AMAT)
+A cache helps when common hits remain fast and sufficiently few accesses pay 
+the miss penalty.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+26</blockquote></details>
+</details>
+</article>
+<article id="tlb"><small>Core concept · tlb</small><h2>TLB misses versus cache misses</h2><h3>Concept facts</h3><ul><li>A TLB miss requires address translation work.</li><li>A cache miss requires fetching data from a lower level.</li><li>A translation miss and a data miss are distinct events.</li></ul><details><summary>Lecture evidence · p. 30</summary><blockquote>CPU Memory Hierarchy
+End-to-End Load/Store Path: Address Resolution – TLB – Cache 
+Hierarchy – DRAM
+A TLB miss requires address translation work. A cache miss determines whether 
+the data must come from a lower level.
+▪
+Only a miss through the cache hierarchy sends the data request to the memory 
+controller and DRAM.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+30</blockquote></details><h3>Reference note points</h3><ol>
+<li>A TLB miss requires address translation work. <small>(2 pts)</small><details><summary>Lecture evidence · p. 30</summary><blockquote>CPU Memory Hierarchy
+End-to-End Load/Store Path: Address Resolution – TLB – Cache 
+Hierarchy – DRAM
+A TLB miss requires address translation work. A cache miss determines whether 
+the data must come from a lower level.
+▪
+Only a miss through the cache hierarchy sends the data request to the memory 
+controller and DRAM.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+30</blockquote></details></li>
+<li>A cache miss requires fetching data from a lower level. <small>(2 pts)</small><details><summary>Lecture evidence · p. 30</summary><blockquote>CPU Memory Hierarchy
+End-to-End Load/Store Path: Address Resolution – TLB – Cache 
+Hierarchy – DRAM
+A TLB miss requires address translation work. A cache miss determines whether 
+the data must come from a lower level.
+▪
+Only a miss through the cache hierarchy sends the data request to the memory 
+controller and DRAM.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+30</blockquote></details></li>
+<li>A translation miss and a data miss are distinct events. <small>(2 pts)</small><details><summary>Lecture evidence · p. 30</summary><blockquote>CPU Memory Hierarchy
+End-to-End Load/Store Path: Address Resolution – TLB – Cache 
+Hierarchy – DRAM
+A TLB miss requires address translation work. A cache miss determines whether 
+the data must come from a lower level.
+▪
+Only a miss through the cache hierarchy sends the data request to the memory 
+controller and DRAM.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+30</blockquote></details></li>
+</ol>
+</article>
+<article id="sram-dram"><small>Core concept · sram-dram</small><h2>SRAM versus DRAM</h2><h3>Concept facts</h3><ul><li>SRAM retains state in a stable transistor circuit and is used in caches or registers.</li><li>DRAM stores charge in capacitors, needs refresh and restores data after reading.</li></ul><details><summary>Lecture evidence · p. 32</summary><blockquote>SRAM --- Store data via stable transistor circuit
+Requires low power to retain bit (423mV for 45nm) 
+Requires 6 transistors/bit --- expansive
+Usage: Caches, register files
+DRAM --- Store date via tiny capacitors (bit is represented as 
+charged and discharged)
+One transistor/bit --- cheap
+Must be re-written after being read
+Must also be periodically refreshed
+Each row can be refreshed simultaneously
+Address lines are multiplexed:
+Upper half of address: row access strobe (RAS)
+Lower half of address: column access strobe (CAS)
+Usage: DDR / GDDR / HBM
+CPU Memory Hierarchy
+DRAM Behind Cache: SRAM vs. DRAM
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+32</blockquote></details><h3>Reference note points</h3><ol>
+<li>SRAM retains state in a stable transistor circuit and is used in caches or registers. <small>(2 pts)</small><details><summary>Lecture evidence · p. 32</summary><blockquote>SRAM --- Store data via stable transistor circuit
+Requires low power to retain bit (423mV for 45nm) 
+Requires 6 transistors/bit --- expansive
+Usage: Caches, register files
+DRAM --- Store date via tiny capacitors (bit is represented as 
+charged and discharged)
+One transistor/bit --- cheap
+Must be re-written after being read
+Must also be periodically refreshed
+Each row can be refreshed simultaneously
+Address lines are multiplexed:
+Upper half of address: row access strobe (RAS)
+Lower half of address: column access strobe (CAS)
+Usage: DDR / GDDR / HBM
+CPU Memory Hierarchy
+DRAM Behind Cache: SRAM vs. DRAM
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+32</blockquote></details></li>
+<li>DRAM stores charge in capacitors, needs refresh and restores data after reading. <small>(2 pts)</small><details><summary>Lecture evidence · p. 32</summary><blockquote>SRAM --- Store data via stable transistor circuit
+Requires low power to retain bit (423mV for 45nm) 
+Requires 6 transistors/bit --- expansive
+Usage: Caches, register files
+DRAM --- Store date via tiny capacitors (bit is represented as 
+charged and discharged)
+One transistor/bit --- cheap
+Must be re-written after being read
+Must also be periodically refreshed
+Each row can be refreshed simultaneously
+Address lines are multiplexed:
+Upper half of address: row access strobe (RAS)
+Lower half of address: column access strobe (CAS)
+Usage: DDR / GDDR / HBM
+CPU Memory Hierarchy
+DRAM Behind Cache: SRAM vs. DRAM
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+32</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#sram-dram">SRAM versus DRAM</a> → provides_storage_technologies_for → <a href="#memory-hierarchy">Memory hierarchy</a></p><details><summary>Lecture evidence · p. 32</summary><blockquote>SRAM --- Store data via stable transistor circuit
+Requires low power to retain bit (423mV for 45nm) 
+Requires 6 transistors/bit --- expansive
+Usage: Caches, register files
+DRAM --- Store date via tiny capacitors (bit is represented as 
+charged and discharged)
+One transistor/bit --- cheap
+Must be re-written after being read
+Must also be periodically refreshed
+Each row can be refreshed simultaneously
+Address lines are multiplexed:
+Upper half of address: row access strobe (RAS)
+Lower half of address: column access strobe (CAS)
+Usage: DDR / GDDR / HBM
+CPU Memory Hierarchy
+DRAM Behind Cache: SRAM vs. DRAM
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+32</blockquote></details><details><summary>Lecture evidence · p. 21</summary><blockquote>For frequent data: use fast but expensive and small memory (e.g., cache)
+For not frequent data: use slow but cheap and large memory (e.g., main 
+memory, disk)
+CPU Memory Hierarchy
+Memory Hierarchy: Taking Advantage of Locality
+The working set changes over time. The hierarchy is useful when a small, active 
+subset receives most accesses.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+21</blockquote></details>
+</details>
+</article>
+<article id="banks"><small>Core concept · banks</small><h2>DRAM bank parallelism</h2><h3>Concept facts</h3><ul><li>Independent banks can overlap work.</li><li>A shared data bus still limits concurrent returns.</li></ul><details><summary>Lecture evidence · p. 36</summary><blockquote>Memory
+Controller
+Data Bus
+Channel
+Multi-Banked DRAM Chip
+CPU Memory Hierarchy
+DRAM Behind Cache: Multi-Bank DRAM
+Banks provide independent storage arrays. Work in one bank can overlap 
+preparation in another.
+▪
+The shared data bus still limits how much data the channel can return at once.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+36
+Addr  and Cmd Bus</blockquote></details><h3>Reference note points</h3><ol>
+<li>Independent banks can overlap work. <small>(2 pts)</small><details><summary>Lecture evidence · p. 36</summary><blockquote>Memory
+Controller
+Data Bus
+Channel
+Multi-Banked DRAM Chip
+CPU Memory Hierarchy
+DRAM Behind Cache: Multi-Bank DRAM
+Banks provide independent storage arrays. Work in one bank can overlap 
+preparation in another.
+▪
+The shared data bus still limits how much data the channel can return at once.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+36
+Addr  and Cmd Bus</blockquote></details></li>
+<li>A shared data bus still limits concurrent returns. <small>(2 pts)</small><details><summary>Lecture evidence · p. 36</summary><blockquote>Memory
+Controller
+Data Bus
+Channel
+Multi-Banked DRAM Chip
+CPU Memory Hierarchy
+DRAM Behind Cache: Multi-Bank DRAM
+Banks provide independent storage arrays. Work in one bank can overlap 
+preparation in another.
+▪
+The shared data bus still limits how much data the channel can return at once.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+36
+Addr  and Cmd Bus</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#banks">DRAM bank parallelism</a> → shares_bandwidth_within → <a href="#channels">Memory channels</a></p><details><summary>Lecture evidence · p. 36</summary><blockquote>Memory
+Controller
+Data Bus
+Channel
+Multi-Banked DRAM Chip
+CPU Memory Hierarchy
+DRAM Behind Cache: Multi-Bank DRAM
+Banks provide independent storage arrays. Work in one bank can overlap 
+preparation in another.
+▪
+The shared data bus still limits how much data the channel can return at once.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+36
+Addr  and Cmd Bus</blockquote></details><details><summary>Lecture evidence · p. 40</summary><blockquote>CPU Memory Hierarchy
+DRAM Behind Cache: Channel Bandwidth Grows Along Three
+Axes
+Independent channels add bandwidth when requests use them concurrently. Bank 
+scheduling improves bus utilization.
+▪
+DDR5 splits 64 data bits into two 32-bit subchannels. This split alone does not 
+double total data width.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+40</blockquote></details>
+</details>
+</article>
+<article id="channels"><small>Core concept · channels</small><h2>Memory channels</h2><h3>Concept facts</h3><ul><li>Independent channels increase bandwidth when used concurrently.</li><li>Splitting a 64-bit DDR5 interface into two 32-bit subchannels does not itself double aggregate width.</li></ul><details><summary>Lecture evidence · p. 40</summary><blockquote>CPU Memory Hierarchy
+DRAM Behind Cache: Channel Bandwidth Grows Along Three
+Axes
+Independent channels add bandwidth when requests use them concurrently. Bank 
+scheduling improves bus utilization.
+▪
+DDR5 splits 64 data bits into two 32-bit subchannels. This split alone does not 
+double total data width.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+40</blockquote></details><h3>Reference note points</h3><ol>
+<li>Independent channels increase bandwidth when used concurrently. <small>(2 pts)</small><details><summary>Lecture evidence · p. 40</summary><blockquote>CPU Memory Hierarchy
+DRAM Behind Cache: Channel Bandwidth Grows Along Three
+Axes
+Independent channels add bandwidth when requests use them concurrently. Bank 
+scheduling improves bus utilization.
+▪
+DDR5 splits 64 data bits into two 32-bit subchannels. This split alone does not 
+double total data width.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+40</blockquote></details></li>
+<li>Splitting a 64-bit DDR5 interface into two 32-bit subchannels does not itself double aggregate width. <small>(2 pts)</small><details><summary>Lecture evidence · p. 40</summary><blockquote>CPU Memory Hierarchy
+DRAM Behind Cache: Channel Bandwidth Grows Along Three
+Axes
+Independent channels add bandwidth when requests use them concurrently. Bank 
+scheduling improves bus utilization.
+▪
+DDR5 splits 64 data bits into two 32-bit subchannels. This split alone does not 
+double total data width.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+40</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#banks">DRAM bank parallelism</a> → shares_bandwidth_within → <a href="#channels">Memory channels</a></p><details><summary>Lecture evidence · p. 36</summary><blockquote>Memory
+Controller
+Data Bus
+Channel
+Multi-Banked DRAM Chip
+CPU Memory Hierarchy
+DRAM Behind Cache: Multi-Bank DRAM
+Banks provide independent storage arrays. Work in one bank can overlap 
+preparation in another.
+▪
+The shared data bus still limits how much data the channel can return at once.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+36
+Addr  and Cmd Bus</blockquote></details><details><summary>Lecture evidence · p. 40</summary><blockquote>CPU Memory Hierarchy
+DRAM Behind Cache: Channel Bandwidth Grows Along Three
+Axes
+Independent channels add bandwidth when requests use them concurrently. Bank 
+scheduling improves bus utilization.
+▪
+DDR5 splits 64 data bits into two 32-bit subchannels. This split alone does not 
+double total data width.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+40</blockquote></details>
+</details>
+</article>
+<article id="gpu-memory"><small>Core concept · gpu-memory</small><h2>GPU memory hierarchy</h2><h3>Concept facts</h3><ul><li>Registers are allocated per thread.</li><li>Shared memory and L1 are SM-local.</li><li>L2 is shared across the device.</li><li>GDDR or HBM provides off-chip storage.</li></ul><details><summary>Lecture evidence · p. 43</summary><blockquote>Registers
+Allocated per thread, hardware 
+managed
+Shared Memory + L1 Cache
+Per SM explicit scratchpad, 
+hardware cache
+L2 Cache
+Device-wide, shared by all SMs
+Device Memory: GDDR / HBM
+Off-chip physical memory serving 
+the global address space
+GPU Memory Hierarchy
+Larger Capacity, Longer Access Time
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+43</blockquote></details><h3>Reference note points</h3><ol>
+<li>Registers are allocated per thread. <small>(2 pts)</small><details><summary>Lecture evidence · p. 43</summary><blockquote>Registers
+Allocated per thread, hardware 
+managed
+Shared Memory + L1 Cache
+Per SM explicit scratchpad, 
+hardware cache
+L2 Cache
+Device-wide, shared by all SMs
+Device Memory: GDDR / HBM
+Off-chip physical memory serving 
+the global address space
+GPU Memory Hierarchy
+Larger Capacity, Longer Access Time
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+43</blockquote></details></li>
+<li>Shared memory and L1 are SM-local. <small>(2 pts)</small><details><summary>Lecture evidence · p. 43</summary><blockquote>Registers
+Allocated per thread, hardware 
+managed
+Shared Memory + L1 Cache
+Per SM explicit scratchpad, 
+hardware cache
+L2 Cache
+Device-wide, shared by all SMs
+Device Memory: GDDR / HBM
+Off-chip physical memory serving 
+the global address space
+GPU Memory Hierarchy
+Larger Capacity, Longer Access Time
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+43</blockquote></details></li>
+<li>L2 is shared across the device. <small>(2 pts)</small><details><summary>Lecture evidence · p. 43</summary><blockquote>Registers
+Allocated per thread, hardware 
+managed
+Shared Memory + L1 Cache
+Per SM explicit scratchpad, 
+hardware cache
+L2 Cache
+Device-wide, shared by all SMs
+Device Memory: GDDR / HBM
+Off-chip physical memory serving 
+the global address space
+GPU Memory Hierarchy
+Larger Capacity, Longer Access Time
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+43</blockquote></details></li>
+<li>GDDR or HBM provides off-chip storage. <small>(2 pts)</small><details><summary>Lecture evidence · p. 43</summary><blockquote>Registers
+Allocated per thread, hardware 
+managed
+Shared Memory + L1 Cache
+Per SM explicit scratchpad, 
+hardware cache
+L2 Cache
+Device-wide, shared by all SMs
+Device Memory: GDDR / HBM
+Off-chip physical memory serving 
+the global address space
+GPU Memory Hierarchy
+Larger Capacity, Longer Access Time
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+43</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#cuda-spaces">CUDA memory spaces, scope and physical placement</a> → maps_to_device_DRAM_in → <a href="#gpu-memory">GPU memory hierarchy</a></p><details><summary>Lecture evidence · p. 46</summary><blockquote>GPU Memory Hierarchy
+Every CUDA Memory Space Maps to a Physical Resource
+Local memory is thread-private in scope but usually resides in device DRAM and 
+passes through L1/L2.
+▪
+Register and shared-memory allocations limit how many blocks and warps can 
+reside on an SM.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+46</blockquote></details><details><summary>Lecture evidence · p. 43</summary><blockquote>Registers
+Allocated per thread, hardware 
+managed
+Shared Memory + L1 Cache
+Per SM explicit scratchpad, 
+hardware cache
+L2 Cache
+Device-wide, shared by all SMs
+Device Memory: GDDR / HBM
+Off-chip physical memory serving 
+the global address space
+GPU Memory Hierarchy
+Larger Capacity, Longer Access Time
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+43</blockquote></details>
+</details>
+</article>
+<article id="cuda-spaces"><small>Core concept · cuda-spaces</small><h2>CUDA memory spaces, scope and physical placement</h2><h3>Concept facts</h3><ul><li>Scope determines which threads may access data; lifetime determines how long it exists.</li><li>Local memory is thread-private but typically resides in device DRAM and can pass through L1/L2.</li><li>Thread-private scope does not imply register placement.</li></ul><details><summary>Lecture evidence · p. 45</summary><blockquote>GPU Memory Hierarchy
+Programmer’s View of CUDA Memories
+Scope identifies which threads can access data. Lifetime identifies how long the 
+data exists.
+▪
+__syncthreads() coordinates threads within one block; it does not synchronize 
+different blocks.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+45</blockquote></details><details><summary>Lecture evidence · p. 46</summary><blockquote>GPU Memory Hierarchy
+Every CUDA Memory Space Maps to a Physical Resource
+Local memory is thread-private in scope but usually resides in device DRAM and 
+passes through L1/L2.
+▪
+Register and shared-memory allocations limit how many blocks and warps can 
+reside on an SM.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+46</blockquote></details><h3>Reference note points</h3><ol>
+<li>Scope determines which threads may access data; lifetime determines how long it exists. <small>(2 pts)</small><details><summary>Lecture evidence · p. 45</summary><blockquote>GPU Memory Hierarchy
+Programmer’s View of CUDA Memories
+Scope identifies which threads can access data. Lifetime identifies how long the 
+data exists.
+▪
+__syncthreads() coordinates threads within one block; it does not synchronize 
+different blocks.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+45</blockquote></details><details><summary>Lecture evidence · p. 46</summary><blockquote>GPU Memory Hierarchy
+Every CUDA Memory Space Maps to a Physical Resource
+Local memory is thread-private in scope but usually resides in device DRAM and 
+passes through L1/L2.
+▪
+Register and shared-memory allocations limit how many blocks and warps can 
+reside on an SM.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+46</blockquote></details></li>
+<li>Local memory is thread-private but typically resides in device DRAM and can pass through L1/L2. <small>(2 pts)</small><details><summary>Lecture evidence · p. 45</summary><blockquote>GPU Memory Hierarchy
+Programmer’s View of CUDA Memories
+Scope identifies which threads can access data. Lifetime identifies how long the 
+data exists.
+▪
+__syncthreads() coordinates threads within one block; it does not synchronize 
+different blocks.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+45</blockquote></details><details><summary>Lecture evidence · p. 46</summary><blockquote>GPU Memory Hierarchy
+Every CUDA Memory Space Maps to a Physical Resource
+Local memory is thread-private in scope but usually resides in device DRAM and 
+passes through L1/L2.
+▪
+Register and shared-memory allocations limit how many blocks and warps can 
+reside on an SM.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+46</blockquote></details></li>
+<li>Thread-private scope does not imply register placement. <small>(2 pts)</small><details><summary>Lecture evidence · p. 45</summary><blockquote>GPU Memory Hierarchy
+Programmer’s View of CUDA Memories
+Scope identifies which threads can access data. Lifetime identifies how long the 
+data exists.
+▪
+__syncthreads() coordinates threads within one block; it does not synchronize 
+different blocks.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+45</blockquote></details><details><summary>Lecture evidence · p. 46</summary><blockquote>GPU Memory Hierarchy
+Every CUDA Memory Space Maps to a Physical Resource
+Local memory is thread-private in scope but usually resides in device DRAM and 
+passes through L1/L2.
+▪
+Register and shared-memory allocations limit how many blocks and warps can 
+reside on an SM.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+46</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#cuda-spaces">CUDA memory spaces, scope and physical placement</a> → maps_to_device_DRAM_in → <a href="#gpu-memory">GPU memory hierarchy</a></p><details><summary>Lecture evidence · p. 46</summary><blockquote>GPU Memory Hierarchy
+Every CUDA Memory Space Maps to a Physical Resource
+Local memory is thread-private in scope but usually resides in device DRAM and 
+passes through L1/L2.
+▪
+Register and shared-memory allocations limit how many blocks and warps can 
+reside on an SM.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+46</blockquote></details><details><summary>Lecture evidence · p. 43</summary><blockquote>Registers
+Allocated per thread, hardware 
+managed
+Shared Memory + L1 Cache
+Per SM explicit scratchpad, 
+hardware cache
+L2 Cache
+Device-wide, shared by all SMs
+Device Memory: GDDR / HBM
+Off-chip physical memory serving 
+the global address space
+GPU Memory Hierarchy
+Larger Capacity, Longer Access Time
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+43</blockquote></details>
+</details>
+</article>
+<article id="coalescing"><small>Core concept · coalescing</small><h2>Memory coalescing</h2><h3>Concept facts</h3><ul><li>Coalescing applies to one memory instruction issued by a warp.</li><li>Aligned contiguous addresses usually reduce transactions.</li><li>Strided accesses or boundary crossings can increase transactions.</li></ul><details><summary>Lecture evidence · p. 48</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Coalescing Packs Nearby Addresses into 
+Fewer Transactions
+Coalescing is evaluated for one warp memory instruction. Aligned, contiguous 
+addresses touch fewer segments.
+▪
+Misalignment can cross extra boundaries. Strided accesses can touch many more 
+segments.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+48</blockquote></details><h3>Reference note points</h3><ol>
+<li>Coalescing applies to one memory instruction issued by a warp. <small>(2 pts)</small><details><summary>Lecture evidence · p. 48</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Coalescing Packs Nearby Addresses into 
+Fewer Transactions
+Coalescing is evaluated for one warp memory instruction. Aligned, contiguous 
+addresses touch fewer segments.
+▪
+Misalignment can cross extra boundaries. Strided accesses can touch many more 
+segments.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+48</blockquote></details></li>
+<li>Aligned contiguous addresses usually reduce transactions. <small>(2 pts)</small><details><summary>Lecture evidence · p. 48</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Coalescing Packs Nearby Addresses into 
+Fewer Transactions
+Coalescing is evaluated for one warp memory instruction. Aligned, contiguous 
+addresses touch fewer segments.
+▪
+Misalignment can cross extra boundaries. Strided accesses can touch many more 
+segments.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+48</blockquote></details></li>
+<li>Strided accesses or boundary crossings can increase transactions. <small>(2 pts)</small><details><summary>Lecture evidence · p. 48</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Coalescing Packs Nearby Addresses into 
+Fewer Transactions
+Coalescing is evaluated for one warp memory instruction. Aligned, contiguous 
+addresses touch fewer segments.
+▪
+Misalignment can cross extra boundaries. Strided accesses can touch many more 
+segments.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+48</blockquote></details></li>
+</ol>
+</article>
+<article id="shared-memory"><small>Core concept · shared-memory</small><h2>Shared-memory staging</h2><h3>Concept facts</h3><ul><li>Software explicitly stages data and coordinates access.</li><li>On-chip reuse can reduce DRAM traffic and increase arithmetic intensity relative to DRAM bytes.</li></ul><details><summary>Lecture evidence · p. 50</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Shared Memory Creates an Explicit On-Chip 
+Data Stage
+Software explicitly chooses the data to stage in shared memory and when threads 
+must synchronize.
+▪
+One off-chip load can support repeated on-chip reuse, reducing DRAM traffic and 
+increasing arithmetic intensity.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+50</blockquote></details><h3>Reference note points</h3><ol>
+<li>Software explicitly stages data and coordinates access. <small>(2 pts)</small><details><summary>Lecture evidence · p. 50</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Shared Memory Creates an Explicit On-Chip 
+Data Stage
+Software explicitly chooses the data to stage in shared memory and when threads 
+must synchronize.
+▪
+One off-chip load can support repeated on-chip reuse, reducing DRAM traffic and 
+increasing arithmetic intensity.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+50</blockquote></details></li>
+<li>On-chip reuse can reduce DRAM traffic and increase arithmetic intensity relative to DRAM bytes. <small>(2 pts)</small><details><summary>Lecture evidence · p. 50</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Shared Memory Creates an Explicit On-Chip 
+Data Stage
+Software explicitly chooses the data to stage in shared memory and when threads 
+must synchronize.
+▪
+One off-chip load can support repeated on-chip reuse, reducing DRAM traffic and 
+increasing arithmetic intensity.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+50</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#bank-conflict">Shared-memory bank conflicts</a> → can_serialize_access_to → <a href="#shared-memory">Shared-memory staging</a></p><details><summary>Lecture evidence · p. 51</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Bank Conflicts Serialize Otherwise Parallel 
+Accesses
+Typical GPUs use 32 banks; the figure shows 8 for readability. Same-address 
+reads can use broadcast.
+▪
+Different addresses in the same bank require multiple service rounds. This differs 
+from global-memory coalescing.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+51</blockquote></details><details><summary>Lecture evidence · p. 50</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Shared Memory Creates an Explicit On-Chip 
+Data Stage
+Software explicitly chooses the data to stage in shared memory and when threads 
+must synchronize.
+▪
+One off-chip load can support repeated on-chip reuse, reducing DRAM traffic and 
+increasing arithmetic intensity.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+50</blockquote></details>
+</details>
+</article>
+<article id="bank-conflict"><small>Core concept · bank-conflict</small><h2>Shared-memory bank conflicts</h2><h3>Concept facts</h3><ul><li>Different addresses in one bank can require multiple service rounds.</li><li>Reads of the same address can be broadcast.</li><li>Bank conflicts and global-memory coalescing are distinct.</li></ul><details><summary>Lecture evidence · p. 51</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Bank Conflicts Serialize Otherwise Parallel 
+Accesses
+Typical GPUs use 32 banks; the figure shows 8 for readability. Same-address 
+reads can use broadcast.
+▪
+Different addresses in the same bank require multiple service rounds. This differs 
+from global-memory coalescing.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+51</blockquote></details><h3>Reference note points</h3><ol>
+<li>Different addresses in one bank can require multiple service rounds. <small>(2 pts)</small><details><summary>Lecture evidence · p. 51</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Bank Conflicts Serialize Otherwise Parallel 
+Accesses
+Typical GPUs use 32 banks; the figure shows 8 for readability. Same-address 
+reads can use broadcast.
+▪
+Different addresses in the same bank require multiple service rounds. This differs 
+from global-memory coalescing.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+51</blockquote></details></li>
+<li>Reads of the same address can be broadcast. <small>(2 pts)</small><details><summary>Lecture evidence · p. 51</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Bank Conflicts Serialize Otherwise Parallel 
+Accesses
+Typical GPUs use 32 banks; the figure shows 8 for readability. Same-address 
+reads can use broadcast.
+▪
+Different addresses in the same bank require multiple service rounds. This differs 
+from global-memory coalescing.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+51</blockquote></details></li>
+<li>Bank conflicts and global-memory coalescing are distinct. <small>(2 pts)</small><details><summary>Lecture evidence · p. 51</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Bank Conflicts Serialize Otherwise Parallel 
+Accesses
+Typical GPUs use 32 banks; the figure shows 8 for readability. Same-address 
+reads can use broadcast.
+▪
+Different addresses in the same bank require multiple service rounds. This differs 
+from global-memory coalescing.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+51</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#bank-conflict">Shared-memory bank conflicts</a> → can_serialize_access_to → <a href="#shared-memory">Shared-memory staging</a></p><details><summary>Lecture evidence · p. 51</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Bank Conflicts Serialize Otherwise Parallel 
+Accesses
+Typical GPUs use 32 banks; the figure shows 8 for readability. Same-address 
+reads can use broadcast.
+▪
+Different addresses in the same bank require multiple service rounds. This differs 
+from global-memory coalescing.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+51</blockquote></details><details><summary>Lecture evidence · p. 50</summary><blockquote>GPU Memory Hierarchy
+Access Memory: Shared Memory Creates an Explicit On-Chip 
+Data Stage
+Software explicitly chooses the data to stage in shared memory and when threads 
+must synchronize.
+▪
+One off-chip load can support repeated on-chip reuse, reducing DRAM traffic and 
+increasing arithmetic intensity.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+50</blockquote></details>
+</details>
+</article>
+<article id="hbm"><small>Core concept · hbm</small><h2>HBM packaging</h2><h3>Concept facts</h3><ul><li>HBM typically sits beside the XPU on an interposer.</li><li>Dense connections improve bandwidth and energy efficiency per bit at a packaging cost.</li></ul><details><summary>Lecture evidence · p. 57</summary><blockquote>GPU Memory Hierarchy
+From GDDR to HBM: 2.5D Packaging
+HBM commonly sits beside the XPU on an interposer, forming a 2.5D package.
+▪
+Dense connections improve bandwidth and energy per bit, with costs in assembly, 
+yield, cooling, and power delivery.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+57</blockquote></details><h3>Reference note points</h3><ol>
+<li>HBM typically sits beside the XPU on an interposer. <small>(2 pts)</small><details><summary>Lecture evidence · p. 57</summary><blockquote>GPU Memory Hierarchy
+From GDDR to HBM: 2.5D Packaging
+HBM commonly sits beside the XPU on an interposer, forming a 2.5D package.
+▪
+Dense connections improve bandwidth and energy per bit, with costs in assembly, 
+yield, cooling, and power delivery.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+57</blockquote></details></li>
+<li>Dense connections improve bandwidth and energy efficiency per bit at a packaging cost. <small>(2 pts)</small><details><summary>Lecture evidence · p. 57</summary><blockquote>GPU Memory Hierarchy
+From GDDR to HBM: 2.5D Packaging
+HBM commonly sits beside the XPU on an interposer, forming a 2.5D package.
+▪
+Dense connections improve bandwidth and energy per bit, with costs in assembly, 
+yield, cooling, and power delivery.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+57</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#hbm">HBM packaging</a> → provides_hot_data_tier_for → <a href="#tiering">Tiered memory management</a></p><details><summary>Lecture evidence · p. 57</summary><blockquote>GPU Memory Hierarchy
+From GDDR to HBM: 2.5D Packaging
+HBM commonly sits beside the XPU on an interposer, forming a 2.5D package.
+▪
+Dense connections improve bandwidth and energy per bit, with costs in assembly, 
+yield, cooling, and power delivery.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+57</blockquote></details><details><summary>Lecture evidence · p. 69</summary><blockquote>SOTA Memory Technologies
+Tiered Memory Management Decides What Stays in HBM
+Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects 
+in the LPDDR capacity tier.
+▪
+Promotion helps only when future reuse saves more than the transfer and 
+bookkeeping cost.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+69</blockquote></details>
+</details>
+</article>
+<article id="memory-tradeoff"><small>Core concept · memory-tradeoff</small><h2>DDR, GDDR and HBM trade-offs</h2><h3>Concept facts</h3><ul><li>DDR favors capacity, expandability and cost per GB.</li><li>GDDR balances pin bandwidth and board cost.</li><li>HBM favors package bandwidth and energy efficiency.</li></ul><details><summary>Lecture evidence · p. 59</summary><blockquote>GPU Memory Hierarchy
+DDR, GDDR, and HBM Optimize Different Constraints
+DDR favors capacity, expandability, and cost per GB. GDDR balances pin 
+bandwidth and board cost.
+▪
+HBM favors bandwidth per package and per watt. The choice depends on the 
+workload and system constraints.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+59</blockquote></details><h3>Reference note points</h3><ol>
+<li>DDR favors capacity, expandability and cost per GB. <small>(2 pts)</small><details><summary>Lecture evidence · p. 59</summary><blockquote>GPU Memory Hierarchy
+DDR, GDDR, and HBM Optimize Different Constraints
+DDR favors capacity, expandability, and cost per GB. GDDR balances pin 
+bandwidth and board cost.
+▪
+HBM favors bandwidth per package and per watt. The choice depends on the 
+workload and system constraints.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+59</blockquote></details></li>
+<li>GDDR balances pin bandwidth and board cost. <small>(2 pts)</small><details><summary>Lecture evidence · p. 59</summary><blockquote>GPU Memory Hierarchy
+DDR, GDDR, and HBM Optimize Different Constraints
+DDR favors capacity, expandability, and cost per GB. GDDR balances pin 
+bandwidth and board cost.
+▪
+HBM favors bandwidth per package and per watt. The choice depends on the 
+workload and system constraints.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+59</blockquote></details></li>
+<li>HBM favors package bandwidth and energy efficiency. <small>(2 pts)</small><details><summary>Lecture evidence · p. 59</summary><blockquote>GPU Memory Hierarchy
+DDR, GDDR, and HBM Optimize Different Constraints
+DDR favors capacity, expandability, and cost per GB. GDDR balances pin 
+bandwidth and board cost.
+▪
+HBM favors bandwidth per package and per watt. The choice depends on the 
+workload and system constraints.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+59</blockquote></details></li>
+</ol>
+</article>
+<article id="coherence"><small>Core concept · coherence</small><h2>Cache coherence</h2><h3>Concept facts</h3><ul><li>Write propagation requires other processors eventually to observe a write.</li><li>Write serialization requires agreement on the order of writes to one address.</li></ul><details><summary>Lecture evidence · p. 63</summary><blockquote>A write can make another core’s copy stale
+Write Propagation: Other processors must eventually observe the write
+Write Serialization: All processors must agree on one order for writes to the same 
+location
+SOTA Memory Technologies
+Multicore Technologies: Coherence
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+63</blockquote></details><h3>Reference note points</h3><ol>
+<li>Write propagation requires other processors eventually to observe a write. <small>(2 pts)</small><details><summary>Lecture evidence · p. 63</summary><blockquote>A write can make another core’s copy stale
+Write Propagation: Other processors must eventually observe the write
+Write Serialization: All processors must agree on one order for writes to the same 
+location
+SOTA Memory Technologies
+Multicore Technologies: Coherence
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+63</blockquote></details></li>
+<li>Write serialization requires agreement on the order of writes to one address. <small>(2 pts)</small><details><summary>Lecture evidence · p. 63</summary><blockquote>A write can make another core’s copy stale
+Write Propagation: Other processors must eventually observe the write
+Write Serialization: All processors must agree on one order for writes to the same 
+location
+SOTA Memory Technologies
+Multicore Technologies: Coherence
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+63</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#coherence-protocol">Snooping and directory protocols</a> → implements → <a href="#coherence">Cache coherence</a></p><details><summary>Lecture evidence · p. 64</summary><blockquote>Coherence Protocols: Snooping and Directory
+SOTA Memory Technologies
+Multicore Technologies: Coherence
+Snooping broadcasts coherence requests. A directory tracks owners and sharers 
+to target the messages.
+▪
+MESI describes permissions. Snooping and directory designs determine how 
+coherence messages reach the caches.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+64</blockquote></details><details><summary>Lecture evidence · p. 63</summary><blockquote>A write can make another core’s copy stale
+Write Propagation: Other processors must eventually observe the write
+Write Serialization: All processors must agree on one order for writes to the same 
+location
+SOTA Memory Technologies
+Multicore Technologies: Coherence
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+63</blockquote></details>
+</details>
+</article>
+<article id="coherence-protocol"><small>Core concept · coherence-protocol</small><h2>Snooping and directory protocols</h2><h3>Concept facts</h3><ul><li>Snooping broadcasts requests; a directory tracks owners and sharers to target requests.</li><li>MESI describes permissions rather than a message-routing scheme.</li></ul><details><summary>Lecture evidence · p. 64</summary><blockquote>Coherence Protocols: Snooping and Directory
+SOTA Memory Technologies
+Multicore Technologies: Coherence
+Snooping broadcasts coherence requests. A directory tracks owners and sharers 
+to target the messages.
+▪
+MESI describes permissions. Snooping and directory designs determine how 
+coherence messages reach the caches.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+64</blockquote></details><h3>Reference note points</h3><ol>
+<li>Snooping broadcasts requests; a directory tracks owners and sharers to target requests. <small>(2 pts)</small><details><summary>Lecture evidence · p. 64</summary><blockquote>Coherence Protocols: Snooping and Directory
+SOTA Memory Technologies
+Multicore Technologies: Coherence
+Snooping broadcasts coherence requests. A directory tracks owners and sharers 
+to target the messages.
+▪
+MESI describes permissions. Snooping and directory designs determine how 
+coherence messages reach the caches.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+64</blockquote></details></li>
+<li>MESI describes permissions rather than a message-routing scheme. <small>(2 pts)</small><details><summary>Lecture evidence · p. 64</summary><blockquote>Coherence Protocols: Snooping and Directory
+SOTA Memory Technologies
+Multicore Technologies: Coherence
+Snooping broadcasts coherence requests. A directory tracks owners and sharers 
+to target the messages.
+▪
+MESI describes permissions. Snooping and directory designs determine how 
+coherence messages reach the caches.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+64</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#coherence-protocol">Snooping and directory protocols</a> → implements → <a href="#coherence">Cache coherence</a></p><details><summary>Lecture evidence · p. 64</summary><blockquote>Coherence Protocols: Snooping and Directory
+SOTA Memory Technologies
+Multicore Technologies: Coherence
+Snooping broadcasts coherence requests. A directory tracks owners and sharers 
+to target the messages.
+▪
+MESI describes permissions. Snooping and directory designs determine how 
+coherence messages reach the caches.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+64</blockquote></details><details><summary>Lecture evidence · p. 63</summary><blockquote>A write can make another core’s copy stale
+Write Propagation: Other processors must eventually observe the write
+Write Serialization: All processors must agree on one order for writes to the same 
+location
+SOTA Memory Technologies
+Multicore Technologies: Coherence
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+63</blockquote></details>
+</details>
+</article>
+<article id="cxl"><small>Core concept · cxl</small><h2>CXL expansion, pooling and sharing</h2><h3>Concept facts</h3><ul><li>Expansion adds capacity to a host.</li><li>Pooling allocates device capacity among hosts.</li><li>Coherent sharing requires more than mapping the same region.</li></ul><details><summary>Lecture evidence · p. 67</summary><blockquote>SOTA Memory Technologies
+CXL Switches Enable Expansion, Pooling, and Sharing
+Expansion adds capacity to one host. Pooling assigns portions of memory devices 
+to different hosts.
+▪
+CXL 3.0 coherent sharing differs from merely allowing several hosts to map the 
+same memory region.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+67</blockquote></details><h3>Reference note points</h3><ol>
+<li>Expansion adds capacity to a host. <small>(2 pts)</small><details><summary>Lecture evidence · p. 67</summary><blockquote>SOTA Memory Technologies
+CXL Switches Enable Expansion, Pooling, and Sharing
+Expansion adds capacity to one host. Pooling assigns portions of memory devices 
+to different hosts.
+▪
+CXL 3.0 coherent sharing differs from merely allowing several hosts to map the 
+same memory region.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+67</blockquote></details></li>
+<li>Pooling allocates device capacity among hosts. <small>(2 pts)</small><details><summary>Lecture evidence · p. 67</summary><blockquote>SOTA Memory Technologies
+CXL Switches Enable Expansion, Pooling, and Sharing
+Expansion adds capacity to one host. Pooling assigns portions of memory devices 
+to different hosts.
+▪
+CXL 3.0 coherent sharing differs from merely allowing several hosts to map the 
+same memory region.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+67</blockquote></details></li>
+<li>Coherent sharing requires more than mapping the same region. <small>(2 pts)</small><details><summary>Lecture evidence · p. 67</summary><blockquote>SOTA Memory Technologies
+CXL Switches Enable Expansion, Pooling, and Sharing
+Expansion adds capacity to one host. Pooling assigns portions of memory devices 
+to different hosts.
+▪
+CXL 3.0 coherent sharing differs from merely allowing several hosts to map the 
+same memory region.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+67</blockquote></details></li>
+</ol>
+</article>
+<article id="memory-wall"><small>Core concept · memory-wall</small><h2>Memory wall and system bottlenecks</h2><h3>Concept facts</h3><ul><li>A widening processor-memory performance gap can leave compute resources waiting.</li><li>Bandwidth limits data delivered per unit time; latency limits how soon an access completes.</li><li>Capacity per compute resource can fall when compute grows faster than memory capacity.</li></ul><details><summary>Lecture evidence · p. 7</summary><blockquote>Adapted from: J. Kubiatowicz, “Memory and Caches,” UC Berkeley CS152, 1999.
+Why is Memory So Important, Especially Today
+Processor-DRAM Performance Gap grows 50% per Year
+The 50% gap describes the historical period in this graph. Faster processors 
+alone do not guarantee faster applications.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+7</blockquote></details><details><summary>Lecture evidence · p. 8</summary><blockquote>Memory-bound region keeps growing 
+across GPU generations.
+The arithmetic intensity shifts towards 
+memory-bound as model size and 
+context length increase.
+Scaling Laws of LLM 
+Workloads
+Increased amount of parameters and 
+data.
+Increased chain-of-thought length 
+and search depth.
+Larger Model Size and Context State
+Post-Dennard Scaling of AI 
+Accelerators
+Tensor Core throughput has been 
+growing much faster than the 
+capacity of HBM.
+Widening the Memory Wall across 
+Generations
+Why is Memory So Important, Especially Today
+Scaling Laws Meet Memory Walls
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+8</blockquote></details><details><summary>Lecture evidence · p. 9</summary><blockquote>PU core number 
+doubling every ~2 years.
+DRAM DIMM capacity, 
+however, doubling 
+every ~3 years.
+Memory capacity per 
+core expected to drop 
+by 30% every two years
+Much data may load 
+from low-speed disk!
+Adapted from: K. T. Lim et al., “Disaggregated 
+Memory for Expansion and Sharing in Blade Servers,” 
+ISCA, 2009, Fig. 1(a). 2011–2017 projected.
+Memory Wall
+Capacity, Bandwidth, and Latency
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+9</blockquote></details><details><summary>Lecture evidence · p. 10</summary><blockquote>Trends of bandwidth and latency are worsen. 
+Adapted from: K. K. Chang, “Understanding and Improving DRAM Latency,” Ph.D. 
+dissertation, CMU, 2017, Fig. 1.1.
+Memory Wall
+Capacity, Bandwidth, and Latency
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+10</blockquote></details><details><summary>Lecture evidence · p. 11</summary><blockquote>Trends of bandwidth and latency are worsen. 
+Adapted from: K. K. Chang, “Understanding and Improving DRAM Latency,” Ph.D. 
+dissertation, CMU, 2017, Fig. 1.1.
+In modern computing systems, 
+memory performance typically the bottleneck of entire systems.
+Memory Wall
+Capacity, Bandwidth, and Latency
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+11</blockquote></details><h3>Reference note points</h3><ol>
+<li>A widening processor-memory performance gap can leave compute resources waiting. <small>(2 pts)</small><details><summary>Lecture evidence · p. 7</summary><blockquote>Adapted from: J. Kubiatowicz, “Memory and Caches,” UC Berkeley CS152, 1999.
+Why is Memory So Important, Especially Today
+Processor-DRAM Performance Gap grows 50% per Year
+The 50% gap describes the historical period in this graph. Faster processors 
+alone do not guarantee faster applications.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+7</blockquote></details><details><summary>Lecture evidence · p. 8</summary><blockquote>Memory-bound region keeps growing 
+across GPU generations.
+The arithmetic intensity shifts towards 
+memory-bound as model size and 
+context length increase.
+Scaling Laws of LLM 
+Workloads
+Increased amount of parameters and 
+data.
+Increased chain-of-thought length 
+and search depth.
+Larger Model Size and Context State
+Post-Dennard Scaling of AI 
+Accelerators
+Tensor Core throughput has been 
+growing much faster than the 
+capacity of HBM.
+Widening the Memory Wall across 
+Generations
+Why is Memory So Important, Especially Today
+Scaling Laws Meet Memory Walls
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+8</blockquote></details><details><summary>Lecture evidence · p. 9</summary><blockquote>PU core number 
+doubling every ~2 years.
+DRAM DIMM capacity, 
+however, doubling 
+every ~3 years.
+Memory capacity per 
+core expected to drop 
+by 30% every two years
+Much data may load 
+from low-speed disk!
+Adapted from: K. T. Lim et al., “Disaggregated 
+Memory for Expansion and Sharing in Blade Servers,” 
+ISCA, 2009, Fig. 1(a). 2011–2017 projected.
+Memory Wall
+Capacity, Bandwidth, and Latency
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+9</blockquote></details><details><summary>Lecture evidence · p. 10</summary><blockquote>Trends of bandwidth and latency are worsen. 
+Adapted from: K. K. Chang, “Understanding and Improving DRAM Latency,” Ph.D. 
+dissertation, CMU, 2017, Fig. 1.1.
+Memory Wall
+Capacity, Bandwidth, and Latency
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+10</blockquote></details><details><summary>Lecture evidence · p. 11</summary><blockquote>Trends of bandwidth and latency are worsen. 
+Adapted from: K. K. Chang, “Understanding and Improving DRAM Latency,” Ph.D. 
+dissertation, CMU, 2017, Fig. 1.1.
+In modern computing systems, 
+memory performance typically the bottleneck of entire systems.
+Memory Wall
+Capacity, Bandwidth, and Latency
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+11</blockquote></details></li>
+<li>Bandwidth limits data delivered per unit time; latency limits how soon an access completes. <small>(2 pts)</small><details><summary>Lecture evidence · p. 7</summary><blockquote>Adapted from: J. Kubiatowicz, “Memory and Caches,” UC Berkeley CS152, 1999.
+Why is Memory So Important, Especially Today
+Processor-DRAM Performance Gap grows 50% per Year
+The 50% gap describes the historical period in this graph. Faster processors 
+alone do not guarantee faster applications.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+7</blockquote></details><details><summary>Lecture evidence · p. 8</summary><blockquote>Memory-bound region keeps growing 
+across GPU generations.
+The arithmetic intensity shifts towards 
+memory-bound as model size and 
+context length increase.
+Scaling Laws of LLM 
+Workloads
+Increased amount of parameters and 
+data.
+Increased chain-of-thought length 
+and search depth.
+Larger Model Size and Context State
+Post-Dennard Scaling of AI 
+Accelerators
+Tensor Core throughput has been 
+growing much faster than the 
+capacity of HBM.
+Widening the Memory Wall across 
+Generations
+Why is Memory So Important, Especially Today
+Scaling Laws Meet Memory Walls
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+8</blockquote></details><details><summary>Lecture evidence · p. 9</summary><blockquote>PU core number 
+doubling every ~2 years.
+DRAM DIMM capacity, 
+however, doubling 
+every ~3 years.
+Memory capacity per 
+core expected to drop 
+by 30% every two years
+Much data may load 
+from low-speed disk!
+Adapted from: K. T. Lim et al., “Disaggregated 
+Memory for Expansion and Sharing in Blade Servers,” 
+ISCA, 2009, Fig. 1(a). 2011–2017 projected.
+Memory Wall
+Capacity, Bandwidth, and Latency
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+9</blockquote></details><details><summary>Lecture evidence · p. 10</summary><blockquote>Trends of bandwidth and latency are worsen. 
+Adapted from: K. K. Chang, “Understanding and Improving DRAM Latency,” Ph.D. 
+dissertation, CMU, 2017, Fig. 1.1.
+Memory Wall
+Capacity, Bandwidth, and Latency
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+10</blockquote></details><details><summary>Lecture evidence · p. 11</summary><blockquote>Trends of bandwidth and latency are worsen. 
+Adapted from: K. K. Chang, “Understanding and Improving DRAM Latency,” Ph.D. 
+dissertation, CMU, 2017, Fig. 1.1.
+In modern computing systems, 
+memory performance typically the bottleneck of entire systems.
+Memory Wall
+Capacity, Bandwidth, and Latency
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+11</blockquote></details></li>
+<li>Capacity per compute resource can fall when compute grows faster than memory capacity. <small>(2 pts)</small><details><summary>Lecture evidence · p. 7</summary><blockquote>Adapted from: J. Kubiatowicz, “Memory and Caches,” UC Berkeley CS152, 1999.
+Why is Memory So Important, Especially Today
+Processor-DRAM Performance Gap grows 50% per Year
+The 50% gap describes the historical period in this graph. Faster processors 
+alone do not guarantee faster applications.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+7</blockquote></details><details><summary>Lecture evidence · p. 8</summary><blockquote>Memory-bound region keeps growing 
+across GPU generations.
+The arithmetic intensity shifts towards 
+memory-bound as model size and 
+context length increase.
+Scaling Laws of LLM 
+Workloads
+Increased amount of parameters and 
+data.
+Increased chain-of-thought length 
+and search depth.
+Larger Model Size and Context State
+Post-Dennard Scaling of AI 
+Accelerators
+Tensor Core throughput has been 
+growing much faster than the 
+capacity of HBM.
+Widening the Memory Wall across 
+Generations
+Why is Memory So Important, Especially Today
+Scaling Laws Meet Memory Walls
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+8</blockquote></details><details><summary>Lecture evidence · p. 9</summary><blockquote>PU core number 
+doubling every ~2 years.
+DRAM DIMM capacity, 
+however, doubling 
+every ~3 years.
+Memory capacity per 
+core expected to drop 
+by 30% every two years
+Much data may load 
+from low-speed disk!
+Adapted from: K. T. Lim et al., “Disaggregated 
+Memory for Expansion and Sharing in Blade Servers,” 
+ISCA, 2009, Fig. 1(a). 2011–2017 projected.
+Memory Wall
+Capacity, Bandwidth, and Latency
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+9</blockquote></details><details><summary>Lecture evidence · p. 10</summary><blockquote>Trends of bandwidth and latency are worsen. 
+Adapted from: K. K. Chang, “Understanding and Improving DRAM Latency,” Ph.D. 
+dissertation, CMU, 2017, Fig. 1.1.
+Memory Wall
+Capacity, Bandwidth, and Latency
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+10</blockquote></details><details><summary>Lecture evidence · p. 11</summary><blockquote>Trends of bandwidth and latency are worsen. 
+Adapted from: K. K. Chang, “Understanding and Improving DRAM Latency,” Ph.D. 
+dissertation, CMU, 2017, Fig. 1.1.
+In modern computing systems, 
+memory performance typically the bottleneck of entire systems.
+Memory Wall
+Capacity, Bandwidth, and Latency
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+11</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (1)</summary>
+<p><a href="#memory-wall">Memory wall and system bottlenecks</a> → motivates → <a href="#tiering">Tiered memory management</a></p><details><summary>Lecture evidence · p. 7</summary><blockquote>Adapted from: J. Kubiatowicz, “Memory and Caches,” UC Berkeley CS152, 1999.
+Why is Memory So Important, Especially Today
+Processor-DRAM Performance Gap grows 50% per Year
+The 50% gap describes the historical period in this graph. Faster processors 
+alone do not guarantee faster applications.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+7</blockquote></details><details><summary>Lecture evidence · p. 68</summary><blockquote>SOTA Memory Technologies
+Memory Extension: LPDDR
+Hopper retains local HBM. Grace connects LPDDR5X through the coherent 
+NVLink-C2C CPU–GPU link.
+▪
+LPDDR extends the capacity the accelerator can address; it does not enlarge 
+HBM itself.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+68</blockquote></details><details><summary>Lecture evidence · p. 69</summary><blockquote>SOTA Memory Technologies
+Tiered Memory Management Decides What Stays in HBM
+Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects 
+in the LPDDR capacity tier.
+▪
+Promotion helps only when future reuse saves more than the transfer and 
+bookkeeping cost.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+69</blockquote></details>
+</details>
+</article>
+<article id="tiering"><small>Core concept · tiering</small><h2>Tiered memory management</h2><h3>Concept facts</h3><ul><li>Hot latency-sensitive data is prioritized for HBM.</li><li>Larger cold objects can occupy LPDDR.</li><li>Migration benefits must exceed movement and management costs.</li><li>In the Grace/Hopper example, NVLink-C2C provides access to Grace-attached LPDDR5X without enlarging local HBM.</li></ul><details><summary>Lecture evidence · p. 68</summary><blockquote>SOTA Memory Technologies
+Memory Extension: LPDDR
+Hopper retains local HBM. Grace connects LPDDR5X through the coherent 
+NVLink-C2C CPU–GPU link.
+▪
+LPDDR extends the capacity the accelerator can address; it does not enlarge 
+HBM itself.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+68</blockquote></details><details><summary>Lecture evidence · p. 69</summary><blockquote>SOTA Memory Technologies
+Tiered Memory Management Decides What Stays in HBM
+Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects 
+in the LPDDR capacity tier.
+▪
+Promotion helps only when future reuse saves more than the transfer and 
+bookkeeping cost.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+69</blockquote></details><h3>Reference note points</h3><ol>
+<li>Hot latency-sensitive data is prioritized for HBM. <small>(2 pts)</small><details><summary>Lecture evidence · p. 68</summary><blockquote>SOTA Memory Technologies
+Memory Extension: LPDDR
+Hopper retains local HBM. Grace connects LPDDR5X through the coherent 
+NVLink-C2C CPU–GPU link.
+▪
+LPDDR extends the capacity the accelerator can address; it does not enlarge 
+HBM itself.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+68</blockquote></details><details><summary>Lecture evidence · p. 69</summary><blockquote>SOTA Memory Technologies
+Tiered Memory Management Decides What Stays in HBM
+Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects 
+in the LPDDR capacity tier.
+▪
+Promotion helps only when future reuse saves more than the transfer and 
+bookkeeping cost.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+69</blockquote></details></li>
+<li>Larger cold objects can occupy LPDDR. <small>(2 pts)</small><details><summary>Lecture evidence · p. 68</summary><blockquote>SOTA Memory Technologies
+Memory Extension: LPDDR
+Hopper retains local HBM. Grace connects LPDDR5X through the coherent 
+NVLink-C2C CPU–GPU link.
+▪
+LPDDR extends the capacity the accelerator can address; it does not enlarge 
+HBM itself.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+68</blockquote></details><details><summary>Lecture evidence · p. 69</summary><blockquote>SOTA Memory Technologies
+Tiered Memory Management Decides What Stays in HBM
+Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects 
+in the LPDDR capacity tier.
+▪
+Promotion helps only when future reuse saves more than the transfer and 
+bookkeeping cost.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+69</blockquote></details></li>
+<li>Migration benefits must exceed movement and management costs. <small>(2 pts)</small><details><summary>Lecture evidence · p. 68</summary><blockquote>SOTA Memory Technologies
+Memory Extension: LPDDR
+Hopper retains local HBM. Grace connects LPDDR5X through the coherent 
+NVLink-C2C CPU–GPU link.
+▪
+LPDDR extends the capacity the accelerator can address; it does not enlarge 
+HBM itself.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+68</blockquote></details><details><summary>Lecture evidence · p. 69</summary><blockquote>SOTA Memory Technologies
+Tiered Memory Management Decides What Stays in HBM
+Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects 
+in the LPDDR capacity tier.
+▪
+Promotion helps only when future reuse saves more than the transfer and 
+bookkeeping cost.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+69</blockquote></details></li>
+<li>In the Grace/Hopper example, NVLink-C2C provides access to Grace-attached LPDDR5X without enlarging local HBM. <small>(2 pts)</small><details><summary>Lecture evidence · p. 68</summary><blockquote>SOTA Memory Technologies
+Memory Extension: LPDDR
+Hopper retains local HBM. Grace connects LPDDR5X through the coherent 
+NVLink-C2C CPU–GPU link.
+▪
+LPDDR extends the capacity the accelerator can address; it does not enlarge 
+HBM itself.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+68</blockquote></details><details><summary>Lecture evidence · p. 69</summary><blockquote>SOTA Memory Technologies
+Tiered Memory Management Decides What Stays in HBM
+Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects 
+in the LPDDR capacity tier.
+▪
+Promotion helps only when future reuse saves more than the transfer and 
+bookkeeping cost.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+69</blockquote></details></li>
+</ol>
+<details><summary>Reference relations (2)</summary>
+<p><a href="#memory-wall">Memory wall and system bottlenecks</a> → motivates → <a href="#tiering">Tiered memory management</a></p><details><summary>Lecture evidence · p. 7</summary><blockquote>Adapted from: J. Kubiatowicz, “Memory and Caches,” UC Berkeley CS152, 1999.
+Why is Memory So Important, Especially Today
+Processor-DRAM Performance Gap grows 50% per Year
+The 50% gap describes the historical period in this graph. Faster processors 
+alone do not guarantee faster applications.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+7</blockquote></details><details><summary>Lecture evidence · p. 68</summary><blockquote>SOTA Memory Technologies
+Memory Extension: LPDDR
+Hopper retains local HBM. Grace connects LPDDR5X through the coherent 
+NVLink-C2C CPU–GPU link.
+▪
+LPDDR extends the capacity the accelerator can address; it does not enlarge 
+HBM itself.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+68</blockquote></details><details><summary>Lecture evidence · p. 69</summary><blockquote>SOTA Memory Technologies
+Tiered Memory Management Decides What Stays in HBM
+Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects 
+in the LPDDR capacity tier.
+▪
+Promotion helps only when future reuse saves more than the transfer and 
+bookkeeping cost.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+69</blockquote></details>
+<p><a href="#hbm">HBM packaging</a> → provides_hot_data_tier_for → <a href="#tiering">Tiered memory management</a></p><details><summary>Lecture evidence · p. 57</summary><blockquote>GPU Memory Hierarchy
+From GDDR to HBM: 2.5D Packaging
+HBM commonly sits beside the XPU on an interposer, forming a 2.5D package.
+▪
+Dense connections improve bandwidth and energy per bit, with costs in assembly, 
+yield, cooling, and power delivery.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+57</blockquote></details><details><summary>Lecture evidence · p. 69</summary><blockquote>SOTA Memory Technologies
+Tiered Memory Management Decides What Stays in HBM
+Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects 
+in the LPDDR capacity tier.
+▪
+Promotion helps only when future reuse saves more than the transfer and 
+bookkeeping cost.
+▪
+Memory Wall
+CPU Memory
+GPU Memory
+SOTA Memory
+Advanced AI Computing and Systems
+69</blockquote></details>
+</details>
+</article>
+</aside></main><script>
+function show(scroll){const wanted=document.getElementById(location.hash.slice(1));const active=wanted?.tagName==='ARTICLE'?wanted:document.querySelector('article');for(const el of document.querySelectorAll('article'))el.classList.toggle('active',el===active);for(const a of document.querySelectorAll('.node'))a.setAttribute('aria-current',String(a.hash==='#'+active.id));const panel=document.querySelector('aside');panel.scrollTop=0;if(scroll&&matchMedia('(max-width:780px)').matches)panel.scrollIntoView()}
+document.addEventListener('click',e=>{const a=e.target.closest('a[href^="#"]');if(!a||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;e.preventDefault();history.pushState(null,'',a.hash);show(true)});window.addEventListener('popstate',()=>show(false));show(false)
+</script></html>

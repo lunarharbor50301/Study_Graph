@@ -1,0 +1,218 @@
+{
+  "concepts": {
+    "precision": {
+      "numerator": 29,
+      "denominator": 29,
+      "value": 1.0,
+      "status": "measured"
+    },
+    "core_recall": {
+      "numerator": 19,
+      "denominator": 20,
+      "value": 0.95,
+      "status": "measured"
+    },
+    "missing_core_ids": [
+      "parallelism"
+    ],
+    "raw_count": 29,
+    "deduplicated_count": 29
+  },
+  "relations": {
+    "precision": {
+      "numerator": 0,
+      "denominator": 0,
+      "value": null,
+      "status": "not_applicable"
+    },
+    "core_recall": {
+      "numerator": 0,
+      "denominator": 7,
+      "value": 0.0,
+      "status": "measured"
+    },
+    "missing_core_ids": [
+      "R01",
+      "R02",
+      "R03",
+      "R04",
+      "R05",
+      "R06",
+      "R07"
+    ],
+    "raw_count": 0,
+    "deduplicated_count": 0
+  },
+  "study_notes": {
+    "mean_point_score": {
+      "numerator": 18.166666666666668,
+      "denominator": 20,
+      "value": 0.9083333333333334,
+      "status": "measured"
+    },
+    "micro_point_score": {
+      "numerator": 88,
+      "denominator": 96,
+      "value": 0.9166666666666666,
+      "status": "measured"
+    },
+    "fully_covered_points": {
+      "numerator": 43,
+      "denominator": 48,
+      "value": 0.8958333333333334,
+      "status": "measured"
+    },
+    "items": [
+      {
+        "id": "N-hierarchy",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-pipeline",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-ideal-pipeline",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-hazard",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-forwarding",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-ooo",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-superscalar",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-smt",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-parallelism",
+        "numerator": 0,
+        "denominator": 4,
+        "value": 0.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-sm",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-warp",
+        "numerator": 5,
+        "denominator": 6,
+        "value": 0.8333333333333334,
+        "status": "measured"
+      },
+      {
+        "id": "N-latency-hiding",
+        "numerator": 2,
+        "denominator": 4,
+        "value": 0.5,
+        "status": "measured"
+      },
+      {
+        "id": "N-divergence",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-atomic",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-mutex",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-cuda-execution",
+        "numerator": 5,
+        "denominator": 6,
+        "value": 0.8333333333333334,
+        "status": "measured"
+      },
+      {
+        "id": "N-amdahl",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-roofline",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-cpu-gpu",
+        "numerator": 6,
+        "denominator": 6,
+        "value": 1.0,
+        "status": "measured"
+      },
+      {
+        "id": "N-speculation",
+        "numerator": 4,
+        "denominator": 4,
+        "value": 1.0,
+        "status": "measured"
+      }
+    ]
+  },
+  "review_type": "llm_judge",
+  "reference_status": "human_review_pending",
+  "limitations": [
+    "Semantic decisions require human verification, especially LLM judge decisions.",
+    "Reference set is non-exhaustive; valid extra concepts count toward precision.",
+    "Fact point coverage is not a measurement of all generated factual claims.",
+    "Relations require semantic/direction/endpoint review; layout edges are not relations."
+  ],
+  "reference_sha256": "7c0d4e3d4198357f28c6b8b8385a1c111ee46c0a3b1afd3804b9a64f4328366f",
+  "prediction_sha256": "a73fbbf535eca3c891c9af021375ae9249d1da9a497d688bc16cc4668647437a"
+}
