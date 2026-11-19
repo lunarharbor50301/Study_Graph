@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 
+import json
 import os
+import time
+import urllib.error
+import urllib.request
 from dataclasses import dataclass
 from typing import Callable
 
@@ -13,6 +17,7 @@ from backend.qwen_client import chat as qwen_chat, stream_chat as qwen_stream_ch
 
 DEFAULT_QWEN_MODEL = "qwen3.8-27b"
 _runtime_provider: str | None = None
+_health_cache: tuple[float, str, bool, str] | None = None
 
 
 @dataclass(frozen=True)
@@ -43,18 +48,52 @@ def active_provider() -> str:
     return _valid_name(os.getenv("STUDYGRAPH_LLM_PROVIDER") or "deepseek")
 
 
+def check_tacc_ready(timeout: float = 2.5) -> tuple[bool, str]:
+    """Check the TACC OpenAI-compatible endpoint without waiting for a chat."""
+    global _health_cache
+    endpoint = os.getenv("QWEN_BASE_URL", "").strip().rstrip("/")
+    if not endpoint:
+        return False, "QWEN_BASE_URL is not configured for TACC."
+    now = time.monotonic()
+    if _health_cache and _health_cache[1] == endpoint and now - _health_cache[0] < 5:
+        return _health_cache[2], _health_cache[3]
+    try:
+        request = urllib.request.Request(endpoint + "/models", headers={"Accept": "application/json"})
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            if response.status != 200:
+                message = f"TACC returned HTTP {response.status}."
+                _health_cache = (now, endpoint, False, message)
+                return False, message
+            json.load(response)
+        _health_cache = (now, endpoint, True, "")
+        return True, ""
+    except urllib.error.HTTPError as exc:
+        message = f"TACC returned HTTP {exc.code}."
+    except (urllib.error.URLError, TimeoutError, OSError, ValueError):
+        message = "TACC is not responding; switch back to API."
+    except Exception as exc:  # http.client.IncompleteRead and similar
+        message = f"TACC is not responding ({type(exc).__name__}); switch back to API."
+    _health_cache = (now, endpoint, False, message)
+    return False, message
+
+
 def set_runtime_provider(name: str) -> str:
     """Switch providers for this backend process; env remains the startup default."""
     global _runtime_provider
     name = _valid_name(name)
     _build(name, require=True, tutor=False)  # validate before changing state
+    if name == "tacc" and os.getenv("STUDYGRAPH_PROVIDER_HEALTHCHECK", "1") != "0":
+        ready, message = check_tacc_ready()
+        if not ready:
+            raise HTTPException(503, message)
     _runtime_provider = name
     return name
 
 
 def reset_runtime_provider() -> None:
-    global _runtime_provider
+    global _runtime_provider, _health_cache
     _runtime_provider = None
+    _health_cache = None
 
 
 def _deepseek_tutor_chat(messages, base_url, max_tokens=256, temperature=0, timeout=90):

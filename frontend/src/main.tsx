@@ -317,6 +317,7 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
   }
   async function changeProvider(next: ProviderName) {
     setProviderBusy(true)
+    setStatus(next === 'tacc' ? 'Checking TACC…' : 'Switching provider…')
     try {
       const data = await setProvider(next)
       setProviderName(data.provider)

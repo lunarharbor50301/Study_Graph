@@ -10,7 +10,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from backend import deepseek_client, documents
 from backend.demo_users import demo_user
-from backend.llm_provider import provider_for
+from backend.llm_provider import check_tacc_ready, provider_for
 from backend.qwen_client import normalize_base_url
 
 router = APIRouter(prefix="/api/agent")
@@ -288,6 +288,10 @@ async def stream_turn(body: Turn):
     endpoint = config.endpoint
     if config.name == "tacc":
         endpoint = normalize_base_url(endpoint)
+        if os.getenv("STUDYGRAPH_PROVIDER_HEALTHCHECK", "1") != "0":
+            ready, message = check_tacc_ready()
+            if not ready:
+                raise HTTPException(503, message)
         if os.getenv("TACC_SSH_TARGET"):
             raise HTTPException(503, "Use a persistent SSH tunnel for pi streaming.")
     sources = {doc_id: documents.document(doc_id)

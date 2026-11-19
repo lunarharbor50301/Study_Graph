@@ -1,5 +1,6 @@
 """Provider selection is configuration-only and works without TACC."""
 import os
+import time
 import unittest
 from unittest.mock import patch
 
@@ -27,6 +28,7 @@ class ProviderSwitchTest(unittest.TestCase):
             "DEEPSEEK_API_KEY": "test",
             "DEEPSEEK_BASE_URL": "https://example.test",
             "QWEN_BASE_URL": "http://127.0.0.1:18029/v1",
+            "STUDYGRAPH_PROVIDER_HEALTHCHECK": "0",
         }
         with patch.dict(os.environ, env):
             set_runtime_provider("tacc")
@@ -64,6 +66,18 @@ class ProviderSwitchTest(unittest.TestCase):
             with self.assertRaises(HTTPException) as error:
                 provider_for("STUDYGRAPH_GENERATION_PROVIDER")
             self.assertEqual(error.exception.status_code, 503)
+
+    def test_unreachable_tacc_fails_the_switch_fast(self):
+        with patch.dict(os.environ, {
+            "STUDYGRAPH_LLM_PROVIDER": "deepseek",
+            "QWEN_BASE_URL": "http://127.0.0.1:9/v1",
+        }):
+            started = time.monotonic()
+            with self.assertRaises(HTTPException) as error:
+                set_runtime_provider("tacc")
+            self.assertEqual(error.exception.status_code, 503)
+            self.assertLess(time.monotonic() - started, 5)
+            self.assertEqual(active_provider(), "deepseek")
 
 
 if __name__ == "__main__":
