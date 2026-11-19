@@ -38,14 +38,17 @@ def _valid_name(value: str) -> str:
 
 
 def _provider_name(feature_env: str) -> str:
+    if feature_env == "STUDYGRAPH_TUTOR_PROVIDER":
+        return _valid_name(os.getenv(feature_env) or "tacc")
     return _valid_name(os.getenv(feature_env) or os.getenv("STUDYGRAPH_LLM_PROVIDER") or "deepseek")
 
 
 def active_provider() -> str:
-    """Return the provider selected by the current process, if any."""
+    """Return the generation provider selected by the current process."""
     if _runtime_provider:
         return _runtime_provider
-    return _valid_name(os.getenv("STUDYGRAPH_LLM_PROVIDER") or "deepseek")
+    return _valid_name(os.getenv("STUDYGRAPH_GENERATION_PROVIDER")
+                       or os.getenv("STUDYGRAPH_LLM_PROVIDER") or "deepseek")
 
 
 def check_tacc_ready(timeout: float = 2.5) -> tuple[bool, str]:
@@ -70,15 +73,15 @@ def check_tacc_ready(timeout: float = 2.5) -> tuple[bool, str]:
     except urllib.error.HTTPError as exc:
         message = f"TACC returned HTTP {exc.code}."
     except (urllib.error.URLError, TimeoutError, OSError, ValueError):
-        message = "TACC is not responding; switch back to API."
+        message = "TACC is not responding."
     except Exception as exc:  # http.client.IncompleteRead and similar
-        message = f"TACC is not responding ({type(exc).__name__}); switch back to API."
+        message = f"TACC is not responding ({type(exc).__name__})."
     _health_cache = (now, endpoint, False, message)
     return False, message
 
 
 def set_runtime_provider(name: str) -> str:
-    """Switch providers for this backend process; env remains the startup default."""
+    """Switch the generation provider for this process; the tutor stays TACC."""
     global _runtime_provider
     name = _valid_name(name)
     _build(name, require=True, tutor=False)  # validate before changing state
@@ -134,6 +137,6 @@ def provider_for(feature_env: str, *, require: bool = True, tutor: bool = False)
     `require=False` is for cache-key construction: it returns the configured
     provider/model even when the API key or endpoint is missing.
     """
-    name = _runtime_provider or _provider_name(feature_env)
+    name = _runtime_provider if feature_env == "STUDYGRAPH_GENERATION_PROVIDER" and _runtime_provider else _provider_name(feature_env)
     return _build(name, require=require, tutor=tutor)
 

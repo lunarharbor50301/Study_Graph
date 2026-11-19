@@ -74,11 +74,11 @@ export function listConversations(documentId: string) {
 export type ProviderName = 'deepseek' | 'tacc'
 
 export function getProvider() {
-  return request<{ provider: ProviderName }>('config/provider')
+  return request<{ provider: ProviderName }>('config/generation-provider')
 }
 
 export function setProvider(provider: ProviderName) {
-  return request<{ provider: ProviderName }>('config/provider', {
+  return request<{ provider: ProviderName }>('config/generation-provider', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ provider }),

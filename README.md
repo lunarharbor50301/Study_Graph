@@ -4,7 +4,7 @@ StudyGraph 帮助学生从课程讲义的概念图出发，提问、回到原页
 
 ## 评审快速开始
 
-课程项目不评估界面体验，重点是可运行、结果可复现。默认配置使用 **DeepSeek 公共 API**，不需要 TACC 账号；也可以切到 TACC Qwen。
+课程项目不评估界面体验，重点是可运行、结果可复现。生成（概念图、study note、练习题）默认使用 **DeepSeek 公共 API**，不需要 TACC；AI Tutor 固定使用 **TACC Qwen**，需要可用的 TACC 服务或隧道。
 
 依赖：Python 3.12、Node.js 22.19+（建议 24）。首次安装需要联网。
 
@@ -20,9 +20,14 @@ npm run build --prefix frontend
 
 ```text
 STUDYGRAPH_LLM_PROVIDER=deepseek
+STUDYGRAPH_TUTOR_PROVIDER=tacc
 DEEPSEEK_API_KEY=你的 key
 DEEPSEEK_BASE_URL=https://api.deepseek.com
 DEEPSEEK_MODEL=deepseek-flash
+
+# AI Tutor 固定走 TACC；没有 TACC 时生成仍可用，只有 tutor 不可用
+QWEN_BASE_URL=http://127.0.0.1:18029/v1
+QWEN_MODEL=qwen3.8-27b
 ```
 
 启动后端和前端开发服务器：
@@ -40,26 +45,25 @@ npm run dev --prefix frontend
 
 打开 Vite 打印的地址（默认 `http://127.0.0.1:5173/`）。接口文档在 `http://127.0.0.1:8000/docs`。
 
-### 切换模型供应商
+### 模型供应商
 
-只改环境变量，不需要改代码：
+AI Tutor 固定使用 TACC Qwen；可切换的是**生成模型**（概念图、study note、练习题）。
 
 ```text
-# 全局默认：deepseek 或 tacc
+# 生成模型默认：deepseek；也可设为 tacc
 STUDYGRAPH_LLM_PROVIDER=deepseek
+STUDYGRAPH_GENERATION_PROVIDER=
 
-# 可选：分别覆盖生成和助教
-STUDYGRAPH_GENERATION_PROVIDER=deepseek
-STUDYGRAPH_TUTOR_PROVIDER=deepseek
+# AI Tutor 固定 TACC
+STUDYGRAPH_TUTOR_PROVIDER=tacc
 ```
 
 - `deepseek`：使用 `DEEPSEEK_API_KEY`、`DEEPSEEK_BASE_URL`、`DEEPSEEK_MODEL`。
 - `tacc`：使用 `QWEN_BASE_URL`（必须带 `/v1`）、`QWEN_MODEL`（默认 `qwen3.8-27b`）、`QWEN_API_KEY`（本地服务可省略）；AI tutor 还需要持久 SSH 隧道。
-- 概念图、单概念笔记、出题和 AI tutor 共用这套选择；`STUDYGRAPH_GENERATION_PROVIDER` / `STUDYGRAPH_TUTOR_PROVIDER` 可分别覆盖。
+- 侧栏的 **Generation model** 下拉可现场切换生成 provider（DeepSeek API / TACC Qwen）。它只改当前后端进程，重启后回到 `.env`；API key 始终留在后端；AI Tutor 不受这个下拉影响。
+- 切到 TACC 前会先请求 `QWEN_BASE_URL/models`（2.5 秒超时），TACC 不可用时快速返回 503，不切换； tutor 每轮开始前也做同样 preflight，不会等满 180 秒。
 
-聊天头部也提供 **API / TACC** 下拉，用于现场切换。它只改当前后端进程，重启后回到 `.env` 的配置；API key 始终留在后端。切到 TACC 前和后端每次开始 tutor 回合前，都会用 2.5 秒超时请求 `QWEN_BASE_URL/models`；TACC 不可用时快速返回 503，前端保持原 provider，不会等 180 秒的完整回答超时。
-
-TACC 作业通常只有 1 小时时限，作业结束后隧道会失效，AI tutor 会报连接错误。评审和复现优先用 DeepSeek；需要 TACC 时按 [TACC 连接步骤](docs/tacc/live-qa.md)重新提交并更新 `QWEN_BASE_URL`。
+TACC 作业通常只有 1 小时时限，作业结束后隧道会失效，AI Tutor 会报连接错误。生成可以继续用 DeepSeek；需要 TACC tutor 时按 [TACC 连接步骤](docs/tacc/live-qa.md)重新提交并更新 `QWEN_BASE_URL`。
 
 ## 组员从这里开始
 

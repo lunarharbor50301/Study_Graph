@@ -32,12 +32,12 @@ class ProviderChoice(BaseModel):
     provider: Literal["deepseek", "tacc"]
 
 
-@app.get("/api/config/provider")
+@app.get("/api/config/generation-provider")
 def current_provider():
     return {"provider": active_provider()}
 
 
-@app.post("/api/config/provider")
+@app.post("/api/config/generation-provider")
 def switch_provider(body: ProviderChoice):
     return {"provider": set_runtime_provider(body.provider)}
 

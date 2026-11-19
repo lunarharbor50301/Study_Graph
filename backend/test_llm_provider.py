@@ -34,8 +34,10 @@ class ProviderSwitchTest(unittest.TestCase):
             set_runtime_provider("tacc")
             self.assertEqual(active_provider(), "tacc")
             self.assertEqual(provider_for("STUDYGRAPH_GENERATION_PROVIDER").name, "tacc")
+            self.assertEqual(provider_for("STUDYGRAPH_TUTOR_PROVIDER", tutor=True).name, "tacc")
             set_runtime_provider("deepseek")
             self.assertEqual(provider_for("STUDYGRAPH_GENERATION_PROVIDER").name, "deepseek")
+            self.assertEqual(provider_for("STUDYGRAPH_TUTOR_PROVIDER", tutor=True).name, "tacc")
 
     def test_deepseek_is_the_default_and_can_be_overridden_per_feature(self):
         env = {
@@ -48,7 +50,7 @@ class ProviderSwitchTest(unittest.TestCase):
         }
         with patch.dict(os.environ, env):
             self.assertEqual(provider_for("STUDYGRAPH_GENERATION_PROVIDER").name, "deepseek")
-            self.assertEqual(provider_for("STUDYGRAPH_TUTOR_PROVIDER", tutor=True).name, "deepseek")
+            self.assertEqual(provider_for("STUDYGRAPH_TUTOR_PROVIDER", tutor=True).name, "tacc")
             with patch.dict(os.environ, {"STUDYGRAPH_TUTOR_PROVIDER": "tacc"}):
                 tacc = provider_for("STUDYGRAPH_TUTOR_PROVIDER", tutor=True)
             self.assertEqual(tacc.name, "tacc")

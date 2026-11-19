@@ -19,6 +19,28 @@ function Navigation({ workspaceActive, courseShelf, mode, onMode, chatVisible, v
   chatVisible: boolean; viewerVisible: boolean
   onChatVisibilityChange: (visible: boolean) => void; onViewerVisibilityChange: (visible: boolean) => void
 }) {
+  const [provider, setProviderName] = useState<ProviderName>('deepseek')
+  const [providerBusy, setProviderBusy] = useState(false)
+  const [providerError, setProviderError] = useState('')
+  useEffect(() => {
+    let cancelled = false
+    void getProvider()
+      .then(data => { if (!cancelled) setProviderName(data.provider) })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [])
+  async function changeProvider(next: ProviderName) {
+    setProviderBusy(true)
+    setProviderError('')
+    try {
+      const data = await setProvider(next)
+      setProviderName(data.provider)
+    } catch (error) {
+      setProviderError(error instanceof Error ? error.message : 'Could not switch generation provider.')
+    } finally {
+      setProviderBusy(false)
+    }
+  }
   return <aside className="sidebar">
     <div className="brand">
       <span className="brand__mark">
@@ -58,6 +80,16 @@ function Navigation({ workspaceActive, courseShelf, mode, onMode, chatVisible, v
     </div>}
 
     {courseShelf}
+
+    <div className="sidebar__section generation-setting">
+      <label className="sidebar__label" htmlFor="generation-provider">Generation model</label>
+      <select id="generation-provider" value={provider} disabled={providerBusy}
+        onChange={event => void changeProvider(event.target.value as ProviderName)}>
+        <option value="deepseek">DeepSeek API</option>
+        <option value="tacc">TACC Qwen</option>
+      </select>
+      <small>{providerError || 'Concept maps, study notes, tests'}</small>
+    </div>
 
     <div className="sidebar__footer">
       <span className="sidebar__label" id="demo-user-label">Demo user</span>
@@ -277,8 +309,6 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
   const [sessionId, setSessionId] = useState(() => item.agentSessionId ?? crypto.randomUUID())
   const [agentMessages, setAgentMessages] = useState<ChatMessage[]>([])
   const [conversations, setConversations] = useState<ConversationSummary[]>([])
-  const [provider, setProviderName] = useState<ProviderName>('deepseek')
-  const [providerBusy, setProviderBusy] = useState(false)
   const [loadingHistory, setLoadingHistory] = useState(true)
   const [status, setStatus] = useState('')
   const abort = useRef<AbortController | null>(null)
@@ -303,30 +333,10 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
       .catch(() => {})
     return () => { cancelled = true }
   }, [doc.document_id])
-  useEffect(() => {
-    let cancelled = false
-    void getProvider()
-      .then(data => { if (!cancelled) setProviderName(data.provider) })
-      .catch(() => {})
-    return () => { cancelled = true }
-  }, [])
   const refreshConversations = () => {
     void listConversations(doc.document_id)
       .then(data => setConversations(data.conversations))
       .catch(() => {})
-  }
-  async function changeProvider(next: ProviderName) {
-    setProviderBusy(true)
-    setStatus(next === 'tacc' ? 'Checking TACC…' : 'Switching provider…')
-    try {
-      const data = await setProvider(next)
-      setProviderName(data.provider)
-      setStatus(`Provider: ${data.provider === 'tacc' ? 'TACC Qwen' : 'DeepSeek API'}`)
-    } catch (error) {
-      setStatus(error instanceof Error ? error.message : 'Could not switch provider.')
-    } finally {
-      setProviderBusy(false)
-    }
   }
   const setupMessages = item.messages.filter(message =>
     message.sessionId ? message.sessionId === sessionId : sessionId === item.agentSessionId)
@@ -386,11 +396,6 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onCitation 
     : [{ id: sessionId, title: 'New conversation', updated_at: '', turn_count: 0 }, ...conversations]
   return <div className="chat-layout"><div className="chat-context">
     <span><Icon name={mode === 'learn' ? 'book' : 'test'} size={14}/>{contextLabel}</span>
-    <select className="chat-provider" aria-label="Model provider" title="Switch between DeepSeek API and TACC Qwen"
-      value={provider} disabled={busy || providerBusy} onChange={event => void changeProvider(event.target.value as ProviderName)}>
-      <option value="deepseek">API</option>
-      <option value="tacc">TACC</option>
-    </select>
     <select className="chat-conversation" aria-label="Conversation history" value={sessionId}
       disabled={busy} onChange={event => {
         const next = event.target.value
