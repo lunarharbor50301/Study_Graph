@@ -380,7 +380,6 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onDeleteCon
       const remaining = conversations.filter(conversation => conversation.id !== id)
       setConversations(remaining)
       onDeleteConversation(id)
-      setConversationOpen(false)
       if (id === sessionId) {
         const next = remaining[0]?.id ?? crypto.randomUUID()
         onAgentSession(next)
