@@ -5,7 +5,7 @@ export type SlideText = { page: number; text: string }
 
 type StudyGuide = {
   title: string
-  topics: { title: string; notes: { page: number; title: string; summary: string; detail: string; keyPoints: string[]; formula: string | null }[] }[]
+  topics: { title: string; notes: { page: number; pages?: number[]; title: string; summary: string; detail: string; keyPoints: string[]; formula: string | null }[] }[]
   sources: Record<number, string>
 }
 
@@ -17,13 +17,15 @@ export async function createGeneratedOutline(doc: DocumentInfo, instructions = '
   const topics = guide.topics.map((topic, index): LectureTopic => {
     const notes = topic.notes.map((note, position): Concept => ({
       id: `topic-${index}-note-${position}`, name: note.title, shortName: shorten(note.title, 45),
-      page: note.page, eyebrow: topic.title, summary: note.summary, detail: note.detail,
+      page: note.page, sourcePages: note.pages?.length ? note.pages : undefined,
+      eyebrow: topic.title, summary: note.summary, detail: note.detail,
       keyPoints: note.keyPoints, formula: note.formula ?? undefined, sourceText: guide.sources[note.page],
     }))
+    const pages = notes.flatMap(note => note.sourcePages ?? [note.page])
     concepts.push(...notes)
     return {
       id: `topic-${index}`, title: topic.title,
-      firstPage: Math.min(...notes.map(note => note.page)), lastPage: Math.max(...notes.map(note => note.page)),
+      firstPage: Math.min(...pages), lastPage: Math.max(...pages),
       conceptIds: notes.map(note => note.id),
     }
   })
