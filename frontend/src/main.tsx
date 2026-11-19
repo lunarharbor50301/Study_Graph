@@ -487,6 +487,17 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onDeleteCon
 
 function LectureViewer({ doc, page, onPage, evidenceVisible, setEvidenceVisible }: { doc: DocumentInfo; page: number; onPage: (page: number) => void; evidenceVisible: boolean; setEvidenceVisible: (visible: boolean) => void }) {
   const pageUrl = '/api/documents/' + doc.document_id + '/pages/' + page
+  const [imageDoc, setImageDoc] = useState<string | null>(null)
+  useEffect(() => {
+    if (doc.preview_mode !== 'slide_content') return
+    const controller = new AbortController()
+    fetch(withDemoUser('/api/documents/' + doc.document_id), { signal: controller.signal })
+      .then(response => response.ok ? response.json() : null)
+      .then(info => {
+        if (!controller.signal.aborted && info?.preview_mode === 'page_image') setImageDoc(doc.document_id)
+      }).catch(() => {})
+    return () => controller.abort()
+  }, [doc.document_id, doc.preview_mode])
   const [excerpt, setExcerpt] = useState<{url: string; text: string} | null>(null)
   useEffect(() => {
     if (!evidenceVisible) return
@@ -502,7 +513,7 @@ function LectureViewer({ doc, page, onPage, evidenceVisible, setEvidenceVisible 
   }, [pageUrl, evidenceVisible])
   return <div className="viewer-layout"><div className="file-strip"><span className="pdf-mark">{doc.name.toLowerCase().endsWith('.pptx')?'PPTX':'PDF'}</span><div><b>{doc.name}</b><small>{doc.page_count} pages · <a href={withDemoUser(doc.original_url)}>Download original</a></small></div><span className="ready-badge"><i/>Ready</span></div>
     <div className="viewer-toolbar"><button onClick={() => onPage(Math.max(1, page - 1))} disabled={page <= 1} aria-label="Previous page"><Icon name="previous"/></button><label>Page<input type="number" min="1" max={doc.page_count} value={page} onChange={event => onPage(Math.max(1, Math.min(doc.page_count, Math.trunc(Number(event.target.value)))))}/><span>of {doc.page_count}</span></label><button onClick={() => onPage(Math.min(doc.page_count, page + 1))} disabled={page >= doc.page_count} aria-label="Next page"><Icon name="next"/></button><button className={`evidence-toggle ${evidenceVisible ? 'active' : ''}`} onClick={() => setEvidenceVisible(!evidenceVisible)}><Icon name="sparkle" size={14}/>Evidence</button></div>
-    <div className="slide-stage">{doc.preview_mode==='slide_content' ? <iframe title="Slide content" sandbox="" src={withDemoUser(pageUrl+'/preview')} style={{width:'100%',height:'100%'}}/> : <img key={pageUrl} src={withDemoUser(pageUrl+'/preview')} alt={'Lecture page '+page} style={{width:'100%',height:'auto'}}/>}</div>
+    <div className="slide-stage">{doc.preview_mode==='slide_content' && imageDoc !== doc.document_id ? <iframe title="Slide content" sandbox="" src={withDemoUser(pageUrl+'/preview')} style={{width:'100%',height:'100%'}}/> : <img key={pageUrl} src={withDemoUser(pageUrl+'/preview')} alt={'Lecture page '+page} style={{width:'100%',height:'auto'}}/>}</div>
     {evidenceVisible && <div className="evidence-panel" style={{maxHeight:'25%',overflow:'auto'}}><div><span className="eyebrow">Page {page} text</span><p>{excerpt?.url===pageUrl ? excerpt.text : 'Loading…'}</p></div></div>}
   </div>
 }

@@ -76,6 +76,14 @@ studygraph -NoOpen
 
 后端日志在 `.run/backend.out.log` 和 `.run/backend.err.log`。这个脚本不负责提交 TACC 作业，只等待已有的 TACC 服务/隧道。
 
+### PPTX 原版式预览
+
+访问网页的学生只需浏览器。后端用 LibreOffice 将上传的 PPTX 转成分页预览，转换结果随讲义缓存。多人共用一个后端时，只在服务器安装一次；每人各自启动 localhost 时，每台运行后端的电脑都需要这个组件。
+
+Windows 的 `scripts/install-studygraph.ps1` 会检测 LibreOffice，缺失时调用 winget 安装。macOS 后端运行 `brew install --cask libreoffice`；Debian 或 Ubuntu 后端运行 `sudo apt-get install libreoffice-impress`。自定义安装位置可通过 `SOFFICE_PATH` 指向 soffice 可执行文件。为接近原稿排版，可在服务器安装课件使用的字体。
+
+已有的简化预览可通过重新上传同一份 PPTX 升级。转换结果是静态幻灯片，支持分页查看。
+
 ### 模型供应商
 
 AI Tutor 固定使用 TACC Qwen；可切换的是**生成模型**（概念图、study note、练习题）。

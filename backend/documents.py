@@ -101,6 +101,16 @@ def parse(data, kind):
 
 def render_slides(data):
     office = os.getenv("SOFFICE_PATH") or shutil.which("soffice")
+    if not office and Path("/Applications/LibreOffice.app/Contents/MacOS/soffice").is_file():
+        office = "/Applications/LibreOffice.app/Contents/MacOS/soffice"
+    if not office and os.name == "nt":
+        for variable in ("ProgramW6432", "ProgramFiles", "ProgramFiles(x86)", "LOCALAPPDATA"):
+            directory = os.getenv(variable)
+            if directory:
+                candidate = Path(directory) / "LibreOffice/program/soffice.exe"
+                if candidate.is_file():
+                    office = str(candidate)
+                    break
     if not office:
         return None
     with tempfile.TemporaryDirectory() as tmp:
@@ -153,6 +163,17 @@ def metadata(db, doc):
             "pages_without_text": [r[0] for r in empty]}
 
 
+def upgrade_slide_preview(db, doc, data, page_count):
+    rendered = render_slides(data)
+    if rendered is None:
+        return
+    with pymupdf.open(stream=rendered, filetype="pdf") as pdf:
+        if len(pdf) != page_count:
+            return
+    db.execute("INSERT OR IGNORE INTO renderings VALUES(?,?)", (doc, rendered))
+    db.execute("UPDATE pages SET html='' WHERE doc=?", (doc,))
+
+
 @router.post("", status_code=201, response_model=DocumentInfo)
 def upload(file: UploadFile = File(...)):
     name = Path(file.filename or "").name
@@ -165,7 +186,14 @@ def upload(file: UploadFile = File(...)):
     doc = hashlib.sha256(data).hexdigest()
     with database() as db:
         if db.execute("SELECT 1 FROM docs WHERE id=?", (doc,)).fetchone():
-            return metadata(db, doc)
+            info = metadata(db, doc)
+            if kind == "pptx" and info["preview_mode"] == "slide_content":
+                try:
+                    upgrade_slide_preview(db, doc, data, info["page_count"])
+                except (subprocess.SubprocessError, OSError):
+                    return info
+                return metadata(db, doc)
+            return info
         try:
             pages = list(parse(data, kind))
             rendered = render_slides(data) if kind == "pptx" else None
