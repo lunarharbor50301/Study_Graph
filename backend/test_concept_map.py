@@ -21,7 +21,7 @@ def outline_payload(topics) -> dict:
     return {
         "title": "Test map",
         "topics": [
-            {"title": title, "concepts": [{"title": name, "page": page} for name, page in concepts]}
+            {"title": title, "concepts": [{"title": name, "page": page, "learning_question": f"Explain {name}?", "evidence_pages": [page]} for name, page in concepts]}
             for title, concepts in topics
         ],
     }
@@ -31,7 +31,7 @@ class FakeModel:
     def __init__(self, outline, notes=None, gap=None):
         self.outline = outline
         self.notes = notes or self.default_notes
-        self.gap = gap or (lambda payload: {"notes": []})
+        self.gap = gap or (lambda payload: {"actions": [{"action": "skip", "evidence_pages": payload["candidate_pages"]}]})
         self.calls = []
 
     @staticmethod
@@ -102,7 +102,7 @@ class StagedGuideTest(unittest.TestCase):
         self.assertEqual(len(guide.topics), 6)
         self.assertEqual(sum(len(topic.notes) for topic in guide.topics), 30)
 
-    def test_partial_batch_failure_keeps_other_batches(self):
+    def test_unrecovered_batch_cannot_return_partial_map(self):
         topics = [(f"Topic {topic}", [(f"Concept {topic}-{item}", topic * 3 + item + 1)
                                       for item in range(3)]) for topic in range(4)]
         self.seed({number: page_text(number) for number in range(1, 13)})
@@ -112,12 +112,12 @@ class StagedGuideTest(unittest.TestCase):
                 raise RuntimeError("batch failed")
             return FakeModel.default_notes(payload)
 
-        guide = self.build(FakeModel(outline_payload(topics), notes=notes))
-        self.assertEqual(sum(len(topic.notes) for topic in guide.topics), 9)
+        with self.assertRaisesRegex(HTTPException, "Missing lecture pages"):
+            self.build(FakeModel(outline_payload(topics), notes=notes))
 
     def test_title_and_page_mismatches_are_dropped(self):
         topics = [("Topic", [("Alpha", 1), ("Beta", 2), ("Gamma", 3)])]
-        self.seed({number: page_text(number) for number in range(1, 5)})
+        self.seed({number: page_text(number) for number in range(1, 4)})
 
         def notes(payload):
             return {"notes": [
@@ -129,8 +129,8 @@ class StagedGuideTest(unittest.TestCase):
                  "keyPoints": ["p"], "formula": None, "quote": None},
             ]}
 
-        guide = self.build(FakeModel(outline_payload(topics), notes=notes))
-        self.assertEqual([note.title for topic in guide.topics for note in topic.notes], ["Gamma"])
+        with self.assertRaisesRegex(HTTPException, "Missing lecture pages"):
+            self.build(FakeModel(outline_payload(topics), notes=notes))
 
     def test_quote_must_come_from_the_page(self):
         raw = {"title": "Alpha", "page": 1, "summary": "s", "detail": "d",
@@ -165,18 +165,47 @@ class StagedGuideTest(unittest.TestCase):
         def gap(payload):
             gap_calls.append(sorted(payload["pages"]))
             if len(gap_calls) == 1:
-                return {"need_pages": [7]}
-            return {"notes": [{
-                "topic": "Topic", "title": "Appendix", "page": 7,
-                "summary": "s", "detail": "d", "keyPoints": ["p"],
-                "formula": None, "quote": "Appendix map only.",
-            }]}
+                return {"need_pages": [1]}
+            return {"actions": [
+                {"action": "attach", "title": "Alpha", "evidence_pages": [2, 3, 4, 5]},
+                {"action": "add", "topic": "Topic", "title": "Appendix", "page": 7,
+                 "learning_question": "What is the appendix?", "evidence_pages": [6, 7]}]}
 
-        guide = self.build(FakeModel(outline_payload(topics), gap=gap))
+        fake = FakeModel(outline_payload(topics), gap=gap)
+        guide = self.build(fake)
+        payload = fake.calls[-1]["payload"]
+        self.assertEqual(payload["concepts"][0]["evidence_pages"], [1, 2, 3, 4, 5])
+        self.assertEqual(set(payload["pages"]), set(map(str, range(1, 8))))
         self.assertEqual([(note.title, note.page) for topic in guide.topics for note in topic.notes],
                          [("Alpha", 1), ("Appendix", 7)])
         self.assertEqual(len(gap_calls), 2)
-        self.assertIn("7", gap_calls[1])
+        self.assertNotIn("1", gap_calls[0])
+        self.assertIn("1", gap_calls[1])
+
+    def test_disconnected_pages_rejected_at_outline_and_gap_stages(self):
+        raw = outline_payload([("Topic", [("Alpha", 1)])])
+        concept = raw["topics"][0]["concepts"][0]
+        concept["evidence_pages"] = [1, 3]
+        with self.assertRaisesRegex(ValueError, "consecutive"):
+            concept_map._parse_outline(raw, {1, 2, 3}, "Lecture")
+        concept["evidence_pages"] = [1]
+        outline = concept_map._parse_outline(raw, {1, 2, 3}, "Lecture")
+        action = {"action": "attach", "title": "Alpha", "evidence_pages": [3]}
+        with self.assertRaisesRegex(ValueError, "consecutive"):
+            concept_map._apply_actions({"actions": [action]}, outline, {3}, [3])
+        self.assertEqual(outline.topics[0].concepts[0].evidence_pages, [1])
+
+    def test_evidence_pages_do_not_trigger_gap_planning(self):
+        self.seed({p: page_text(p) for p in range(1, 4)})
+        outline = outline_payload([("Topic", [("Alpha", 2)])])
+        outline["topics"][0]["concepts"][0]["evidence_pages"] = [1, 2, 3]
+        fake = FakeModel(outline)
+        guide, metrics = concept_map._generate_guide("doc", "focus", fake, "test", 1, 18)
+        self.assertEqual([note.page for note in guide.topics[0].notes], [2])
+        self.assertEqual(len(fake.calls), 2)
+        self.assertEqual(guide.model_dump()["topics"][0]["notes"][0]["evidence_pages"], [1, 2, 3])
+        self.assertEqual(metrics["covered_pages"], 3)
+        self.assertEqual(metrics["gap_added"], 0)
 
     def test_cache_hit_skips_generation(self):
         topics = [("Topic", [("Alpha", 1)])]
@@ -196,13 +225,13 @@ class StagedGuideTest(unittest.TestCase):
             cache=False, concurrency=1)
         self.assertGreater(len(fake.calls), calls)
 
-    def test_call_budget_returns_partial_map(self):
+    def test_call_budget_rejects_incomplete_map(self):
         topics = [(f"Topic {topic}", [(f"Concept {topic}-{item}", topic * 3 + item + 1)
                                       for item in range(3)]) for topic in range(4)]
         self.seed({number: page_text(number) for number in range(1, 13)})
         fake = FakeModel(outline_payload(topics))
-        guide = self.build(fake, max_calls=2)
-        self.assertEqual(sum(len(topic.notes) for topic in guide.topics), 9)
+        with self.assertRaisesRegex(HTTPException, "Missing lecture pages"):
+            self.build(fake, max_calls=2)
         self.assertEqual(len(fake.calls), 2)
 
     def test_zero_notes_is_an_error(self):
@@ -236,7 +265,7 @@ class StagedGuideTest(unittest.TestCase):
         pages = {number: page_text(number) for number in range(1, 16)}
         outline = concept_map.Outline.model_validate({
             "title": "Map",
-            "topics": [{"title": title, "concepts": [{"title": name, "page": page}
+            "topics": [{"title": title, "concepts": [{"title": name, "page": page, "learning_question": f"Explain {name}?", "evidence_pages": [page]}
                                                      for name, page in concepts]}
                        for title, concepts in topics],
         })
@@ -247,7 +276,5 @@ class StagedGuideTest(unittest.TestCase):
     def test_truncated_gap_groups_mark_incomplete(self):
         self.seed({number: "content " * 150 for number in range(1, 31)})
         fake = FakeModel(outline_payload([("Topic", [("Alpha", 1)])]))
-        guide, metrics = concept_map._generate_guide("doc", "focus", fake, "test", 1, 18)
-        self.assertEqual(sum(len(topic.notes) for topic in guide.topics), 1)
-        self.assertTrue(metrics["gap_incomplete"])
-        self.assertTrue(metrics["incomplete"])
+        with self.assertRaisesRegex(HTTPException, "Missing lecture pages"):
+            self.build(fake)

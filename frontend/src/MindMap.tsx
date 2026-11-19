@@ -205,7 +205,9 @@ export function MindMap({ title, subtitle, topics, activeTopic, visited, hidden,
                   <span className="mind-map__text">
                     <strong title={concept.name}>{concept.name}</strong>
                     <small>{concept.sourcePages && concept.sourcePages.length > 1
-                      ? `${concept.sourcePages.length} pages · p. ${concept.page}` : pageLabel(concept.page)}</small>
+                      ? (concept.sourcePages.every((page, i, pages) => i === 0 || page === pages[i - 1] + 1)
+                        ? pageLabel(concept.sourcePages[0], concept.sourcePages[concept.sourcePages.length - 1])
+                        : `pp. ${concept.sourcePages.join(', ')}`) : pageLabel(concept.page)}</small>
                   </span>
                   <Icon name="chevron" size={13}/>
                 </button>
