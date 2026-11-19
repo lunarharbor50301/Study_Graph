@@ -1,0 +1,1153 @@
+{
+  "id": "L1-ANSWER03",
+  "input": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "session_id": "single-38b35d25ee654e0abd65d009e4c0cbaf",
+    "question": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly.\nHow do data, control and structural hazards differ?"
+  },
+  "events": [
+    {
+      "type": "model_start",
+      "call": 1
+    },
+    {
+      "type": "answer_start"
+    },
+    {
+      "type": "model_end",
+      "call": 1,
+      "first_text_ms": null,
+      "duration_ms": 4026,
+      "stop_reason": "toolUse",
+      "output_tokens": 104
+    },
+    {
+      "type": "tool_start",
+      "tool": "search_lecture",
+      "args": {
+        "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+        "query": "data hazard control hazard structural hazard pipeline"
+      }
+    },
+    {
+      "type": "tool_result",
+      "tool": "search_lecture",
+      "args": {
+        "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+        "query": "data hazard control hazard structural hazard pipeline"
+      },
+      "pages": [
+        18,
+        20,
+        44
+      ],
+      "duration_ms": 2,
+      "model_call": 1
+    },
+    {
+      "type": "model_start",
+      "call": 2
+    },
+    {
+      "type": "answer_start"
+    },
+    {
+      "type": "model_end",
+      "call": 2,
+      "first_text_ms": null,
+      "duration_ms": 6489,
+      "stop_reason": "toolUse",
+      "output_tokens": 198
+    },
+    {
+      "type": "tool_start",
+      "tool": "read_page",
+      "args": {
+        "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+        "page": 18
+      }
+    },
+    {
+      "type": "tool_result",
+      "tool": "read_page",
+      "args": {
+        "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+        "page": 18
+      },
+      "pages": [
+        18
+      ],
+      "duration_ms": 2,
+      "model_call": 2
+    },
+    {
+      "type": "tool_start",
+      "tool": "read_page",
+      "args": {
+        "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+        "page": 19
+      }
+    },
+    {
+      "type": "tool_result",
+      "tool": "read_page",
+      "args": {
+        "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+        "page": 19
+      },
+      "pages": [
+        19
+      ],
+      "duration_ms": 1,
+      "model_call": 2
+    },
+    {
+      "type": "model_start",
+      "call": 3
+    },
+    {
+      "type": "answer_start"
+    },
+    {
+      "type": "delta",
+      "text": "Based"
+    },
+    {
+      "type": "delta",
+      "text": " on"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " lecture"
+    },
+    {
+      "type": "delta",
+      "text": " material"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " hazards"
+    },
+    {
+      "type": "delta",
+      "text": " are"
+    },
+    {
+      "type": "delta",
+      "text": " defined"
+    },
+    {
+      "type": "delta",
+      "text": " as"
+    },
+    {
+      "type": "delta",
+      "text": " any"
+    },
+    {
+      "type": "delta",
+      "text": " condition"
+    },
+    {
+      "type": "delta",
+      "text": " that"
+    },
+    {
+      "type": "delta",
+      "text": " causes"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " pipeline"
+    },
+    {
+      "type": "delta",
+      "text": " to"
+    },
+    {
+      "type": "delta",
+      "text": " stall"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " resulting"
+    },
+    {
+      "type": "delta",
+      "text": " in"
+    },
+    {
+      "type": "delta",
+      "text": " \""
+    },
+    {
+      "type": "delta",
+      "text": "b"
+    },
+    {
+      "type": "delta",
+      "text": "ubbles"
+    },
+    {
+      "type": "delta",
+      "text": "\""
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " degraded"
+    },
+    {
+      "type": "delta",
+      "text": " efficiency"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": " The"
+    },
+    {
+      "type": "delta",
+      "text": " three"
+    },
+    {
+      "type": "delta",
+      "text": " types"
+    },
+    {
+      "type": "delta",
+      "text": " of"
+    },
+    {
+      "type": "delta",
+      "text": " hazards"
+    },
+    {
+      "type": "delta",
+      "text": " differ"
+    },
+    {
+      "type": "delta",
+      "text": " based"
+    },
+    {
+      "type": "delta",
+      "text": " on"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " specific"
+    },
+    {
+      "type": "delta",
+      "text": " cause"
+    },
+    {
+      "type": "delta",
+      "text": " of"
+    },
+    {
+      "type": "delta",
+      "text": " the"
+    },
+    {
+      "type": "delta",
+      "text": " stall"
+    },
+    {
+      "type": "delta",
+      "text": ":"
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": "."
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "Data"
+    },
+    {
+      "type": "delta",
+      "text": " Haz"
+    },
+    {
+      "type": "delta",
+      "text": "ards"
+    },
+    {
+      "type": "delta",
+      "text": "**:"
+    },
+    {
+      "type": "delta",
+      "text": " These"
+    },
+    {
+      "type": "delta",
+      "text": " occur"
+    },
+    {
+      "type": "delta",
+      "text": " due"
+    },
+    {
+      "type": "delta",
+      "text": " to"
+    },
+    {
+      "type": "delta",
+      "text": " dependencies"
+    },
+    {
+      "type": "delta",
+      "text": " on"
+    },
+    {
+      "type": "delta",
+      "text": " data"
+    },
+    {
+      "type": "delta",
+      "text": "."
+    },
+    {
+      "type": "delta",
+      "text": " The"
+    },
+    {
+      "type": "delta",
+      "text": " lecture"
+    },
+    {
+      "type": "delta",
+      "text": " specifies"
+    },
+    {
+      "type": "delta",
+      "text": " three"
+    },
+    {
+      "type": "delta",
+      "text": " sub"
+    },
+    {
+      "type": "delta",
+      "text": "-types"
+    },
+    {
+      "type": "delta",
+      "text": " of"
+    },
+    {
+      "type": "delta",
+      "text": " data"
+    },
+    {
+      "type": "delta",
+      "text": " hazards"
+    },
+    {
+      "type": "delta",
+      "text": ":"
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "   "
+    },
+    {
+      "type": "delta",
+      "text": " *"
+    },
+    {
+      "type": "delta",
+      "text": "  "
+    },
+    {
+      "type": "delta",
+      "text": " Read"
+    },
+    {
+      "type": "delta",
+      "text": "-after"
+    },
+    {
+      "type": "delta",
+      "text": "-write"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "RAW"
+    },
+    {
+      "type": "delta",
+      "text": ")"
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "   "
+    },
+    {
+      "type": "delta",
+      "text": " *"
+    },
+    {
+      "type": "delta",
+      "text": "  "
+    },
+    {
+      "type": "delta",
+      "text": " Write"
+    },
+    {
+      "type": "delta",
+      "text": "-after"
+    },
+    {
+      "type": "delta",
+      "text": "-write"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "W"
+    },
+    {
+      "type": "delta",
+      "text": "AW"
+    },
+    {
+      "type": "delta",
+      "text": ")"
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "   "
+    },
+    {
+      "type": "delta",
+      "text": " *"
+    },
+    {
+      "type": "delta",
+      "text": "  "
+    },
+    {
+      "type": "delta",
+      "text": " Write"
+    },
+    {
+      "type": "delta",
+      "text": "-after"
+    },
+    {
+      "type": "delta",
+      "text": "-read"
+    },
+    {
+      "type": "delta",
+      "text": " ("
+    },
+    {
+      "type": "delta",
+      "text": "WAR"
+    },
+    {
+      "type": "delta",
+      "text": ")"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "2"
+    },
+    {
+      "type": "delta",
+      "text": "."
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "Control"
+    },
+    {
+      "type": "delta",
+      "text": " Haz"
+    },
+    {
+      "type": "delta",
+      "text": "ards"
+    },
+    {
+      "type": "delta",
+      "text": "**:"
+    },
+    {
+      "type": "delta",
+      "text": " These"
+    },
+    {
+      "type": "delta",
+      "text": " occur"
+    },
+    {
+      "type": "delta",
+      "text": " due"
+    },
+    {
+      "type": "delta",
+      "text": " to"
+    },
+    {
+      "type": "delta",
+      "text": " branches"
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " synchronization"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": " The"
+    },
+    {
+      "type": "delta",
+      "text": " lecture"
+    },
+    {
+      "type": "delta",
+      "text": " notes"
+    },
+    {
+      "type": "delta",
+      "text": " that"
+    },
+    {
+      "type": "delta",
+      "text": " deeper"
+    },
+    {
+      "type": "delta",
+      "text": " pipelines"
+    },
+    {
+      "type": "delta",
+      "text": " can"
+    },
+    {
+      "type": "delta",
+      "text": " cause"
+    },
+    {
+      "type": "delta",
+      "text": " worse"
+    },
+    {
+      "type": "delta",
+      "text": " penalties"
+    },
+    {
+      "type": "delta",
+      "text": " for"
+    },
+    {
+      "type": "delta",
+      "text": " control"
+    },
+    {
+      "type": "delta",
+      "text": " hazards"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "2"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "3"
+    },
+    {
+      "type": "delta",
+      "text": "."
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": " **"
+    },
+    {
+      "type": "delta",
+      "text": "Struct"
+    },
+    {
+      "type": "delta",
+      "text": "ural"
+    },
+    {
+      "type": "delta",
+      "text": " Haz"
+    },
+    {
+      "type": "delta",
+      "text": "ards"
+    },
+    {
+      "type": "delta",
+      "text": "**:"
+    },
+    {
+      "type": "delta",
+      "text": " These"
+    },
+    {
+      "type": "delta",
+      "text": " occur"
+    },
+    {
+      "type": "delta",
+      "text": " due"
+    },
+    {
+      "type": "delta",
+      "text": " to"
+    },
+    {
+      "type": "delta",
+      "text": " contention"
+    },
+    {
+      "type": "delta",
+      "text": " on"
+    },
+    {
+      "type": "delta",
+      "text": " hardware"
+    },
+    {
+      "type": "delta",
+      "text": " resources"
+    },
+    {
+      "type": "delta",
+      "text": "."
+    },
+    {
+      "type": "delta",
+      "text": " Examples"
+    },
+    {
+      "type": "delta",
+      "text": " of"
+    },
+    {
+      "type": "delta",
+      "text": " such"
+    },
+    {
+      "type": "delta",
+      "text": " hardware"
+    },
+    {
+      "type": "delta",
+      "text": " include"
+    },
+    {
+      "type": "delta",
+      "text": " memory"
+    },
+    {
+      "type": "delta",
+      "text": " channels"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " cache"
+    },
+    {
+      "type": "delta",
+      "text": " slots"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " queues"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "In"
+    },
+    {
+      "type": "delta",
+      "text": " summary"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " data"
+    },
+    {
+      "type": "delta",
+      "text": " hazards"
+    },
+    {
+      "type": "delta",
+      "text": " stem"
+    },
+    {
+      "type": "delta",
+      "text": " from"
+    },
+    {
+      "type": "delta",
+      "text": " data"
+    },
+    {
+      "type": "delta",
+      "text": " dependencies"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " control"
+    },
+    {
+      "type": "delta",
+      "text": " hazards"
+    },
+    {
+      "type": "delta",
+      "text": " stem"
+    },
+    {
+      "type": "delta",
+      "text": " from"
+    },
+    {
+      "type": "delta",
+      "text": " branching"
+    },
+    {
+      "type": "delta",
+      "text": "/s"
+    },
+    {
+      "type": "delta",
+      "text": "ynchronization"
+    },
+    {
+      "type": "delta",
+      "text": " logic"
+    },
+    {
+      "type": "delta",
+      "text": ","
+    },
+    {
+      "type": "delta",
+      "text": " and"
+    },
+    {
+      "type": "delta",
+      "text": " structural"
+    },
+    {
+      "type": "delta",
+      "text": " hazards"
+    },
+    {
+      "type": "delta",
+      "text": " stem"
+    },
+    {
+      "type": "delta",
+      "text": " from"
+    },
+    {
+      "type": "delta",
+      "text": " physical"
+    },
+    {
+      "type": "delta",
+      "text": " hardware"
+    },
+    {
+      "type": "delta",
+      "text": " resource"
+    },
+    {
+      "type": "delta",
+      "text": " contention"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": "]."
+    },
+    {
+      "type": "delta",
+      "text": "\n\n"
+    },
+    {
+      "type": "delta",
+      "text": "**"
+    },
+    {
+      "type": "delta",
+      "text": "Source"
+    },
+    {
+      "type": "delta",
+      "text": ":**"
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "*"
+    },
+    {
+      "type": "delta",
+      "text": "  "
+    },
+    {
+      "type": "delta",
+      "text": " Page"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": "8"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "1"
+    },
+    {
+      "type": "delta",
+      "text": "]"
+    },
+    {
+      "type": "delta",
+      "text": "\n"
+    },
+    {
+      "type": "delta",
+      "text": "*"
+    },
+    {
+      "type": "delta",
+      "text": "  "
+    },
+    {
+      "type": "delta",
+      "text": " Page"
+    },
+    {
+      "type": "delta",
+      "text": " "
+    },
+    {
+      "type": "delta",
+      "text": "2"
+    },
+    {
+      "type": "delta",
+      "text": "0"
+    },
+    {
+      "type": "delta",
+      "text": " ["
+    },
+    {
+      "type": "delta",
+      "text": "S"
+    },
+    {
+      "type": "delta",
+      "text": "2"
+    },
+    {
+      "type": "delta",
+      "text": "]"
+    },
+    {
+      "type": "model_end",
+      "call": 3,
+      "first_text_ms": 803,
+      "duration_ms": 6464,
+      "stop_reason": "stop",
+      "output_tokens": 242
+    },
+    {
+      "type": "done",
+      "answer": "Based on the lecture material, hazards are defined as any condition that causes the pipeline to stall, resulting in \"bubbles\" and degraded efficiency [S1]. The three types of hazards differ based on the specific cause of the stall:\n\n1.  **Data Hazards**: These occur due to dependencies on data. The lecture specifies three sub-types of data hazards:\n    *   Read-after-write (RAW)\n    *   Write-after-write (WAW)\n    *   Write-after-read (WAR) [S1].\n\n2.  **Control Hazards**: These occur due to branches and synchronization [S1]. The lecture notes that deeper pipelines can cause worse penalties for control hazards [S2].\n\n3.  **Structural Hazards**: These occur due to contention on hardware resources. Examples of such hardware include memory channels, cache slots, and queues [S1].\n\nIn summary, data hazards stem from data dependencies, control hazards stem from branching/synchronization logic, and structural hazards stem from physical hardware resource contention [S1].\n\n**Source:**\n*   Page 18 [S1]\n*   Page 20 [S2]",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p18-1",
+          "page": 18,
+          "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n Why Pipeline Stalls: Hazards\n\n¡ Any condition that causes the pipeline to\n   stall is called a hazard.\n\n   ¡  Result: Much bubbles and degraded efficiency\n¡ Various types of hazards\n\n   ¡  Data Hazard: Stall due to dependencies of some\n       data\n\n      ¡  Read-after-write (RAW)\n\n      ¡  Write-after-write (WAW)\n\n      ¡  Write-after-read (WAR)\n\n   ¡  Control Hazard: Stall due to branch and\n       synchronization\n\n   ¡  Structural hazard: Stall due to contention on\n      hardware such as memory channel, cache slot,\n      queue, etc.",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/18/preview",
+          "source": "S1"
+        },
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p20-1",
+          "page": 20,
+          "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Control Hazards\n\n¡  Case #1: Deeper pipeline causes worser penalty",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/20/preview",
+          "source": "S2"
+        }
+      ],
+      "trace": [
+        {
+          "tool": "search_lecture",
+          "args": {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "query": "data hazard control hazard structural hazard pipeline"
+          },
+          "pages": [
+            18,
+            20,
+            44
+          ],
+          "duration_ms": 2,
+          "model_call": 1
+        },
+        {
+          "tool": "read_page",
+          "args": {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "page": 18
+          },
+          "pages": [
+            18
+          ],
+          "duration_ms": 2,
+          "model_call": 2
+        },
+        {
+          "tool": "read_page",
+          "args": {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "page": 19
+          },
+          "pages": [
+            19
+          ],
+          "duration_ms": 1,
+          "model_call": 2
+        }
+      ],
+      "model_calls": 3,
+      "timing_ms": {
+        "generation": 16979,
+        "total": 16990
+      }
+    }
+  ],
+  "status": "done",
+  "elapsed_s": 17.14
+}

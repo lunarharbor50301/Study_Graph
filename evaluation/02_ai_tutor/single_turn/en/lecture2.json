@@ -1,0 +1,553 @@
+{
+  "version": "0.3-en",
+  "status": "human_review_pending",
+  "document_id": "ACS-L2",
+  "questions": [
+    {
+      "id": "L2-ANSWER12",
+      "topic_family": "locality",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Distinguish spatial locality from temporal locality.",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Spatial locality means nearby data is likely to be accessed. Temporal locality means the same data is reused within a short time.",
+        "rubric": [
+          {
+            "id": "locality-P1",
+            "criterion": "Spatial locality means nearby data is likely to be accessed.",
+            "max_score": 2
+          },
+          {
+            "id": "locality-P2",
+            "criterion": "Temporal locality means the same data is reused within a short time.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 22,
+            "quote": "Spatial Locality\nThe neighbors of the current data \naccess tend to be accessed in the \nfuture.\nE.g., array\nTemporal Locality\nA piece of data is quickly reused \nin the future.\nE.g., Loops\nCPU Memory Hierarchy\nLocality: The Hot Feature Makes Caches Useful\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n22"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER13",
+      "topic_family": "amat",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Give the AMAT formula and explain the miss penalty.",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "AMAT = hit time + miss rate × miss penalty. The miss penalty includes access latency and transfer time.",
+        "rubric": [
+          {
+            "id": "amat-P1",
+            "criterion": "AMAT = hit time + miss rate × miss penalty.",
+            "max_score": 2
+          },
+          {
+            "id": "amat-P2",
+            "criterion": "The miss penalty includes access latency and transfer time.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 26,
+            "quote": "AMAT = Hit time + Miss rate x Miss penalty\nMiss Penalty: time to fetch a block from lower memory \nlevel\nAccess Time: Latency for the memory to handle one access\nTransfer Time: Latency to transfer data block to higher level\nMiss penalty = access time + data size / bandwidth\nCPU Memory Hierarchy\nAverage Memory Access Time (AMAT)\nA cache helps when common hits remain fast and sufficiently few accesses pay \nthe miss penalty.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n26"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER14",
+      "topic_family": "tlb",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Are a TLB miss and a cache miss the same thing?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "A TLB miss involves address translation. A cache miss requires retrieving data from a lower level. The two misses are distinct.",
+        "rubric": [
+          {
+            "id": "tlb-P1",
+            "criterion": "A TLB miss involves address translation.",
+            "max_score": 2
+          },
+          {
+            "id": "tlb-P2",
+            "criterion": "A cache miss requires retrieving data from a lower level.",
+            "max_score": 2
+          },
+          {
+            "id": "tlb-P3",
+            "criterion": "The two misses are distinct.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 30,
+            "quote": "CPU Memory Hierarchy\nEnd-to-End Load/Store Path: Address Resolution – TLB – Cache \nHierarchy – DRAM\nA TLB miss requires address translation work. A cache miss determines whether \nthe data must come from a lower level.\n▪\nOnly a miss through the cache hierarchy sends the data request to the memory \ncontroller and DRAM.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n30"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER15",
+      "topic_family": "sram-dram",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Compare how SRAM and DRAM store data and describe their typical uses.",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "SRAM stores state in stable transistor circuits and is commonly used for caches and registers. DRAM stores data in capacitors and requires refresh and restoration after reads.",
+        "rubric": [
+          {
+            "id": "sram-dram-P1",
+            "criterion": "SRAM stores state in stable transistor circuits and is commonly used for caches and registers.",
+            "max_score": 2
+          },
+          {
+            "id": "sram-dram-P2",
+            "criterion": "DRAM stores data in capacitors and requires refresh and restoration after reads.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 32,
+            "quote": "SRAM --- Store data via stable transistor circuit\nRequires low power to retain bit (423mV for 45nm) \nRequires 6 transistors/bit --- expansive\nUsage: Caches, register files\nDRAM --- Store date via tiny capacitors (bit is represented as \ncharged and discharged)\nOne transistor/bit --- cheap\nMust be re-written after being read\nMust also be periodically refreshed\nEach row can be refreshed simultaneously\nAddress lines are multiplexed:\nUpper half of address: row access strobe (RAS)\nLower half of address: column access strobe (CAS)\nUsage: DDR / GDDR / HBM\nCPU Memory Hierarchy\nDRAM Behind Cache: SRAM vs. DRAM\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n32"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER16",
+      "topic_family": "banks",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Does increasing the number of banks let one channel's return bandwidth grow without limit?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Operations in independent banks can overlap. The shared data bus still limits how much data can return at once.",
+        "rubric": [
+          {
+            "id": "banks-P1",
+            "criterion": "Operations in independent banks can overlap.",
+            "max_score": 2
+          },
+          {
+            "id": "banks-P2",
+            "criterion": "The shared data bus still limits how much data can return at once.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 36,
+            "quote": "Memory\nController\nData Bus\nChannel\nMulti-Banked DRAM Chip\nCPU Memory Hierarchy\nDRAM Behind Cache: Multi-Bank DRAM\nBanks provide independent storage arrays. Work in one bank can overlap \npreparation in another.\n▪\nThe shared data bus still limits how much data the channel can return at once.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n36\nAddr  and Cmd Bus"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER17",
+      "topic_family": "channels",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Do DDR5's two 32-bit subchannels mean that total data width doubles?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Concurrent use of independent channels can increase bandwidth. Splitting 64 bits into two 32-bit subchannels does not itself double total width.",
+        "rubric": [
+          {
+            "id": "width",
+            "criterion": "No. Two 32-bit subchannels still total 64 bits.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 40,
+            "quote": "CPU Memory Hierarchy\nDRAM Behind Cache: Channel Bandwidth Grows Along Three\nAxes\nIndependent channels add bandwidth when requests use them concurrently. Bank \nscheduling improves bus utilization.\n▪\nDDR5 splits 64 data bits into two 32-bit subchannels. This split alone does not \ndouble total data width.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n40"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER18",
+      "topic_family": "gpu-memory-family",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Is CUDA local memory always on-chip?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Its scope is private to one thread. It usually resides in device DRAM and is cached through L1/L2. The word local does not imply register storage.",
+        "rubric": [
+          {
+            "id": "local-memory-P1",
+            "criterion": "Its scope is private to one thread.",
+            "max_score": 2
+          },
+          {
+            "id": "local-memory-P2",
+            "criterion": "It usually resides in device DRAM and is cached through L1/L2.",
+            "max_score": 2
+          },
+          {
+            "id": "local-memory-P3",
+            "criterion": "The word local does not imply register storage.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 46,
+            "quote": "GPU Memory Hierarchy\nEvery CUDA Memory Space Maps to a Physical Resource\nLocal memory is thread-private in scope but usually resides in device DRAM and \npasses through L1/L2.\n▪\nRegister and shared-memory allocations limit how many blocks and warps can \nreside on an SM.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n46"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER19",
+      "topic_family": "gpu-memory-family",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Why do aligned, contiguous accesses often generate fewer transactions than strided accesses?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Consider a single memory instruction issued by one warp. Aligned contiguous addresses generally require fewer transactions. Crossing boundaries or using strides can require additional transactions.",
+        "rubric": [
+          {
+            "id": "coalescing-P1",
+            "criterion": "Consider a single memory instruction issued by one warp.",
+            "max_score": 2
+          },
+          {
+            "id": "coalescing-P2",
+            "criterion": "Aligned contiguous addresses generally require fewer transactions.",
+            "max_score": 2
+          },
+          {
+            "id": "coalescing-P3",
+            "criterion": "Crossing boundaries or using strides can require additional transactions.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 48,
+            "quote": "GPU Memory Hierarchy\nAccess Memory: Coalescing Packs Nearby Addresses into \nFewer Transactions\nCoalescing is evaluated for one warp memory instruction. Aligned, contiguous \naddresses touch fewer segments.\n▪\nMisalignment can cross extra boundaries. Strided accesses can touch many more \nsegments.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n48"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER20",
+      "topic_family": "gpu-memory-family",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Do all accesses to the same bank cause conflicts?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Different addresses in the same bank require multiple service rounds. Reads of the same address can be broadcast. Bank conflicts are distinct from global-memory coalescing.",
+        "rubric": [
+          {
+            "id": "bank-conflict-P1",
+            "criterion": "Different addresses in the same bank require multiple service rounds.",
+            "max_score": 2
+          },
+          {
+            "id": "bank-conflict-P2",
+            "criterion": "Reads of the same address can be broadcast.",
+            "max_score": 2
+          },
+          {
+            "id": "bank-conflict-P3",
+            "criterion": "Bank conflicts are distinct from global-memory coalescing.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 51,
+            "quote": "GPU Memory Hierarchy\nAccess Memory: Bank Conflicts Serialize Otherwise Parallel \nAccesses\nTypical GPUs use 32 banks; the figure shows 8 for readability. Same-address \nreads can use broadcast.\n▪\nDifferent addresses in the same bank require multiple service rounds. This differs \nfrom global-memory coalescing.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n51"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER21",
+      "topic_family": "coherence-protocol",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Compare the roles of snooping, directories and MESI.",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Snooping broadcasts requests, whereas directories track owners and sharers to target messages. MESI describes permissions rather than message routing.",
+        "rubric": [
+          {
+            "id": "coherence-protocol-P1",
+            "criterion": "Snooping broadcasts requests, whereas directories track owners and sharers to target messages.",
+            "max_score": 2
+          },
+          {
+            "id": "coherence-protocol-P2",
+            "criterion": "MESI describes permissions rather than message routing.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 64,
+            "quote": "Coherence Protocols: Snooping and Directory\nSOTA Memory Technologies\nMulticore Technologies: Coherence\nSnooping broadcasts coherence requests. A directory tracks owners and sharers \nto target the messages.\n▪\nMESI describes permissions. Snooping and directory designs determine how \ncoherence messages reach the caches.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n64"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER22",
+      "topic_family": "memory-tradeoff",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Why is HBM not necessarily the best choice for every system?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "DDR emphasizes capacity expansion and cost. GDDR balances pin bandwidth against board-level cost. HBM emphasizes package bandwidth and energy efficiency.",
+        "rubric": [
+          {
+            "id": "memory-tradeoff-P1",
+            "criterion": "DDR emphasizes capacity expansion and cost.",
+            "max_score": 2
+          },
+          {
+            "id": "memory-tradeoff-P2",
+            "criterion": "GDDR balances pin bandwidth against board-level cost.",
+            "max_score": 2
+          },
+          {
+            "id": "memory-tradeoff-P3",
+            "criterion": "HBM emphasizes package bandwidth and energy efficiency.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 59,
+            "quote": "GPU Memory Hierarchy\nDDR, GDDR, and HBM Optimize Different Constraints\nDDR favors capacity, expandability, and cost per GB. GDDR balances pin \nbandwidth and board cost.\n▪\nHBM favors bandwidth per package and per watt. The choice depends on the \nworkload and system constraints.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n59"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER23",
+      "topic_family": "lpddr",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Does Grace's LPDDR expansion increase the GPU's HBM capacity?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Grace connects LPDDR5X through the NVLink-C2C arrangement. It expands accelerator-addressable capacity without increasing HBM itself.",
+        "rubric": [
+          {
+            "id": "lpddr-P1",
+            "criterion": "Grace connects LPDDR5X through the NVLink-C2C arrangement.",
+            "max_score": 2
+          },
+          {
+            "id": "lpddr-P2",
+            "criterion": "It expands accelerator-addressable capacity without increasing HBM itself.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 68,
+            "quote": "SOTA Memory Technologies\nMemory Extension: LPDDR\nHopper retains local HBM. Grace connects LPDDR5X through the coherent \nNVLink-C2C CPU–GPU link.\n▪\nLPDDR extends the capacity the accelerator can address; it does not enlarge \nHBM itself.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n68"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER24",
+      "topic_family": "tiering",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Which data should be migrated to HBM? When is migration worthwhile?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Prefer HBM for hot, latency-sensitive data. Large, cold data can reside in LPDDR. The benefit must exceed transfer and bookkeeping costs.",
+        "rubric": [
+          {
+            "id": "tiering-P1",
+            "criterion": "Prefer HBM for hot, latency-sensitive data.",
+            "max_score": 2
+          },
+          {
+            "id": "tiering-P2",
+            "criterion": "Large, cold data can reside in LPDDR.",
+            "max_score": 2
+          },
+          {
+            "id": "tiering-P3",
+            "criterion": "The benefit must exceed transfer and bookkeeping costs.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 69,
+            "quote": "SOTA Memory Technologies\nTiered Memory Management Decides What Stays in HBM\nKeep hot, latency-critical, frequently reused data in HBM. Place large, cold objects \nin the LPDDR capacity tier.\n▪\nPromotion helps only when future reuse saves more than the transfer and \nbookkeeping cost.\n▪\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n69"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER26",
+      "topic_family": "amat",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "With a hit time of 1 cycle, a miss rate of 10% and a miss penalty of 300 cycles, what is AMAT?",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "supported",
+        "reference_answer": "Use hit time plus miss rate times the additional miss penalty. The result is 31. Express the result in cycles.",
+        "rubric": [
+          {
+            "id": "amat-calc-0",
+            "criterion": "Use hit time plus miss rate times the additional miss penalty.",
+            "max_score": 2
+          },
+          {
+            "id": "amat-calc-1",
+            "criterion": "The result is 31.",
+            "max_score": 2
+          },
+          {
+            "id": "amat-calc-2",
+            "criterion": "Express the result in cycles.",
+            "max_score": 2
+          }
+        ],
+        "evidence": [
+          {
+            "document_id": "ACS-L2",
+            "page": 27,
+            "quote": "Average Memory Access Time (AMAT)\n= Hit Time + Miss rate * Miss Penalty\n= Thit(L1) + Miss%(L1) * T(memory)  \nExample: \nCache Hit = 1 cycle\nMiss rate = 10% = 0.1\nMiss penalty = 300 cycles\nAMAT = 1 + 0.1 * 300 = 31 cycles\nCan we improve it?\nMain\nMemory\n(DRAM)\nFirst-level\nCache\nHit Time\nMiss % * Miss penalty\n1 clk\n300 clks\nCPU Memory Hierarchy\nMemory Hierarchy Performance\nMemory Wall\nCPU Memory\nGPU Memory\nSOTA Memory\nAdvanced AI Computing and Systems\n27"
+          }
+        ]
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER27",
+      "topic_family": "unavailable-runtime",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Using only the currently imported lecture, give the real-time GPU utilization of yuxinye's current TACC job.",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "unsupported",
+        "reference_answer": "The lecture contains no live measurements. The requested value requires monitoring data for the corresponding job or service.",
+        "rubric": [
+          {
+            "id": "abstain",
+            "criterion": "Explain that the lecture provides insufficient evidence and do not invent a value.",
+            "max_score": 2
+          },
+          {
+            "id": "needed-data",
+            "criterion": "Identify the need for actual monitoring or measurement data.",
+            "max_score": 2
+          }
+        ],
+        "evidence": []
+      },
+      "document_id": "ACS-L2"
+    },
+    {
+      "id": "L2-ANSWER28",
+      "topic_family": "unavailable-runtime",
+      "input": {
+        "document_id": "ACS-L2",
+        "question": "Using only the currently imported lecture, give today's actual P95 response time for the local StudyGraph service.",
+        "instruction": "Answer using only the current lecture. Explain your reasoning or show the calculation and cite the physical PDF page numbers. If the material is insufficient, say so explicitly."
+      },
+      "expected": {
+        "answerability": "unsupported",
+        "reference_answer": "The lecture contains no live measurements. The requested value requires monitoring data for the corresponding job or service.",
+        "rubric": [
+          {
+            "id": "abstain",
+            "criterion": "Explain that the lecture provides insufficient evidence and do not invent a value.",
+            "max_score": 2
+          },
+          {
+            "id": "needed-data",
+            "criterion": "Identify the need for actual monitoring or measurement data.",
+            "max_score": 2
+          }
+        ],
+        "evidence": []
+      },
+      "document_id": "ACS-L2"
+    }
+  ]
+}

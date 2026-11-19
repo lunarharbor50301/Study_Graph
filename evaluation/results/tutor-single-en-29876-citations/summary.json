@@ -1,0 +1,15 @@
+{
+  "language": "en",
+  "questions": 30,
+  "completed": 30,
+  "failed": 0,
+  "lecture_scores": {
+    "ACS-L1": 1.0,
+    "ACS-L2": 0.9791666666666666
+  },
+  "macro_score": 0.9895833333333333,
+  "supported_with_citations": 26,
+  "supported": 26,
+  "median_s": 14.89,
+  "p95_s": 24.254
+}

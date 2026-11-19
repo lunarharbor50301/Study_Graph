@@ -1,0 +1,590 @@
+{
+  "job": 29876,
+  "model": "qwen3.8-27b",
+  "endpoint": "/api/agent/stream",
+  "concurrency": 3,
+  "attempts_per_question": 1,
+  "reviewer": "Codex preliminary semantic scoring; pending human review",
+  "summary": {
+    "L1": {
+      "count": 14,
+      "completed": 14,
+      "mean_question_score": 1.0,
+      "median_s": 18.29,
+      "p95_s": 27.234,
+      "supported": 12,
+      "with_citations": 5,
+      "reference_page_hit": 5
+    },
+    "L2": {
+      "count": 16,
+      "completed": 16,
+      "mean_question_score": 0.96875,
+      "median_s": 15.48,
+      "p95_s": 30.1775,
+      "supported": 14,
+      "with_citations": 12,
+      "reference_page_hit": 12
+    },
+    "pooled": {
+      "count": 30,
+      "completed": 30,
+      "mean_question_score": 0.9833333333333333,
+      "median_s": 16.865000000000002,
+      "p95_s": 28.965999999999998,
+      "supported": 26,
+      "with_citations": 17,
+      "reference_page_hit": 17
+    },
+    "macro_score": 0.984375
+  },
+  "rows": [
+    {
+      "id": "L1-ANSWER01",
+      "status": "done",
+      "scores": {
+        "pipeline-P1": 2,
+        "pipeline-P2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 26.87,
+      "pages": [],
+      "expected_pages": [
+        16
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L1-ANSWER02",
+      "status": "done",
+      "scores": {
+        "ideal-pipeline-P1": 2,
+        "ideal-pipeline-P2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 17.14,
+      "pages": [
+        17
+      ],
+      "expected_pages": [
+        17
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L1-ANSWER03",
+      "status": "done",
+      "scores": {
+        "hazard-P1": 2,
+        "hazard-P2": 2,
+        "hazard-P3": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 19.61,
+      "pages": [],
+      "expected_pages": [
+        18
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L1-ANSWER04",
+      "status": "done",
+      "scores": {
+        "smt-P1": 2,
+        "smt-P2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 14.53,
+      "pages": [],
+      "expected_pages": [
+        29
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L1-ANSWER05",
+      "status": "done",
+      "scores": {
+        "parallelism-P1": 2,
+        "parallelism-P2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 17.02,
+      "pages": [],
+      "expected_pages": [
+        33
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L1-ANSWER06",
+      "status": "done",
+      "scores": {
+        "scope": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 20.69,
+      "pages": [
+        35,
+        37
+      ],
+      "expected_pages": [
+        37
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L1-ANSWER07",
+      "status": "done",
+      "scores": {
+        "divergence-P1": 2,
+        "divergence-P2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 27.91,
+      "pages": [
+        44,
+        45,
+        46
+      ],
+      "expected_pages": [
+        44
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L1-ANSWER08",
+      "status": "done",
+      "scores": {
+        "scope": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 10.92,
+      "pages": [],
+      "expected_pages": [
+        63
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L1-ANSWER09",
+      "status": "done",
+      "scores": {
+        "amdahl-P1": 2,
+        "amdahl-P2": 2,
+        "amdahl-P3": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 19.72,
+      "pages": [],
+      "expected_pages": [
+        66
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L1-ANSWER10",
+      "status": "done",
+      "scores": {
+        "roofline-P1": 2,
+        "roofline-P2": 2,
+        "roofline-P3": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 24.77,
+      "pages": [
+        67
+      ],
+      "expected_pages": [
+        67
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L1-ANSWER11",
+      "status": "done",
+      "scores": {
+        "mutex-P1": 2,
+        "mutex-P2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 14.12,
+      "pages": [
+        58
+      ],
+      "expected_pages": [
+        58
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L1-ANSWER25",
+      "status": "done",
+      "scores": {
+        "amdahl-calc-0": 2,
+        "amdahl-calc-1": 2,
+        "amdahl-calc-2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 19.44,
+      "pages": [],
+      "expected_pages": [
+        66
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L1-ANSWER27",
+      "status": "done",
+      "scores": {
+        "abstain": 2,
+        "needed-data": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 9.76,
+      "pages": [
+        33,
+        46,
+        67
+      ],
+      "expected_pages": [],
+      "answerability": "unsupported"
+    },
+    {
+      "id": "L1-ANSWER28",
+      "status": "done",
+      "scores": {
+        "abstain": 2,
+        "needed-data": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 16.71,
+      "pages": [
+        2,
+        16,
+        25,
+        56,
+        57,
+        62,
+        64,
+        65
+      ],
+      "expected_pages": [],
+      "answerability": "unsupported"
+    },
+    {
+      "id": "L2-ANSWER12",
+      "status": "done",
+      "scores": {
+        "locality-P1": 2,
+        "locality-P2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 31.22,
+      "pages": [
+        22,
+        23,
+        24
+      ],
+      "expected_pages": [
+        22
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER13",
+      "status": "done",
+      "scores": {
+        "amat-P1": 2,
+        "amat-P2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 17.94,
+      "pages": [
+        25,
+        26,
+        27,
+        28
+      ],
+      "expected_pages": [
+        26
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER14",
+      "status": "done",
+      "scores": {
+        "tlb-P1": 2,
+        "tlb-P2": 2,
+        "tlb-P3": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 29.83,
+      "pages": [
+        25,
+        30
+      ],
+      "expected_pages": [
+        30
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER15",
+      "status": "done",
+      "scores": {
+        "sram-dram-P1": 2,
+        "sram-dram-P2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 26.17,
+      "pages": [
+        31,
+        32,
+        34,
+        35
+      ],
+      "expected_pages": [
+        32
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER16",
+      "status": "done",
+      "scores": {
+        "banks-P1": 2,
+        "banks-P2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 11.55,
+      "pages": [],
+      "expected_pages": [
+        36
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER17",
+      "status": "done",
+      "scores": {
+        "width": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 12.14,
+      "pages": [
+        40
+      ],
+      "expected_pages": [
+        40
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER18",
+      "status": "done",
+      "scores": {
+        "local-memory-P1": 2,
+        "local-memory-P2": 2,
+        "local-memory-P3": 1
+      },
+      "normalized": 0.8333333333333334,
+      "note": "Identifies off-chip DRAM, but leaves the distinction from registers implicit.",
+      "elapsed_s": 15.67,
+      "pages": [
+        44,
+        46
+      ],
+      "expected_pages": [
+        46
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER19",
+      "status": "done",
+      "scores": {
+        "coalescing-P1": 2,
+        "coalescing-P2": 2,
+        "coalescing-P3": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 26.33,
+      "pages": [
+        47,
+        48
+      ],
+      "expected_pages": [
+        48
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER20",
+      "status": "done",
+      "scores": {
+        "bank-conflict-P1": 2,
+        "bank-conflict-P2": 2,
+        "bank-conflict-P3": 0
+      },
+      "normalized": 0.6666666666666666,
+      "note": "Explains serialization and broadcast, but omits the distinction from global-memory coalescing.",
+      "elapsed_s": 16.1,
+      "pages": [
+        51
+      ],
+      "expected_pages": [
+        51
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER21",
+      "status": "done",
+      "scores": {
+        "coherence-protocol-P1": 2,
+        "coherence-protocol-P2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 24.08,
+      "pages": [],
+      "expected_pages": [
+        64
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER22",
+      "status": "done",
+      "scores": {
+        "memory-tradeoff-P1": 2,
+        "memory-tradeoff-P2": 2,
+        "memory-tradeoff-P3": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 14.91,
+      "pages": [
+        59
+      ],
+      "expected_pages": [
+        59
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER23",
+      "status": "done",
+      "scores": {
+        "lpddr-P1": 2,
+        "lpddr-P2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 10.95,
+      "pages": [
+        68,
+        69
+      ],
+      "expected_pages": [
+        68
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER24",
+      "status": "done",
+      "scores": {
+        "tiering-P1": 2,
+        "tiering-P2": 2,
+        "tiering-P3": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 15.29,
+      "pages": [
+        69
+      ],
+      "expected_pages": [
+        69
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER26",
+      "status": "done",
+      "scores": {
+        "amat-calc-0": 2,
+        "amat-calc-1": 2,
+        "amat-calc-2": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 14.44,
+      "pages": [
+        26,
+        27
+      ],
+      "expected_pages": [
+        27
+      ],
+      "answerability": "supported"
+    },
+    {
+      "id": "L2-ANSWER27",
+      "status": "done",
+      "scores": {
+        "abstain": 2,
+        "needed-data": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 8.46,
+      "pages": [],
+      "expected_pages": [],
+      "answerability": "unsupported"
+    },
+    {
+      "id": "L2-ANSWER28",
+      "status": "done",
+      "scores": {
+        "abstain": 2,
+        "needed-data": 2
+      },
+      "normalized": 1.0,
+      "note": "All required points covered.",
+      "elapsed_s": 8.85,
+      "pages": [
+        25,
+        26,
+        51
+      ],
+      "expected_pages": [],
+      "answerability": "unsupported"
+    }
+  ]
+}

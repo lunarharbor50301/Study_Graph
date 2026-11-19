@@ -1,0 +1,2541 @@
+{
+ "id": "L1-ANSWER05",
+ "input": {
+  "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+  "session_id": "single-979a3a71357a4042aa3c9b1b5b2add27",
+  "question": "仅根据当前课件回答，给出解释或计算过程及PDF物理页码；材料不足时明确说明。\n比较数据并行与任务并行。"
+ },
+ "events": [
+  {
+   "type": "model_start",
+   "call": 1
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "model_end",
+   "call": 1,
+   "first_text_ms": null,
+   "duration_ms": 7471,
+   "stop_reason": "toolUse",
+   "output_tokens": 209
+  },
+  {
+   "type": "tool_start",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "query": "data parallelism task parallelism comparison"
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "query": "data parallelism task parallelism comparison"
+   },
+   "pages": [
+    33,
+    55,
+    11
+   ],
+   "duration_ms": 3,
+   "model_call": 1
+  },
+  {
+   "type": "tool_start",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "query": "数据并行 任务并行 并行计算"
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "search_lecture",
+   "args": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "query": "数据并行 任务并行 并行计算"
+   },
+   "pages": [],
+   "duration_ms": 1,
+   "model_call": 1
+  },
+  {
+   "type": "model_start",
+   "call": 2
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "model_end",
+   "call": 2,
+   "first_text_ms": null,
+   "duration_ms": 3815,
+   "stop_reason": "toolUse",
+   "output_tokens": 99
+  },
+  {
+   "type": "tool_start",
+   "tool": "read_page",
+   "args": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "page": 33
+   }
+  },
+  {
+   "type": "tool_result",
+   "tool": "read_page",
+   "args": {
+    "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+    "page": 33
+   },
+   "pages": [
+    33
+   ],
+   "duration_ms": 2,
+   "model_call": 2
+  },
+  {
+   "type": "model_start",
+   "call": 3
+  },
+  {
+   "type": "answer_start"
+  },
+  {
+   "type": "delta",
+   "text": "根据"
+  },
+  {
+   "type": "delta",
+   "text": "当前"
+  },
+  {
+   "type": "delta",
+   "text": "课件"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "L"
+  },
+  {
+   "type": "delta",
+   "text": "ecture"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "9"
+  },
+  {
+   "type": "delta",
+   "text": ","
+  },
+  {
+   "type": "delta",
+   "text": " \""
+  },
+  {
+   "type": "delta",
+   "text": "From"
+  },
+  {
+   "type": "delta",
+   "text": " CPU"
+  },
+  {
+   "type": "delta",
+   "text": " to"
+  },
+  {
+   "type": "delta",
+   "text": " GPU"
+  },
+  {
+   "type": "delta",
+   "text": ":"
+  },
+  {
+   "type": "delta",
+   "text": " Parallel"
+  },
+  {
+   "type": "delta",
+   "text": "ism"
+  },
+  {
+   "type": "delta",
+   "text": " for"
+  },
+  {
+   "type": "delta",
+   "text": " Huge"
+  },
+  {
+   "type": "delta",
+   "text": " Computing"
+  },
+  {
+   "type": "delta",
+   "text": " Power"
+  },
+  {
+   "type": "delta",
+   "text": "!\""
+  },
+  {
+   "type": "delta",
+   "text": "），"
+  },
+  {
+   "type": "delta",
+   "text": "数据"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "Data"
+  },
+  {
+   "type": "delta",
+   "text": " Parallel"
+  },
+  {
+   "type": "delta",
+   "text": "ism"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "与"
+  },
+  {
+   "type": "delta",
+   "text": "任务"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "Task"
+  },
+  {
+   "type": "delta",
+   "text": " Parallel"
+  },
+  {
+   "type": "delta",
+   "text": "ism"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "的比较"
+  },
+  {
+   "type": "delta",
+   "text": "如下"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "###"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "核心"
+  },
+  {
+   "type": "delta",
+   "text": "定义"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "数据"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "Data"
+  },
+  {
+   "type": "delta",
+   "text": " Parallel"
+  },
+  {
+   "type": "delta",
+   "text": "ism"
+  },
+  {
+   "type": "delta",
+   "text": ")**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "不同的"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "数据"
+  },
+  {
+   "type": "delta",
+   "text": "片段"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "pieces"
+  },
+  {
+   "type": "delta",
+   "text": " of"
+  },
+  {
+   "type": "delta",
+   "text": " data"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "可以"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": "操作"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "任务"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "Task"
+  },
+  {
+   "type": "delta",
+   "text": " Parallel"
+  },
+  {
+   "type": "delta",
+   "text": "ism"
+  },
+  {
+   "type": "delta",
+   "text": ")**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "不同的"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "任务"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "tasks"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "可以"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": "操作"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "###"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "具体"
+  },
+  {
+   "type": "delta",
+   "text": "形式"
+  },
+  {
+   "type": "delta",
+   "text": "/"
+  },
+  {
+   "type": "delta",
+   "text": "实现"
+  },
+  {
+   "type": "delta",
+   "text": "方式"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "数据"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "通常"
+  },
+  {
+   "type": "delta",
+   "text": "体现"
+  },
+  {
+   "type": "delta",
+   "text": "为"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "向量"
+  },
+  {
+   "type": "delta",
+   "text": "处理"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "Vector"
+  },
+  {
+   "type": "delta",
+   "text": " processing"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "和"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "数组"
+  },
+  {
+   "type": "delta",
+   "text": "处理"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "Array"
+  },
+  {
+   "type": "delta",
+   "text": " processing"
+  },
+  {
+   "type": "delta",
+   "text": "）。"
+  },
+  {
+   "type": "delta",
+   "text": "这意味着"
+  },
+  {
+   "type": "delta",
+   "text": "对"
+  },
+  {
+   "type": "delta",
+   "text": "同一"
+  },
+  {
+   "type": "delta",
+   "text": "类"
+  },
+  {
+   "type": "delta",
+   "text": "操作"
+  },
+  {
+   "type": "delta",
+   "text": "应用于"
+  },
+  {
+   "type": "delta",
+   "text": "不同的"
+  },
+  {
+   "type": "delta",
+   "text": "数据"
+  },
+  {
+   "type": "delta",
+   "text": "元素"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "任务"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "："
+  },
+  {
+   "type": "delta",
+   "text": "通常"
+  },
+  {
+   "type": "delta",
+   "text": "体现"
+  },
+  {
+   "type": "delta",
+   "text": "为"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "多线程"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "Mult"
+  },
+  {
+   "type": "delta",
+   "text": "ith"
+  },
+  {
+   "type": "delta",
+   "text": "reading"
+  },
+  {
+   "type": "delta",
+   "text": "）。"
+  },
+  {
+   "type": "delta",
+   "text": "这意味着"
+  },
+  {
+   "type": "delta",
+   "text": "执行"
+  },
+  {
+   "type": "delta",
+   "text": "不同的"
+  },
+  {
+   "type": "delta",
+   "text": "逻辑"
+  },
+  {
+   "type": "delta",
+   "text": "任务"
+  },
+  {
+   "type": "delta",
+   "text": "或"
+  },
+  {
+   "type": "delta",
+   "text": "指令"
+  },
+  {
+   "type": "delta",
+   "text": "流"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "###"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "共同"
+  },
+  {
+   "type": "delta",
+   "text": "点"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "两者"
+  },
+  {
+   "type": "delta",
+   "text": "都属于"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": "性"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "Parallel"
+  },
+  {
+   "type": "delta",
+   "text": "ism"
+  },
+  {
+   "type": "delta",
+   "text": "）**"
+  },
+  {
+   "type": "delta",
+   "text": "的"
+  },
+  {
+   "type": "delta",
+   "text": "范畴"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "其"
+  },
+  {
+   "type": "delta",
+   "text": "核心"
+  },
+  {
+   "type": "delta",
+   "text": "目标是"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "并发"
+  },
+  {
+   "type": "delta",
+   "text": "执行"
+  },
+  {
+   "type": "delta",
+   "text": "多个"
+  },
+  {
+   "type": "delta",
+   "text": "作业"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "Do"
+  },
+  {
+   "type": "delta",
+   "text": " multiple"
+  },
+  {
+   "type": "delta",
+   "text": " jobs"
+  },
+  {
+   "type": "delta",
+   "text": " concurrently"
+  },
+  {
+   "type": "delta",
+   "text": "）。"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "这里的"
+  },
+  {
+   "type": "delta",
+   "text": "“"
+  },
+  {
+   "type": "delta",
+   "text": "作业"
+  },
+  {
+   "type": "delta",
+   "text": "”"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "Job"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "被"
+  },
+  {
+   "type": "delta",
+   "text": "定义为"
+  },
+  {
+   "type": "delta",
+   "text": "指令"
+  },
+  {
+   "type": "delta",
+   "text": "、"
+  },
+  {
+   "type": "delta",
+   "text": "操作"
+  },
+  {
+   "type": "delta",
+   "text": "或"
+  },
+  {
+   "type": "delta",
+   "text": "任务"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "###"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "4"
+  },
+  {
+   "type": "delta",
+   "text": "."
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "补充"
+  },
+  {
+   "type": "delta",
+   "text": "背景"
+  },
+  {
+   "type": "delta",
+   "text": "（"
+  },
+  {
+   "type": "delta",
+   "text": "来自"
+  },
+  {
+   "type": "delta",
+   "text": "其他"
+  },
+  {
+   "type": "delta",
+   "text": "页面"
+  },
+  {
+   "type": "delta",
+   "text": "）"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "在"
+  },
+  {
+   "type": "delta",
+   "text": " CPU"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "多"
+  },
+  {
+   "type": "delta",
+   "text": "核"
+  },
+  {
+   "type": "delta",
+   "text": "编程"
+  },
+  {
+   "type": "delta",
+   "text": "中"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "任务"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": "常"
+  },
+  {
+   "type": "delta",
+   "text": "通过"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "p"
+  },
+  {
+   "type": "delta",
+   "text": "Thread"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "实现"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "采用"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "共享"
+  },
+  {
+   "type": "delta",
+   "text": "内存"
+  },
+  {
+   "type": "delta",
+   "text": "编程"
+  },
+  {
+   "type": "delta",
+   "text": "模型"
+  },
+  {
+   "type": "delta",
+   "text": "**。"
+  },
+  {
+   "type": "delta",
+   "text": "一个"
+  },
+  {
+   "type": "delta",
+   "text": "进程"
+  },
+  {
+   "type": "delta",
+   "text": "包含"
+  },
+  {
+   "type": "delta",
+   "text": "多个"
+  },
+  {
+   "type": "delta",
+   "text": "线程"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "线程"
+  },
+  {
+   "type": "delta",
+   "text": "共享"
+  },
+  {
+   "type": "delta",
+   "text": "同一"
+  },
+  {
+   "type": "delta",
+   "text": "虚拟"
+  },
+  {
+   "type": "delta",
+   "text": "地址"
+  },
+  {
+   "type": "delta",
+   "text": "空间"
+  },
+  {
+   "type": "delta",
+   "text": "、"
+  },
+  {
+   "type": "delta",
+   "text": "全局"
+  },
+  {
+   "type": "delta",
+   "text": "变量"
+  },
+  {
+   "type": "delta",
+   "text": "和"
+  },
+  {
+   "type": "delta",
+   "text": "堆"
+  },
+  {
+   "type": "delta",
+   "text": "对象"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "且"
+  },
+  {
+   "type": "delta",
+   "text": "同步"
+  },
+  {
+   "type": "delta",
+   "text": "是"
+  },
+  {
+   "type": "delta",
+   "text": "程序"
+  },
+  {
+   "type": "delta",
+   "text": "员的"
+  },
+  {
+   "type": "delta",
+   "text": "职责"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "在"
+  },
+  {
+   "type": "delta",
+   "text": " AI"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "计算"
+  },
+  {
+   "type": "delta",
+   "text": "中"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "数据"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": "是"
+  },
+  {
+   "type": "delta",
+   "text": "分布式"
+  },
+  {
+   "type": "delta",
+   "text": "计算"
+  },
+  {
+   "type": "delta",
+   "text": "的基础"
+  },
+  {
+   "type": "delta",
+   "text": "之一"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "例如"
+  },
+  {
+   "type": "delta",
+   "text": "用于"
+  },
+  {
+   "type": "delta",
+   "text": " AI"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "训练的"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "5"
+  },
+  {
+   "type": "delta",
+   "text": "D"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "中"
+  },
+  {
+   "type": "delta",
+   "text": "会"
+  },
+  {
+   "type": "delta",
+   "text": "涉及"
+  },
+  {
+   "type": "delta",
+   "text": "数据"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": "维度"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "###"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "总结"
+  },
+  {
+   "type": "delta",
+   "text": "对比"
+  },
+  {
+   "type": "delta",
+   "text": "表"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "|"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "特性"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "数据"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "Data"
+  },
+  {
+   "type": "delta",
+   "text": " Parallel"
+  },
+  {
+   "type": "delta",
+   "text": "ism"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "任务"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "Task"
+  },
+  {
+   "type": "delta",
+   "text": " Parallel"
+  },
+  {
+   "type": "delta",
+   "text": "ism"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "|"
+  },
+  {
+   "type": "delta",
+   "text": " :"
+  },
+  {
+   "type": "delta",
+   "text": "---"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": " :"
+  },
+  {
+   "type": "delta",
+   "text": "---"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": " :"
+  },
+  {
+   "type": "delta",
+   "text": "---"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "|"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "并行"
+  },
+  {
+   "type": "delta",
+   "text": "对象"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "不同的"
+  },
+  {
+   "type": "delta",
+   "text": "数据"
+  },
+  {
+   "type": "delta",
+   "text": "片段"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "不同的"
+  },
+  {
+   "type": "delta",
+   "text": "任务"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "|"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "典型"
+  },
+  {
+   "type": "delta",
+   "text": "实现"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "向量"
+  },
+  {
+   "type": "delta",
+   "text": "处理"
+  },
+  {
+   "type": "delta",
+   "text": "、"
+  },
+  {
+   "type": "delta",
+   "text": "数组"
+  },
+  {
+   "type": "delta",
+   "text": "处理"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "多线程"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "Mult"
+  },
+  {
+   "type": "delta",
+   "text": "ith"
+  },
+  {
+   "type": "delta",
+   "text": "reading"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "|"
+  },
+  {
+   "type": "delta",
+   "text": " **"
+  },
+  {
+   "type": "delta",
+   "text": "核心"
+  },
+  {
+   "type": "delta",
+   "text": "思想"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "同一"
+  },
+  {
+   "type": "delta",
+   "text": "操作"
+  },
+  {
+   "type": "delta",
+   "text": "作用于"
+  },
+  {
+   "type": "delta",
+   "text": "不同"
+  },
+  {
+   "type": "delta",
+   "text": "数据"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "不同"
+  },
+  {
+   "type": "delta",
+   "text": "操作"
+  },
+  {
+   "type": "delta",
+   "text": "/"
+  },
+  {
+   "type": "delta",
+   "text": "任务"
+  },
+  {
+   "type": "delta",
+   "text": "同时"
+  },
+  {
+   "type": "delta",
+   "text": "执行"
+  },
+  {
+   "type": "delta",
+   "text": " |"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "PDF"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "物理"
+  },
+  {
+   "type": "delta",
+   "text": "页"
+  },
+  {
+   "type": "delta",
+   "text": "码"
+  },
+  {
+   "type": "delta",
+   "text": "引用"
+  },
+  {
+   "type": "delta",
+   "text": "：**"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "]"
+  },
+  {
+   "type": "delta",
+   "text": " /"
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "4"
+  },
+  {
+   "type": "delta",
+   "text": "]:"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "第"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "页"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "From"
+  },
+  {
+   "type": "delta",
+   "text": " CPU"
+  },
+  {
+   "type": "delta",
+   "text": " to"
+  },
+  {
+   "type": "delta",
+   "text": " GPU"
+  },
+  {
+   "type": "delta",
+   "text": ":"
+  },
+  {
+   "type": "delta",
+   "text": " Parallel"
+  },
+  {
+   "type": "delta",
+   "text": "ism"
+  },
+  {
+   "type": "delta",
+   "text": " for"
+  },
+  {
+   "type": "delta",
+   "text": " Huge"
+  },
+  {
+   "type": "delta",
+   "text": " Computing"
+  },
+  {
+   "type": "delta",
+   "text": " Power"
+  },
+  {
+   "type": "delta",
+   "text": "!"
+  },
+  {
+   "type": "delta",
+   "text": " -"
+  },
+  {
+   "type": "delta",
+   "text": " Multip"
+  },
+  {
+   "type": "delta",
+   "text": "rocess"
+  },
+  {
+   "type": "delta",
+   "text": "ors"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "2"
+  },
+  {
+   "type": "delta",
+   "text": "]:"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "第"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "5"
+  },
+  {
+   "type": "delta",
+   "text": "5"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "页"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "CPU"
+  },
+  {
+   "type": "delta",
+   "text": " Mult"
+  },
+  {
+   "type": "delta",
+   "text": "ic"
+  },
+  {
+   "type": "delta",
+   "text": "ore"
+  },
+  {
+   "type": "delta",
+   "text": " Programming"
+  },
+  {
+   "type": "delta",
+   "text": ":"
+  },
+  {
+   "type": "delta",
+   "text": " p"
+  },
+  {
+   "type": "delta",
+   "text": "Thread"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": "\n"
+  },
+  {
+   "type": "delta",
+   "text": "*"
+  },
+  {
+   "type": "delta",
+   "text": "  "
+  },
+  {
+   "type": "delta",
+   "text": " ["
+  },
+  {
+   "type": "delta",
+   "text": "S"
+  },
+  {
+   "type": "delta",
+   "text": "3"
+  },
+  {
+   "type": "delta",
+   "text": "]:"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "第"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": "1"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "页"
+  },
+  {
+   "type": "delta",
+   "text": " ("
+  },
+  {
+   "type": "delta",
+   "text": "A"
+  },
+  {
+   "type": "delta",
+   "text": " Quick"
+  },
+  {
+   "type": "delta",
+   "text": " Review"
+  },
+  {
+   "type": "delta",
+   "text": " of"
+  },
+  {
+   "type": "delta",
+   "text": " Host"
+  },
+  {
+   "type": "delta",
+   "text": " Architecture"
+  },
+  {
+   "type": "delta",
+   "text": " -"
+  },
+  {
+   "type": "delta",
+   "text": " Roles"
+  },
+  {
+   "type": "delta",
+   "text": " in"
+  },
+  {
+   "type": "delta",
+   "text": " AI"
+  },
+  {
+   "type": "delta",
+   "text": " Computing"
+  },
+  {
+   "type": "delta",
+   "text": ")"
+  },
+  {
+   "type": "delta",
+   "text": "\n\n"
+  },
+  {
+   "type": "delta",
+   "text": "**"
+  },
+  {
+   "type": "delta",
+   "text": "说明"
+  },
+  {
+   "type": "delta",
+   "text": "：**"
+  },
+  {
+   "type": "delta",
+   "text": " "
+  },
+  {
+   "type": "delta",
+   "text": "以上"
+  },
+  {
+   "type": "delta",
+   "text": "解释"
+  },
+  {
+   "type": "delta",
+   "text": "严格"
+  },
+  {
+   "type": "delta",
+   "text": "基于"
+  },
+  {
+   "type": "delta",
+   "text": "提供的"
+  },
+  {
+   "type": "delta",
+   "text": "课件"
+  },
+  {
+   "type": "delta",
+   "text": "片段"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "delta",
+   "text": "课件"
+  },
+  {
+   "type": "delta",
+   "text": "未"
+  },
+  {
+   "type": "delta",
+   "text": "提供"
+  },
+  {
+   "type": "delta",
+   "text": "关于"
+  },
+  {
+   "type": "delta",
+   "text": "两者"
+  },
+  {
+   "type": "delta",
+   "text": "在"
+  },
+  {
+   "type": "delta",
+   "text": "性能"
+  },
+  {
+   "type": "delta",
+   "text": "瓶颈"
+  },
+  {
+   "type": "delta",
+   "text": "、"
+  },
+  {
+   "type": "delta",
+   "text": "通信"
+  },
+  {
+   "type": "delta",
+   "text": "开销"
+  },
+  {
+   "type": "delta",
+   "text": "或"
+  },
+  {
+   "type": "delta",
+   "text": "具体"
+  },
+  {
+   "type": "delta",
+   "text": "硬件"
+  },
+  {
+   "type": "delta",
+   "text": "架构"
+  },
+  {
+   "type": "delta",
+   "text": "差异"
+  },
+  {
+   "type": "delta",
+   "text": "上的"
+  },
+  {
+   "type": "delta",
+   "text": "深入"
+  },
+  {
+   "type": "delta",
+   "text": "对比"
+  },
+  {
+   "type": "delta",
+   "text": "，"
+  },
+  {
+   "type": "delta",
+   "text": "仅"
+  },
+  {
+   "type": "delta",
+   "text": "给出了"
+  },
+  {
+   "type": "delta",
+   "text": "定义"
+  },
+  {
+   "type": "delta",
+   "text": "和"
+  },
+  {
+   "type": "delta",
+   "text": "典型"
+  },
+  {
+   "type": "delta",
+   "text": "实现"
+  },
+  {
+   "type": "delta",
+   "text": "形式"
+  },
+  {
+   "type": "delta",
+   "text": "。"
+  },
+  {
+   "type": "model_end",
+   "call": 3,
+   "first_text_ms": 707,
+   "duration_ms": 12922,
+   "stop_reason": "stop",
+   "output_tokens": 586
+  },
+  {
+   "type": "done",
+   "answer": "根据当前课件（Lecture 9, \"From CPU to GPU: Parallelism for Huge Computing Power!\"），数据并行（Data Parallelism）与任务并行（Task Parallelism）的比较如下：\n\n### 1. 核心定义\n*   **数据并行 (Data Parallelism)**：不同的**数据片段**（pieces of data）可以并行操作。\n*   **任务并行 (Task Parallelism)**：不同的**任务**（tasks）可以并行操作。\n\n### 2. 具体形式/实现方式\n*   **数据并行**：通常体现为**向量处理**（Vector processing）和**数组处理**（Array processing）。这意味着对同一类操作应用于不同的数据元素。\n*   **任务并行**：通常体现为**多线程**（Multithreading）。这意味着执行不同的逻辑任务或指令流。\n\n### 3. 共同点\n*   两者都属于**并行性（Parallelism）**的范畴，其核心目标是**并发执行多个作业**（Do multiple jobs concurrently）。\n*   这里的“作业”（Job）被定义为指令、操作或任务。\n\n### 4. 补充背景（来自其他页面）\n*   在 CPU 多核编程中，任务并行常通过 **pThread** 实现，采用**共享内存编程模型**。一个进程包含多个线程，线程共享同一虚拟地址空间、全局变量和堆对象，且同步是程序员的职责 [S2]。\n*   在 AI 计算中，数据并行是分布式计算的基础之一，例如用于 AI 训练的 **5D 并行** 中会涉及数据并行维度 [S3]。\n\n### 总结对比表\n\n| 特性 | 数据并行 (Data Parallelism) | 任务并行 (Task Parallelism) |\n| :--- | :--- | :--- |\n| **并行对象** | 不同的数据片段 | 不同的任务 |\n| **典型实现** | 向量处理、数组处理 | 多线程 (Multithreading) |\n| **核心思想** | 同一操作作用于不同数据 | 不同操作/任务同时执行 |\n\n**PDF 物理页码引用：**\n*   [S1] / [S4]: 第 33 页 (From CPU to GPU: Parallelism for Huge Computing Power! - Multiprocessors)\n*   [S2]: 第 55 页 (CPU Multicore Programming: pThread)\n*   [S3]: 第 11 页 (A Quick Review of Host Architecture - Roles in AI Computing)\n\n**说明：** 以上解释严格基于提供的课件片段。课件未提供关于两者在性能瓶颈、通信开销或具体硬件架构差异上的深入对比，仅给出了定义和典型实现形式。",
+   "citations": [
+    {
+     "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+     "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p55-1",
+     "page": 55,
+     "text": "CPU Multicore Programming: pThread\n  Thread Parallelism with Shared Memory Programming Model\n\n¡  Break down a complex task into multiple lightweight sub-tasks.\n\n   ¡ One process contains multiple threads.\n\n   ¡  Threads share the same virtual address space, global variables and heap objects are shared.\n   ¡  Synchronization is the programmer’s responsibility.",
+     "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/55/preview",
+     "source": "S2"
+    },
+    {
+     "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+     "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p11-1",
+     "page": 11,
+     "text": "A Quick Review of Host Architecture\n   Roles in AI Computing --- NIC Package: the Host Scalable Input/Output\n\n¡ Main Function: Scale Single Computing\n   System for Distributed Computing\n\n   ¡  Connect many hosts to execute the same\n       task.\n\n                                                    DDRs         CPUs                  CPUs         DDRs     ¡  E.g., 5D parallelism for AI training\n                                                                                                    C   C   C   C                    C   C   C   C\n         (Lecture 9).                                                                                                    C   C   C   C                    C   C   C   C                                                                                                                                                                                Level          ",
+     "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/11/preview",
+     "source": "S3"
+    },
+    {
+     "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+     "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p33-1",
+     "page": 33,
+     "text": "From CPU to GPU: Parallelism for Huge Computing Power!\n  Multiprocessors\n\n¡  Parallelism: Do multiple jobs concurrently.\n\n   ¡  Job: instructions, operations, tasks\n\n\n¡ Data Parallelism\n\n   ¡  Different pieces of data can be operated in parallel\n\n   ¡  Vector processing and array processing\n\n\n¡  Task Parallelism\n\n   ¡  Different tasks can be operated in parallel\n\n   ¡  Multithreading",
+     "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/33/preview",
+     "source": "S1"
+    },
+    {
+     "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+     "page": 33,
+     "chunk_id": "page-33",
+     "text": "From CPU to GPU: Parallelism for Huge Computing Power!\n  Multiprocessors\n\n¡  Parallelism: Do multiple jobs concurrently.\n\n   ¡  Job: instructions, operations, tasks\n\n\n¡ Data Parallelism\n\n   ¡  Different pieces of data can be operated in parallel\n\n   ¡  Vector processing and array processing\n\n\n¡  Task Parallelism\n\n   ¡  Different tasks can be operated in parallel\n\n   ¡  Multithreading",
+     "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/33/preview",
+     "source": "S4"
+    }
+   ],
+   "trace": [
+    {
+     "tool": "search_lecture",
+     "args": {
+      "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+      "query": "data parallelism task parallelism comparison"
+     },
+     "pages": [
+      33,
+      55,
+      11
+     ],
+     "duration_ms": 3,
+     "model_call": 1
+    },
+    {
+     "tool": "search_lecture",
+     "args": {
+      "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+      "query": "数据并行 任务并行 并行计算"
+     },
+     "pages": [],
+     "duration_ms": 1,
+     "model_call": 1
+    },
+    {
+     "tool": "read_page",
+     "args": {
+      "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+      "page": 33
+     },
+     "pages": [
+      33
+     ],
+     "duration_ms": 2,
+     "model_call": 2
+    }
+   ],
+   "model_calls": 3,
+   "timing_ms": {
+    "generation": 24208,
+    "total": 24220
+   }
+  }
+ ],
+ "status": "done",
+ "elapsed_s": 24.37
+}

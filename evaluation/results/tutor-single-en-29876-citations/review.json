@@ -1,0 +1,255 @@
+{
+  "language": "en",
+  "job": "29876",
+  "rows": [
+    {
+      "id": "L1-ANSWER01",
+      "scores": {
+        "pipeline-P1": 2,
+        "pipeline-P2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER12",
+      "scores": {
+        "locality-P1": 2,
+        "locality-P2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L1-ANSWER02",
+      "scores": {
+        "ideal-pipeline-P1": 2,
+        "ideal-pipeline-P2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER13",
+      "scores": {
+        "amat-P1": 2,
+        "amat-P2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L1-ANSWER03",
+      "scores": {
+        "hazard-P1": 2,
+        "hazard-P2": 2,
+        "hazard-P3": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER14",
+      "scores": {
+        "tlb-P1": 2,
+        "tlb-P2": 2,
+        "tlb-P3": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L1-ANSWER04",
+      "scores": {
+        "smt-P1": 2,
+        "smt-P2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER15",
+      "scores": {
+        "sram-dram-P1": 2,
+        "sram-dram-P2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L1-ANSWER05",
+      "scores": {
+        "parallelism-P1": 2,
+        "parallelism-P2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER16",
+      "scores": {
+        "banks-P1": 2,
+        "banks-P2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L1-ANSWER06",
+      "scores": {
+        "scope": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER17",
+      "scores": {
+        "width": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L1-ANSWER07",
+      "scores": {
+        "divergence-P1": 2,
+        "divergence-P2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER18",
+      "scores": {
+        "local-memory-P1": 2,
+        "local-memory-P2": 2,
+        "local-memory-P3": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L1-ANSWER08",
+      "scores": {
+        "scope": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER19",
+      "scores": {
+        "coalescing-P1": 0,
+        "coalescing-P2": 2,
+        "coalescing-P3": 2
+      },
+      "note": "Explains alignment and stride but omits the single-warp, single-instruction scope."
+    },
+    {
+      "id": "L1-ANSWER09",
+      "scores": {
+        "amdahl-P1": 2,
+        "amdahl-P2": 2,
+        "amdahl-P3": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER20",
+      "scores": {
+        "bank-conflict-P1": 2,
+        "bank-conflict-P2": 2,
+        "bank-conflict-P3": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L1-ANSWER10",
+      "scores": {
+        "roofline-P1": 2,
+        "roofline-P2": 2,
+        "roofline-P3": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER21",
+      "scores": {
+        "coherence-protocol-P1": 2,
+        "coherence-protocol-P2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L1-ANSWER11",
+      "scores": {
+        "mutex-P1": 2,
+        "mutex-P2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER22",
+      "scores": {
+        "memory-tradeoff-P1": 2,
+        "memory-tradeoff-P2": 2,
+        "memory-tradeoff-P3": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L1-ANSWER25",
+      "scores": {
+        "amdahl-calc-0": 2,
+        "amdahl-calc-1": 2,
+        "amdahl-calc-2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER23",
+      "scores": {
+        "lpddr-P1": 2,
+        "lpddr-P2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L1-ANSWER27",
+      "scores": {
+        "abstain": 2,
+        "needed-data": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER24",
+      "scores": {
+        "tiering-P1": 2,
+        "tiering-P2": 2,
+        "tiering-P3": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L1-ANSWER28",
+      "scores": {
+        "abstain": 2,
+        "needed-data": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER26",
+      "scores": {
+        "amat-calc-0": 2,
+        "amat-calc-1": 2,
+        "amat-calc-2": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER27",
+      "scores": {
+        "abstain": 2,
+        "needed-data": 2
+      },
+      "note": "Required points covered."
+    },
+    {
+      "id": "L2-ANSWER28",
+      "scores": {
+        "abstain": 2,
+        "needed-data": 2
+      },
+      "note": "Required points covered."
+    }
+  ],
+  "reviewer": "Codex preliminary rubric review; human review pending"
+}
