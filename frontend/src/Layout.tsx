@@ -43,7 +43,7 @@ export function SplitHandle({ axis, label, controls, value, onChange }: {
   axis: 'x' | 'y'
   label: string
   controls: string
-  value: number
+  value?: number
   onChange: (value: number) => void
 }) {
   const drag = useRef<{ start: number; value: number; available: number } | null>(null)
@@ -51,6 +51,21 @@ export function SplitHandle({ axis, label, controls, value, onChange }: {
   const dimension = horizontalMovement ? 'width' : 'height'
   const coordinate = horizontalMovement ? 'clientX' : 'clientY'
   const updateValue = (next: number) => onChange(Math.min(100, Math.max(0, next)))
+
+  function measure(handle: HTMLDivElement) {
+    const layout = handle.parentElement!
+    const styles = getComputedStyle(layout)
+    const primaryMin = parseFloat(styles.getPropertyValue('--split-primary-min'))
+    const secondaryMin = parseFloat(styles.getPropertyValue('--split-secondary-min'))
+    const maxGrowth = parseFloat(styles.getPropertyValue('--split-max-growth'))
+    const contentSize = horizontalMovement
+      ? layout.clientWidth - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight)
+      : layout.clientHeight - parseFloat(styles.paddingTop) - parseFloat(styles.paddingBottom)
+    const available = Math.min(Number.isFinite(maxGrowth) ? maxGrowth : Infinity,
+      contentSize - handle.getBoundingClientRect()[dimension] - primaryMin - secondaryMin)
+    const paneSize = document.getElementById(controls)?.getBoundingClientRect()[dimension] ?? primaryMin
+    return { available, current: value ?? (available > 0 ? (paneSize - primaryMin) / available * 100 : 0) }
+  }
 
   return <div
     className={`split-handle split-handle--${axis}`}
@@ -61,23 +76,18 @@ export function SplitHandle({ axis, label, controls, value, onChange }: {
     aria-orientation={horizontalMovement ? 'vertical' : 'horizontal'}
     aria-valuemin={0}
     aria-valuemax={100}
-    aria-valuenow={Math.round(value)}
+    aria-valuenow={Math.round(value ?? 20)}
     title={label}
     onPointerDown={event => {
       if (event.button !== 0 || !event.isPrimary) return
       const handle = event.currentTarget
-      const layout = handle.parentElement!
-      const styles = getComputedStyle(layout)
-      const primaryMin = parseFloat(styles.getPropertyValue('--split-primary-min'))
-      const secondaryMin = parseFloat(styles.getPropertyValue('--split-secondary-min'))
-      const available = layout.getBoundingClientRect()[dimension]
-        - handle.getBoundingClientRect()[dimension] - primaryMin - secondaryMin
+      const { available, current } = measure(handle)
       if (available <= 0) return
 
       event.preventDefault()
       handle.focus({ preventScroll: true })
       handle.setPointerCapture(event.pointerId)
-      drag.current = { start: event[coordinate], value, available }
+      drag.current = { start: event[coordinate], value: current, available }
     }}
     onPointerMove={event => {
       const active = drag.current
@@ -88,8 +98,9 @@ export function SplitHandle({ axis, label, controls, value, onChange }: {
     onKeyDown={event => {
       const decrease = horizontalMovement ? 'ArrowLeft' : 'ArrowUp'
       const increase = horizontalMovement ? 'ArrowRight' : 'ArrowDown'
-      if (event.key === decrease) updateValue(value - 5)
-      else if (event.key === increase) updateValue(value + 5)
+      const { current } = measure(event.currentTarget)
+      if (event.key === decrease) updateValue(current - 5)
+      else if (event.key === increase) updateValue(current + 5)
       else if (event.key === 'Home') updateValue(0)
       else if (event.key === 'End') updateValue(100)
       else return

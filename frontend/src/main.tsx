@@ -1,6 +1,7 @@
 import UploadWorkspace, { SavedQuestionSet } from './Documents'
 import TutorMarkdown from './TutorMarkdown'
 import { CourseShelf } from './CourseShelf'
+import { LecturePreview } from './LecturePreview'
 import {Icon, Panel, SplitHandle} from './Layout'
 import { getMapTopics, MindMap, type MapTopic } from './MindMap'
 import React, { FormEvent, lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
@@ -41,7 +42,7 @@ function Navigation({ workspaceActive, courseShelf, mode, onMode, chatVisible, v
       setProviderBusy(false)
     }
   }
-  return <aside className="sidebar">
+  return <aside id="workspace-sidebar" className="sidebar">
     <div className="brand">
       <span className="brand__mark">
         <svg width="26" height="26" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.55" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -397,6 +398,7 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onDeleteCon
   const archivedQuestion = item?.kind === 'test' ? item.questions[item.current] : undefined
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
+  const [pendingReplyId, setPendingReplyId] = useState<string | null>(null)
   const context = archivedQuestion?.prompt ?? concept.name
   const contextLabel = item.kind === 'test' ? `Question ${item.current + 1}: ${archivedQuestion?.concept}` : `Discussing: ${concept.name}`
   const suggestions = mode === 'learn' ? [`Explain ${concept.shortName} simply`, 'How is it related to the previous concept?', 'Give me one practice question'] : ['Clarify the question without giving the answer', 'What concept should I review?', 'Check my reasoning approach']
@@ -412,6 +414,7 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onDeleteCon
     abort.current = controller
     if (!item.agentSessionId) onAgentSession(sessionId)
     const replyId = crypto.randomUUID()
+    setPendingReplyId(replyId)
     setAgentMessages(messages => [...messages, userMessage, { id: replyId, role: 'assistant', text: '' }])
     const updateReply = (update: (message: ChatMessage) => ChatMessage) => {
       if (!controller.signal.aborted) setAgentMessages(messages => messages.map(message => message.id === replyId ? update(message) : message))
@@ -432,6 +435,7 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onDeleteCon
         if (event.type === 'done') {
           const trace = event.trace.map((entry: {tool: string; args: unknown; pages: number[]}) => `${entry.tool} ${JSON.stringify(entry.args)} → ${entry.pages.join(', ')}`)
           updateReply(message => ({ ...message, text: event.answer, citations: event.citations, trace }))
+          setPendingReplyId(null)
           setStatus(`${event.model_calls} model calls · ${(event.timing_ms.total / 1000).toFixed(2)} s`)
           refreshConversations()
         }
@@ -441,16 +445,22 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onDeleteCon
       setStatus(controller.signal.aborted ? 'Stopped.' : String(error))
     } finally {
       abort.current = null
+      setPendingReplyId(null)
       setBusy(false)
     }
   }
   return <div className="chat-layout"><div className="chat-context">
-    <span><Icon name={mode === 'learn' ? 'book' : 'test'} size={14}/>{contextLabel}</span>
+    <span className="chat-context__topic">
+      <Icon name={mode === 'learn' ? 'book' : 'test'} size={14}/>
+      <span title={contextLabel}>{contextLabel}</span>
+    </span>
+    <small className="chat-context__status" role="status">{loadingHistory ? 'Restoring conversation…' : status}</small>
+    {busy && <button className="chat-new" onClick={() => abort.current?.abort()}>Stop</button>}
     <div className="conversation-picker" ref={picker}>
       <button type="button" className="conversation-trigger" aria-label="Conversation history"
         aria-haspopup="menu" aria-expanded={conversationOpen} disabled={busy}
         onClick={() => setConversationOpen(open => !open)}>
-        <span>{currentTitle}</span><Icon name="chevron" size={12}/>
+        <span title={currentTitle}>{currentTitle}</span><Icon name="chevron" size={12}/>
       </button>
       {conversationOpen && <div className="conversation-menu" role="menu">
         <button type="button" className="conversation-new" role="menuitem" onClick={startConversation}>
@@ -468,20 +478,32 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onDeleteCon
         </div>) : <p className="conversation-empty">No saved conversations yet.</p>}
       </div>}
     </div>
-    {busy && <button className="chat-new" onClick={() => abort.current?.abort()}>Stop</button>}
-    <small role="status">{loadingHistory ? 'Restoring conversation…' : status}</small>
   </div>
     <div className="chat-messages" aria-live="polite">{[welcome, ...setupMessages, ...agentMessages].map(message => <div key={message.id} className={`message message--${message.role}`}>
       {message.role === 'assistant' && <span className="assistant-avatar"><Icon name="sparkle" size={15}/></span>}
       <div>
         {message.role === 'assistant' ? <TutorMarkdown text={message.text}/> : <p>{message.text}</p>}
+        {message.id === pendingReplyId && <span className="typing" role="status" aria-label="AI Tutor is replying"><i/><i/><i/></span>}
         {!!message.trace?.length && <details><summary>Lecture lookups</summary>{message.trace.map((line, i) => <p key={i}>{describeLookup(line)}</p>)}</details>}
         {(message.citations ?? message.pages?.map(page => ({ page, document_id: message.documentId })))?.map(({ page, document_id }) =>
           <button key={`${document_id ?? ''}:${page}`} onClick={() => onCitation(page, document_id)}><Icon name="file" size={13}/>View source · p. {page}</button>)}
       </div>
-    </div>)}{busy && <div className="message message--assistant"><span className="assistant-avatar"><Icon name="sparkle" size={15}/></span><div className="typing"><i/><i/><i/></div></div>}</div>
+    </div>)}</div>
     <div className="suggestions">{suggestions.map(suggestion => <button key={suggestion} onClick={() => send(undefined, suggestion)}>{suggestion}</button>)}</div>
-    <form className="chat-input" onSubmit={send}><textarea aria-label="Message AI tutor" placeholder={mode === 'learn' ? 'Ask about this concept…' : 'Discuss your reasoning…'} value={input} onChange={event => setInput(event.target.value)} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); void send() } }}/><button disabled={!input.trim() || busy || loadingHistory} aria-label="Send message"><Icon name="chevron"/></button><span>Enter to send · Shift + Enter for a new line</span></form>
+    <form className="chat-input" onSubmit={send}>
+      <textarea aria-label="Message AI tutor"
+        placeholder={mode === 'learn' ? 'Ask about this concept…' : 'Discuss your reasoning…'}
+        value={input} onChange={event => setInput(event.target.value)}
+        onKeyDown={event => {
+          if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault()
+            void send()
+          }
+        }}/>
+      <button disabled={!input.trim() || busy || loadingHistory} aria-label="Send message">
+        <Icon name="chevron"/>
+      </button>
+    </form>
   </div>
 }
 
@@ -513,7 +535,8 @@ function LectureViewer({ doc, page, onPage, evidenceVisible, setEvidenceVisible 
   }, [pageUrl, evidenceVisible])
   return <div className="viewer-layout"><div className="file-strip"><span className="pdf-mark">{doc.name.toLowerCase().endsWith('.pptx')?'PPTX':'PDF'}</span><div><b>{doc.name}</b><small>{doc.page_count} pages · <a href={withDemoUser(doc.original_url)}>Download original</a></small></div><span className="ready-badge"><i/>Ready</span></div>
     <div className="viewer-toolbar"><button onClick={() => onPage(Math.max(1, page - 1))} disabled={page <= 1} aria-label="Previous page"><Icon name="previous"/></button><label>Page<input type="number" min="1" max={doc.page_count} value={page} onChange={event => onPage(Math.max(1, Math.min(doc.page_count, Math.trunc(Number(event.target.value)))))}/><span>of {doc.page_count}</span></label><button onClick={() => onPage(Math.min(doc.page_count, page + 1))} disabled={page >= doc.page_count} aria-label="Next page"><Icon name="next"/></button><button className={`evidence-toggle ${evidenceVisible ? 'active' : ''}`} onClick={() => setEvidenceVisible(!evidenceVisible)}><Icon name="sparkle" size={14}/>Evidence</button></div>
-    <div className="slide-stage">{doc.preview_mode==='slide_content' && imageDoc !== doc.document_id ? <iframe title="Slide content" sandbox="" src={withDemoUser(pageUrl+'/preview')} style={{width:'100%',height:'100%'}}/> : <img key={pageUrl} src={withDemoUser(pageUrl+'/preview')} alt={'Lecture page '+page} style={{width:'100%',height:'auto'}}/>}</div>
+    <LecturePreview key={doc.document_id} url={withDemoUser(pageUrl + '/preview')} page={page}
+      fallback={doc.preview_mode === 'slide_content' && imageDoc !== doc.document_id}/>
     {evidenceVisible && <div className="evidence-panel" style={{maxHeight:'25%',overflow:'auto'}}><div><span className="eyebrow">Page {page} text</span><p>{excerpt?.url===pageUrl ? excerpt.text : 'Loading…'}</p></div></div>}
   </div>
 }
@@ -580,6 +603,7 @@ function App() {
   const [sourceId, setSourceId] = useState<string>()
   const [chatVisible, setChatVisible] = useState(true)
   const [viewerVisible, setViewerVisible] = useState(true)
+  const [sidebarShare, setSidebarShare] = useState<number>()
   const [workspaceShare, setWorkspaceShare] = useState(68)
   const [mainShare, setMainShare] = useState(83)
   const [expanded, setExpanded] = useState<string | null>(null)
@@ -663,12 +687,13 @@ function App() {
       course.change(entries => entries.filter(entry => entry.id !== id))
       if (entryId === id) switchMode(mode)
     }}/>
-  return <div className="app-shell">
+  return <div className="app-shell" style={{ '--sidebar-size': sidebarShare === undefined ? undefined : `calc(var(--split-primary-min) + var(--sidebar-growth) * ${sidebarShare / 100})` } as React.CSSProperties}>
     <Navigation workspaceActive={!item} courseShelf={courseShelf} mode={mode} onMode={switchMode}
       chatVisible={chatVisible} viewerVisible={viewerVisible}
       onChatVisibilityChange={setChatPanelVisible} onViewerVisibilityChange={setViewerPanelVisible}/>
+    <SplitHandle axis="x" label="Resize sidebar" controls="workspace-sidebar" value={sidebarShare} onChange={setSidebarShare}/>
     {item && activeDoc && sourceDoc ? <div className={`study-area ${viewerVisible ? 'study-area--with-viewer' : ''}`} style={{ '--split-share': workspaceShare / 100 } as React.CSSProperties}>
-      <main id="study-workspace" className={`workspace${chatVisible ? ' workspace--with-chat' : ''}${mode === 'learn' ? ' workspace--learning' : ''}`} style={{ '--split-share': mainShare / 100 } as React.CSSProperties}>
+      <main id="study-workspace" className={`workspace${chatVisible ? ' workspace--with-chat' : ''}`} style={{ '--split-share': mainShare / 100 } as React.CSSProperties}>
         <Panel id="main" title={item.title} subtitle={activeDoc.name} icon={mode === 'learn' ? 'brain' : 'test'} expanded={expanded} onExpand={() => toggleExpand('main')} className="panel--main">
           {item.kind === 'map'
             ? <LearningPanel key={item.id} lecture={item.lecture} documentId={activeDoc.document_id} selected={selected} onSelect={selectConcept} onPage={setPage} onCitation={openCitation}/>
@@ -677,7 +702,7 @@ function App() {
               onEdit={(id, apply) => course.update(id, entry => entry.kind === 'test' ? apply(entry) : entry)}/>}
         </Panel>
         {chatVisible && <SplitHandle axis="y" label="Resize main panel and AI tutor" controls="panel-main" value={mainShare} onChange={setMainShare}/>}
-        <Panel id="chat" title="AI Tutor" subtitle={mode === 'learn' ? 'Ask, compare, and practice' : 'Discuss your reasoning without spoilers'} icon="chat" canClose hidden={!chatVisible} expanded={expanded} onClose={() => setChatPanelVisible(false)} onExpand={() => toggleExpand('chat')} className="panel--chat">
+        <Panel id="chat" title="AI Tutor" icon="chat" canClose hidden={!chatVisible} expanded={expanded} onClose={() => setChatPanelVisible(false)} onExpand={() => toggleExpand('chat')} className="panel--chat">
           <ChatPanel key={`${item.id}:${activeDoc.document_id}`} item={item} doc={activeDoc} page={sourceDoc.document_id === activeDoc.document_id ? page : firstEntryPage(item)} mode={mode} concept={selected} onCitation={openCitation}
             onAgentSession={agentSessionId => course.update(item.id, entry => ({
               ...entry, agentSessionId,

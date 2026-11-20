@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, useState, type CSSProperties, type PointerEven
 import { Icon } from './Layout'
 import { getMapLayout, mapGeometry, type MapPoint } from './mapLayout'
 import type { Concept, Lecture, LectureTopic } from './types'
+import { usePinchZoom } from './usePinchZoom'
 import './mindMap.css'
 
 export type MapTopic = LectureTopic & { concepts: Concept[] }
@@ -61,17 +62,15 @@ export function MindMap({ title, subtitle, topics, activeTopic, visited, hidden,
   const [zoom, setZoom] = useState<Zoom>('auto')
   const [dragging, setDragging] = useState(false)
   const drag = useRef<{ pointer: number; x: number; y: number; scrollX: number; scrollY: number } | null>(null)
-  const zoomAnchor = useRef<{ x: number; y: number } | null>(null)
+  const zoomAnchor = useRef<{ x: number; y: number; offsetX: number; offsetY: number } | null>(null)
 
   useLayoutEffect(() => {
     const frame = viewportFrame.current
     const element = viewport.current
     if (!frame || !element) return
     const measure = () => {
-      // The vertical gutter keeps the available width constant. Use the outer
-      // height so a horizontal scrollbar cannot change the fit calculation.
       const width = element.clientWidth
-      const height = frame.clientHeight
+      const height = element.clientHeight
       if (width && height) {
         setViewportSize(current => current.width === width && current.height === height ? current : { width, height })
       }
@@ -95,21 +94,35 @@ export function MindMap({ title, subtitle, topics, activeTopic, visited, hidden,
   useLayoutEffect(() => {
     const element = viewport.current
     if (!element || hidden || !viewportSize.width) return
-    const anchor = zoomAnchor.current ?? { x: .5, y: .5 }
+    const anchor = zoomAnchor.current
     zoomAnchor.current = null
-    element.scrollLeft = Math.max(0, surfaceWidth - element.clientWidth) / 2 + (anchor.x - .5) * surfaceWidth
-    element.scrollTop = Math.max(0, surfaceHeight - element.clientHeight) / 2 + (anchor.y - .5) * surfaceHeight
-  }, [activeTopic?.id, hidden, surfaceHeight, surfaceWidth, viewportSize])
+    element.scrollLeft = anchor
+      ? Math.max(0, (element.clientWidth - surfaceWidth) / 2) + anchor.x * surfaceWidth - anchor.offsetX
+      : Math.max(0, (surfaceWidth - element.clientWidth) / 2)
+    element.scrollTop = anchor
+      ? Math.max(0, (element.clientHeight - surfaceHeight) / 2) + anchor.y * surfaceHeight - anchor.offsetY
+      : Math.max(0, (surfaceHeight - element.clientHeight) / 2)
+  }, [activeTopic?.id, hidden, scale, surfaceHeight, surfaceWidth, viewportSize])
+
+  function zoomTo(nextScale: number, clientX?: number, clientY?: number) {
+    const element = viewport.current
+    const next = Math.min(maximumZoom, Math.max(minZoom, nextScale))
+    if (!element || next === scale) return
+    const rect = element.getBoundingClientRect()
+    const offsetX = clientX === undefined ? element.clientWidth / 2 : clientX - rect.left
+    const offsetY = clientY === undefined ? element.clientHeight / 2 : clientY - rect.top
+    zoomAnchor.current = {
+      x: (element.scrollLeft + offsetX - Math.max(0, (element.clientWidth - surfaceWidth) / 2)) / surfaceWidth,
+      y: (element.scrollTop + offsetY - Math.max(0, (element.clientHeight - surfaceHeight) / 2)) / surfaceHeight,
+      offsetX, offsetY,
+    }
+    setZoom(next)
+  }
+
+  usePinchZoom(viewport, scale, zoomTo, !hidden)
 
   function changeZoom(direction: 1 | -1) {
-    const element = viewport.current
-    if (element) {
-      zoomAnchor.current = {
-        x: .5 + (element.scrollLeft - Math.max(0, surfaceWidth - element.clientWidth) / 2) / surfaceWidth,
-        y: .5 + (element.scrollTop - Math.max(0, surfaceHeight - element.clientHeight) / 2) / surfaceHeight,
-      }
-    }
-    setZoom(Math.min(maximumZoom, Math.max(minZoom, scale + direction * zoomStep)))
+    zoomTo(scale + direction * zoomStep)
   }
 
   function startPan(event: PointerEvent<HTMLDivElement>) {
@@ -159,7 +172,7 @@ export function MindMap({ title, subtitle, topics, activeTopic, visited, hidden,
     <div ref={viewportFrame} className="mind-map__viewport">
       <div ref={viewport} className={`mind-map__canvas${canPan ? ' can-pan' : ''}${dragging ? ' is-panning' : ''}`}
         aria-label={activeTopic ? `${activeTopic.title} concept map` : 'Lecture concept map'} role="group"
-        aria-description={canPan ? 'Drag or scroll to pan.' : undefined}
+        aria-description="Pinch or use the zoom buttons to zoom. Drag the background to pan."
         tabIndex={canPan ? 0 : undefined}
         onPointerDown={startPan} onPointerMove={movePan} onLostPointerCapture={stopPan}>
         <div className="mind-map__frame" style={{ width: surfaceWidth, height: surfaceHeight }}>

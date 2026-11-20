@@ -83,7 +83,7 @@
 .mind-map__viewport {
   position: relative;
   flex: 1;
-  min-height: 280px;
+  min-height: 0;
   border: 1px solid #e0e7f0;
   border-radius: 12px;
   background: #f9fbfd radial-gradient(#dbe5f1 .8px, transparent .8px) 0 0 / 15px 15px;
@@ -93,9 +93,11 @@
   inset: 0;
   isolation: isolate;
   overflow: auto;
-  scrollbar-gutter: stable;
+  scrollbar-width: none;
+  touch-action: pan-x pan-y;
   border-radius: inherit;
 }
+.mind-map__canvas::-webkit-scrollbar { display: none; }
 .mind-map__canvas.can-pan { cursor: grab; }
 .mind-map__canvas.is-panning,
 .mind-map__canvas.is-panning button { cursor: grabbing; user-select: none; }
