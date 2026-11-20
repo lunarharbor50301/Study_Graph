@@ -214,6 +214,7 @@ class Turn(BaseModel):
     context: str = Field(default="", max_length=2000)
     page: int | None = Field(default=None, ge=1)
     additional_document_ids: list[str] = Field(default_factory=list, max_length=4)
+    history_document_id: str | None = None
 
 
 @router.get("/conversations")
@@ -310,10 +311,13 @@ async def stream_turn(body: Turn):
             raise HTTPException(503, "Use a persistent SSH tunnel for pi streaming.")
     sources = {doc_id: documents.document(doc_id)
                for doc_id in dict.fromkeys([body.document_id, *body.additional_document_ids])}
+    history_document_id = body.history_document_id or body.document_id
+    if history_document_id not in sources:
+        raise HTTPException(422, "The conversation document is outside the current workspace.")
     node = shutil.which("node")
     if not node:
         raise HTTPException(503, "Install Node.js and run npm ci --prefix agent.")
-    key = body.session_id + ":" + body.document_id
+    key = body.session_id + ":" + history_document_id
     lock = locks.setdefault((demo_user.get(), key), asyncio.Lock())
     if lock.locked():
         raise HTTPException(409, "This conversation is already answering.")

@@ -109,6 +109,26 @@ class PiFlow(unittest.TestCase):
                         third = asyncio.run(turn("New topic", "two"))
                         self.assertNotIn("Explain this lecture", json.dumps(requests[-1]["messages"]))
                         self.assertEqual(third[-1]["type"], "error")
+                        with pymupdf.open() as pdf:
+                            pdf.new_page().insert_text((20, 40), "Second lecture: memory hierarchy.")
+                            other_doc = documents.upload(UploadFile(io.BytesIO(pdf.tobytes()), filename="second.pdf"))
+
+                        async def change_test_question():
+                            response = await agent_api.stream_turn(agent_api.Turn(
+                                session_id="one", question="What did we discuss in the first lecture?",
+                                document_id=other_doc["document_id"], page=1,
+                                additional_document_ids=[doc["document_id"]],
+                                history_document_id=doc["document_id"],
+                            ))
+                            return [json.loads(line) async for line in response.body_iterator]
+
+                        switched = asyncio.run(change_test_question())
+                        self.assertEqual(switched[-1]["type"], "done", switched)
+                        self.assertIn("Current document: " + other_doc["document_id"], requests[-1]["messages"][0]["content"])
+                        history = agent_api.conversation_history("one", doc["document_id"])["messages"]
+                        self.assertEqual(history[0]["text"], "Explain this lecture.")
+                        self.assertEqual(history[-2]["text"], "What did we discuss in the first lecture?")
+                        self.assertEqual(agent_api.conversation_history("one", other_doc["document_id"])["messages"], [])
             finally:
                 server.shutdown()
                 server.server_close()

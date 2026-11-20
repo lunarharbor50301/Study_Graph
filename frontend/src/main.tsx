@@ -309,6 +309,7 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onDeleteCon
   onDeleteConversation: (sessionId: string) => void
   onCitation: (page: number, documentId?: string) => void
 }) {
+  const historyDocumentId = item.document.document_id
   const [sessionId, setSessionId] = useState(() => item.agentSessionId ?? crypto.randomUUID())
   const [agentMessages, setAgentMessages] = useState<ChatMessage[]>([])
   const [conversations, setConversations] = useState<ConversationSummary[]>([])
@@ -337,24 +338,24 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onDeleteCon
     const controller = new AbortController()
     setLoadingHistory(true)
     setAgentMessages([])
-    const query = new URLSearchParams({ session_id: sessionId, document_id: doc.document_id })
+    const query = new URLSearchParams({ session_id: sessionId, document_id: historyDocumentId })
     void request<{messages: ChatMessage[]}>(`agent/history?${query}`, { signal: controller.signal })
       .then(data => {
-        if (!controller.signal.aborted) setAgentMessages(data.messages.map(message => ({ ...message, documentId: doc.document_id })))
+        if (!controller.signal.aborted) setAgentMessages(data.messages.map(message => ({ ...message, documentId: historyDocumentId })))
       })
       .catch(() => { if (!controller.signal.aborted) setStatus('Could not restore conversation.') })
       .finally(() => { if (!controller.signal.aborted) setLoadingHistory(false) })
     return () => controller.abort()
-  }, [sessionId, doc.document_id])
+  }, [sessionId, historyDocumentId])
   useEffect(() => {
     let cancelled = false
-    void listConversations(doc.document_id)
+    void listConversations(historyDocumentId)
       .then(data => { if (!cancelled) setConversations(data.conversations) })
       .catch(() => {})
     return () => { cancelled = true }
-  }, [doc.document_id])
+  }, [historyDocumentId])
   const refreshConversations = () => {
-    void listConversations(doc.document_id)
+    void listConversations(historyDocumentId)
       .then(data => setConversations(data.conversations))
       .catch(() => {})
   }
@@ -377,7 +378,7 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onDeleteCon
   }
   async function removeConversation(id: string) {
     try {
-      await deleteAgentConversation(id, doc.document_id)
+      await deleteAgentConversation(id, historyDocumentId)
       const remaining = conversations.filter(conversation => conversation.id !== id)
       setConversations(remaining)
       onDeleteConversation(id)
@@ -439,7 +440,7 @@ function ChatPanel({ doc, page, mode, concept, item, onAgentSession, onDeleteCon
           setStatus(`${event.model_calls} model calls · ${(event.timing_ms.total / 1000).toFixed(2)} s`)
           refreshConversations()
         }
-      }, additionalDocuments)
+      }, additionalDocuments, historyDocumentId)
     } catch (error) {
       setAgentMessages(messages => messages.filter(message => message.id !== replyId && message.id !== userMessage.id))
       setStatus(controller.signal.aborted ? 'Stopped.' : String(error))
@@ -597,6 +598,8 @@ function App() {
   const [entryId, setEntryId] = useState(() => initial.get('entry'))
   const item = course.items.find(entry => entry.id === entryId)
   const [workspaceMode, setWorkspaceMode] = useState<Mode>(() => initial.has('tests') ? 'test' : 'learn')
+  const lastTestId = useRef(item?.kind === 'test' ? item.id : undefined)
+  const [testDraftVersion, setTestDraftVersion] = useState(0)
   const mode = item ? item.kind === 'test' ? 'test' : 'learn' : workspaceMode
   const [selectedId, setSelectedId] = useState(() => item?.kind === 'map' ? item.lecture.concepts[0].id : 'hierarchy')
   const [page, setPage] = useState(() => item ? firstEntryPage(item) : 1)
@@ -636,6 +639,14 @@ function App() {
   }
 
   function switchMode(next: Mode) {
+    if (next === 'test' && mode !== 'test') {
+      const previous = course.items.find(entry => entry.id === lastTestId.current)
+      if (previous) {
+        openSaved(previous)
+        return
+      }
+    }
+    if (next === 'test') lastTestId.current = undefined
     setEntryId(null)
     setWorkspaceMode(next)
     setExpanded(null)
@@ -643,6 +654,7 @@ function App() {
   }
 
   function openSaved(entry: CourseItem) {
+    if (entry.kind === 'test') lastTestId.current = entry.id
     setEntryId(entry.id)
     if (entry.kind === 'map') setSelectedId(entry.lecture.concepts[0].id)
     setExpanded(null)
@@ -664,6 +676,7 @@ function App() {
   }
 
   function addTest(documents: DocumentInfo[], questions: CourseQuestion[], open: boolean, conversation: Pick<CourseItem, 'id' | 'messages'>) {
+    setTestDraftVersion(version => version + 1)
     const document = documents[0]
     const messages = conversation.messages.map(message => ({ ...message, sessionId: conversation.id }))
     const entry: SavedTest = {
@@ -703,7 +716,7 @@ function App() {
         </Panel>
         {chatVisible && <SplitHandle axis="y" label="Resize main panel and AI tutor" controls="panel-main" value={mainShare} onChange={setMainShare}/>}
         <Panel id="chat" title="AI Tutor" icon="chat" canClose hidden={!chatVisible} expanded={expanded} onClose={() => setChatPanelVisible(false)} onExpand={() => toggleExpand('chat')} className="panel--chat">
-          <ChatPanel key={`${item.id}:${activeDoc.document_id}`} item={item} doc={activeDoc} page={sourceDoc.document_id === activeDoc.document_id ? page : firstEntryPage(item)} mode={mode} concept={selected} onCitation={openCitation}
+          <ChatPanel key={item.id} item={item} doc={activeDoc} page={sourceDoc.document_id === activeDoc.document_id ? page : firstEntryPage(item)} mode={mode} concept={selected} onCitation={openCitation}
             onAgentSession={agentSessionId => course.update(item.id, entry => ({
               ...entry, agentSessionId,
             }))}
@@ -718,7 +731,9 @@ function App() {
       <Panel id="viewer" title="Lecture Viewer" subtitle="Source evidence from the uploaded material" icon="file" canClose hidden={!viewerVisible} expanded={expanded} onClose={() => setViewerPanelVisible(false)} onExpand={() => toggleExpand('viewer')} className="panel--viewer">
         <LectureViewer doc={sourceDoc} page={page} onPage={setPage} evidenceVisible={evidenceVisible} setEvidenceVisible={setEvidenceVisible}/>
       </Panel>
-    </div> : <UploadWorkspace key={mode} mode={mode} onMapCreated={addMap} onTestCreated={addTest}/>}
+    </div> : mode === 'learn' && <UploadWorkspace key="learn" mode="learn" active onMapCreated={addMap} onTestCreated={addTest}/>}
+    <UploadWorkspace key={`test-${testDraftVersion}`} mode="test" active={!item && mode === 'test'}
+      onMapCreated={addMap} onTestCreated={addTest}/>
   </div>
 }
 

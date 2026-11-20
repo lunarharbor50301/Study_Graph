@@ -54,9 +54,10 @@ export async function askAgent(question: string, sessionId: string, context: str
   })
   return { id: crypto.randomUUID(), role: 'assistant', text: result.answer, citations: result.citations }
 }
-export async function streamAgent(question: string, sessionId: string, context: string, documentId: string, page: number, signal: AbortSignal, onEvent: (event: any) => void, additionalDocuments: string[]) {
+export async function streamAgent(question: string, sessionId: string, context: string, documentId: string, page: number, signal: AbortSignal, onEvent: (event: any) => void, additionalDocuments: string[], historyDocumentId: string) {
   return streamEvents('/api/agent/stream', {
     question, session_id: sessionId, context, page, document_id: documentId, additional_document_ids: additionalDocuments,
+    history_document_id: historyDocumentId,
   }, signal, onEvent)
 }
 

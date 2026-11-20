@@ -25,11 +25,12 @@ const promptSuggestions = {
 
 type WorkspaceProps = {
   mode: Mode
+  active: boolean
   onMapCreated: (doc: DocumentInfo, lecture: Lecture, open: boolean, conversation: WorkspaceConversation) => void
   onTestCreated: (docs: DocumentInfo[], questions: CourseQuestion[], open: boolean, conversation: WorkspaceConversation) => void
 }
 
-export default function UploadWorkspace({ mode, onMapCreated, onTestCreated }: WorkspaceProps) {
+export default function UploadWorkspace({ mode, active, onMapCreated, onTestCreated }: WorkspaceProps) {
   const tests = mode === 'test'
   const [files, setFiles] = useState<File[]>([])
   const [counts, setCounts] = useState<QuestionCounts>({ 'multiple-choice': 2, 'true-false': 1, 'short-answer': 2 })
@@ -45,6 +46,8 @@ export default function UploadWorkspace({ mode, onMapCreated, onTestCreated }: W
   const composer = useRef<HTMLTextAreaElement>(null)
   const imported = useRef(new WeakMap<File, DocumentInfo>())
   const mounted = useRef(true)
+  const visible = useRef(active)
+  visible.current = active
   const pending = useRef(false)
   const total = Object.values(counts).reduce((sum, count) => sum + count, 0)
   const busy = !!status || asking
@@ -123,12 +126,12 @@ export default function UploadWorkspace({ mode, onMapCreated, onTestCreated }: W
         setStatus(`Generating questions (0/${total})…`)
         const questions = await createTest(uploaded, counts, difficulty,
           (completed, count) => setStatus(`Generating questions (${completed}/${count})…`), instructions)
-        onTestCreated(uploaded, questions, mounted.current, conversation)
+        onTestCreated(uploaded, questions, mounted.current && visible.current, conversation)
       } else {
         const doc = uploaded[0]
         setStatus('Building your concept map…')
         const lecture = await createGeneratedOutline(doc, instructions)
-        onMapCreated(doc, lecture, mounted.current, conversation)
+        onMapCreated(doc, lecture, mounted.current && visible.current, conversation)
       }
     } catch (error) {
       setError(error instanceof Error ? error.message : String(error))
@@ -138,10 +141,10 @@ export default function UploadWorkspace({ mode, onMapCreated, onTestCreated }: W
     }
   }
 
-  return <main className="creation-workspace">
-    <section className="creation-content" aria-labelledby="creation-title">
+  return <main className="creation-workspace" style={active ? undefined : { display: 'none' }}>
+    <section className="creation-content" aria-labelledby={`creation-title-${mode}`}>
       <header>
-        <h1 id="creation-title">{tests ? 'Create a practice test' : 'Create a concept map'}</h1>
+        <h1 id={`creation-title-${mode}`}>{tests ? 'Create a practice test' : 'Create a concept map'}</h1>
         <p>{tests ? 'Upload lecture slides and choose how you want to practice.'
           : 'Turn a lecture into an interactive concept map and study notes.'}</p>
       </header>
@@ -172,8 +175,8 @@ export default function UploadWorkspace({ mode, onMapCreated, onTestCreated }: W
           <ChatTranscript messages={messages} busy={asking}/>
         </section>}
         <div className="creation-composer">
-          <label htmlFor="creation-message">Message AI Tutor or add generation instructions</label>
-          <textarea ref={composer} id="creation-message" rows={3} maxLength={promptLimit} disabled={busy} value={prompt}
+          <label htmlFor={`creation-message-${mode}`}>Message AI Tutor or add generation instructions</label>
+          <textarea ref={composer} id={`creation-message-${mode}`} rows={3} maxLength={promptLimit} disabled={busy} value={prompt}
             placeholder={tests ? 'Focus on calculations and use realistic examples.' : 'Highlight the key formulas and keep the study notes concise.'}
             onChange={event => setPrompt(event.target.value)}/>
           <div className="creation-composer__actions">
