@@ -33,35 +33,40 @@ async function lectureTopics(doc: DocumentInfo, count: number) {
   return topics
 }
 
-export async function createTest(documents: DocumentInfo[], counts: QuestionCounts, difficulty: Difficulty,
-  onProgress: (completed: number, total: number) => void, instructions = ''): Promise<CourseQuestion[]> {
+export async function prepareTest(documents: DocumentInfo[], counts: QuestionCounts, difficulty: Difficulty, instructions: string) {
   const types = questionTypes.flatMap(({ type }) => Array<QuestionType>(counts[type]).fill(type))
   const topics = await Promise.all(documents.map((doc, index) =>
     lectureTopics(doc, types.filter((_, position) => position % documents.length === index).length)))
   const questions: CourseQuestion[] = []
 
-  for (const [index, type] of types.entries()) {
-    const sourceIndex = index % documents.length
-    const doc = documents[sourceIndex]
-    const sourceTopics = topics[sourceIndex]
-    const topic = sourceTopics[Math.floor(index / documents.length) % sourceTopics.length]
-    const result = await request<PracticeQuestion>(`documents/${doc.document_id}/practice-question`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        type, difficulty, topic: topic.label, query: topic.query, instructions,
-        previous: questions.map(question => question.prompt),
-      }),
-    })
-    questions.push({
-      concept: result.concept, prompt: result.prompt, citations: result.citations, documentId: doc.document_id,
-      exercise: {
-        id: `q-${index + 1}`, page: result.citations[0].page, conceptId: '', type: result.type,
-        prompt: result.prompt, answer: result.answer, options: result.options, hint: result.hint,
-        explanation: result.explanation, acceptedAnswers: result.accepted_answers,
-      },
-    })
+  async function complete(onProgress: (completed: number, total: number) => void) {
     onProgress(questions.length, types.length)
+    for (let index = questions.length; index < types.length; index++) {
+      const type = types[index]
+      const sourceIndex = index % documents.length
+      const doc = documents[sourceIndex]
+      const sourceTopics = topics[sourceIndex]
+      const topic = sourceTopics[Math.floor(index / documents.length) % sourceTopics.length]
+      const result = await request<PracticeQuestion>(`documents/${doc.document_id}/practice-question`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type, difficulty, topic: topic.label, query: topic.query, instructions,
+          previous: questions.map(question => question.prompt),
+        }),
+      })
+      questions.push({
+        concept: result.concept, prompt: result.prompt, citations: result.citations, documentId: doc.document_id,
+        exercise: {
+          id: `q-${index + 1}`, page: result.citations[0].page, conceptId: '', type: result.type,
+          prompt: result.prompt, answer: result.answer, options: result.options, hint: result.hint,
+          explanation: result.explanation, acceptedAnswers: result.accepted_answers,
+        },
+      })
+      onProgress(questions.length, types.length)
+    }
+    return questions
   }
-  return questions
+
+  return { complete, get completed() { return questions.length } }
 }

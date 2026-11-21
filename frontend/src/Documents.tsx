@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Icon } from './Layout'
 import { askAgent, request, uploadLecture } from './api'
 import { ChatTranscript } from './ChatTranscript'
-import { createTest, maxQuestions, questionTypes, type Difficulty, type QuestionCounts } from './createTest'
+import { prepareTest, maxQuestions, questionTypes, type Difficulty, type QuestionCounts } from './createTest'
 import { createGeneratedOutline } from './slideOutline'
 import type { SavedTest } from './courseStore'
 import type { ChatMessage, CourseQuestion, DocumentInfo, EvidenceHit, Lecture, Mode } from './types'
@@ -49,6 +49,18 @@ export default function UploadWorkspace({ mode, active, onMapCreated, onTestCrea
   const visible = useRef(active)
   visible.current = active
   const pending = useRef(false)
+  const testDraft = useRef<{
+    files: File[]
+    counts: QuestionCounts
+    difficulty: Difficulty
+    instructions: string
+    documents: DocumentInfo[]
+    plan: Awaited<ReturnType<typeof prepareTest>>
+  } | null>(null)
+  const instructions = prompt.trim()
+  const savedDraft = testDraft.current
+  const resumable = savedDraft && savedDraft.files === files && savedDraft.counts === counts &&
+    savedDraft.difficulty === difficulty && savedDraft.instructions === instructions ? savedDraft : null
   const total = Object.values(counts).reduce((sum, count) => sum + count, 0)
   const busy = !!status || asking
   const fileLimit = tests ? 5 : 1
@@ -117,17 +129,25 @@ export default function UploadWorkspace({ mode, active, onMapCreated, onTestCrea
     if (pending.current || !files.length || (tests && total < files.length)) return
     pending.current = true
     setError('')
-    setStatus(files.length === 1 ? 'Uploading lecture…' : 'Uploading lectures…')
+    if (!resumable) setStatus(files.length === 1 ? 'Uploading lecture…' : 'Uploading lectures…')
     try {
-      const uploaded = await uploadSelected()
-      const instructions = prompt.trim()
       const conversation = { id: sessionId, messages }
       if (tests) {
-        setStatus(`Generating questions (0/${total})…`)
-        const questions = await createTest(uploaded, counts, difficulty,
-          (completed, count) => setStatus(`Generating questions (${completed}/${count})…`), instructions)
-        onTestCreated(uploaded, questions, mounted.current && visible.current, conversation)
+        let draft = resumable
+        if (!draft) {
+          testDraft.current = null
+          const documents = await uploadSelected()
+          setStatus('Preparing questions…')
+          const plan = await prepareTest(documents, counts, difficulty, instructions)
+          draft = { files, counts, difficulty, instructions, documents, plan }
+          testDraft.current = draft
+        }
+        const questions = await draft.plan.complete(
+          (completed, count) => setStatus(`Generating questions (${completed}/${count})…`))
+        onTestCreated(draft.documents, questions, mounted.current && visible.current, conversation)
+        testDraft.current = null
       } else {
+        const uploaded = await uploadSelected()
         const doc = uploaded[0]
         setStatus('Building your concept map…')
         const lecture = await createGeneratedOutline(doc, instructions)
@@ -218,9 +238,12 @@ export default function UploadWorkspace({ mode, active, onMapCreated, onTestCrea
         {error && <p className="creation-error" role="alert">{error}</p>}
         {tests && files.length > total && <p className="creation-status">Choose at least one question per lecture file.</p>}
         <div className="creation-footer">
-          <span aria-live="polite">{status || (tests ? `${total} of ${maxQuestions} questions` : '')}</span>
+          <span aria-live="polite">{status || (resumable
+            ? `${resumable.plan.completed} of ${total} questions generated`
+            : tests ? `${total} of ${maxQuestions} questions` : '')}</span>
           <button className="button button--primary" type="submit" disabled={busy || !files.length || (tests && total < files.length)}>
-            {tests ? 'Generate test' : 'Generate concept map'}<Icon name="chevron" size={16}/>
+            {resumable && !busy ? `Retry question ${Math.min(resumable.plan.completed + 1, total)}`
+              : tests ? 'Generate test' : 'Generate concept map'}<Icon name="chevron" size={16}/>
           </button>
         </div>
       </form>
