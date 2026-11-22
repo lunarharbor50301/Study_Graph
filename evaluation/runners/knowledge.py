@@ -206,7 +206,8 @@ def score(args):
     if Path(args.output).exists():
         raise ValueError('Output exists; choose a new output path.')
     if args.judge:
-        from backend import deepseek_client
+        from evaluation.runners.provider import resolve_provider
+        provider = resolve_provider(args.judge)
         review_path = args.save_review or str(Path(args.output).with_suffix('.review.json'))
         if Path(review_path).exists():
             raise ValueError('Review output exists; choose a new path.')
@@ -228,19 +229,19 @@ def score(args):
             'Give a concrete reason for every decision. Set review_type=llm_judge; reviewer to model name; '
             'review_date to the supplied UTC date. Never omit pending items.'
         )
-        response = deepseek_client.chat([
+        response = provider.chat([
             {'role': 'system', 'content': prompt},
             {'role': 'user', 'content': json.dumps({'reference': ref, 'prediction': pred, 'template': skeleton,
-                'model': deepseek_client.model_name(), 'utc_date': datetime.now(timezone.utc).isoformat()}, ensure_ascii=False)}
-        ], os.getenv('DEEPSEEK_BASE_URL', deepseek_client.DEFAULT_BASE_URL), max_tokens=16000, temperature=0)
+                'model': provider.model, 'utc_date': datetime.now(timezone.utc).isoformat()}, ensure_ascii=False)}
+        ], provider.endpoint, max_tokens=16000, temperature=0)
         # Preserve raw output even if parsing or validation fails. No silent retry.
         write(str(review_path)+'.raw.json', response)
         raw = response['choices'][0]['message']['content'].strip()
         review = json.loads(raw.removeprefix('```json').removesuffix('```').strip())
         review['review_type'] = 'llm_judge'
-        review['reviewer'] = deepseek_client.model_name()
+        review['reviewer'] = provider.model
         review['review_date'] = datetime.now(timezone.utc).isoformat()
-        review['judge_configuration'] = {'provider': 'deepseek', 'model': deepseek_client.model_name(),
+        review['judge_configuration'] = {'provider': provider.name, 'model': provider.model,
                                           'temperature': 0, 'max_tokens': 16000, 'prompt_version': 2}
         write(review_path, review)
     else:
@@ -268,7 +269,7 @@ def main():
     scoring.add_argument('--reference', required=True)
     scoring.add_argument('--prediction', required=True)
     mode = scoring.add_mutually_exclusive_group(required=True)
-    mode.add_argument('--judge', choices=['deepseek'])
+    mode.add_argument('--judge', choices=['deepseek', 'tacc'])
     mode.add_argument('--review')
     mode.add_argument('--template', help='Write pending manual review template without scoring')
     scoring.add_argument('--save-review')
