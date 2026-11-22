@@ -1,3 +1,5 @@
+**English** · [简体中文](README.zh-CN.md)
+
 # StudyGraph
 
 StudyGraph turns course slides into a study workspace. Students can navigate a concept map, read cited notes alongside the source slides, ask a retrieval-enabled AI tutor, and build and take a practice test.
