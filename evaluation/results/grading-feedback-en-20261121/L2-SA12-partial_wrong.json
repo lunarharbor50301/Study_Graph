@@ -1,0 +1,47 @@
+{
+  "question": "L2-SA12",
+  "variant": "partial_wrong",
+  "student_answer": "It is private to each thread. It is always stored in on-chip registers.",
+  "raw_response": {
+    "id": "52de75ce-26c9-4ec4-a7e9-cf8bbbcc8744",
+    "object": "chat.completion",
+    "created": 1795271864,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[{\"point\":\"P2\",\"span\":\"It is always stored in on-chip registers.\"}],\"missing\":[],\"feedback\":\"Correct that local memory is thread-private, but it usually resides in device DRAM, not on-chip registers; the 'always stored in registers' claim is false.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 349,
+      "completion_tokens": 75,
+      "total_tokens": 424,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 221
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P2",
+        "span": "It is always stored in on-chip registers."
+      }
+    ],
+    "missing": [],
+    "feedback": "Correct that local memory is thread-private, but it usually resides in device DRAM, not on-chip registers; the 'always stored in registers' claim is false."
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "id": "L1-MT02",
+  "document_id": "ACS-L1",
+  "session": "multi-8795f39136ac42098dc41dce3dc2625e",
+  "job": "30603",
+  "turns": [
+    {
+      "question": "Explain the difference between data parallelism and task parallelism.",
+      "status": "done",
+      "answer": "Based on the lecture, the key difference lies in **what** is being parallelized:\n\n**Data Parallelism**\n- Different *pieces of data* are operated on in parallel.\n- Typical examples are vector processing and array processing, where the same operation is applied to many data elements simultaneously.\n- This is the style of parallelism GPUs are optimized for: with less control logic, data parallelism is easy, allowing scaling to thousands or even tens of thousands of light cores and delivering 10x–100x the computing power of a CPU. See page 33 [S1] and page 34 [S2].\n\n**Task Parallelism**\n- Different *tasks* (jobs/instructions/operations) are executed in parallel.\n- The lecture associates this with multithreading, where a complex task is broken down into multiple lightweight sub-tasks that run concurrently. See page 33 [S1].\n- In the CPU multicore context, this is implemented via shared-memory thread parallelism (e.g., pThread): one process contains multiple threads that share the same virtual address space, global variables, and heap objects, with synchronization being the programmer's responsibility. See page 55 [S3].\n\n**In short:** data parallelism splits the *data* (same operation on many elements), while task parallelism splits the *work* (different operations/tasks running at the same time). CPUs, with their heavy control logic and general-purpose design, are better suited to task parallelism across hundreds of heavy cores, whereas GPUs excel at data parallelism across many light cores. See page 34 [S2].",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p33-1",
+          "page": 33,
+          "text": "From CPU to GPU: Parallelism for Huge Computing Power!\n  Multiprocessors\n\n¡  Parallelism: Do multiple jobs concurrently.\n\n   ¡  Job: instructions, operations, tasks\n\n\n¡ Data Parallelism\n\n   ¡  Different pieces of data can be operated in parallel\n\n   ¡  Vector processing and array processing\n\n\n¡  Task Parallelism\n\n   ¡  Different tasks can be operated in parallel\n\n   ¡  Multithreading",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/33/preview",
+          "source": "S1"
+        },
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p34-1",
+          "page": 34,
+          "text": "From CPU to GPU: Parallelism for Huge Computing Power!\n   Difference of Scaling Cores: Control vs. Compute\n\n¡ CPU’s Goal: Be general to complex tasks.\n\n   ¡  Hazards are easy to occur, forcing CPU microarchitecture to implement much optimizations.\n\n   ¡  \"Control logic\" such as branches and dependencies in complex tasks incur many synchronization among\n       cores.\n\n   ¡  Result: Scale to hundreds of heavy cores.\n\n\n¡ GPU’s Goal: Be specific to tasks that are easy to parallel.\n\n   ¡  Control logic is less, data parallelism is easy.\n\n   ¡  Example: vector processing.\n   ¡  Result: Scale to 1,000s to 10,000s of light cores.\n\n\n   ¡  10x to 100x of computing power than CPU!",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/34/preview",
+          "source": "S2"
+        },
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p55-1",
+          "page": 55,
+          "text": "CPU Multicore Programming: pThread\n  Thread Parallelism with Shared Memory Programming Model\n\n¡  Break down a complex task into multiple lightweight sub-tasks.\n\n   ¡ One process contains multiple threads.\n\n   ¡  Threads share the same virtual address space, global variables and heap objects are shared.\n   ¡  Synchronization is the programmer’s responsibility.",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/55/preview",
+          "source": "S3"
+        }
+      ],
+      "elapsed_s": 15.91
+    },
+    {
+      "question": "Is the former suitable for applying the same operation to every element of an array? Why?",
+      "status": "done",
+      "answer": "Yes — \"the former\" (data parallelism) is exactly the right fit for applying the same operation to every element of an array.\n\n**Why:**\n- Data parallelism is defined as operating on *different pieces of data in parallel*, with vector processing and array processing given as the canonical examples. See page 33 [S1].\n- Applying the same operation to every element of an array is precisely the \"same operation on many data elements\" pattern: the operation is uniform, and only the data differs from element to element. This is the essence of data parallelism.\n- This is also why GPUs are well suited to it: with less control logic, data parallelism is easy, so a GPU can scale to thousands or tens of thousands of light cores to process array elements concurrently, achieving 10x–100x the computing power of a CPU. See page 34 [S2].\n\nBy contrast, task parallelism is about running *different* tasks in parallel (e.g., multithreading a complex job into distinct sub-tasks), which is not what you need when the operation is identical across all elements. See page 33 [S1].",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p33-1",
+          "page": 33,
+          "text": "From CPU to GPU: Parallelism for Huge Computing Power!\n  Multiprocessors\n\n¡  Parallelism: Do multiple jobs concurrently.\n\n   ¡  Job: instructions, operations, tasks\n\n\n¡ Data Parallelism\n\n   ¡  Different pieces of data can be operated in parallel\n\n   ¡  Vector processing and array processing\n\n\n¡  Task Parallelism\n\n   ¡  Different tasks can be operated in parallel\n\n   ¡  Multithreading",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/33/preview",
+          "source": "S1"
+        },
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p34-1",
+          "page": 34,
+          "text": "From CPU to GPU: Parallelism for Huge Computing Power!\n   Difference of Scaling Cores: Control vs. Compute\n\n¡ CPU’s Goal: Be general to complex tasks.\n\n   ¡  Hazards are easy to occur, forcing CPU microarchitecture to implement much optimizations.\n\n   ¡  \"Control logic\" such as branches and dependencies in complex tasks incur many synchronization among\n       cores.\n\n   ¡  Result: Scale to hundreds of heavy cores.\n\n\n¡ GPU’s Goal: Be specific to tasks that are easy to parallel.\n\n   ¡  Control logic is less, data parallelism is easy.\n\n   ¡  Example: vector processing.\n   ¡  Result: Scale to 1,000s to 10,000s of light cores.\n\n\n   ¡  10x to 100x of computing power than CPU!",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/34/preview",
+          "source": "S2"
+        }
+      ],
+      "elapsed_s": 6.41
+    },
+    {
+      "question": "Is SMT the same concept, then?",
+      "status": "done",
+      "answer": "Not quite — SMT (Simultaneous Multithreading, aka Hyper-Threading) is related to *task* parallelism, not data parallelism, and it's a specific mechanism rather than the same concept.\n\n**What SMT is (per the lecture):**\n- Hyper-threading introduces SMT, where *multiple hardware threads share one physical core*.\n- Each logical thread has its own architectural state, but execution units, caches, queues, and predictors are shared. See page 29 [S4].\n- Its purpose is to reduce idle slots in an OoO superscalar core (caused by cache misses, branch mispredictions, dependency chains) by letting another thread use the idle execution resources. See page 29 [S4].\n\n**How it relates to the two kinds of parallelism:**\n- SMT is a form of *task* parallelism: it runs different threads (different tasks/instruction streams) concurrently on the same core. The lecture lists \"multithreading\" as the example of task parallelism. See page 33 [S1].\n- It is *not* data parallelism, because it does not apply the same operation to many data elements in parallel. Instead, it overlaps the execution of distinct threads to keep the core's execution units busy. See page 29 [S4].\n\n**In short:** SMT is a hardware technique that enables task parallelism *within a single core* by sharing execution resources among multiple threads. It's a mechanism for task parallelism, not the same as data parallelism (which is about the same operation across many data elements, as in array/vector processing). See page 33 [S1][S4].",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p29-1",
+          "page": 29,
+          "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Optimization #6: OoO Superscalar with Hyper-Threading\n\n¡  Problem: Even OoO superscalar cores have idle slot issues.\n\n¡  Reasons:\n\n   ¡  Cache miss, branch misprediction, dependency chain……\n\n\n¡  Hyper-threading introduces simultaneous multithreading (SMT)\n\n   ¡  Multiple hardware threads share one physical core.\n\n   ¡  Each logical thread has its own architectural state.\n\n   ¡  Execution units, caches, queues, and predictors are shared.\n\n\n\n¡ The closest architecture to modern CPUs.",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/29/preview",
+          "source": "S4"
+        },
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p33-1",
+          "page": 33,
+          "text": "From CPU to GPU: Parallelism for Huge Computing Power!\n  Multiprocessors\n\n¡  Parallelism: Do multiple jobs concurrently.\n\n   ¡  Job: instructions, operations, tasks\n\n\n¡ Data Parallelism\n\n   ¡  Different pieces of data can be operated in parallel\n\n   ¡  Vector processing and array processing\n\n\n¡  Task Parallelism\n\n   ¡  Different tasks can be operated in parallel\n\n   ¡  Multithreading",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/33/preview",
+          "source": "S1"
+        }
+      ],
+      "elapsed_s": 12.52
+    },
+    {
+      "question": "Identify the lecture pages that support the distinction you just explained.",
+      "status": "done",
+      "answer": "Here are the lecture pages that support the distinction between data parallelism and task parallelism, and the role of SMT:\n\n**Data vs. Task Parallelism (the core distinction)**\n- **Page 33** — Defines both: data parallelism = \"different pieces of data can be operated in parallel\" (vector/array processing); task parallelism = \"different tasks can be operated in parallel\" (multithreading). [S1]\n\n**Why data parallelism suits \"same operation on every array element\" / GPU fit**\n- **Page 34** — Explains that GPUs have less control logic, making data parallelism easy, and scale to thousands–tens of thousands of light cores for 10x–100x CPU computing power. [S2]\n\n**SMT / Hyper-Threading as a task-parallelism mechanism**\n- **Page 29** — Describes SMT: multiple hardware threads share one physical core, each with its own architectural state while sharing execution units, caches, queues, and predictors; introduced to fix idle-slot issues in OoO superscalar cores. [S4]\n\n**Supporting context (multithreading / shared-memory task parallelism)**\n- **Page 55** — CPU multicore thread parallelism (pThread): a complex task broken into lightweight sub-tasks, threads sharing the same virtual address space, with synchronization as the programmer's responsibility. [S3]\n\nSo the key pages are **33** (the distinction), **34** (data-parallelism/GPU fit), and **29** (SMT as a task-parallelism mechanism), with **55** as supporting context on multithreading. [S1][S2][S4][S3]",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p33-1",
+          "page": 33,
+          "text": "From CPU to GPU: Parallelism for Huge Computing Power!\n  Multiprocessors\n\n¡  Parallelism: Do multiple jobs concurrently.\n\n   ¡  Job: instructions, operations, tasks\n\n\n¡ Data Parallelism\n\n   ¡  Different pieces of data can be operated in parallel\n\n   ¡  Vector processing and array processing\n\n\n¡  Task Parallelism\n\n   ¡  Different tasks can be operated in parallel\n\n   ¡  Multithreading",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/33/preview",
+          "source": "S1"
+        },
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p34-1",
+          "page": 34,
+          "text": "From CPU to GPU: Parallelism for Huge Computing Power!\n   Difference of Scaling Cores: Control vs. Compute\n\n¡ CPU’s Goal: Be general to complex tasks.\n\n   ¡  Hazards are easy to occur, forcing CPU microarchitecture to implement much optimizations.\n\n   ¡  \"Control logic\" such as branches and dependencies in complex tasks incur many synchronization among\n       cores.\n\n   ¡  Result: Scale to hundreds of heavy cores.\n\n\n¡ GPU’s Goal: Be specific to tasks that are easy to parallel.\n\n   ¡  Control logic is less, data parallelism is easy.\n\n   ¡  Example: vector processing.\n   ¡  Result: Scale to 1,000s to 10,000s of light cores.\n\n\n   ¡  10x to 100x of computing power than CPU!",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/34/preview",
+          "source": "S2"
+        },
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p29-1",
+          "page": 29,
+          "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Optimization #6: OoO Superscalar with Hyper-Threading\n\n¡  Problem: Even OoO superscalar cores have idle slot issues.\n\n¡  Reasons:\n\n   ¡  Cache miss, branch misprediction, dependency chain……\n\n\n¡  Hyper-threading introduces simultaneous multithreading (SMT)\n\n   ¡  Multiple hardware threads share one physical core.\n\n   ¡  Each logical thread has its own architectural state.\n\n   ¡  Execution units, caches, queues, and predictors are shared.\n\n\n\n¡ The closest architecture to modern CPUs.",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/29/preview",
+          "source": "S4"
+        },
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p55-1",
+          "page": 55,
+          "text": "CPU Multicore Programming: pThread\n  Thread Parallelism with Shared Memory Programming Model\n\n¡  Break down a complex task into multiple lightweight sub-tasks.\n\n   ¡ One process contains multiple threads.\n\n   ¡  Threads share the same virtual address space, global variables and heap objects are shared.\n   ¡  Synchronization is the programmer’s responsibility.",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/55/preview",
+          "source": "S3"
+        }
+      ],
+      "elapsed_s": 8.68
+    }
+  ]
+}

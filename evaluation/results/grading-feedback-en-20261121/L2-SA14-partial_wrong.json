@@ -1,0 +1,47 @@
+{
+  "question": "L2-SA14",
+  "variant": "partial_wrong",
+  "student_answer": "Pooling can assign separate portions of memory capacity to different hosts. Coherent sharing requires all memory to be partitioned into disjoint private ranges.",
+  "raw_response": {
+    "id": "82a91ccf-b7ed-4416-94b9-8c66bf0f1266",
+    "object": "chat.completion",
+    "created": 1795271867,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[{\"point\":\"P2\",\"span\":\"Coherent sharing requires all memory to be partitioned into disjoint private ranges.\"}],\"missing\":[],\"feedback\":\"P1 is correct. P2 is contradicted: coherent sharing lets hosts access shared data with coherence, not partitioning memory into disjoint private ranges.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 363,
+      "completion_tokens": 76,
+      "total_tokens": 439,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 235
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P2",
+        "span": "Coherent sharing requires all memory to be partitioned into disjoint private ranges."
+      }
+    ],
+    "missing": [],
+    "feedback": "P1 is correct. P2 is contradicted: coherent sharing lets hosts access shared data with coherence, not partitioning memory into disjoint private ranges."
+  }
+}

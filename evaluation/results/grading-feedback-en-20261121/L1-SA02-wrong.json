@@ -1,0 +1,51 @@
+{
+  "question": "L1-SA02",
+  "variant": "wrong",
+  "student_answer": "A RAW hazard occurs when both instructions only read the same register. Forwarding helps by forcing the consumer to wait for write-back.",
+  "raw_response": {
+    "id": "4f189452-52fc-4efd-a223-8f56e558cee6",
+    "object": "chat.completion",
+    "created": 1795271845,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[{\"point\":\"P1\",\"span\":\"when both instructions only read the same register\"},{\"point\":\"P2\",\"span\":\"forcing the consumer to wait for write-back\"}],\"missing\":[],\"feedback\":\"RAW is a read-after-write dependency where a consumer needs a result produced by an earlier instruction, not two reads of the same register. Forwarding passes the result directly to the consumer before write-back; it does not make the consumer wait for write-back.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 538,
+      "completion_tokens": 110,
+      "total_tokens": 648,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 282
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P1",
+        "span": "when both instructions only read the same register"
+      },
+      {
+        "point": "P2",
+        "span": "forcing the consumer to wait for write-back"
+      }
+    ],
+    "missing": [],
+    "feedback": "RAW is a read-after-write dependency where a consumer needs a result produced by an earlier instruction, not two reads of the same register. Forwarding passes the result directly to the consumer before write-back; it does not make the consumer wait for write-back."
+  }
+}

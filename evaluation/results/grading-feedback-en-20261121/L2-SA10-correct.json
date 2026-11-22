@@ -1,0 +1,42 @@
+{
+  "question": "L2-SA10",
+  "variant": "correct",
+  "student_answer": "Misses add 4 cycles on average. The total average is 6 cycles.",
+  "raw_response": {
+    "id": "3f48fe20-84c4-4844-b95e-bbfdf21d6619",
+    "object": "chat.completion",
+    "created": 1795271859,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":2},\"errors\":[],\"missing\":[],\"feedback\":\"Correct: 4% × 100 = 4 cycles average miss penalty, and AMAT = 2 + 4 = 6 cycles.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 397,
+      "completion_tokens": 55,
+      "total_tokens": 452,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 397
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 2
+    },
+    "errors": [],
+    "missing": [],
+    "feedback": "Correct: 4% × 100 = 4 cycles average miss penalty, and AMAT = 2 + 4 = 6 cycles."
+  }
+}

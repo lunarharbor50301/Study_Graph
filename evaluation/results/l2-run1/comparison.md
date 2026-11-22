@@ -41,3 +41,32 @@ out=$(mktemp -d)
   --reference evaluation/01_knowledge/v0.4-en/lecture2.json --prediction "$run/prediction.json" \
   --review "$run/v04/review.json" --output "$out/v04.json"
 ```
+
+## 切换 TACC / DeepSeek 运行评测
+
+以下是当前代码的运行方式，历史报告中的模型名称和成绩保持原样；切换模型后应保存到新的结果目录并重新评分。[完整配置、参数和运行说明](../../runners/README.md)。命令均从仓库根目录执行。
+
+先启动 TACC 模型及 SSH 隧道，然后在运行评测脚本的终端设置地址并检查接口：
+
+```bash
+export QWEN_BASE_URL=http://127.0.0.1:18024/v1
+
+curl --noproxy '*' -fsS --max-time 8 \
+  http://127.0.0.1:18024/v1/models
+```
+
+直接调用 TACC 的评测脚本不需要 DeepSeek API key。改用 DeepSeek 时，需要在当前进程配置 `DEEPSEEK_API_KEY`。如果密钥已保存在项目 `.env` 中，可以加载：
+
+```bash
+set -a
+source .env
+set +a
+```
+
+用 TACC 对已有概念图和笔记重新进行语义评分：
+
+```bash
+.venv/bin/python -m evaluation.runners.knowledge score --reference evaluation/01_knowledge/v0.5-en/lecture1.json --prediction evaluation/results/v0.5-en-20261119/l1/prediction.json --judge tacc --output evaluation/results/l1-tacc-metrics-new.json
+```
+
+换成 `--judge deepseek` 可切换裁判；此命令不会重新生成概念图。需要 TACC 生成时，在启动独立后端前设置 `STUDYGRAPH_GENERATION_PROVIDER=tacc`，再让 `knowledge generate --base-url` 指向该后端。不要把不匹配的参考集和历史预测拼在一起作公平对照。大体量裁判输入加16000输出token预算须适合TACC上下文窗口，超限不会自动截断或回退。

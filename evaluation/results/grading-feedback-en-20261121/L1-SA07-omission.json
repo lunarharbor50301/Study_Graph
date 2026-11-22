@@ -1,0 +1,44 @@
+{
+  "question": "L1-SA07",
+  "variant": "omission",
+  "student_answer": "Four processors give a speedup of 2.5.",
+  "raw_response": {
+    "id": "8d59cc54-2923-43bc-a1ba-dc7abe48c970",
+    "object": "chat.completion",
+    "created": 1795271854,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[],\"missing\":[\"P2\"],\"feedback\":\"Correct speedup for four processors. You also need the infinite-processor limit, which is 5.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 409,
+      "completion_tokens": 49,
+      "total_tokens": 458,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 153
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P2"
+    ],
+    "feedback": "Correct speedup for four processors. You also need the infinite-processor limit, which is 5."
+  }
+}

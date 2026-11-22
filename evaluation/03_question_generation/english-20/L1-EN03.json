@@ -1,0 +1,25 @@
+{
+  "id": "L1-EN03",
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      66
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 66. Give a fixed-size workload with 80% parallel work and four processors. Ask for both the finite speedup and the infinite-processor limit.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 66,
+      "request": {
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "topic": "Amdahl's law",
+        "query": "Amdahl's law",
+        "instructions": "Write one English short-answer question using only physical PDF pages 66. Give a fixed-size workload with 80% parallel work and four processors. Ask for both the finite speedup and the infinite-processor limit.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L1"
+}

@@ -1,0 +1,1028 @@
+{
+  "review_date": "2026-11-22",
+  "reviewer": "Codex AI-assisted semantic review; human review pending",
+  "language": "English",
+  "job": "30603",
+  "model": "qwen3.8-27b",
+  "run_type": "English translated multi-turn evaluation; new sessions",
+  "rubric": "../../shared/scoring.md",
+  "method": "Frozen full answers reviewed against English candidate points and actual attached citation excerpts. No keyword-only scoring. Context applicability annotated after execution.",
+  "reference_sha256": {
+    "lecture1.json": "5617f63dc62d2808df7cf10b6eabd143411c17120ee87d11a4db7169c0b824b6",
+    "lecture2.json": "e6b29b09c01a0ff173c3dc07d0d00e05287af5f18c6c020b858ff2eccaeb9868"
+  },
+  "unmeasured": [
+    "browser_navigation",
+    "claim_level_citation_support_rate",
+    "claim_level_citation_completeness_rate",
+    "retrieval_evidence_coverage"
+  ],
+  "summary": {
+    "execution_success": {
+      "numerator": 24,
+      "denominator": 24,
+      "value": 1.0,
+      "status": "measured"
+    },
+    "turn_score_mean": {
+      "numerator": 23.833333333333332,
+      "denominator": 24,
+      "value": 0.9930555555555555,
+      "status": "measured"
+    },
+    "point_score_micro": {
+      "numerator": 99,
+      "denominator": 100,
+      "value": 0.99,
+      "status": "measured"
+    },
+    "context_checks_posthoc": {
+      "numerator": 18,
+      "denominator": 18,
+      "value": 1.0,
+      "status": "measured"
+    },
+    "strict_dialogue_success": {
+      "numerator": 4,
+      "denominator": 6,
+      "value": 0.6666666666666666,
+      "status": "measured"
+    },
+    "turns_with_substantive_error": {
+      "numerator": 2,
+      "denominator": 24,
+      "value": 0.08333333333333333,
+      "status": "measured"
+    },
+    "latency_s": {
+      "median": 6.785,
+      "p95": 12.9855,
+      "sample_count": 24
+    }
+  },
+  "by_document": {
+    "ACS-L1": {
+      "execution_success": {
+        "numerator": 12,
+        "denominator": 12,
+        "value": 1.0,
+        "status": "measured"
+      },
+      "turn_score_mean": {
+        "numerator": 11.833333333333334,
+        "denominator": 12,
+        "value": 0.9861111111111112,
+        "status": "measured"
+      },
+      "point_score_micro": {
+        "numerator": 47,
+        "denominator": 48,
+        "value": 0.9791666666666666,
+        "status": "measured"
+      },
+      "context_checks_posthoc": {
+        "numerator": 9,
+        "denominator": 9,
+        "value": 1.0,
+        "status": "measured"
+      },
+      "strict_dialogue_success": {
+        "numerator": 2,
+        "denominator": 3,
+        "value": 0.6666666666666666,
+        "status": "measured"
+      },
+      "turns_with_substantive_error": {
+        "numerator": 1,
+        "denominator": 12,
+        "value": 0.08333333333333333,
+        "status": "measured"
+      },
+      "latency_s": {
+        "median": 7.755,
+        "p95": 14.336999999999998,
+        "sample_count": 12
+      }
+    },
+    "ACS-L2": {
+      "execution_success": {
+        "numerator": 12,
+        "denominator": 12,
+        "value": 1.0,
+        "status": "measured"
+      },
+      "turn_score_mean": {
+        "numerator": 12.0,
+        "denominator": 12,
+        "value": 1.0,
+        "status": "measured"
+      },
+      "point_score_micro": {
+        "numerator": 52,
+        "denominator": 52,
+        "value": 1.0,
+        "status": "measured"
+      },
+      "context_checks_posthoc": {
+        "numerator": 9,
+        "denominator": 9,
+        "value": 1.0,
+        "status": "measured"
+      },
+      "strict_dialogue_success": {
+        "numerator": 2,
+        "denominator": 3,
+        "value": 0.6666666666666666,
+        "status": "measured"
+      },
+      "turns_with_substantive_error": {
+        "numerator": 1,
+        "denominator": 12,
+        "value": 0.08333333333333333,
+        "status": "measured"
+      },
+      "latency_s": {
+        "median": 6.0,
+        "p95": 11.2945,
+        "sample_count": 12
+      }
+    }
+  },
+  "dialogues": [
+    {
+      "id": "L1-MT01",
+      "document_id": "ACS-L1",
+      "raw_file": "L1-MT01.json",
+      "raw_sha256": "4a331edcb947f40f1a6a7d2a0e1c2275a5026e807fb22bdbcbc18488363e24b2",
+      "turns": [
+        {
+          "turn": 1,
+          "question": "Explain the five stages of a five-stage instruction pipeline and what each stage does.",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "List IF/ID/EX/MEM/WB",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Overlapping stages improves throughput",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "not_applicable",
+            "passed": null,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "列出五阶段及作用，说明重叠提高吞吐；引用16、17页，另补充26页超标量。",
+          "citation_pages": [
+            16,
+            17,
+            26
+          ],
+          "elapsed_s": 10.32
+        },
+        {
+          "turn": 2,
+          "question": "Does that mean it makes every instruction take only one cycle?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Resolve it as the five-stage pipeline",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Distinguish completion rate from a single instruction passing through multiple stages; reject the false premise",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "正确区分理想五级流水线的5周期单指令延迟与填满后的完成速率，引用17页。",
+          "citation_pages": [
+            17
+          ],
+          "elapsed_s": 6.36
+        },
+        {
+          "turn": 3,
+          "question": "Using the same ideal five-stage pipeline, how many cycles are needed to execute 10 instructions?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Retain M=5 and use N=10",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Under ideal bubble-free conditions, 5+10-1=14 cycles",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "保留M=5、N=10，得14周期，引用17页。",
+          "citation_pages": [
+            17
+          ],
+          "elapsed_s": 4.91
+        },
+        {
+          "turn": 4,
+          "question": "If a data hazard occurs, does the previous calculation necessarily still hold? Cite the supporting lecture pages.",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Identify the previous calculation as the ideal 14-cycle result",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Hazards may cause stalls; forwarding can reduce stalls but does not guarantee 14 cycles in every case",
+              "score": 1,
+              "maximum": 2
+            },
+            {
+              "point": "Cite pages supporting both the ideal formula and the effects of hazards",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 5,
+          "maximum": 6,
+          "normalized": 0.8333333333333334,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": true,
+          "required_evidence_complete": true,
+          "review_note": "保留14周期并引用17、18、22、25页，来源完整。但末段明确说“Any data hazard introduces bubbles”，把可能停顿说成必然；虽提到转发减少停顿，未承认有些依赖可完全消除停顿，第二要点仅1分。",
+          "citation_pages": [
+            17,
+            18,
+            22,
+            25
+          ],
+          "elapsed_s": 10.67
+        }
+      ],
+      "strict_success": false
+    },
+    {
+      "id": "L1-MT02",
+      "document_id": "ACS-L1",
+      "raw_file": "L1-MT02.json",
+      "raw_sha256": "0544e57eed26890143d76855fa0daf0572a5ef17056b024801ca1c6c8b78f793",
+      "turns": [
+        {
+          "turn": 1,
+          "question": "Explain the difference between data parallelism and task parallelism.",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Explain concurrent operations on different data versus concurrent execution of different tasks",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 2,
+          "maximum": 2,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "not_applicable",
+            "passed": null,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "正确区分不同数据与不同任务并发；33页支持定义，34、55页提供背景。",
+          "citation_pages": [
+            33,
+            34,
+            55
+          ],
+          "elapsed_s": 15.91
+        },
+        {
+          "turn": 2,
+          "question": "Is the former suitable for applying the same operation to every element of an array? Why?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Resolve the former as data parallelism",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Different elements can be processed in parallel",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "将former解析为数据并行，解释相同操作处理不同元素；末段说task parallelism不是此处所需，按场景选择理解，不等同于中文版断言任务并行不能正确高效实现。",
+          "citation_pages": [
+            33,
+            34
+          ],
+          "elapsed_s": 6.41
+        },
+        {
+          "turn": 3,
+          "question": "Is SMT the same concept, then?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Compare SMT with the preceding discussion of data parallelism",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "SMT means multiple hardware threads sharing one physical core; it is not a synonym for data parallelism",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "正确比较SMT与数据并行，说明共享物理核与独立架构状态，引用29、33页；按机制与工作划分方式的区别评分，不把该说法推广为SMT不能运行数据并行工作负载。",
+          "citation_pages": [
+            29,
+            33
+          ],
+          "elapsed_s": 12.52
+        },
+        {
+          "turn": 4,
+          "question": "Identify the lecture pages that support the distinction you just explained.",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Resolve the distinction as SMT versus data parallelism",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Give pages 29 and 33, or alternative pages that genuinely support the distinction",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "承接SMT区别，给出29、33页及额外背景34、55页，必要来源齐全。",
+          "citation_pages": [
+            33,
+            34,
+            29,
+            55
+          ],
+          "elapsed_s": 8.68
+        }
+      ],
+      "strict_success": true
+    },
+    {
+      "id": "L1-MT03",
+      "document_id": "ACS-L1",
+      "raw_file": "L1-MT03.json",
+      "raw_sha256": "301f2d0180e2215a9da0ee39d69607fdd25d1fc52a1f453a3540f0a0e92b8e2b",
+      "turns": [
+        {
+          "turn": 1,
+          "question": "For a fixed-size program that is 90% parallelizable, what speedup can 10 processors achieve?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Use f=.9 and p=10",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "S=100/19, approximately 5.263",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "not_applicable",
+            "passed": null,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "f=.9、p=10，5.26倍满足0.01容差，引用66页。",
+          "citation_pages": [
+            66
+          ],
+          "elapsed_s": 13.05
+        },
+        {
+          "turn": 2,
+          "question": "What if we increase that to 100?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Retain f=.9 and the fixed problem size",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "S=1/(.1+.009), approximately 9.174",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "保留f=.9与原固定规模模型，p改100，得9.17倍。",
+          "citation_pages": [
+            66
+          ],
+          "elapsed_s": 6.74
+        },
+        {
+          "turn": 3,
+          "question": "So adding more processors can push the speedup beyond 10 times, right?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Retain the preceding conditions",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Correct the premise: speedup is below 10 for finite p and approaches 10 in the limit",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "否定突破10倍，用公式及p趋无穷说明极限；有限p小于10由所给公式成立。",
+          "citation_pages": [
+            66
+          ],
+          "elapsed_s": 6.83
+        },
+        {
+          "turn": 4,
+          "question": "Give the supporting page and state the serial fraction in this example.",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Cite page 66",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "The serial fraction is 1-f=.1",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "明确给出66页和串行比例.10。",
+          "citation_pages": [
+            66
+          ],
+          "elapsed_s": 6.6
+        }
+      ],
+      "strict_success": true
+    },
+    {
+      "id": "L2-MT01",
+      "document_id": "ACS-L2",
+      "raw_file": "L2-MT01.json",
+      "raw_sha256": "fdbfbf1ec9440ce24334d5d20f55c8cb79a0b15a157ea6b8f2b70bfd3d38f12e",
+      "turns": [
+        {
+          "turn": 1,
+          "question": "Explain temporal locality and spatial locality.",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Temporal locality means reusing the same data",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Spatial locality means accessing nearby locations",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "not_applicable",
+            "passed": null,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "正确说明同一数据复用与邻近位置访问，D和数组例子对应24页。",
+          "citation_pages": [
+            24,
+            23,
+            22
+          ],
+          "elapsed_s": 12.62
+        },
+        {
+          "turn": 2,
+          "question": "Does repeatedly reading the same variable illustrate the former or the latter?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Resolve the former as temporal locality",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Repeatedly reading the same variable illustrates temporal locality",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "正确识别former为时间局部性，解释重复读取同一变量。",
+          "citation_pages": [
+            22,
+            24
+          ],
+          "elapsed_s": 4.5
+        },
+        {
+          "turn": 3,
+          "question": "Switching to a calculation: the hit time is 1 cycle, the miss rate is 10%, and the additional miss penalty is 300 cycles. What is the AMAT?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Recognize the switch to AMAT",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "1+.1*300=31 cycles",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": true,
+          "substantive_error": true,
+          "required_evidence_complete": false,
+          "review_note": "切换为AMAT并给出正确主结果31周期，必要点满分。但附加Note将额外penalty=300时错误写成1+.1×301=31.1，重复计算miss情形的hit time，构成实质错误；唯一引用22页只讲局部性，不能支持AMAT公式。",
+          "citation_pages": [
+            22
+          ],
+          "elapsed_s": 5.76
+        },
+        {
+          "turn": 4,
+          "question": "Change only the previous miss rate to 5%, keeping everything else unchanged. What is the result? Cite the formula page.",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Retain hit time=1 and penalty=300",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "1+.05*300=16 cycles",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Cite page 26 or 27",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 6,
+          "maximum": 6,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "正确保持hit=1、penalty=300，仅改miss rate=.05，得16周期；27页支持公式及原示例。",
+          "citation_pages": [
+            27
+          ],
+          "elapsed_s": 8.8
+        }
+      ],
+      "strict_success": false
+    },
+    {
+      "id": "L2-MT02",
+      "document_id": "ACS-L2",
+      "raw_file": "L2-MT02.json",
+      "raw_sha256": "7aca5be8680f88d1e86e84d9ebe4121048c09cd896c2e39568e51f57834f5176",
+      "turns": [
+        {
+          "turn": 1,
+          "question": "Is CUDA local memory private to a thread or shared by all threads? Where does it usually reside?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Thread-private",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Usually resides in device DRAM and passes through L1/L2",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "not_applicable",
+            "passed": null,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "说明线程私有、通常device DRAM、经过L1/L2，引用46页。",
+          "citation_pages": [
+            46
+          ],
+          "elapsed_s": 8.19
+        },
+        {
+          "turn": 2,
+          "question": "So because its name includes local, must it be as fast as registers?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Resolve it as local memory",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "The name does not establish its physical location or guarantee register-level speed",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "承接local memory，否定名称保证寄存器速度，引用43、46页。",
+          "citation_pages": [
+            46,
+            43
+          ],
+          "elapsed_s": 5.81
+        },
+        {
+          "turn": 3,
+          "question": "A different question: in shared memory, how do accesses to different addresses in the same bank differ from reads of the same address?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Correctly switch to shared memory",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Different addresses require multiple service rounds; reads of the same address can use broadcast",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "正确切换shared memory并区分同地址读广播与同bank不同地址多轮服务，51页支持；47页补充全局事务背景。",
+          "citation_pages": [
+            51,
+            47
+          ],
+          "elapsed_s": 10.21
+        },
+        {
+          "turn": 4,
+          "question": "Is that the same thing as global-memory coalescing? Cite the source.",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Resolve that as shared-memory bank conflicts/broadcast",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Distinguish bank service from combining warp addresses into memory transactions",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Cite pages 48 and 51",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 6,
+          "maximum": 6,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "正确比较两机制，引用51页bank服务与47页coalescer按sector/transaction分组；47页是有效替代证据，不因参考写48页而扣分。",
+          "citation_pages": [
+            51,
+            47
+          ],
+          "elapsed_s": 6.19
+        }
+      ],
+      "strict_success": true
+    },
+    {
+      "id": "L2-MT03",
+      "document_id": "ACS-L2",
+      "raw_file": "L2-MT03.json",
+      "raw_sha256": "8e2f1d7b5619612556e32c56b65b876f07bf9d2fa260cc55fe710dc5c49c81d1",
+      "turns": [
+        {
+          "turn": 1,
+          "question": "Does the LPDDR expansion in Grace make the GPU HBM itself larger?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Does not enlarge HBM itself",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Expands addressable capacity",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "not_applicable",
+            "passed": null,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "否定HBM本身变大，说明扩展可寻址容量，引用68页，并补充分层管理69页。",
+          "citation_pages": [
+            68,
+            69
+          ],
+          "elapsed_s": 7.92
+        },
+        {
+          "turn": 2,
+          "question": "Which tier should hot data and cold data go into, respectively?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Continue the HBM versus LPDDR context",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Hot, latency-critical or frequently reused data goes in HBM; large cold data can go in LPDDR",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "承接两层，hot/latency-critical/frequently reused留HBM，大冷对象去LPDDR，引用69页。",
+          "citation_pages": [
+            69
+          ],
+          "elapsed_s": 4.17
+        },
+        {
+          "turn": 3,
+          "question": "If a piece of cold data is accessed only once, is it worth moving it immediately to the former?",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Resolve the former as HBM",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "It is not necessarily worthwhile; compare future reuse savings with transfer and bookkeeping costs",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "former正确指HBM；按课件未来复用收益判据分析单次访问无法回收传输/管理成本。",
+          "citation_pages": [
+            69
+          ],
+          "elapsed_s": 3.14
+        },
+        {
+          "turn": 4,
+          "question": "Give the specific page supporting the migration decision you just made.",
+          "execution_status": "done",
+          "points": [
+            {
+              "point": "Refer to the migration cost-benefit decision",
+              "score": 2,
+              "maximum": 2
+            },
+            {
+              "point": "Cite page 69, not only the LPDDR introduction on page 68",
+              "score": 2,
+              "maximum": 2
+            }
+          ],
+          "earned": 4,
+          "maximum": 4,
+          "normalized": 1.0,
+          "context_check": {
+            "status": "measured",
+            "passed": true,
+            "scope": "Reference resolution, retained conditions, or explicit topic switch; annotated after execution"
+          },
+          "additional_substantive_error": false,
+          "substantive_error": false,
+          "required_evidence_complete": true,
+          "review_note": "明确回答迁移判断由69页支持；答案虽短但正确承接前一轮，引用片段包含所需判据。",
+          "citation_pages": [
+            69
+          ],
+          "elapsed_s": 3.11
+        }
+      ],
+      "strict_success": true
+    }
+  ]
+}

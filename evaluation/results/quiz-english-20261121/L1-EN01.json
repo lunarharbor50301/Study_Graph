@@ -1,0 +1,91 @@
+{
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      16,
+      17
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 16,17. Ask the student to distinguish steady-state throughput from the latency of a single instruction in a five-stage pipeline.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 16,
+      "request": {
+        "topic": "Instruction pipeline throughput",
+        "query": "Instruction pipeline throughput",
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "previous": [],
+        "instructions": "Write one English short-answer question using only physical PDF pages 16,17. Ask the student to distinguish steady-state throughput from the latency of a single instruction in a five-stage pipeline."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4"
+          ],
+          "raw_response": {
+            "id": "fa7e782b-3bfb-49f8-b252-c5447302331d",
+            "object": "chat.completion",
+            "created": 1795269369,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\n  \"prompt\": \"In a five-stage instruction pipeline, what is the steady-state throughput (in instructions per cycle) after the pipeline is filled, assuming no bubbles?\",\n  \"source\": \"S1\",\n  \"options\": [],\n  \"answer\": \"1\",\n  \"accepted_answers\": [\"1\", \"one\", \"1 instruction per cycle\", \"one instruction per cycle\"],\n  \"hint\": \"Consider how many instructions complete each cycle once the pipeline is full.\",\n  \"explanation\": \"The passage states that in a perfect pipeline, one instruction completes per cycle after filling the pipeline, which is the maximum throughput.\"\n}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 731,
+              "completion_tokens": 133,
+              "total_tokens": 864,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 731
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "Instruction pipeline throughput",
+        "prompt": "In a five-stage instruction pipeline, what is the steady-state throughput (in instructions per cycle) after the pipeline is filled, assuming no bubbles?",
+        "citations": [
+          {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p17-1",
+            "page": 17,
+            "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Five-Stage Instruction Pipeline\n\n¡ Perfect Pipeline\n\n   ¡ One instruction completes per cycle after filling\n      the pipeline.\n\n   ¡ No bubbles and maximum throughput.\n\n\n¡ For N instructions and M stages:\n\n   ¡  Total Cycles = M + N – 1\n\n   ¡  Average throughput\n     = N / (M + N - 1) instructions per cycle\n\n   ¡  Instruction throughput per second\n     Frequency * N / (M + N - 1)",
+            "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/17/preview"
+          }
+        ],
+        "type": "short-answer",
+        "answer": "1",
+        "hint": "Consider how many instructions complete each cycle once the pipeline is full.",
+        "explanation": "The passage states that in a perfect pipeline, one instruction completes per cycle after filling the pipeline, which is the maximum throughput.",
+        "options": [],
+        "accepted_answers": [
+          "1",
+          "one",
+          "1 instruction per cycle",
+          "one instruction per cycle"
+        ]
+      },
+      "elapsed_s": 1.83
+    }
+  ]
+}

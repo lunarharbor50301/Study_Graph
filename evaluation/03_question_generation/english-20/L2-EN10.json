@@ -1,0 +1,26 @@
+{
+  "id": "L2-EN10",
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      68,
+      69
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 68,69. Present a frequently reused object in LPDDR. Ask when promotion to HBM is worth the transfer and bookkeeping costs.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 68,
+      "request": {
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "topic": "HBM tier placement",
+        "query": "HBM tier placement",
+        "instructions": "Write one English short-answer question using only physical PDF pages 68,69. Present a frequently reused object in LPDDR. Ask when promotion to HBM is worth the transfer and bookkeeping costs.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L2"
+}

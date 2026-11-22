@@ -1,0 +1,42 @@
+{
+  "question": "L1-SA01",
+  "variant": "correct",
+  "student_answer": "One result retires each tick once full; one instruction still traverses all five stages.",
+  "raw_response": {
+    "id": "5c4b0401-d2e3-426a-9731-da417c90eda5",
+    "object": "chat.completion",
+    "created": 1795271843,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":2},\"errors\":[],\"missing\":[],\"feedback\":\"Correct: identifies one instruction completing per cycle after fill and that each instruction still passes through all five stages.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 391,
+      "completion_tokens": 46,
+      "total_tokens": 437,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 391
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 2
+    },
+    "errors": [],
+    "missing": [],
+    "feedback": "Correct: identifies one instruction completing per cycle after fill and that each instruction still passes through all five stages."
+  }
+}

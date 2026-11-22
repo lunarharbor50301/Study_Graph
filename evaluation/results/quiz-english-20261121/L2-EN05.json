@@ -1,0 +1,90 @@
+{
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      36,
+      37
+    ],
+    "instruction": "Write one English true-false question using only physical PDF pages 36,37. Test whether independent banks can overlap work. Explain what can overlap.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 36,
+      "request": {
+        "topic": "DRAM bank parallelism",
+        "query": "DRAM bank parallelism",
+        "type": "true-false",
+        "difficulty": "Foundational",
+        "previous": [],
+        "instructions": "Write one English true-false question using only physical PDF pages 36,37. Test whether independent banks can overlap work. Explain what can overlap."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ],
+          "raw_response": {
+            "id": "9ffb8597-c430-4daa-a0d5-54744f9d2ee6",
+            "object": "chat.completion",
+            "created": 1795269379,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"prompt\": \"True or False: In a multi-banked DRAM chip, work in one bank can overlap with preparation in another bank.\", \"source\": \"S1\", \"options\": [], \"answer\": \"True\", \"accepted_answers\": [], \"hint\": \"Consider whether banks are described as independent storage arrays that can work in parallel.\", \"explanation\": \"The passage states that banks provide independent storage arrays and that work in one bank can overlap preparation in another, though the shared data bus still limits how much data the channel can return at once.\"}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 770,
+              "completion_tokens": 118,
+              "total_tokens": 888,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 770
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "DRAM bank parallelism",
+        "prompt": "True or False: In a multi-banked DRAM chip, work in one bank can overlap with preparation in another bank.",
+        "citations": [
+          {
+            "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+            "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p36-1",
+            "page": 36,
+            "text": "CPU Memory Hierarchy\n\nDRAM Behind Cache: Multi-Bank DRAM\n                 Addr and Cmd Bus\n\n       Memory\n        Controller\n\n\n                    Data Bus\n                   Channel\n\n\n\n\n                                    Multi-Banked DRAM Chip\n  Banks provide independent storage arrays. Work in one bank can overlap\n▪\n  preparation in another.\n\n▪ The shared data bus still limits how much data the channel can return at once.\n\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        36",
+            "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/36/preview"
+          }
+        ],
+        "type": "true-false",
+        "answer": "True",
+        "hint": "Consider whether banks are described as independent storage arrays that can work in parallel.",
+        "explanation": "The passage states that banks provide independent storage arrays and that work in one bank can overlap preparation in another, though the shared data bus still limits how much data the channel can return at once.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "accepted_answers": []
+      },
+      "elapsed_s": 2.23
+    }
+  ]
+}

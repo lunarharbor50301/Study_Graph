@@ -1,0 +1,47 @@
+{
+  "question": "L1-SA05",
+  "variant": "partial_wrong",
+  "student_answer": "Both threads can read the old sum before either writes the result. Locking only after both threads finish updating prevents the lost update.",
+  "raw_response": {
+    "id": "e99ac5ec-de75-47c5-9b6f-aa7ec90a3f54",
+    "object": "chat.completion",
+    "created": 1795271851,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[{\"point\":\"P2\",\"span\":\"Locking only after both threads finish updating prevents the lost update.\"}],\"missing\":[],\"feedback\":\"P1 is correct. P2 is wrong: a mutex must serialize the entire read-modify-write critical section, not be applied after both threads finish updating.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 560,
+      "completion_tokens": 80,
+      "total_tokens": 640,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "prompt_cache_hit_tokens": 384,
+      "prompt_cache_miss_tokens": 176
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P2",
+        "span": "Locking only after both threads finish updating prevents the lost update."
+      }
+    ],
+    "missing": [],
+    "feedback": "P1 is correct. P2 is wrong: a mutex must serialize the entire read-modify-write critical section, not be applied after both threads finish updating."
+  }
+}

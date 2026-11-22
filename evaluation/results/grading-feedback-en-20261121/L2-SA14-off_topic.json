@@ -1,0 +1,45 @@
+{
+  "question": "L2-SA14",
+  "variant": "off_topic",
+  "student_answer": "The lecture is part of a computing course.",
+  "raw_response": {
+    "id": "557b02a8-f4ce-4294-97a0-a38d2d99f5cb",
+    "object": "chat.completion",
+    "created": 1795271868,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[],\"missing\":[\"P1\",\"P2\"],\"feedback\":\"Your answer is off-topic and does not address the question. Explain that pooling assigns separate portions of memory capacity to different hosts, while coherent sharing lets hosts access shared data with coherence.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 345,
+      "completion_tokens": 68,
+      "total_tokens": 413,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 217
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P1",
+      "P2"
+    ],
+    "feedback": "Your answer is off-topic and does not address the question. Explain that pooling assigns separate portions of memory capacity to different hosts, while coherent sharing lets hosts access shared data with coherence."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "L2-EN03",
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      26,
+      27
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 26,27. Give a hit time of 2 cycles, miss rate of 4% and additional miss penalty of 100 cycles. Ask for AMAT in cycles.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 26,
+      "request": {
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "topic": "Average memory access time",
+        "query": "Average memory access time",
+        "instructions": "Write one English short-answer question using only physical PDF pages 26,27. Give a hit time of 2 cycles, miss rate of 4% and additional miss penalty of 100 cycles. Ask for AMAT in cycles.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L2"
+}

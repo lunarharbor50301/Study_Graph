@@ -1,0 +1,93 @@
+{
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      45,
+      46
+    ],
+    "instruction": "Write one English multiple-choice question using only physical PDF pages 45,46. Ask which option correctly pairs CUDA local memory scope with its usual physical placement. Include exactly one correct pair.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 45,
+      "request": {
+        "topic": "CUDA local memory",
+        "query": "CUDA local memory",
+        "type": "multiple-choice",
+        "difficulty": "Foundational",
+        "previous": [],
+        "instructions": "Write one English multiple-choice question using only physical PDF pages 45,46. Ask which option correctly pairs CUDA local memory scope with its usual physical placement. Include exactly one correct pair."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5",
+            "S6"
+          ],
+          "raw_response": {
+            "id": "f56e519c-9bbf-4086-b49f-f450bad38589",
+            "object": "chat.completion",
+            "created": 1795269372,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"type\": \"multiple-choice\", \"difficulty\": \"Foundational\", \"topic\": \"CUDA local memory\", \"prompt\": \"According to the passage, which option correctly pairs CUDA local memory's scope with its usual physical placement?\", \"source\": \"S1\", \"options\": [\"Thread-private scope; usually resides in device DRAM and passes through L1/L2\", \"Block-shared scope; usually resides in shared memory on the SM\", \"Thread-private scope; usually resides in registers with no DRAM access\", \"Grid-wide scope; usually resides in host CPU memory\"], \"answer\": \"Thread-private scope; usually resides in device DRAM and passes through L1/L2\", \"accepted_answers\": [], \"hint\": \"Focus on the sentence describing local memory's scope and where it typically resides.\", \"explanation\": \"The passage states that local memory is thread-private in scope but usually resides in device DRAM and passes through L1/L2.\"}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 793,
+              "completion_tokens": 202,
+              "total_tokens": 995,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 793
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "CUDA local memory",
+        "prompt": "According to the passage, which option correctly pairs CUDA local memory's scope with its usual physical placement?",
+        "citations": [
+          {
+            "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+            "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p46-1",
+            "page": 46,
+            "text": "GPU Memory Hierarchy\n\nEvery CUDA Memory Space Maps to a Physical Resource\n\n\n\n\n\n▪ Local memory is thread-private in scope but usually resides in device DRAM and\n  passes through L1/L2.\n▪ Register and shared-memory allocations limit how many blocks and warps can\n  reside on an SM.\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        46",
+            "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/46/preview"
+          }
+        ],
+        "type": "multiple-choice",
+        "answer": "Thread-private scope; usually resides in device DRAM and passes through L1/L2",
+        "hint": "Focus on the sentence describing local memory's scope and where it typically resides.",
+        "explanation": "The passage states that local memory is thread-private in scope but usually resides in device DRAM and passes through L1/L2.",
+        "options": [
+          "Thread-private scope; usually resides in device DRAM and passes through L1/L2",
+          "Block-shared scope; usually resides in shared memory on the SM",
+          "Thread-private scope; usually resides in registers with no DRAM access",
+          "Grid-wide scope; usually resides in host CPU memory"
+        ],
+        "accepted_answers": []
+      },
+      "elapsed_s": 2.14
+    }
+  ]
+}

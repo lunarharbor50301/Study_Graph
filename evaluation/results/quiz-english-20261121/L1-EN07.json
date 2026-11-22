@@ -1,0 +1,92 @@
+{
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      57,
+      58
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 57,58. Describe two threads losing an update to a shared sum. Ask for a synchronization mechanism and what it protects.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 57,
+      "request": {
+        "topic": "Protecting a shared counter",
+        "query": "Protecting a shared counter",
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "previous": [],
+        "instructions": "Write one English short-answer question using only physical PDF pages 57,58. Describe two threads losing an update to a shared sum. Ask for a synchronization mechanism and what it protects."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ],
+          "raw_response": {
+            "id": "b1d4358a-a3dd-4085-a968-48da98e5a071",
+            "object": "chat.completion",
+            "created": 1795269383,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\n  \"prompt\": \"In the context of two threads updating a shared sum, what synchronization mechanism is used to protect the critical section, and what does it protect?\",\n  \"source\": \"S2\",\n  \"options\": [],\n  \"answer\": \"Mutex\",\n  \"accepted_answers\": [\"Mutex\", \"pthread_mutex\", \"lock\", \"mutex lock\"],\n  \"hint\": \"Consider the mechanism that ensures only one thread executes the critical section at a time.\",\n  \"explanation\": \"A mutex serializes access to the critical section, preventing race conditions on the shared sum.\"\n}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 755,
+              "completion_tokens": 130,
+              "total_tokens": 885,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 755
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "Protecting a shared counter",
+        "prompt": "In the context of two threads updating a shared sum, what synchronization mechanism is used to protect the critical section, and what does it protect?",
+        "citations": [
+          {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p58-1",
+            "page": 58,
+            "text": "CPU Multicore Programming: pThread\n  Mutex: Protect Shared State\n\n                                              ¡ The Mutex provides:\n¡ Mutex pattern:\n                                                ¡  Serialized access to critical section\n      pthread_mutex_lock(&lock);\n                                                ¡ Race avoidance for protected     sum += local_sum;\n                                                         shared state      pthread_mutex_unlock(&lock);\n                                              ¡  Cost: Lock contention\n\n\n\n\n\n      Only one thread holds the mutex; others wait and the protected region is serialized",
+            "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/58/preview"
+          }
+        ],
+        "type": "short-answer",
+        "answer": "Mutex",
+        "hint": "Consider the mechanism that ensures only one thread executes the critical section at a time.",
+        "explanation": "A mutex serializes access to the critical section, preventing race conditions on the shared sum.",
+        "options": [],
+        "accepted_answers": [
+          "Mutex",
+          "pthread_mutex",
+          "lock",
+          "mutex lock"
+        ]
+      },
+      "elapsed_s": 2.29
+    }
+  ]
+}

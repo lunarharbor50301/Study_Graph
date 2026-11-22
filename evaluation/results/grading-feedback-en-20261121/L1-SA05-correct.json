@@ -1,0 +1,42 @@
+{
+  "question": "L1-SA05",
+  "variant": "correct",
+  "student_answer": "Both workers may load the same original value. Holding a mutex throughout the update makes the updates run one at a time.",
+  "raw_response": {
+    "id": "0b882a38-b871-4b6b-90bf-900ed8d15511",
+    "object": "chat.completion",
+    "created": 1795271849,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":2},\"errors\":[],\"missing\":[],\"feedback\":\"Correct: identifies the lost-update race (both read the old value) and that the mutex serializes the whole update.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 559,
+      "completion_tokens": 51,
+      "total_tokens": 610,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 559
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 2
+    },
+    "errors": [],
+    "missing": [],
+    "feedback": "Correct: identifies the lost-update race (both read the old value) and that the mutex serializes the whole update."
+  }
+}

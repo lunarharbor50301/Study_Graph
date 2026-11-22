@@ -1,0 +1,26 @@
+{
+  "id": "L1-EN07",
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      57,
+      58
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 57,58. Describe two threads losing an update to a shared sum. Ask for a synchronization mechanism and what it protects.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 57,
+      "request": {
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "topic": "Protecting a shared counter",
+        "query": "Protecting a shared counter",
+        "instructions": "Write one English short-answer question using only physical PDF pages 57,58. Describe two threads losing an update to a shared sum. Ask for a synchronization mechanism and what it protects.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L1"
+}

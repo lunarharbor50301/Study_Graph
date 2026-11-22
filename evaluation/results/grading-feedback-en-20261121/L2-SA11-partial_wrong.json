@@ -1,0 +1,47 @@
+{
+  "question": "L2-SA11",
+  "variant": "partial_wrong",
+  "student_answer": "Independent banks can overlap work with preparation in another bank. Every rank on a channel has a dedicated independent channel data bus.",
+  "raw_response": {
+    "id": "0e080447-740d-4311-9774-1b0940ad7c2b",
+    "object": "chat.completion",
+    "created": 1795271862,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[{\"point\":\"P2\",\"span\":\"Every rank on a channel has a dedicated independent channel data bus.\"}],\"missing\":[],\"feedback\":\"P1 is correct. P2 is contradicted: ranks on the same channel share the channel data bus, not a dedicated independent bus per rank.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 464,
+      "completion_tokens": 76,
+      "total_tokens": 540,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 208
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P2",
+        "span": "Every rank on a channel has a dedicated independent channel data bus."
+      }
+    ],
+    "missing": [],
+    "feedback": "P1 is correct. P2 is contradicted: ranks on the same channel share the channel data bus, not a dedicated independent bus per rank."
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "question": "L1-SA04",
+  "variant": "omission",
+  "student_answer": "Lanes of the same warp follow different branch paths.",
+  "raw_response": {
+    "id": "f2e73e39-0062-4896-b26f-41ff15fd2c9b",
+    "object": "chat.completion",
+    "created": 1795271848,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[],\"missing\":[\"P2\"],\"feedback\":\"Correctly states that lanes in the same warp take different branch paths. However, you did not explain the effect on SIMD utilization: executing a path with only some lanes active wastes pipeline utilization.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 458,
+      "completion_tokens": 67,
+      "total_tokens": 525,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 202
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P2"
+    ],
+    "feedback": "Correctly states that lanes in the same warp take different branch paths. However, you did not explain the effect on SIMD utilization: executing a path with only some lanes active wastes pipeline utilization."
+  }
+}

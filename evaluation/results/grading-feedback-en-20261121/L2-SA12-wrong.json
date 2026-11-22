@@ -1,0 +1,51 @@
+{
+  "question": "L2-SA12",
+  "variant": "wrong",
+  "student_answer": "All threads in a block can directly address another thread's local variables. It is always stored in on-chip registers.",
+  "raw_response": {
+    "id": "ab924641-ceb6-4d0f-a0fb-8e45b891b948",
+    "object": "chat.completion",
+    "created": 1795271864,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[{\"point\":\"P1\",\"span\":\"All threads in a block can directly address another thread's local variables.\"},{\"point\":\"P2\",\"span\":\"It is always stored in on-chip registers.\"}],\"missing\":[],\"feedback\":\"Local memory is private to each thread, not shared across a block, and it usually resides in device DRAM (passing through L1/L2), not always in on-chip registers.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 356,
+      "completion_tokens": 102,
+      "total_tokens": 458,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 228
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P1",
+        "span": "All threads in a block can directly address another thread's local variables."
+      },
+      {
+        "point": "P2",
+        "span": "It is always stored in on-chip registers."
+      }
+    ],
+    "missing": [],
+    "feedback": "Local memory is private to each thread, not shared across a block, and it usually resides in device DRAM (passing through L1/L2), not always in on-chip registers."
+  }
+}

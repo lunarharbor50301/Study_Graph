@@ -1,0 +1,45 @@
+{
+  "question": "L2-SA13",
+  "variant": "off_topic",
+  "student_answer": "The lecture is part of a computing course.",
+  "raw_response": {
+    "id": "9f01dd26-cced-4eba-b488-588ac8fea3b7",
+    "object": "chat.completion",
+    "created": 1795271866,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[],\"missing\":[\"P1\",\"P2\"],\"feedback\":\"Your answer is off-topic and does not address the question. State that different addresses in one bank require serialized service rounds, while same-address reads can be broadcast.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 358,
+      "completion_tokens": 66,
+      "total_tokens": 424,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 230
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P1",
+      "P2"
+    ],
+    "feedback": "Your answer is off-topic and does not address the question. State that different addresses in one bank require serialized service rounds, while same-address reads can be broadcast."
+  }
+}

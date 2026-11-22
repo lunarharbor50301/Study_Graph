@@ -1,0 +1,42 @@
+{
+  "question": "L2-SA11",
+  "variant": "correct",
+  "student_answer": "Different banks can prepare and serve work concurrently, but returning data still uses the common channel bus.",
+  "raw_response": {
+    "id": "e226c168-f885-4c3c-9621-7ec95a405e3a",
+    "object": "chat.completion",
+    "created": 1795271861,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":1},\"errors\":[],\"missing\":[],\"feedback\":\"P1 is correct: banks overlap preparation and serving. P2 is only partly correct: you mention the shared channel bus, but the rubric specifically requires that ranks on the same channel share the data bus; the rank-sharing detail is missing.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 459,
+      "completion_tokens": 73,
+      "total_tokens": 532,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 459
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 1
+    },
+    "errors": [],
+    "missing": [],
+    "feedback": "P1 is correct: banks overlap preparation and serving. P2 is only partly correct: you mention the shared channel bus, but the rubric specifically requires that ranks on the same channel share the data bus; the rank-sharing detail is missing."
+  }
+}

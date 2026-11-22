@@ -1,0 +1,47 @@
+{
+  "question": "L2-SA10",
+  "variant": "partial_wrong",
+  "student_answer": "Misses add 4 cycles on average. The total average is 102 cycles.",
+  "raw_response": {
+    "id": "4e924935-ad12-4003-af87-f0dabb83a500",
+    "object": "chat.completion",
+    "created": 1795271860,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[{\"point\":\"P2\",\"span\":\"The total average is 102 cycles.\"}],\"missing\":[],\"feedback\":\"P1 is correct: 4% × 100 = 4 cycles average miss cost. P2 is wrong: AMAT = 2 + 4 = 6 cycles, not 102.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 397,
+      "completion_tokens": 82,
+      "total_tokens": 479,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 141
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P2",
+        "span": "The total average is 102 cycles."
+      }
+    ],
+    "missing": [],
+    "feedback": "P1 is correct: 4% × 100 = 4 cycles average miss cost. P2 is wrong: AMAT = 2 + 4 = 6 cycles, not 102."
+  }
+}

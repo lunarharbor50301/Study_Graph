@@ -1,0 +1,96 @@
+{
+  "id": "L2-MT01",
+  "document_id": "ACS-L2",
+  "session": "multi-96a9c93658da4a15b024990383a18f22",
+  "job": "30603",
+  "turns": [
+    {
+      "question": "Explain temporal locality and spatial locality.",
+      "status": "done",
+      "answer": "## Temporal Locality and Spatial Locality\n\nThese are two key concepts in computer architecture that explain why **caches are effective** at speeding up memory access.\n\n### Temporal Locality\nA piece of data is **quickly reused in the future**. In other words, if a value is accessed once, it is likely to be accessed again soon.\n\n- **Example:** Loops. A variable like `D` that is reused on every iteration of a loop exhibits temporal locality.\n- In the lecture's code example, `D` is reused every iteration of the loop `for (i = 0; i < 100; i++) { C[i] = A[i] * B[i] + D; }`, so it benefits from temporal locality. [S3]\n\n### Spatial Locality\nThe **neighbors** of the current data access tend to be accessed in the future. In other words, if a memory location is accessed, nearby memory locations are likely to be accessed soon as well.\n\n- **Example:** Arrays. When you iterate through an array, you access elements sequentially (e.g., `C[0]`, `C[1]`, `C[2]`, …), so neighboring elements are used in sequence.\n- In the lecture's example, arrays `A`, `B`, and `C` are accessed in sequence, demonstrating spatial locality. The hardware exploits this by fetching an entire **cache line** at once (\"fetch once, cache a line\"). [S3]\n\n### Why It Matters\nThese two forms of locality are the \"hot feature\" that makes caches useful. By capturing localities with high-speed caches, the system can address the **memory wall** — the growing gap between CPU speed and memory speed. [S2]\n\nIn short:\n| Type | Idea | Typical Example |\n|---|---|---|\n| **Temporal** | Same data reused soon | Loop variables, counters |\n| **Spatial** | Nearby data accessed soon | Sequential array traversal |\n\nBoth are exploited by the CPU memory hierarchy to keep frequently or nearby-used data in fast cache, reducing costly main-memory accesses. [S1][S2]",
+      "citations": [
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p24-1",
+          "page": 24,
+          "text": "CPU Memory Hierarchy\n\nLocality: The Hot Feature Makes Caches Useful\n  \"D\" reused every                                 Int A[100], B[100], C[100], D;\n  iteration                  for (i = 0; i < 100; i++) {\n                                   C[i] = A[i] * B[i] +D   Temporal locality\n                                  }\n  \"A\", \"B\", \"C\" used\n                               D     C[99] C[98] C[97] C[96]  in sequence\n                                    . . . . . . . . . . . . . .    Spatial locality\n                             C[7]   C[6]   C[5]   C[4]   C[3]   C[2]   C[1]   C[0]  Fetch once, cache a\n                                    . . . . . . . . . . . . . .  line\n                             B[11]  B[10]  B[9]   B[8]   B[7]   B[6]   B[5]   B[4]\n                              B[3]   B[2]   B[1]   B[0]   A[99] A[98] A[97] A[96]\n                                    . . . . . . . . . . . . . ",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/24/preview",
+          "source": "S3"
+        },
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p23-1",
+          "page": 23,
+          "text": "CPU Memory Hierarchy\n\nLocality: The Hot Feature Makes Caches Useful\n\n\n\n\n\n  Temporal Locality                Spatial Locality\n   A piece of data is quickly reused in      The neighbors of the current data\n    the future.                           access tend to be accessed in the\n                                                  future.    E.g., Loops\n                                                  E.g., array\n\n        Capture localities with high-speed caches to address memory wall.\n\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        23",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/23/preview",
+          "source": "S2"
+        },
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p22-1",
+          "page": 22,
+          "text": "CPU Memory Hierarchy\n\nLocality: The Hot Feature Makes Caches Useful\n\n\n\n\n\n  Temporal Locality                 Spatial Locality\n   A piece of data is quickly reused        The neighbors of the current data\n    in the future.                         access tend to be accessed in the\n                                                   future.    E.g., Loops\n                                                  E.g., array\n\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        22",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/22/preview",
+          "source": "S1"
+        }
+      ],
+      "elapsed_s": 12.62
+    },
+    {
+      "question": "Does repeatedly reading the same variable illustrate the former or the latter?",
+      "status": "done",
+      "answer": "Repeatedly reading the **same** variable illustrates **temporal locality** — the \"former.\"\n\nTemporal locality means a piece of data is quickly reused in the future. If you read the same variable over and over (e.g., a loop counter or a constant like `D` in the lecture's example), you are reusing the *same* data, which is exactly temporal locality. [S1][S3]\n\nSpatial locality, by contrast, is about accessing *neighboring* data (e.g., walking through an array `A[0], A[1], A[2], …`), not the same location again. [S1][S3]",
+      "citations": [
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p22-1",
+          "page": 22,
+          "text": "CPU Memory Hierarchy\n\nLocality: The Hot Feature Makes Caches Useful\n\n\n\n\n\n  Temporal Locality                 Spatial Locality\n   A piece of data is quickly reused        The neighbors of the current data\n    in the future.                         access tend to be accessed in the\n                                                   future.    E.g., Loops\n                                                  E.g., array\n\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        22",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/22/preview",
+          "source": "S1"
+        },
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p24-1",
+          "page": 24,
+          "text": "CPU Memory Hierarchy\n\nLocality: The Hot Feature Makes Caches Useful\n  \"D\" reused every                                 Int A[100], B[100], C[100], D;\n  iteration                  for (i = 0; i < 100; i++) {\n                                   C[i] = A[i] * B[i] +D   Temporal locality\n                                  }\n  \"A\", \"B\", \"C\" used\n                               D     C[99] C[98] C[97] C[96]  in sequence\n                                    . . . . . . . . . . . . . .    Spatial locality\n                             C[7]   C[6]   C[5]   C[4]   C[3]   C[2]   C[1]   C[0]  Fetch once, cache a\n                                    . . . . . . . . . . . . . .  line\n                             B[11]  B[10]  B[9]   B[8]   B[7]   B[6]   B[5]   B[4]\n                              B[3]   B[2]   B[1]   B[0]   A[99] A[98] A[97] A[96]\n                                    . . . . . . . . . . . . . ",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/24/preview",
+          "source": "S3"
+        }
+      ],
+      "elapsed_s": 4.5
+    },
+    {
+      "question": "Switching to a calculation: the hit time is 1 cycle, the miss rate is 10%, and the additional miss penalty is 300 cycles. What is the AMAT?",
+      "status": "done",
+      "answer": "## AMAT Calculation\n\nThe standard AMAT (Average Memory Access Time) formula is:\n\n**AMAT = Hit Time + (Miss Rate × Miss Penalty)**\n\nPlugging in your values:\n\n- Hit Time = 1 cycle\n- Miss Rate = 10% = 0.10\n- Miss Penalty = 300 cycles\n\n**AMAT = 1 + (0.10 × 300) = 1 + 30 = 31 cycles**\n\nSo the average memory access time is **31 cycles**.\n\n> **Note:** This uses the basic single-level cache formula. If the miss penalty of 300 cycles is meant to be *on top of* the hit time (i.e., the total time on a miss is 1 + 300 = 301 cycles), the formula would be:\n> AMAT = 1 + 0.10 × 301 = 1 + 30.1 = **31.1 cycles**\n>\n> The difference is small, but the first form (31 cycles) is the most commonly used convention in the lecture context, where the miss penalty is treated as the *additional* cost beyond the hit time. [S1]",
+      "citations": [
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p22-1",
+          "page": 22,
+          "text": "CPU Memory Hierarchy\n\nLocality: The Hot Feature Makes Caches Useful\n\n\n\n\n\n  Temporal Locality                 Spatial Locality\n   A piece of data is quickly reused        The neighbors of the current data\n    in the future.                         access tend to be accessed in the\n                                                   future.    E.g., Loops\n                                                  E.g., array\n\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        22",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/22/preview",
+          "source": "S1"
+        }
+      ],
+      "elapsed_s": 5.76
+    },
+    {
+      "question": "Change only the previous miss rate to 5%, keeping everything else unchanged. What is the result? Cite the formula page.",
+      "status": "done",
+      "answer": "## AMAT with a 5% Miss Rate\n\nUsing the formula from the lecture (see page 27):\n\n**AMAT = Hit Time + Miss Rate × Miss Penalty** [S4]\n\nWith the updated values:\n- Hit Time = 1 cycle\n- Miss Rate = 5% = 0.05\n- Miss Penalty = 300 cycles\n\n**AMAT = 1 + 0.05 × 300 = 1 + 15 = 16 cycles**\n\nSo the average memory access time drops from 31 cycles (at 10%) to **16 cycles** (at 5%).\n\nThe formula and the original 10% example (AMAT = 1 + 0.1 × 300 = 31 cycles) are both shown on page 27 of the lecture. [S4]",
+      "citations": [
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p27-1",
+          "page": 27,
+          "text": "CPU Memory Hierarchy\n\nMemory Hierarchy Performance\n\n\n      1 clk                                 300 clks\n                    First-level                                  Main\n               Cache                               Memory\n      Hit Time              Miss % * Miss penalty                                                  (DRAM)\n\n  Average Memory Access Time (AMAT)\n    = Hit Time + Miss rate * Miss Penalty\n    = Thit(L1) + Miss%(L1) * T(memory)\n  Example:\n    Cache Hit = 1 cycle\n    Miss rate = 10% = 0.1\n    Miss penalty = 300 cycles\n   AMAT = 1 + 0.1 * 300 = 31 cycles\n  Can we improve it?\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        27",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/27/preview",
+          "source": "S4"
+        }
+      ],
+      "elapsed_s": 8.8
+    }
+  ]
+}

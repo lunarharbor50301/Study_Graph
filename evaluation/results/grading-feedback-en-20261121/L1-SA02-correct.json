@@ -1,0 +1,42 @@
+{
+  "question": "L1-SA02",
+  "variant": "correct",
+  "student_answer": "A consumer needs a register result from an earlier producer. Forwarding routes the result directly to the consumer before write-back.",
+  "raw_response": {
+    "id": "0008a1ba-57c5-4c83-aa71-4d2253d247d5",
+    "object": "chat.completion",
+    "created": 1795271845,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":2},\"errors\":[],\"missing\":[],\"feedback\":\"Both parts are correct: RAW is caused by a consumer needing a register result from an earlier producer, and forwarding routes the result directly to the consumer before write-back.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 536,
+      "completion_tokens": 58,
+      "total_tokens": 594,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 536
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 2
+    },
+    "errors": [],
+    "missing": [],
+    "feedback": "Both parts are correct: RAW is caused by a consumer needing a register result from an earlier producer, and forwarding routes the result directly to the consumer before write-back."
+  }
+}

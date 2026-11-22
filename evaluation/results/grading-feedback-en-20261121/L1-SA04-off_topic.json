@@ -1,0 +1,45 @@
+{
+  "question": "L1-SA04",
+  "variant": "off_topic",
+  "student_answer": "The lecture is part of a computing course.",
+  "raw_response": {
+    "id": "4909b1f4-51f4-4a3d-97f4-e75bf2043dce",
+    "object": "chat.completion",
+    "created": 1795271849,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[],\"missing\":[\"P1\",\"P2\"],\"feedback\":\"Your answer does not address the question. State that divergence occurs when lanes in the same warp take different branch paths, and that executing a path with only some lanes active reduces SIMD utilization.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 456,
+      "completion_tokens": 69,
+      "total_tokens": 525,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 200
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P1",
+      "P2"
+    ],
+    "feedback": "Your answer does not address the question. State that divergence occurs when lanes in the same warp take different branch paths, and that executing a path with only some lanes active reduces SIMD utilization."
+  }
+}

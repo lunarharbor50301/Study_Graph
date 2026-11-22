@@ -1,0 +1,26 @@
+{
+  "id": "L2-EN05",
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      36,
+      37
+    ],
+    "instruction": "Write one English true-false question using only physical PDF pages 36,37. Test whether independent banks can overlap work. Explain what can overlap.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 36,
+      "request": {
+        "type": "true-false",
+        "difficulty": "Foundational",
+        "topic": "DRAM bank parallelism",
+        "query": "DRAM bank parallelism",
+        "instructions": "Write one English true-false question using only physical PDF pages 36,37. Test whether independent banks can overlap work. Explain what can overlap.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L2"
+}

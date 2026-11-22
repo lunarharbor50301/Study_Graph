@@ -1,0 +1,44 @@
+{
+  "question": "L2-SA11",
+  "variant": "omission",
+  "student_answer": "Independent banks can overlap work with preparation in another bank.",
+  "raw_response": {
+    "id": "ad5bd5e8-27a2-4fa8-9e93-46be52d0ae01",
+    "object": "chat.completion",
+    "created": 1795271861,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[],\"missing\":[\"P2\"],\"feedback\":\"P1 is correct. You omitted the limiting resource: ranks on the same channel share its data bus, which limits transfers.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 451,
+      "completion_tokens": 53,
+      "total_tokens": 504,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 195
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P2"
+    ],
+    "feedback": "P1 is correct. You omitted the limiting resource: ranks on the same channel share its data bus, which limits transfers."
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "version": "0.3",
+  "version": "0.3-en",
   "status": "human_review_pending",
   "document_id": "ACS-L2",
   "cases": [
@@ -10,14 +10,14 @@
         {
           "turn": 1,
           "input": {
-            "user_message": "解释时间局部性和空间局部性。"
+            "user_message": "Explain temporal locality and spatial locality."
           },
           "expected": {
             "required_points": [
-              "时间=同数据复用",
-              "空间=邻近位置访问"
+              "Temporal locality means reusing the same data",
+              "Spatial locality means accessing nearby locations"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L2",
@@ -26,23 +26,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 2,
           "input": {
-            "user_message": "反复读取同一个变量体现前者还是后者？"
+            "user_message": "Does repeatedly reading the same variable illustrate the former or the latter?"
           },
           "expected": {
             "required_points": [
-              "前者指时间局部性",
-              "反复读取同一变量体现时间局部性"
+              "Resolve the former as temporal locality",
+              "Repeatedly reading the same variable illustrates temporal locality"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L2",
@@ -51,23 +51,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 3,
           "input": {
-            "user_message": "换成计算题：命中1周期，miss rate 10%，额外miss penalty 300周期，AMAT是多少？"
+            "user_message": "Switching to a calculation: the hit time is 1 cycle, the miss rate is 10%, and the additional miss penalty is 300 cycles. What is the AMAT?"
           },
           "expected": {
             "required_points": [
-              "识别话题转为AMAT",
-              "1+.1*300=31周期"
+              "Recognize the switch to AMAT",
+              "1+.1*300=31 cycles"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L2",
@@ -81,24 +81,24 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 4,
           "input": {
-            "user_message": "只把刚才的未命中率改为5%，其余不变呢？请引用公式页。"
+            "user_message": "Change only the previous miss rate to 5%, keeping everything else unchanged. What is the result? Cite the formula page."
           },
           "expected": {
             "required_points": [
-              "保持hit=1,penalty=300",
-              "1+.05*300=16周期",
-              "引用26或27页"
+              "Retain hit time=1 and penalty=300",
+              "1+.05*300=16 cycles",
+              "Cite page 26 or 27"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L2",
@@ -112,9 +112,9 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         }
@@ -127,14 +127,14 @@
         {
           "turn": 1,
           "input": {
-            "user_message": "CUDA local memory 是线程私有还是所有线程共享？通常在哪里？"
+            "user_message": "Is CUDA local memory private to a thread or shared by all threads? Where does it usually reside?"
           },
           "expected": {
             "required_points": [
-              "线程私有",
-              "通常在设备DRAM，经过L1/L2"
+              "Thread-private",
+              "Usually resides in device DRAM and passes through L1/L2"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L2",
@@ -143,23 +143,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 2,
           "input": {
-            "user_message": "所以它名字里有local，就一定和寄存器一样快？"
+            "user_message": "So because its name includes local, must it be as fast as registers?"
           },
           "expected": {
             "required_points": [
-              "它指local memory",
-              "不能由名称推断物理位置或保证寄存器级速度"
+              "Resolve it as local memory",
+              "The name does not establish its physical location or guarantee register-level speed"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L2",
@@ -168,23 +168,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 3,
           "input": {
-            "user_message": "换个问题：共享内存里同bank不同地址访问和同地址读取有什么区别？"
+            "user_message": "A different question: in shared memory, how do accesses to different addresses in the same bank differ from reads of the same address?"
           },
           "expected": {
             "required_points": [
-              "正确切换到共享内存",
-              "不同地址需要多个轮次，同地址读可广播"
+              "Correctly switch to shared memory",
+              "Different addresses require multiple service rounds; reads of the same address can use broadcast"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L2",
@@ -193,24 +193,24 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 4,
           "input": {
-            "user_message": "这与全局内存的coalescing是同一件事吗？给出处。"
+            "user_message": "Is that the same thing as global-memory coalescing? Cite the source."
           },
           "expected": {
             "required_points": [
-              "这指共享内存bank冲突/广播",
-              "区分bank服务与warp地址合并事务",
-              "引用48和51页"
+              "Resolve that as shared-memory bank conflicts/broadcast",
+              "Distinguish bank service from combining warp addresses into memory transactions",
+              "Cite pages 48 and 51"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L2",
@@ -224,9 +224,9 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         }
@@ -239,14 +239,14 @@
         {
           "turn": 1,
           "input": {
-            "user_message": "Grace的LPDDR扩展会让GPU的HBM本身变大吗？"
+            "user_message": "Does the LPDDR expansion in Grace make the GPU HBM itself larger?"
           },
           "expected": {
             "required_points": [
-              "不会增大HBM本身",
-              "扩大可寻址容量"
+              "Does not enlarge HBM itself",
+              "Expands addressable capacity"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L2",
@@ -255,23 +255,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 2,
           "input": {
-            "user_message": "那热数据和冷数据应该分别放哪一层？"
+            "user_message": "Which tier should hot data and cold data go into, respectively?"
           },
           "expected": {
             "required_points": [
-              "承接HBM与LPDDR",
-              "热且延迟敏感/常复用放HBM，大且冷的数据可放LPDDR"
+              "Continue the HBM versus LPDDR context",
+              "Hot, latency-critical or frequently reused data goes in HBM; large cold data can go in LPDDR"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L2",
@@ -280,23 +280,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 3,
           "input": {
-            "user_message": "如果某块冷数据只访问一次，值得立即搬到前者吗？"
+            "user_message": "If a piece of cold data is accessed only once, is it worth moving it immediately to the former?"
           },
           "expected": {
             "required_points": [
-              "前者指HBM",
-              "不能保证值得，比较未来复用收益与搬运管理成本"
+              "Resolve the former as HBM",
+              "It is not necessarily worthwhile; compare future reuse savings with transfer and bookkeeping costs"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L2",
@@ -305,23 +305,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 4,
           "input": {
-            "user_message": "请给出支持刚才迁移判断的具体页码。"
+            "user_message": "Give the specific page supporting the migration decision you just made."
           },
           "expected": {
             "required_points": [
-              "指迁移成本收益判断",
-              "引用69页，不仅给介绍LPDDR的68页"
+              "Refer to the migration cost-benefit decision",
+              "Cite page 69, not only the LPDDR introduction on page 68"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L2",
@@ -330,13 +330,15 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         }
       ]
     }
-  ]
+  ],
+  "language": "en",
+  "translation_note": "English translation preserving original dialogue IDs, conditions, evidence, and scoring requirements."
 }

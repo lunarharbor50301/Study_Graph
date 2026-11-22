@@ -1,0 +1,45 @@
+{
+  "question": "L1-SA05",
+  "variant": "off_topic",
+  "student_answer": "The lecture is part of a computing course.",
+  "raw_response": {
+    "id": "e05b6e94-936e-42e4-8281-77c8a38c4540",
+    "object": "chat.completion",
+    "created": 1795271851,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[],\"missing\":[\"P1\",\"P2\"],\"feedback\":\"Your answer is off-topic and does not address the question. Explain that both threads can read the old sum before either writes (lost update), and that a mutex serializes the read-modify-write critical section so only one thread executes it at a time.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 543,
+      "completion_tokens": 85,
+      "total_tokens": 628,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "prompt_cache_hit_tokens": 384,
+      "prompt_cache_miss_tokens": 159
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P1",
+      "P2"
+    ],
+    "feedback": "Your answer is off-topic and does not address the question. Explain that both threads can read the old sum before either writes (lost update), and that a mutex serializes the read-modify-write critical section so only one thread executes it at a time."
+  }
+}

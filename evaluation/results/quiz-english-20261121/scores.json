@@ -1,0 +1,502 @@
+[
+  {
+    "id": "L1-EN01",
+    "slot": 1,
+    "document": "ACS-L1",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 1,
+        "reason": "题目只涉及稳态吞吐量（每周期1条指令），未按要求让学生区分单条指令的延迟（如M+N-1总周期或单指令穿越五级所需周期），缺少任务要求的核心对比维度。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案1条指令/周期正确，解释与第17页“Perfect Pipeline: One instruction completes per cycle after filling the pipeline”一致，数值和单位无误。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "引用的第17页明确给出“One instruction completes per cycle after filling the pipeline”和最大吞吐量，足以支持答案与解释。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题干条件清晰（五级流水、填满后、无气泡），问法明确，短答题格式与认知要求匹配，存在唯一正确答案。"
+      }
+    },
+    "total": 8
+  },
+  {
+    "id": "L1-EN02",
+    "slot": 1,
+    "document": "ACS-L1",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目覆盖了依赖指令对、数据冒险以及转发机制这一核心主题，并包含机制识别与原因解释两个子问题，符合任务要求。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "正确答案准确指出数据转发将结果从流水线寄存器直接送到ALU输入，使消费者指令提前执行并减少停顿，与第22页内容一致，解释完整。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "第22页明确支持转发机制、流水线寄存器到ALU输入的直接传递以及减少停顿提高效率等关键论点；第18页提供数据冒险背景，引用页面充分支撑答案。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题干条件清晰，四个选项互斥且仅有一个正确，认知难度符合基础水平，可明确作答。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L1-EN03",
+    "slot": 1,
+    "document": "ACS-L1",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目完整覆盖了Amdahl定律的核心要求：固定规模工作负载、80%可并行比例、4个处理器，并同时要求有限加速比S(4)和处理器数趋于无穷时的极限加速比，所有子问题均已包含。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案完全正确：S(4)=1/((0.2)+0.8/4)=1/0.4=2.5，极限为1/(1-0.8)=5，解释完整无误。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "第66页明确给出Amdahl公式S(p)=1/((1-f)+f/p)、f与1-f的定义以及固定问题规模下串行部分限制加速比的说明，足以支撑全部推导。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "条件清晰充分（f=0.8，p=4），格式为短答案，认知要求适当，答案唯一确定。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L1-EN04",
+    "slot": 1,
+    "document": "ACS-L1",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目完整覆盖了要求的主场景（偶/奇lane走不同分支的warp）以及两个子问题：对SIMD利用率的影响和原因，符合任务要求。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案正确指出只有部分线程执行、浪费SIMD流水线利用率，解释与讲义第44页的分支发散结论一致，无遗漏或错误。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "实际引用的第45页给出了偶/奇lane分支示例，第44页明确给出分支发散导致只有部分线程执行、浪费SIMD流水线利用率的结论，足以支撑全部关键论断。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题目条件清晰（偶/奇lane分支示例），要求短答，认知需求适当，答案唯一且可判定。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L1-EN05",
+    "slot": 1,
+    "document": "ACS-L1",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目覆盖了SMT的核心概念，并明确测试逻辑线程是否共享全部架构状态，同时要求在解释中区分私有状态与共享执行资源，完全符合任务要求。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案为False且正确，解释准确指出每个逻辑线程拥有私有架构状态，而执行单元、缓存、队列和预测器为共享资源，结论与解释完整无误。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "第29页明确列出“Each logical thread has its own architectural state”和“Execution units, caches, queues, and predictors are shared”，直接支持答案与解释的全部关键主张。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题目为清晰的True/False格式，条件充分，认知难度适合基础水平，且只有一个正确选项，不存在歧义或多正确答案问题。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L1-EN06",
+    "slot": 1,
+    "document": "ACS-L1",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目覆盖了数据并行与任务并行的核心区分，并聚焦于“对数组元素独立施加相同操作”这一场景，符合任务要求。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案“Data parallelism”正确，解释与第33页内容一致，即不同数据可并行处理，如向量和数组处理。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "引用的第33页明确列出Data Parallelism及“Different pieces of data can be operated in parallel”“Vector processing and array processing”，直接支持答案。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题干清晰，四个选项互斥且仅有一个正确答案，认知要求适合基础难度。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L1-EN07",
+    "slot": 1,
+    "document": "ACS-L1",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目覆盖了任务要求的全部要素：描述两个线程更新共享sum丢失更新（通过概念与提示体现）、询问同步机制（mutex）以及它保护什么（临界区/共享状态）。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案Mutex正确，解释说明互斥锁串行化临界区访问、防止共享sum上的竞态，结论与解释完整正确。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "第58页明确给出mutex模式、串行化访问临界区及避免竞态，直接支撑答案；第57页提供丢失更新与临界区背景，引用页面支持全部关键论断。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题目条件清晰，为简答题格式，认知要求适当，答案唯一明确（mutex），可作答。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L1-EN08",
+    "slot": 1,
+    "document": "ACS-L1",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目完整覆盖了任务要求的核心主题：使用给定 blockIdx.x=2、blockDim.x=64、threadIdx.x=3 计算一维全局索引，且为单选题，符合所有要求。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "计算正确：i = 2*64 + 3 = 131，答案与解释完整无误，选项 131 唯一正确。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "第62页明确给出公式 i = blockIdx.x * blockDim.x + threadIdx.x 及 blockDim.x、threadIdx.x 的定义，足以支持推导；第61页虽未直接引用但属允许范围。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "条件清晰充分，格式为单选题，认知要求适当，四个选项中仅 131 正确，无歧义。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L1-EN09",
+    "slot": 1,
+    "document": "ACS-L1",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目完整覆盖了任务要求：使用第63页内容，以英文判断题形式测试__syncthreads()是否同步内核所有块，并要求解释其实际作用域。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案False正确，解释准确指出__syncthreads()作用域为一个CUDA块，跨块全局同步需通过启动独立内核实现，与第63页内容一致。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "引用的第63页明确写出'Scope: One CUDA block'以及'Kernel boundary ... Achieved by launching separate kernels'，直接支持答案与解释。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "判断题条件清晰，选项为True/False，答案唯一，认知难度符合基础水平。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L1-EN10",
+    "slot": 1,
+    "document": "ACS-L1",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目覆盖了Roofline模型的核心要求：计算算术强度与带宽乘积得到吞吐量上界，并判断限制资源（内存受限），与任务指定的场景和子问题完全一致。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "计算正确：2 FLOPs/byte × 100 GB/s = 200 GFLOP/s，小于峰值500 GFLOP/s，因此为内存受限；答案与解释完整无误。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "第67页明确给出算术强度定义、内存受限时带宽×强度的上界公式以及计算受限/内存受限的区分，足以支持全部关键结论。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题目给出了全部必要数值和明确格式要求，条件充分，认知难度适合Advanced，且为简答题不存在多正确选项问题。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L2-EN01",
+    "slot": 1,
+    "document": "ACS-L2",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 2,
+        "reason": "覆盖了时间局部性和空间局部性两个核心概念，但任务要求结合“重复标量使用”和“顺序数组遍历”的具体场景来识别局部性类型，题目仅用通用定义提问，缺少这两个具体场景要求。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案“Temporal locality; Spatial locality”完全正确，解释与第22页定义一致，无遗漏或错误。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "实际引用的第22页明确给出时间局部性（数据未来被快速重用）和空间局部性（邻近数据未来被访问）的定义，足以支持答案；第24页虽未引用但可佐证数组遍历场景。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "问题清晰，条件充分，短答题格式合适，认知难度为基础级，答案唯一。"
+      }
+    },
+    "total": 9
+  },
+  {
+    "id": "L2-EN02",
+    "slot": 1,
+    "document": "ACS-L2",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目完整覆盖了任务要求的主题（CUDA局部内存），要求将作用域与物理位置正确配对，且为单选、恰好一个正确配对，符合所有要求。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "正确答案与第46页原文一致：局部内存为线程私有作用域，通常位于设备DRAM并经过L1/L2；其余选项均错误（共享内存、寄存器、主机内存）。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "第46页明确给出局部内存作用域与物理位置的完整表述，直接支持正确答案及解释。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题干清晰，条件充分，四个选项中仅一个正确配对，认知难度符合基础水平，可唯一作答。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L2-EN03",
+    "slot": 1,
+    "document": "ACS-L2",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目完整覆盖了指定主题（AMAT计算），使用了任务要求的全部给定参数（命中时间2周期、缺失率4%、额外缺失代价100周期），并要求以周期为单位给出AMAT，符合所有要求。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案与解释完全正确：AMAT = 命中时间 + 缺失率 × 缺失代价 = 2 + 0.04 × 100 = 6周期，计算无误，单位正确。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "引用的第26页明确给出AMAT公式（AMAT = Hit time + Miss rate × Miss penalty），第27页也给出相同公式及示例，足以支持该计算。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题目条件清晰充分，格式为简答题，认知要求适当，答案唯一（6周期），无歧义。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L2-EN04",
+    "slot": 1,
+    "document": "ACS-L2",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目完整覆盖了任务要求：要求区分连续全局内存warp加载与所有lane读取同一字的共享内存warp加载，并要求分别指出两种机制（coalescing与broadcast），主题与子要求均齐全。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案正确：连续全局地址通过coalescing合并为更少事务，同地址共享内存读取通过broadcast服务，解释与第48、51页内容一致，无遗漏或错误。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "第48页明确支持coalescing将邻近地址打包为更少事务，第51页明确支持同地址读取可使用broadcast，两处关键论断均有实际引用页面支撑。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题目条件清晰、格式为简答题、认知要求适当，答案唯一且可由所给页面推导，不存在歧义或多正确答案问题。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L2-EN05",
+    "slot": 1,
+    "document": "ACS-L2",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目覆盖了任务要求的核心主题：多bank DRAM中独立bank的工作重叠，并明确要求解释什么可以重叠（一个bank的工作与另一个bank的准备重叠），符合所有要求。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案为True，与第36页原文'Work in one bank can overlap preparation in another'完全一致，解释也正确指出共享数据总线仍限制通道一次返回的数据量。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "引用的第36页明确包含'Banks provide independent storage arrays. Work in one bank can overlap preparation in another'以及共享数据总线限制的说明，直接支持所有关键论断。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题目为清晰的True/False格式，条件充分，答案唯一（True），认知难度为基础级，适合该任务。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L2-EN06",
+    "slot": 1,
+    "document": "ACS-L2",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目聚焦独立内存通道并发请求对聚合带宽的影响，完全覆盖任务要求的场景与子问题。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "正确答案与第40页表述一致：独立通道在请求并发使用时累加带宽，聚合带宽为各独立内存控制器通道之和；解释完整无误。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "第40页明确给出“Independent channels add bandwidth when requests use them concurrently”，并说明聚合带宽为各独立通道之和，直接支撑答案。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题干条件清晰，四个选项唯一正确，干扰项均可由第40页内容排除，认知要求符合Advanced。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L2-EN07",
+    "slot": 1,
+    "document": "ACS-L2",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目聚焦HBM封装中密集短互连对带宽和每比特能耗的影响，覆盖了任务要求的两个效应，属于核心主题。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案正确指出密集短互连同时改善带宽和每比特能耗，与讲义第55页表述一致，解释完整。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "引用的第55页明确写出“Dense, short wiring improves bandwidth and energy per bit”，直接支持答案；第57页也有类似表述。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "问题条件清晰，要求同时说明两个效应，格式为简答题，认知难度基础，答案唯一可判定。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L2-EN08",
+    "slot": 1,
+    "document": "ACS-L2",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目聚焦于第59页DDR、GDDR与HBM权衡这一主题，并具体询问哪种技术适合低成本可扩展容量，完整覆盖了所需主题与子问题。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "正确答案DDR与页面内容一致：页面明确说明DDR favors capacity, expandability, and cost per GB，解释也准确引用了这一依据，结论与说明完整正确。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "实际引用的第59页原文直接支持DDR在容量、可扩展性和每GB成本上的优势，足以推出正确答案。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题干条件清晰，四个选项互斥且仅DDR符合低成本可扩展容量的描述，格式与认知难度适合基础单选题。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L2-EN09",
+    "slot": 1,
+    "document": "ACS-L2",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目聚焦于CXL池化与一致性共享的区分，属于第67页核心主题，且明确测试“分配独立池化容量是否自动带来一致性共享访问”这一要求，场景与子问题完整。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案为False且解释正确：池化只是把内存设备的部分容量分配给不同主机，而CXL 3.0一致性共享是区别于“多主机映射同一内存区域”的独立能力，结论与解释完整无误。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "第67页明确给出“Pooling assigns portions of memory devices to different hosts”以及“CXL 3.0 coherent sharing differs from merely allowing several hosts to map the same memory region”，直接支撑答案与解释。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "题型为True/False，条件清晰，选项唯一且无歧义，认知难度符合Foundational，可明确作答。"
+      }
+    },
+    "total": 10
+  },
+  {
+    "id": "L2-EN10",
+    "slot": 1,
+    "document": "ACS-L2",
+    "delivered": true,
+    "scores": {
+      "coverage": {
+        "score": 3,
+        "reason": "题目聚焦于LPDDR到HBM的晋升条件，完整覆盖了任务要求的核心场景（频繁复用对象、晋升到HBM、转移与簿记成本权衡），无遗漏。"
+      },
+      "accuracy": {
+        "score": 3,
+        "reason": "答案与第69页原文完全一致：只有当未来复用节省超过转移和簿记成本时才值得晋升，结论和解释均正确。"
+      },
+      "evidence": {
+        "score": 2,
+        "reason": "实际引用的第69页明确给出该条件句，直接支持答案；第68页虽在允许范围内但未被引用，不影响证据充分性。"
+      },
+      "answerability": {
+        "score": 2,
+        "reason": "问题条件清晰、格式为简答题、认知要求适当，答案唯一且可从原文直接得出。"
+      }
+    },
+    "total": 10
+  }
+]

@@ -1,0 +1,44 @@
+{
+  "question": "L2-SA13",
+  "variant": "omission",
+  "student_answer": "Different addresses in one bank can require serialized service rounds.",
+  "raw_response": {
+    "id": "f84ae71e-7a2a-49f9-951f-aad0ad1c304a",
+    "object": "chat.completion",
+    "created": 1795271865,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[],\"missing\":[\"P2\"],\"feedback\":\"Correct on bank conflicts (P1). Also mention that same-address reads can be broadcast (P2).\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 361,
+      "completion_tokens": 50,
+      "total_tokens": 411,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 361
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P2"
+    ],
+    "feedback": "Correct on bank conflicts (P1). Also mention that same-address reads can be broadcast (P2)."
+  }
+}

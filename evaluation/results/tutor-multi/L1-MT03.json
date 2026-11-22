@@ -1,0 +1,72 @@
+{
+  "id": "L1-MT03",
+  "document_id": "ACS-L1",
+  "session": "multi-6f7b79bec1034e7d94a938412913b611",
+  "job": "30603",
+  "turns": [
+    {
+      "question": "For a fixed-size program that is 90% parallelizable, what speedup can 10 processors achieve?",
+      "status": "done",
+      "answer": "Using Amdahl's Law for a fixed problem size:\n\n**S(p) = 1 / ((1 − f) + f / p)**\n\nWith f = 0.90 (90% parallelizable) and p = 10 processors:\n\n- Serial fraction: 1 − f = 0.10\n- Parallel part: f / p = 0.90 / 10 = 0.09\n\n**S(10) = 1 / (0.10 + 0.09) = 1 / 0.19 ≈ 5.26×**\n\nSo 10 processors achieve a speedup of about **5.26×**, well below the ideal 10× because the 10% serial portion cannot be sped up. Note that even with infinitely many processors, the maximum speedup for f = 0.90 is capped at 10× (1 / 0.10). See page 66 [S1].",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p66-1",
+          "page": 66,
+          "text": "Performance Models\n  Amdahl's Law: The Serial Fraction Wins\n\n\n\n ¡ When problem size is fixed, even a small serial fraction caps total speedup\n\n\n S(p) = 1 / ((1 - f) + f / p)\n                                                          FIXED PROBLEM SIZE\n\n\n                                                                                          serial            parallelizable work f: parallelizable fraction\n1 - f: serial fraction\n p: number of processors / threads                        More processors squeeze the blue part, but\n                                                                     the purple serial part remains.\nNUMERICAL INTUITION\n\n             f = 0.90                                 f = 0.99\n\n    max speedup -> 10x          max speedup -> 100x",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/66/preview",
+          "source": "S1"
+        }
+      ],
+      "elapsed_s": 13.05
+    },
+    {
+      "question": "What if we increase that to 100?",
+      "status": "done",
+      "answer": "Using the same Amdahl's Law formula with f = 0.90 and p = 100:\n\n- Serial fraction: 1 − f = 0.10\n- Parallel part: f / p = 0.90 / 100 = 0.009\n\n**S(100) = 1 / (0.10 + 0.009) = 1 / 0.109 ≈ 9.17×**\n\nSo 100 processors give a speedup of about **9.17×**, approaching but still below the theoretical maximum of 10× (which is 1 / 0.10). The serial 10% fraction dominates the runtime, so adding more processors yields diminishing returns. See page 66 [S1].",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p66-1",
+          "page": 66,
+          "text": "Performance Models\n  Amdahl's Law: The Serial Fraction Wins\n\n\n\n ¡ When problem size is fixed, even a small serial fraction caps total speedup\n\n\n S(p) = 1 / ((1 - f) + f / p)\n                                                          FIXED PROBLEM SIZE\n\n\n                                                                                          serial            parallelizable work f: parallelizable fraction\n1 - f: serial fraction\n p: number of processors / threads                        More processors squeeze the blue part, but\n                                                                     the purple serial part remains.\nNUMERICAL INTUITION\n\n             f = 0.90                                 f = 0.99\n\n    max speedup -> 10x          max speedup -> 100x",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/66/preview",
+          "source": "S1"
+        }
+      ],
+      "elapsed_s": 6.74
+    },
+    {
+      "question": "So adding more processors can push the speedup beyond 10 times, right?",
+      "status": "done",
+      "answer": "No, that's not correct. For a fixed problem size with f = 0.90, the speedup is **capped at 10×** no matter how many processors you add. This is because:\n\n**S(p) = 1 / ((1 − f) + f / p)**\n\nAs p → ∞, the term f/p → 0, so:\n\n**S(∞) = 1 / (1 − f) = 1 / 0.10 = 10×**\n\nThe 10% serial portion cannot be parallelized, so it sets a hard upper bound on speedup. This is exactly the key insight of Amdahl's Law: \"When problem size is fixed, even a small serial fraction caps total speedup.\" See page 66 [S1].\n\nSo going from 10 to 100 processors improved speedup from ~5.26× to ~9.17×, but it will never exceed 10×. To get beyond 10×, you would need to reduce the serial fraction (e.g., make more of the program parallelizable).",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p66-1",
+          "page": 66,
+          "text": "Performance Models\n  Amdahl's Law: The Serial Fraction Wins\n\n\n\n ¡ When problem size is fixed, even a small serial fraction caps total speedup\n\n\n S(p) = 1 / ((1 - f) + f / p)\n                                                          FIXED PROBLEM SIZE\n\n\n                                                                                          serial            parallelizable work f: parallelizable fraction\n1 - f: serial fraction\n p: number of processors / threads                        More processors squeeze the blue part, but\n                                                                     the purple serial part remains.\nNUMERICAL INTUITION\n\n             f = 0.90                                 f = 0.99\n\n    max speedup -> 10x          max speedup -> 100x",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/66/preview",
+          "source": "S1"
+        }
+      ],
+      "elapsed_s": 6.83
+    },
+    {
+      "question": "Give the supporting page and state the serial fraction in this example.",
+      "status": "done",
+      "answer": "The supporting page is **page 66** [S1].\n\nIn this example, the serial fraction is **1 − f = 1 − 0.90 = 0.10**, i.e., **10%** of the program is serial (non-parallelizable). This is the portion that cannot be sped up by adding more processors, and it is what caps the maximum speedup at 10×. See page 66 [S1].",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p66-1",
+          "page": 66,
+          "text": "Performance Models\n  Amdahl's Law: The Serial Fraction Wins\n\n\n\n ¡ When problem size is fixed, even a small serial fraction caps total speedup\n\n\n S(p) = 1 / ((1 - f) + f / p)\n                                                          FIXED PROBLEM SIZE\n\n\n                                                                                          serial            parallelizable work f: parallelizable fraction\n1 - f: serial fraction\n p: number of processors / threads                        More processors squeeze the blue part, but\n                                                                     the purple serial part remains.\nNUMERICAL INTUITION\n\n             f = 0.90                                 f = 0.99\n\n    max speedup -> 10x          max speedup -> 100x",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/66/preview",
+          "source": "S1"
+        }
+      ],
+      "elapsed_s": 6.6
+    }
+  ]
+}

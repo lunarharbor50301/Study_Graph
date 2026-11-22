@@ -1,0 +1,91 @@
+{
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      33
+    ],
+    "instruction": "Write one English multiple-choice question using only physical PDF pages 33. Describe the same operation applied independently to different array elements. Ask the learner to classify the parallelism.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 33,
+      "request": {
+        "topic": "Data versus task parallelism",
+        "query": "Data versus task parallelism",
+        "type": "multiple-choice",
+        "difficulty": "Foundational",
+        "previous": [],
+        "instructions": "Write one English multiple-choice question using only physical PDF pages 33. Describe the same operation applied independently to different array elements. Ask the learner to classify the parallelism."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ],
+          "raw_response": {
+            "id": "be998b6e-8942-43b7-a504-0d1460eb4d6b",
+            "object": "chat.completion",
+            "created": 1795269381,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\n  \"prompt\": \"According to the passage, which type of parallelism is described as applying the same operation independently to different array elements?\",\n  \"source\": \"S1\",\n  \"options\": [\n    \"Data parallelism\",\n    \"Task parallelism\",\n    \"Thread parallelism\",\n    \"Instruction-level parallelism\"\n  ],\n  \"answer\": \"Data parallelism\",\n  \"accepted_answers\": [],\n  \"hint\": \"Consider the type that involves vector and array processing.\",\n  \"explanation\": \"Data parallelism allows different pieces of data to be operated on in parallel, such as in vector and array processing.\"\n}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 866,
+              "completion_tokens": 127,
+              "total_tokens": 993,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 866
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "Data versus task parallelism",
+        "prompt": "According to the passage, which type of parallelism is described as applying the same operation independently to different array elements?",
+        "citations": [
+          {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p33-1",
+            "page": 33,
+            "text": "From CPU to GPU: Parallelism for Huge Computing Power!\n  Multiprocessors\n\n¡  Parallelism: Do multiple jobs concurrently.\n\n   ¡  Job: instructions, operations, tasks\n\n\n¡ Data Parallelism\n\n   ¡  Different pieces of data can be operated in parallel\n\n   ¡  Vector processing and array processing\n\n\n¡  Task Parallelism\n\n   ¡  Different tasks can be operated in parallel\n\n   ¡  Multithreading",
+            "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/33/preview"
+          }
+        ],
+        "type": "multiple-choice",
+        "answer": "Data parallelism",
+        "hint": "Consider the type that involves vector and array processing.",
+        "explanation": "Data parallelism allows different pieces of data to be operated on in parallel, such as in vector and array processing.",
+        "options": [
+          "Data parallelism",
+          "Task parallelism",
+          "Thread parallelism",
+          "Instruction-level parallelism"
+        ],
+        "accepted_answers": []
+      },
+      "elapsed_s": 2.14
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      48,
+      51
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 48,51. Ask the learner to distinguish a contiguous global warp load from a shared-memory warp load in which all lanes read the same word. Require both mechanisms.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 48,
+      "request": {
+        "topic": "Coalescing versus bank conflicts",
+        "query": "Coalescing versus bank conflicts",
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "previous": [],
+        "instructions": "Write one English short-answer question using only physical PDF pages 48,51. Ask the learner to distinguish a contiguous global warp load from a shared-memory warp load in which all lanes read the same word. Require both mechanisms."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ],
+          "raw_response": {
+            "id": "87dbc17b-b826-4776-be83-ced13eae67a8",
+            "object": "chat.completion",
+            "created": 1795269376,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"prompt\": \"Using the supplied passages, distinguish how a contiguous global-memory warp load is handled versus a shared-memory warp load in which all lanes read the same word. Name the mechanism used in each case.\", \"source\": \"S3\", \"options\": [], \"answer\": \"Coalescing for the contiguous global load; broadcast for the same-address shared load\", \"accepted_answers\": [\"coalescing and broadcast\", \"coalescing; broadcast\", \"global: coalescing, shared: broadcast\", \"coalescing vs broadcast\", \"coalescing and same-address broadcast\"], \"hint\": \"One mechanism packs nearby addresses into fewer transactions; the other lets identical addresses be served together.\", \"explanation\": \"Contiguous global addresses are packed into fewer transactions via coalescing, while same-address shared-memory reads can use broadcast rather than serializing bank conflicts.\"}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 765,
+              "completion_tokens": 185,
+              "total_tokens": 950,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 765
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "Coalescing versus bank conflicts",
+        "prompt": "Using the supplied passages, distinguish how a contiguous global-memory warp load is handled versus a shared-memory warp load in which all lanes read the same word. Name the mechanism used in each case.",
+        "citations": [
+          {
+            "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+            "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p48-1",
+            "page": 48,
+            "text": "GPU Memory Hierarchy\n\nAccess Memory: Coalescing Packs Nearby Addresses into\nFewer Transactions\n\n\n\n\n\n▪ Coalescing is evaluated for one warp memory instruction. Aligned, contiguous\n  addresses touch fewer segments.\n▪ Misalignment can cross extra boundaries. Strided accesses can touch many more\n  segments.\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        48",
+            "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/48/preview"
+          }
+        ],
+        "type": "short-answer",
+        "answer": "Coalescing for the contiguous global load; broadcast for the same-address shared load",
+        "hint": "One mechanism packs nearby addresses into fewer transactions; the other lets identical addresses be served together.",
+        "explanation": "Contiguous global addresses are packed into fewer transactions via coalescing, while same-address shared-memory reads can use broadcast rather than serializing bank conflicts.",
+        "options": [],
+        "accepted_answers": [
+          "coalescing and broadcast",
+          "coalescing; broadcast",
+          "global: coalescing, shared: broadcast",
+          "coalescing vs broadcast",
+          "coalescing and same-address broadcast"
+        ]
+      },
+      "elapsed_s": 2.56
+    }
+  ]
+}

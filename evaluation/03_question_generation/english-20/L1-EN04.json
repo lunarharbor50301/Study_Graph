@@ -1,0 +1,26 @@
+{
+  "id": "L1-EN04",
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      44,
+      45
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 44,45. Give a warp whose even and odd lanes take different branches. Ask for the effect on SIMD utilization and the reason.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 44,
+      "request": {
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "topic": "Warp branch divergence",
+        "query": "Warp branch divergence",
+        "instructions": "Write one English short-answer question using only physical PDF pages 44,45. Give a warp whose even and odd lanes take different branches. Ask for the effect on SIMD utilization and the reason.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L1"
+}

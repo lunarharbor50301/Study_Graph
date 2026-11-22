@@ -1,0 +1,93 @@
+{
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      18,
+      22
+    ],
+    "instruction": "Write one English multiple-choice question using only physical PDF pages 18,22. Present a dependent instruction pair. Ask which mechanism delivers an earlier result directly to the dependent operation and explain why.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 18,
+      "request": {
+        "topic": "Data hazards and forwarding",
+        "query": "Data hazards and forwarding",
+        "type": "multiple-choice",
+        "difficulty": "Foundational",
+        "previous": [],
+        "instructions": "Write one English multiple-choice question using only physical PDF pages 18,22. Present a dependent instruction pair. Ask which mechanism delivers an earlier result directly to the dependent operation and explain why."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5",
+            "S6"
+          ],
+          "raw_response": {
+            "id": "d242a9d0-d4c5-4c21-accf-aa7e5ccc4ae4",
+            "object": "chat.completion",
+            "created": 1795269371,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\n  \"prompt\": \"Consider a dependent instruction pair where the second instruction needs the result of the first. Which mechanism delivers the earlier result directly to the dependent operation, and why is this beneficial?\",\n  \"source\": \"S1\",\n  \"options\": [\n    \"Data forwarding, because it passes the result directly from a pipeline register to the ALU input, allowing the consumer to execute earlier and reducing stalls.\",\n    \"Register renaming, because it eliminates false dependencies by using additional registers.\",\n    \"Pipeline stalling, because it ensures the dependent instruction waits until the result is written back.\",\n    \"Out-of-order execution, because it allows the dependent instruction to execute before its operands are ready.\"\n  ],\n  \"answer\": \"Data forwarding, because it passes the result directly from a pipeline register to the ALU input, allowing the consumer to execute earlier and reducing stalls.\",\n  \"accepted_answers\": [],\n  \"hint\": \"Think about how a result can be made available to the next instruction without waiting for it to be written to the register file.\",\n  \"explanation\": \"Data forwarding enables the result to be passed directly from a pipeline register to the ALU input, so the consumer can execute earlier, reducing stalls and improving pipeline efficiency.\"\n}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 840,
+              "completion_tokens": 259,
+              "total_tokens": 1099,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 840
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "Data hazards and forwarding",
+        "prompt": "Consider a dependent instruction pair where the second instruction needs the result of the first. Which mechanism delivers the earlier result directly to the dependent operation, and why is this beneficial?",
+        "citations": [
+          {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p22-1",
+            "page": 22,
+            "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Optimization #1: Data Forwarding\n\n¡  Enable Register-to-Register or Register-to-ALU Forwarding\n\n   ¡   E.g., result is passed directly from pipeline register to ALU input.\n\n   ¡  The consumer can execute earlier ——> Fewer stalls and higher pipeline efficiency",
+            "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/22/preview"
+          }
+        ],
+        "type": "multiple-choice",
+        "answer": "Data forwarding, because it passes the result directly from a pipeline register to the ALU input, allowing the consumer to execute earlier and reducing stalls.",
+        "hint": "Think about how a result can be made available to the next instruction without waiting for it to be written to the register file.",
+        "explanation": "Data forwarding enables the result to be passed directly from a pipeline register to the ALU input, so the consumer can execute earlier, reducing stalls and improving pipeline efficiency.",
+        "options": [
+          "Data forwarding, because it passes the result directly from a pipeline register to the ALU input, allowing the consumer to execute earlier and reducing stalls.",
+          "Register renaming, because it eliminates false dependencies by using additional registers.",
+          "Pipeline stalling, because it ensures the dependent instruction waits until the result is written back.",
+          "Out-of-order execution, because it allows the dependent instruction to execute before its operands are ready."
+        ],
+        "accepted_answers": []
+      },
+      "elapsed_s": 2.73
+    }
+  ]
+}

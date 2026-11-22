@@ -1,0 +1,44 @@
+{
+  "question": "L2-SA09",
+  "variant": "omission",
+  "student_answer": "Temporal locality is reuse of the same data soon afterward.",
+  "raw_response": {
+    "id": "d253a5a6-d5e6-4299-b983-1093f80eabda",
+    "object": "chat.completion",
+    "created": 1795271858,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[],\"missing\":[\"P2\"],\"feedback\":\"Temporal locality is correctly defined. Spatial locality is missing; add that nearby addresses tend to be accessed close together in time.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 343,
+      "completion_tokens": 53,
+      "total_tokens": 396,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 343
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P2"
+    ],
+    "feedback": "Temporal locality is correctly defined. Spatial locality is missing; add that nearby addresses tend to be accessed close together in time."
+  }
+}

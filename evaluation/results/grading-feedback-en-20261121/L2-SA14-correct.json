@@ -1,0 +1,42 @@
+{
+  "question": "L2-SA14",
+  "variant": "correct",
+  "student_answer": "Pooling can assign separate portions of memory capacity to different hosts. Coherent sharing allows hosts to access shared data with coherence.",
+  "raw_response": {
+    "id": "fe2825dc-b404-477e-8d73-a854703adadc",
+    "object": "chat.completion",
+    "created": 1795271866,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":2},\"errors\":[],\"missing\":[],\"feedback\":\"Both distinctions are correct and complete: pooling partitions memory capacity among hosts, while coherent sharing lets hosts access shared data with coherence.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 361,
+      "completion_tokens": 50,
+      "total_tokens": 411,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 361
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 2
+    },
+    "errors": [],
+    "missing": [],
+    "feedback": "Both distinctions are correct and complete: pooling partitions memory capacity among hosts, while coherent sharing lets hosts access shared data with coherence."
+  }
+}

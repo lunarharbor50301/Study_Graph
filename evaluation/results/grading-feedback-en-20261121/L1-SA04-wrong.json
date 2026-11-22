@@ -1,0 +1,51 @@
+{
+  "question": "L1-SA04",
+  "variant": "wrong",
+  "student_answer": "Divergence requires different warps to take different paths even when each warp is uniform. Executing divergent paths makes every lane useful on every instruction.",
+  "raw_response": {
+    "id": "8877db0f-42a4-434b-8148-f2ce31b951c1",
+    "object": "chat.completion",
+    "created": 1795271849,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[{\"point\":\"P1\",\"span\":\"Divergence requires different warps to take different paths even when each warp is uniform\"},{\"point\":\"P2\",\"span\":\"Executing divergent paths makes every lane useful on every instruction\"}],\"missing\":[],\"feedback\":\"P1 is contradicted: divergence is within a warp (lanes of the same warp taking different paths), not across warps. P2 is contradicted: divergent execution leaves only a subset of lanes active, reducing SIMD utilization rather than making every lane useful.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 477,
+      "completion_tokens": 124,
+      "total_tokens": 601,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 221
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P1",
+        "span": "Divergence requires different warps to take different paths even when each warp is uniform"
+      },
+      {
+        "point": "P2",
+        "span": "Executing divergent paths makes every lane useful on every instruction"
+      }
+    ],
+    "missing": [],
+    "feedback": "P1 is contradicted: divergence is within a warp (lanes of the same warp taking different paths), not across warps. P2 is contradicted: divergent execution leaves only a subset of lanes active, reducing SIMD utilization rather than making every lane useful."
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      61,
+      62
+    ],
+    "instruction": "Write one English multiple-choice question using only physical PDF pages 61,62. Give blockIdx.x=2, blockDim.x=64 and threadIdx.x=3. Ask for the one-dimensional global index.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 61,
+      "request": {
+        "topic": "CUDA global thread index",
+        "query": "CUDA global thread index",
+        "type": "multiple-choice",
+        "difficulty": "Advanced",
+        "previous": [],
+        "instructions": "Write one English multiple-choice question using only physical PDF pages 61,62. Give blockIdx.x=2, blockDim.x=64 and threadIdx.x=3. Ask for the one-dimensional global index."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ],
+          "raw_response": {
+            "id": "643e717a-4b6c-4a6b-bfef-57b8425d0c73",
+            "object": "chat.completion",
+            "created": 1795269386,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\n  \"prompt\": \"Given blockIdx.x = 2, blockDim.x = 64, and threadIdx.x = 3, what is the one-dimensional global index i computed by the formula i = blockIdx.x * blockDim.x + threadIdx.x?\",\n  \"source\": \"S1\",\n  \"options\": [\"131\", \"128\", \"67\", \"192\"],\n  \"answer\": \"131\",\n  \"accepted_answers\": [],\n  \"hint\": \"Multiply the block index by the number of threads per block, then add the thread index.\",\n  \"explanation\": \"i = 2 * 64 + 3 = 128 + 3 = 131.\"\n}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 964,
+              "completion_tokens": 147,
+              "total_tokens": 1111,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 964
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "CUDA global thread index",
+        "prompt": "Given blockIdx.x = 2, blockDim.x = 64, and threadIdx.x = 3, what is the one-dimensional global index i computed by the formula i = blockIdx.x * blockDim.x + threadIdx.x?",
+        "citations": [
+          {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p62-2",
+            "page": 62,
+            "text": "                                                           blockDim.x is the number of threads per block.\n                                                                             threadIdx.x is the local index inside that block.\n\n¡ Every CUDA thread runs the same kernel\n  code; built-in IDs select the data element.\n\n                                  i = blockIdx.x * blockDim.x + threadIdx.x",
+            "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/62/preview"
+          }
+        ],
+        "type": "multiple-choice",
+        "answer": "131",
+        "hint": "Multiply the block index by the number of threads per block, then add the thread index.",
+        "explanation": "i = 2 * 64 + 3 = 128 + 3 = 131.",
+        "options": [
+          "131",
+          "128",
+          "67",
+          "192"
+        ],
+        "accepted_answers": []
+      },
+      "elapsed_s": 1.97
+    }
+  ]
+}

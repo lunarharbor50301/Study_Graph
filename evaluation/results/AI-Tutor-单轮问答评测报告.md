@@ -316,3 +316,41 @@ Therefore, it is not possible to provide today's actual P95 response time for th
 | 新提示词下重新生成的英文答案 | 26/26 | 26/26 |
 
 新答案中，26 道题均至少使用一次标准单编号标记；实际接口也为每道题返回了至少一个参考证据页。旧答案的回放单独验证了兼容解析的效果。两项改善覆盖了同一批问题，不能把增益相加。[逐题回放](tutor-single-en-29876-citations/citation-replay.json) · [复测指标](tutor-single-en-29876-citations/summary.json)
+
+## 切换 TACC / DeepSeek 运行评测
+
+以下是当前代码的运行方式，历史报告中的模型名称和成绩保持原样；切换模型后应保存到新的结果目录并重新评分。[完整配置、参数和运行说明](../runners/README.md)。命令均从仓库根目录执行。
+
+先启动 TACC 模型及 SSH 隧道，然后在运行评测脚本的终端设置地址并检查接口：
+
+```bash
+export QWEN_BASE_URL=http://127.0.0.1:18024/v1
+
+curl --noproxy '*' -fsS --max-time 8 \
+  http://127.0.0.1:18024/v1/models
+```
+
+直接调用 TACC 的评测脚本不需要 DeepSeek API key。改用 DeepSeek 时，需要在当前进程配置 `DEEPSEEK_API_KEY`。如果密钥已保存在项目 `.env` 中，可以加载：
+
+```bash
+set -a
+source .env
+set +a
+```
+
+AI tutor 运行器通过 HTTP 访问后端，没有 `--provider` 参数。在**后端终端**加载配置后启动一个独立的 TACC 后端（端口需空闲）：
+
+```bash
+export QWEN_BASE_URL=http://127.0.0.1:18024/v1
+export STUDYGRAPH_TUTOR_PROVIDER=tacc
+.venv/bin/python -m uvicorn backend.main:app --host 127.0.0.1 --port 18031
+```
+
+确认两份讲义已导入该后端，在另一终端选择单轮或多轮运行；`CURRENT_JOB_ID` 替换为实际作业号：
+
+```bash
+.venv/bin/python -m evaluation.runners.tutor_single run en evaluation/results/tutor-single-tacc-new --base-url http://127.0.0.1:18031 --job CURRENT_JOB_ID
+.venv/bin/python -m evaluation.runners.tutor_multi evaluation/results/tutor-multi-tacc-new --base-url http://127.0.0.1:18031 --job CURRENT_JOB_ID
+```
+
+改用 DeepSeek 时，在后端启动环境配置 key，并设 `STUDYGRAPH_TUTOR_PROVIDER=deepseek` 后重启；不要把 TACC 作业号当作 DeepSeek 模型信息。仅在评测脚本终端改变量不会改变已运行后端。上述命令只生成回答，语义评分仍需另行审核；固定习题已包含在单轮中，不重复计数。历史压缩在满足条件且存在 DeepSeek key 时仍可能调用 DeepSeek；要求仅用 TACC 时，应在后端进程中取消该 key，使该可选压缩不执行。

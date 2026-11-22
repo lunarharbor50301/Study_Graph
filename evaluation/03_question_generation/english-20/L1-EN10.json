@@ -1,0 +1,25 @@
+{
+  "id": "L1-EN10",
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      67
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 67. Give arithmetic intensity of 2 FLOPs/byte, bandwidth of 100 GB/s and peak compute of 500 GFLOP/s. Ask for the throughput bound and the limiting resource.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 67,
+      "request": {
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "topic": "Roofline throughput bound",
+        "query": "Roofline throughput bound",
+        "instructions": "Write one English short-answer question using only physical PDF pages 67. Give arithmetic intensity of 2 FLOPs/byte, bandwidth of 100 GB/s and peak compute of 500 GFLOP/s. Ask for the throughput bound and the limiting resource.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L1"
+}

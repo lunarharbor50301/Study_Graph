@@ -1,28 +1,51 @@
-# 单课件参考集入口
+# Single-Courseware Reference Set Entry
 
-每次只导入一份 PDF 时，只使用对应的一个 JSON 文件；不要同时加载两个参考文件。
+When importing only one PDF at a time, use only the corresponding single JSON file; do not load two reference files at the same time.
 
 ## Lecture 1
-- 数据文件：[lecture1_reference.json](lecture1_reference.json)
-- 包含：18 个概念、7 条关系、18 组笔记要点、14 道问答、6 条批改样例。
+- Data file: [lecture1_reference.json](lecture1_reference.json)
+- Contains: 18 concepts, 7 relations, 18 sets of note points, 14 Q&A items, 6 grading samples.
 
 ## Lecture 2
-- 数据文件：[lecture2_reference.json](lecture2_reference.json)
-- 包含：20 个概念、9 条关系、20 组笔记要点、16 道问答、12 条批改样例。
+- Data file: [lecture2_reference.json](lecture2_reference.json)
+- Contains: 20 concepts, 9 relations, 20 sets of note points, 16 Q&A items, 12 grading samples.
 
-## 共用规则
-见 [SCORING.md](SCORING.md)。两份文件均保持待人工审核状态，尚未划分开发集和测试集。
+## Shared Rules
+See [SCORING.md](SCORING.md). Both files remain in a pending manual review state and have not yet been split into development and test sets.
 
-已将 3 条跨课件关系移到 cross_lecture_relations_optional.json，仅供未来多课件评测使用。每份文件中的无证据题均已改为当前单课件范围。
+3 cross-courseware relations have been moved to cross_lecture_relations_optional.json, for use only in future multi-courseware evaluation. The no-evidence questions in each file have been changed to fall within the current single-courseware scope.
 
-原 concepts.json、relations.json、study_notes.json、qa.json、feedback.json、manifest.json 及 combined_reference_archive.md 保留为 v0.1 构建来源，不再作为单课件评测入口。lecture1_pages.json 与 lecture2_pages.json 为各自原文提取索引。
+The original concepts.json, relations.json, study_notes.json, qa.json, feedback.json, manifest.json, and combined_reference_archive.md are retained as v0.1 build sources and are no longer used as single-courseware evaluation entries. lecture1_pages.json and lecture2_pages.json are the respective source-text extraction indexes.
 
 
-## 练习模块专项评测（新增）
+## Practice Module Special Evaluation (New)
 
-每份分为出题、批改、回答三模块，建议先阅读Markdown，程序运行使用同名JSON。
+Each is divided into three modules: question generation, grading, and answering. It is recommended to read the Markdown first; for program execution, use the JSON file of the same name.
 
-- [Lecture 1 可读版](lecture1_test_generation_eval.md) · [JSON](lecture1_test_generation_eval.json)
-- [Lecture 2 可读版](lecture2_test_generation_eval.md) · [JSON](lecture2_test_generation_eval.json)
+- [Lecture 1 readable version](lecture1_test_generation_eval.md) · [JSON](lecture1_test_generation_eval.json)
+- [Lecture 2 readable version](lecture2_test_generation_eval.md) · [JSON](lecture2_test_generation_eval.json)
 
-专项文件内的 evaluation_policy 是这次练习模块的评分规则。当前仅建立数据与标准，尚未运行 agent、未经人工审核。
+The evaluation_policy in the special files is the scoring rule for this practice module. Currently only the data and standards have been established; the agent has not yet been run, and no manual review has been conducted.
+
+## Switching TACC / DeepSeek to Run Evaluation
+
+The following is how the current code runs. The model names and scores in historical reports remain as they are; after switching models, results should be saved to a new results directory and re-scored. [Full configuration, parameters, and run instructions](../../runners/README.md). All commands are executed from the repository root.
+
+First start the TACC model and the SSH tunnel, then set the address in the terminal running the evaluation script and check the interface:
+
+```bash
+export QWEN_BASE_URL=http://127.0.0.1:18024/v1
+
+curl --noproxy '*' -fsS --max-time 8 \
+  http://127.0.0.1:18024/v1/models
+```
+
+The evaluation script that directly calls TACC does not require a DeepSeek API key. When switching to DeepSeek, `DEEPSEEK_API_KEY` needs to be configured in the current process. If the key has already been saved in the project `.env`, it can be loaded:
+
+```bash
+set -a
+source .env
+set +a
+```
+
+This file is a historical archive and should not be directly used with old question sets or old commands for new-version comparisons. The current question-generation entry uses `--provider tacc` (a separate `--judge-provider deepseek` can be set), the grading entry uses `--provider tacc`, and concept-map semantic scoring uses `--judge tacc`. To switch to `deepseek`, the corresponding DeepSeek interface can be used; for the current question set and complete commands, see the run instructions above.

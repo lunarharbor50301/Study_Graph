@@ -1,0 +1,94 @@
+{
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      44,
+      45
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 44,45. Give a warp whose even and odd lanes take different branches. Ask for the effect on SIMD utilization and the reason.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 44,
+      "request": {
+        "topic": "Warp branch divergence",
+        "query": "Warp branch divergence",
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "previous": [],
+        "instructions": "Write one English short-answer question using only physical PDF pages 44,45. Give a warp whose even and odd lanes take different branches. Ask for the effect on SIMD utilization and the reason."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5",
+            "S6"
+          ],
+          "raw_response": {
+            "id": "83752c94-77f6-433c-a478-375dd0260630",
+            "object": "chat.completion",
+            "created": 1795269377,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\n  \"prompt\": \"In the example where even and odd lanes take different branches, what is the effect on SIMD utilization and why?\",\n  \"source\": \"S5\",\n  \"options\": [],\n  \"answer\": \"Only a subset of threads execute, wasting SIMD pipeline utilization\",\n  \"accepted_answers\": [\n    \"Only a subset of threads execute, wasting SIMD pipeline utilization\",\n    \"Only a subset of threads execute, waste SIMD pipeline utilization\",\n    \"Only a subset of threads execute, wasting SIMD utilization\",\n    \"Only a subset of threads execute, waste SIMD utilization\",\n    \"Only a subset of threads execute, wasting SIMD pipeline\"\n  ],\n  \"hint\": \"Consider what happens when threads in a warp diverge.\",\n  \"explanation\": \"Branch divergence causes only a subset of threads in a warp to execute at a time, reducing SIMD utilization.\"\n}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 1096,
+              "completion_tokens": 190,
+              "total_tokens": 1286,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 1096
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "Warp branch divergence",
+        "prompt": "In the example where even and odd lanes take different branches, what is the effect on SIMD utilization and why?",
+        "citations": [
+          {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p45-1",
+            "page": 45,
+            "text": "GPU: Optimize Throughput of a Large Number of Simple Threads\n  Issue of SIMD Utilization: Control Divergence\n\n\n\n¡ Example: Intra-warp divergence\n\n\n\n\n\n  Compute(threadIdx.x);\n\n  if (threadIdx.x % 2 == 0){\n\n    Do_this(threadIdx.x);\n\n  }\n\n  else{\n\n    Do_that(threadIdx.x);\n\n  }",
+            "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/45/preview"
+          }
+        ],
+        "type": "short-answer",
+        "answer": "Only a subset of threads execute, wasting SIMD pipeline utilization",
+        "hint": "Consider what happens when threads in a warp diverge.",
+        "explanation": "Branch divergence causes only a subset of threads in a warp to execute at a time, reducing SIMD utilization.",
+        "options": [],
+        "accepted_answers": [
+          "Only a subset of threads execute, wasting SIMD pipeline utilization",
+          "Only a subset of threads execute, waste SIMD pipeline utilization",
+          "Only a subset of threads execute, wasting SIMD utilization",
+          "Only a subset of threads execute, waste SIMD utilization",
+          "Only a subset of threads execute, wasting SIMD pipeline"
+        ]
+      },
+      "elapsed_s": 2.27
+    }
+  ]
+}

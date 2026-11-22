@@ -1,0 +1,42 @@
+{
+  "question": "L2-SA12",
+  "variant": "correct",
+  "student_answer": "It is private to each thread. It usually resides in device DRAM.",
+  "raw_response": {
+    "id": "2afa0313-127e-4faf-b0aa-572b182b259b",
+    "object": "chat.completion",
+    "created": 1795271863,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":2},\"errors\":[],\"missing\":[],\"feedback\":\"Correct: local memory is thread-private and typically resides in device DRAM.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 348,
+      "completion_tokens": 40,
+      "total_tokens": 388,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 348
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 2
+    },
+    "errors": [],
+    "missing": [],
+    "feedback": "Correct: local memory is thread-private and typically resides in device DRAM."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "L1-EN02",
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      18,
+      22
+    ],
+    "instruction": "Write one English multiple-choice question using only physical PDF pages 18,22. Present a dependent instruction pair. Ask which mechanism delivers an earlier result directly to the dependent operation and explain why.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 18,
+      "request": {
+        "type": "multiple-choice",
+        "difficulty": "Foundational",
+        "topic": "Data hazards and forwarding",
+        "query": "Data hazards and forwarding",
+        "instructions": "Write one English multiple-choice question using only physical PDF pages 18,22. Present a dependent instruction pair. Ask which mechanism delivers an earlier result directly to the dependent operation and explain why.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L1"
+}

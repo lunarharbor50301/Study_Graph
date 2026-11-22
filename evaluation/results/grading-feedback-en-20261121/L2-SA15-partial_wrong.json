@@ -1,0 +1,47 @@
+{
+  "question": "L2-SA15",
+  "variant": "partial_wrong",
+  "student_answer": "Hot, frequently reused or latency-critical data belongs in HBM. Promotion pays off whenever the object fits, regardless of migration costs.",
+  "raw_response": {
+    "id": "cd264edd-89c1-433b-8022-f952fba43552",
+    "object": "chat.completion",
+    "created": 1795271869,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[{\"point\":\"P2\",\"span\":\"Promotion pays off whenever the object fits, regardless of migration costs.\"}],\"missing\":[],\"feedback\":\"P1 is correct. P2 is contradicted: promotion depends on reuse savings exceeding transfer and bookkeeping costs, not merely on whether the object fits.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 373,
+      "completion_tokens": 78,
+      "total_tokens": 451,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 245
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P2",
+        "span": "Promotion pays off whenever the object fits, regardless of migration costs."
+      }
+    ],
+    "missing": [],
+    "feedback": "P1 is correct. P2 is contradicted: promotion depends on reuse savings exceeding transfer and bookkeeping costs, not merely on whether the object fits."
+  }
+}

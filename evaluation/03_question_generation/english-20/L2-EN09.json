@@ -1,0 +1,26 @@
+{
+  "id": "L2-EN09",
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      66,
+      67
+    ],
+    "instruction": "Write one English true-false question using only physical PDF pages 66,67. Test the claim that assigning separate pooled capacity to hosts automatically gives them coherent shared access. Explain the distinction.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 66,
+      "request": {
+        "type": "true-false",
+        "difficulty": "Foundational",
+        "topic": "CXL pooling versus coherent sharing",
+        "query": "CXL pooling versus coherent sharing",
+        "instructions": "Write one English true-false question using only physical PDF pages 66,67. Test the claim that assigning separate pooled capacity to hosts automatically gives them coherent shared access. Explain the distinction.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L2"
+}

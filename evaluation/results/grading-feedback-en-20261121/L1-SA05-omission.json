@@ -1,0 +1,44 @@
+{
+  "question": "L1-SA05",
+  "variant": "omission",
+  "student_answer": "Both threads can read the old sum before either writes the result.",
+  "raw_response": {
+    "id": "08d2db0c-0567-4b60-abb8-ad687db03f6e",
+    "object": "chat.completion",
+    "created": 1795271850,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[],\"missing\":[\"P2\"],\"feedback\":\"You correctly explained the lost-update race (P1). You did not explain how a mutex helps: it serializes the read-modify-write critical section so only one thread executes it at a time.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 547,
+      "completion_tokens": 71,
+      "total_tokens": 618,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "prompt_cache_hit_tokens": 384,
+      "prompt_cache_miss_tokens": 163
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P2"
+    ],
+    "feedback": "You correctly explained the lost-update race (P1). You did not explain how a mutex helps: it serializes the read-modify-write critical section so only one thread executes it at a time."
+  }
+}

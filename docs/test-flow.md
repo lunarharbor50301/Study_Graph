@@ -16,3 +16,32 @@
 
 - 选择题和判断题显示选项，简答题显示文本框。提交时由前端评分。生成题的答案经过大小写、空白和部分标点规范化后，与参考答案或模型提供的同义答案逐项比对。提示、答案解析和每题进度也从测验记录读取。[答题和评分](../frontend/src/main.tsx)
 - 点击题目或助教回复中的来源，可打开对应讲义页。聊天时把当前题干作为上下文，并传入当前题目所属讲义。已保存的测验使用固定的历史文档 ID，所以切到另一份讲义的题目时也能接着聊。助教的对话记录由后端保存在 SQLite 中，使用单独配置的 Tutor 模型。[测验界面](../frontend/src/main.tsx) · [助教接口](../backend/agent_api.py)
+
+## 切换 TACC / DeepSeek 运行评测
+
+以下是当前代码的运行方式，历史报告中的模型名称和成绩保持原样；切换模型后应保存到新的结果目录并重新评分。[完整配置、参数和运行说明](../evaluation/runners/README.md)。命令均从仓库根目录执行。
+
+先启动 TACC 模型及 SSH 隧道，然后在运行评测脚本的终端设置地址并检查接口：
+
+```bash
+export QWEN_BASE_URL=http://127.0.0.1:18024/v1
+
+curl --noproxy '*' -fsS --max-time 8 \
+  http://127.0.0.1:18024/v1/models
+```
+
+直接调用 TACC 的评测脚本不需要 DeepSeek API key。改用 DeepSeek 时，需要在当前进程配置 `DEEPSEEK_API_KEY`。如果密钥已保存在项目 `.env` 中，可以加载：
+
+```bash
+set -a
+source .env
+set +a
+```
+
+出题和默认裁判同时使用 TACC：
+
+```bash
+.venv/bin/python -m evaluation.runners.quiz --provider tacc --output-dir evaluation/results/quiz-tacc-new
+```
+
+只重评已有题目时增加 `--predictions evaluation/results/quiz-english-20261121`。可加 `--judge-provider deepseek` 实现 TACC 出题、DeepSeek 评分；`--provider deepseek` 则切回 DeepSeek。仅重算保存的评分数字无需调用模型。

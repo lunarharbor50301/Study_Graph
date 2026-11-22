@@ -1,0 +1,44 @@
+{
+  "question": "L2-SA12",
+  "variant": "omission",
+  "student_answer": "It is private to each thread.",
+  "raw_response": {
+    "id": "ddad4703-e70b-4025-95c7-5319d38aacc8",
+    "object": "chat.completion",
+    "created": 1795271863,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[],\"missing\":[\"P2\"],\"feedback\":\"Correct that local memory is thread-private, but you omitted where it usually resides: device DRAM.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 340,
+      "completion_tokens": 48,
+      "total_tokens": 388,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 340
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P2"
+    ],
+    "feedback": "Correct that local memory is thread-private, but you omitted where it usually resides: device DRAM."
+  }
+}

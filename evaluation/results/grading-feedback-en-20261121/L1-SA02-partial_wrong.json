@@ -1,0 +1,47 @@
+{
+  "question": "L1-SA02",
+  "variant": "partial_wrong",
+  "student_answer": "A consumer needs a register result from an earlier producer. Forwarding helps by forcing the consumer to wait for write-back.",
+  "raw_response": {
+    "id": "04b92a55-78c0-475b-bdd5-9eac08a468c1",
+    "object": "chat.completion",
+    "created": 1795271845,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[{\"point\":\"P2\",\"span\":\"forcing the consumer to wait for write-back\"}],\"missing\":[],\"feedback\":\"P1 is correct. P2 is contradicted: forwarding bypasses write-back and delivers the result directly to the consumer, reducing stalls rather than forcing a wait.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 536,
+      "completion_tokens": 74,
+      "total_tokens": 610,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 536
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P2",
+        "span": "forcing the consumer to wait for write-back"
+      }
+    ],
+    "missing": [],
+    "feedback": "P1 is correct. P2 is contradicted: forwarding bypasses write-back and delivers the result directly to the consumer, reducing stalls rather than forcing a wait."
+  }
+}

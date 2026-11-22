@@ -1,0 +1,45 @@
+{
+  "question": "L2-SA15",
+  "variant": "off_topic",
+  "student_answer": "The lecture is part of a computing course.",
+  "raw_response": {
+    "id": "4ec24d07-ff26-4ba0-8714-cd449d77277d",
+    "object": "chat.completion",
+    "created": 1795271870,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[],\"missing\":[\"P1\",\"P2\"],\"feedback\":\"Your answer does not address the question. State that hot, frequently reused or latency-critical data belongs in HBM, and that an object should be promoted only when expected reuse savings exceed transfer and bookkeeping costs.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 356,
+      "completion_tokens": 73,
+      "total_tokens": 429,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 228
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P1",
+      "P2"
+    ],
+    "feedback": "Your answer does not address the question. State that hot, frequently reused or latency-critical data belongs in HBM, and that an object should be promoted only when expected reuse savings exceed transfer and bookkeeping costs."
+  }
+}

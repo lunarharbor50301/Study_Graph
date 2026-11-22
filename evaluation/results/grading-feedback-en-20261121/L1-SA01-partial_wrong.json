@@ -1,0 +1,47 @@
+{
+  "question": "L1-SA01",
+  "variant": "partial_wrong",
+  "student_answer": "After filling, one instruction completes per cycle. Each instruction finishes all stages in one cycle.",
+  "raw_response": {
+    "id": "5a899f17-44aa-443c-b719-3afd3e83b3e3",
+    "object": "chat.completion",
+    "created": 1795271843,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[{\"point\":\"P2\",\"span\":\"Each instruction finishes all stages in one cycle.\"}],\"missing\":[],\"feedback\":\"P1 is correct. P2 is contradicted: in an ideal five-stage pipeline each instruction still passes through five stages (one stage per cycle), not all stages in one cycle.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 391,
+      "completion_tokens": 79,
+      "total_tokens": 470,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 391
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P2",
+        "span": "Each instruction finishes all stages in one cycle."
+      }
+    ],
+    "missing": [],
+    "feedback": "P1 is correct. P2 is contradicted: in an ideal five-stage pipeline each instruction still passes through five stages (one stage per cycle), not all stages in one cycle."
+  }
+}

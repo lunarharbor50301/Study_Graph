@@ -1,0 +1,45 @@
+{
+  "question": "L1-SA07",
+  "variant": "off_topic",
+  "student_answer": "The lecture is part of a computing course.",
+  "raw_response": {
+    "id": "ff72c2a2-29b4-4fc1-a69b-bcf018029456",
+    "object": "chat.completion",
+    "created": 1795271855,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[],\"missing\":[\"P1\",\"P2\"],\"feedback\":\"Your answer does not address the question. Apply Amdahl's law: with f=0.8 and p=4, speedup = 1/((0.2)+(0.8/4)) = 2.5; as p→∞, the limit is 1/0.2 = 5.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 406,
+      "completion_tokens": 97,
+      "total_tokens": 503,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 150
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P1",
+      "P2"
+    ],
+    "feedback": "Your answer does not address the question. Apply Amdahl's law: with f=0.8 and p=4, speedup = 1/((0.2)+(0.8/4)) = 2.5; as p→∞, the limit is 1/0.2 = 5."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "L2-EN06",
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      39,
+      40
+    ],
+    "instruction": "Write one English multiple-choice question using only physical PDF pages 39,40. Present a workload issuing requests concurrently across independent channels. Ask how this affects aggregate bandwidth.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 39,
+      "request": {
+        "type": "multiple-choice",
+        "difficulty": "Advanced",
+        "topic": "Independent memory channels",
+        "query": "Independent memory channels",
+        "instructions": "Write one English multiple-choice question using only physical PDF pages 39,40. Present a workload issuing requests concurrently across independent channels. Ask how this affects aggregate bandwidth.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L2"
+}

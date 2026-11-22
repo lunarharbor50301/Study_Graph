@@ -1,0 +1,80 @@
+{
+  "id": "L2-MT03",
+  "document_id": "ACS-L2",
+  "session": "multi-4a21b04658944c9daf2bc8185816a4f6",
+  "job": "30603",
+  "turns": [
+    {
+      "question": "Does the LPDDR expansion in Grace make the GPU HBM itself larger?",
+      "status": "done",
+      "answer": "No. The LPDDR expansion in Grace does **not** make the GPU's HBM itself larger.\n\nAccording to the lecture, Hopper retains its local HBM, and Grace connects LPDDR5X through the coherent NVLink‑C2C CPU–GPU link. The LPDDR \"extends the capacity the accelerator can address; it does not enlarge HBM itself.\" In other words, it adds an additional capacity tier that the GPU can reach, while the HBM stays the same size. See page 68 [S1].\n\nThe lecture also notes the practical implication: tiered memory management decides what stays in HBM—hot, latency‑critical, frequently reused data remains in HBM, while large, cold objects are placed in the LPDDR capacity tier. See page 69 [S2].",
+      "citations": [
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p68-1",
+          "page": 68,
+          "text": "SOTA Memory Technologies\n\nMemory Extension: LPDDR\n\n\n\n\n\n▪ Hopper retains local HBM. Grace connects LPDDR5X through the coherent\n  NVLink-C2C CPU–GPU link.\n▪ LPDDR extends the capacity the accelerator can address; it does not enlarge\n HBM itself.\n\nMemory Wall     CPU Memory     GPU Memory    SOTA Memory     Advanced AI Computing and Systems        68",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/68/preview",
+          "source": "S1"
+        },
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p69-1",
+          "page": 69,
+          "text": "SOTA Memory Technologies\n\nTiered Memory Management Decides What Stays in HBM\n\n\n\n\n\n▪ Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects\n  in the LPDDR capacity tier.\n▪ Promotion helps only when future reuse saves more than the transfer and\n  bookkeeping cost.\n\nMemory Wall     CPU Memory     GPU Memory    SOTA Memory     Advanced AI Computing and Systems        69",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/69/preview",
+          "source": "S2"
+        }
+      ],
+      "elapsed_s": 7.92
+    },
+    {
+      "question": "Which tier should hot data and cold data go into, respectively?",
+      "status": "done",
+      "answer": "Based on the lecture, the placement is:\n\n- **Hot data** (latency‑critical, frequently reused) → keep in **HBM**.\n- **Cold data** (large, less frequently used objects) → place in the **LPDDR capacity tier**.\n\nThe lecture adds that promotion (moving data up to HBM) only helps when future reuse saves more than the transfer and bookkeeping cost. See page 69 [S2].",
+      "citations": [
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p69-1",
+          "page": 69,
+          "text": "SOTA Memory Technologies\n\nTiered Memory Management Decides What Stays in HBM\n\n\n\n\n\n▪ Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects\n  in the LPDDR capacity tier.\n▪ Promotion helps only when future reuse saves more than the transfer and\n  bookkeeping cost.\n\nMemory Wall     CPU Memory     GPU Memory    SOTA Memory     Advanced AI Computing and Systems        69",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/69/preview",
+          "source": "S2"
+        }
+      ],
+      "elapsed_s": 4.17
+    },
+    {
+      "question": "If a piece of cold data is accessed only once, is it worth moving it immediately to the former?",
+      "status": "done",
+      "answer": "No. If a piece of cold data is accessed only once, it is **not** worth moving it to HBM.\n\nThe lecture states that promotion \"helps only when future reuse saves more than the transfer and bookkeeping cost.\" A one‑time access has no future reuse, so the transfer and bookkeeping cost would not be recovered—making the move not worthwhile. See page 69 [S2].",
+      "citations": [
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p69-1",
+          "page": 69,
+          "text": "SOTA Memory Technologies\n\nTiered Memory Management Decides What Stays in HBM\n\n\n\n\n\n▪ Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects\n  in the LPDDR capacity tier.\n▪ Promotion helps only when future reuse saves more than the transfer and\n  bookkeeping cost.\n\nMemory Wall     CPU Memory     GPU Memory    SOTA Memory     Advanced AI Computing and Systems        69",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/69/preview",
+          "source": "S2"
+        }
+      ],
+      "elapsed_s": 3.14
+    },
+    {
+      "question": "Give the specific page supporting the migration decision you just made.",
+      "status": "done",
+      "answer": "The migration decision is supported by page 69 [S2].",
+      "citations": [
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p69-1",
+          "page": 69,
+          "text": "SOTA Memory Technologies\n\nTiered Memory Management Decides What Stays in HBM\n\n\n\n\n\n▪ Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects\n  in the LPDDR capacity tier.\n▪ Promotion helps only when future reuse saves more than the transfer and\n  bookkeeping cost.\n\nMemory Wall     CPU Memory     GPU Memory    SOTA Memory     Advanced AI Computing and Systems        69",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/69/preview",
+          "source": "S2"
+        }
+      ],
+      "elapsed_s": 3.11
+    }
+  ]
+}

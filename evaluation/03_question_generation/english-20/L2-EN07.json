@@ -1,0 +1,26 @@
+{
+  "id": "L2-EN07",
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      55,
+      57
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 55,57. Ask how dense, short interposer connections between HBM and the processor affect bandwidth and energy per bit. Require both effects.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 55,
+      "request": {
+        "type": "short-answer",
+        "difficulty": "Foundational",
+        "topic": "HBM packaging",
+        "query": "HBM packaging",
+        "instructions": "Write one English short-answer question using only physical PDF pages 55,57. Ask how dense, short interposer connections between HBM and the processor affect bandwidth and energy per bit. Require both effects.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L2"
+}

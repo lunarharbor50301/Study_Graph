@@ -1,0 +1,44 @@
+{
+  "question": "L1-SA02",
+  "variant": "omission",
+  "student_answer": "A consumer needs a register result from an earlier producer.",
+  "raw_response": {
+    "id": "1168cd5c-d60e-4349-a003-c46ab685ae89",
+    "object": "chat.completion",
+    "created": 1795271845,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[],\"missing\":[\"P2\"],\"feedback\":\"P1 is correct. You did not explain forwarding: it should state that the result is routed directly to the consumer (e.g., register-to-ALU) before write-back, reducing stalls.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 523,
+      "completion_tokens": 67,
+      "total_tokens": 590,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 523
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P2"
+    ],
+    "feedback": "P1 is correct. You did not explain forwarding: it should state that the result is routed directly to the consumer (e.g., register-to-ALU) before write-back, reducing stalls."
+  }
+}

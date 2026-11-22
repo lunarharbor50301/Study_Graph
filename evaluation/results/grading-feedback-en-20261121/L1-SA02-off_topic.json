@@ -1,0 +1,45 @@
+{
+  "question": "L1-SA02",
+  "variant": "off_topic",
+  "student_answer": "The lecture is part of a computing course.",
+  "raw_response": {
+    "id": "61868aaa-4957-48a6-a865-f53c4c316dbd",
+    "object": "chat.completion",
+    "created": 1795271845,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[],\"missing\":[\"P1\",\"P2\"],\"feedback\":\"Your answer does not address the question. Explain that a RAW hazard occurs when a consumer instruction needs a register result produced by an earlier instruction, and that forwarding sends the result directly to the consumer (e.g., from pipeline register to ALU input) before write-back, reducing stalls.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 521,
+      "completion_tokens": 88,
+      "total_tokens": 609,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 265
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P1",
+      "P2"
+    ],
+    "feedback": "Your answer does not address the question. Explain that a RAW hazard occurs when a consumer instruction needs a register result produced by an earlier instruction, and that forwarding sends the result directly to the consumer (e.g., from pipeline register to ALU input) before write-back, reducing stalls."
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "question": "L1-SA08",
+  "variant": "omission",
+  "student_answer": "The throughput bound is 200 GFLOP/s.",
+  "raw_response": {
+    "id": "6fe23949-4f30-4741-b62d-72ad858c7f0e",
+    "object": "chat.completion",
+    "created": 1795271856,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[],\"missing\":[\"P2\"],\"feedback\":\"Correct throughput bound (200 GFLOP/s). Also state that the kernel is bandwidth-limited, since 2 FLOPs/byte × 100 GB/s = 200 GFLOP/s is below the 500 GFLOP/s compute peak.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 389,
+      "completion_tokens": 79,
+      "total_tokens": 468,
+      "prompt_tokens_details": {
+        "cached_tokens": 255
+      },
+      "prompt_cache_hit_tokens": 255,
+      "prompt_cache_miss_tokens": 134
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P2"
+    ],
+    "feedback": "Correct throughput bound (200 GFLOP/s). Also state that the kernel is bandwidth-limited, since 2 FLOPs/byte × 100 GB/s = 200 GFLOP/s is below the 500 GFLOP/s compute peak."
+  }
+}

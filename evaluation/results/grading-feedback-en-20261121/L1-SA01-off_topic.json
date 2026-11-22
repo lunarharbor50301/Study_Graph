@@ -1,0 +1,45 @@
+{
+  "question": "L1-SA01",
+  "variant": "off_topic",
+  "student_answer": "The lecture is part of a computing course.",
+  "raw_response": {
+    "id": "da9e412b-8da7-4924-ac1f-e5710769bf33",
+    "object": "chat.completion",
+    "created": 1795271843,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[],\"missing\":[\"P1\",\"P2\"],\"feedback\":\"Your answer does not address the question. State that after the pipeline fills, one instruction completes per cycle (throughput), and that each instruction still passes through all five stages (latency).\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 382,
+      "completion_tokens": 69,
+      "total_tokens": 451,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 382
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P1",
+      "P2"
+    ],
+    "feedback": "Your answer does not address the question. State that after the pipeline fills, one instruction completes per cycle (throughput), and that each instruction still passes through all five stages (latency)."
+  }
+}

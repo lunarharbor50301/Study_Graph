@@ -1,0 +1,90 @@
+{
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      63
+    ],
+    "instruction": "Write one English true-false question using only physical PDF pages 63. Test whether __syncthreads() synchronizes all blocks of a kernel. Explain its actual scope.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 63,
+      "request": {
+        "topic": "Scope of CUDA synchronization",
+        "query": "Scope of CUDA synchronization",
+        "type": "true-false",
+        "difficulty": "Foundational",
+        "previous": [],
+        "instructions": "Write one English true-false question using only physical PDF pages 63. Test whether __syncthreads() synchronizes all blocks of a kernel. Explain its actual scope."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5",
+            "S6"
+          ],
+          "raw_response": {
+            "id": "051ba77c-a658-406e-93ba-e23680feac16",
+            "object": "chat.completion",
+            "created": 1795269388,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"prompt\": \"__syncthreads() synchronizes all blocks of a kernel.\", \"source\": \"S1\", \"options\": [], \"answer\": \"False\", \"accepted_answers\": [], \"hint\": \"Consider the stated scope of __syncthreads() in the synchronization slide.\", \"explanation\": \"__syncthreads() has the scope of one CUDA block, not the whole kernel; global synchronization across blocks is achieved by launching separate kernels at the kernel boundary.\"}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 1065,
+              "completion_tokens": 103,
+              "total_tokens": 1168,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 1065
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "Scope of CUDA synchronization",
+        "prompt": "__syncthreads() synchronizes all blocks of a kernel.",
+        "citations": [
+          {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p63-1",
+            "page": 63,
+            "text": "GPU Programming: CUDA\n  CUDA Synchronization\n\n\n¡  __syncthreads()\n\n                                                        __shared__ float tile[256];   ¡  Scope: One CUDA block\n                                                        tile[threadIdx.x] = A[i];\n   ¡  Use: Tile coordination in the shared                                                        __syncthreads();\n     memory.\n                                                        use(tile);\n\n\n¡  Kernel boundary\n\n   ¡  Scope: Whole threads\n                                           ¡ Load data from global memory to shared memory.   ¡  Use: Global phase between kernels\n                                           ¡ Wait until all threads in the block complete the   ¡  Achieved by launching separate kernels\n                                              shared-memory load.",
+            "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/63/preview"
+          }
+        ],
+        "type": "true-false",
+        "answer": "False",
+        "hint": "Consider the stated scope of __syncthreads() in the synchronization slide.",
+        "explanation": "__syncthreads() has the scope of one CUDA block, not the whole kernel; global synchronization across blocks is achieved by launching separate kernels at the kernel boundary.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "accepted_answers": []
+      },
+      "elapsed_s": 2.2
+    }
+  ]
+}

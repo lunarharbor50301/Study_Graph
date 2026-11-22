@@ -1,0 +1,92 @@
+{
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      59
+    ],
+    "instruction": "Write one English multiple-choice question using only physical PDF pages 59. Ask which technology is favored for inexpensive expandable capacity. Explain the reason for the correct choice.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 59,
+      "request": {
+        "topic": "DDR, GDDR and HBM trade-offs",
+        "query": "DDR, GDDR and HBM trade-offs",
+        "type": "multiple-choice",
+        "difficulty": "Foundational",
+        "previous": [],
+        "instructions": "Write one English multiple-choice question using only physical PDF pages 59. Ask which technology is favored for inexpensive expandable capacity. Explain the reason for the correct choice."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5",
+            "S6"
+          ],
+          "raw_response": {
+            "id": "1966957e-c1a8-4746-83d3-65617a7007e8",
+            "object": "chat.completion",
+            "created": 1795269386,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"type\": \"multiple-choice\", \"prompt\": \"According to the passage on page 59, which memory technology is favored for inexpensive, expandable capacity?\", \"source\": \"S1\", \"options\": [\"DDR\", \"GDDR\", \"HBM\", \"Shared LLC\"], \"answer\": \"DDR\", \"accepted_answers\": [], \"hint\": \"Focus on which technology the passage associates with capacity, expandability, and cost per GB.\", \"explanation\": \"The passage states that DDR favors capacity, expandability, and cost per GB, making it the choice for inexpensive expandable capacity.\"}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 959,
+              "completion_tokens": 128,
+              "total_tokens": 1087,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 959
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "DDR, GDDR and HBM trade-offs",
+        "prompt": "According to the passage on page 59, which memory technology is favored for inexpensive, expandable capacity?",
+        "citations": [
+          {
+            "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+            "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p59-1",
+            "page": 59,
+            "text": "GPU Memory Hierarchy\n\nDDR, GDDR, and HBM Optimize Different Constraints\n\n\n\n\n\n▪ DDR favors capacity, expandability, and cost per GB. GDDR balances pin\n  bandwidth and board cost.\n▪ HBM favors bandwidth per package and per watt. The choice depends on the\n  workload and system constraints.\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        59",
+            "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/59/preview"
+          }
+        ],
+        "type": "multiple-choice",
+        "answer": "DDR",
+        "hint": "Focus on which technology the passage associates with capacity, expandability, and cost per GB.",
+        "explanation": "The passage states that DDR favors capacity, expandability, and cost per GB, making it the choice for inexpensive expandable capacity.",
+        "options": [
+          "DDR",
+          "GDDR",
+          "HBM",
+          "Shared LLC"
+        ],
+        "accepted_answers": []
+      },
+      "elapsed_s": 1.86
+    }
+  ]
+}

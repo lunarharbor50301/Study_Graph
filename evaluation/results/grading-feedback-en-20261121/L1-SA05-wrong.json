@@ -1,0 +1,54 @@
+{
+  "question": "L1-SA05",
+  "variant": "wrong",
+  "student_answer": "A lost update requires the two threads to write different private counters. Locking only after both threads finish updating prevents the lost update.",
+  "raw_response": {
+    "id": "751a64bc-a677-4bbf-afae-007bb702bdac",
+    "object": "chat.completion",
+    "created": 1795271851,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[{\"point\":\"P1\",\"span\":\"A lost update requires the two threads to write different private counters.\"},{\"point\":\"P2\",\"span\":\"Locking only after both threads finish updating prevents the lost update.\"}],\"missing\":[\"P1\",\"P2\"],\"feedback\":\"The answer misstates the cause of lost updates (it's both threads reading the old shared sum before writing, not writing private counters) and misplaces the lock (it must serialize the read-modify-write, not run after updates finish).\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 560,
+      "completion_tokens": 122,
+      "total_tokens": 682,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "prompt_cache_hit_tokens": 384,
+      "prompt_cache_miss_tokens": 176
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P1",
+        "span": "A lost update requires the two threads to write different private counters."
+      },
+      {
+        "point": "P2",
+        "span": "Locking only after both threads finish updating prevents the lost update."
+      }
+    ],
+    "missing": [
+      "P1",
+      "P2"
+    ],
+    "feedback": "The answer misstates the cause of lost updates (it's both threads reading the old shared sum before writing, not writing private counters) and misplaces the lock (it must serialize the read-modify-write, not run after updates finish)."
+  }
+}

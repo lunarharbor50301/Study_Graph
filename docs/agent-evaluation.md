@@ -65,3 +65,41 @@ agent-dev.json 是根据已用的 ACS 讲义准备的候选开发题，参考要
 TACC 作业 `29155` 上两组各完成 8 次回答。证据足够的追问从 10.8 秒降到 2.9 秒，两次都从三次调用降到一次，无需再检索，答出了带宽不变时上限翻倍并引用第 67 页。需要新资料的追问从 14.0 秒升到 14.5 秒，两组每次都用了两次模型调用，并找到第 66 和 67 页。实验组第二次将引用写成 `(S4, p. 66)` 形式，旧解析器未暴露可点击引用。解析器现在接收这种格式，并按实际证据核对来源 ID 和页码。追问优化保持可选，原始对照记录位于本地 `.venv/agent-followup-ab-29155.jsonl`。
 
 修正解析器后在同一作业复测。已有证据的追问仍只调用一次模型并引用第 67 页，实测 5.7 秒。需要新证据的追问调用两次模型并返回第 66、67 页引用，实测 16.0 秒。本地回归验证组合引用、括号式引用和页码不匹配的情况。
+
+## 切换 TACC / DeepSeek 运行评测
+
+以下是当前代码的运行方式，历史报告中的模型名称和成绩保持原样；切换模型后应保存到新的结果目录并重新评分。[完整配置、参数和运行说明](../evaluation/runners/README.md)。命令均从仓库根目录执行。
+
+先启动 TACC 模型及 SSH 隧道，然后在运行评测脚本的终端设置地址并检查接口：
+
+```bash
+export QWEN_BASE_URL=http://127.0.0.1:18024/v1
+
+curl --noproxy '*' -fsS --max-time 8 \
+  http://127.0.0.1:18024/v1/models
+```
+
+直接调用 TACC 的评测脚本不需要 DeepSeek API key。改用 DeepSeek 时，需要在当前进程配置 `DEEPSEEK_API_KEY`。如果密钥已保存在项目 `.env` 中，可以加载：
+
+```bash
+set -a
+source .env
+set +a
+```
+
+AI tutor 运行器通过 HTTP 访问后端，没有 `--provider` 参数。在**后端终端**加载配置后启动一个独立的 TACC 后端（端口需空闲）：
+
+```bash
+export QWEN_BASE_URL=http://127.0.0.1:18024/v1
+export STUDYGRAPH_TUTOR_PROVIDER=tacc
+.venv/bin/python -m uvicorn backend.main:app --host 127.0.0.1 --port 18031
+```
+
+确认两份讲义已导入该后端，在另一终端选择单轮或多轮运行；`CURRENT_JOB_ID` 替换为实际作业号：
+
+```bash
+.venv/bin/python -m evaluation.runners.tutor_single run en evaluation/results/tutor-single-tacc-new --base-url http://127.0.0.1:18031 --job CURRENT_JOB_ID
+.venv/bin/python -m evaluation.runners.tutor_multi evaluation/results/tutor-multi-tacc-new --base-url http://127.0.0.1:18031 --job CURRENT_JOB_ID
+```
+
+改用 DeepSeek 时，在后端启动环境配置 key，并设 `STUDYGRAPH_TUTOR_PROVIDER=deepseek` 后重启；不要把 TACC 作业号当作 DeepSeek 模型信息。仅在评测脚本终端改变量不会改变已运行后端。上述命令只生成回答，语义评分仍需另行审核；固定习题已包含在单轮中，不重复计数。历史压缩在满足条件且存在 DeepSeek key 时仍可能调用 DeepSeek；要求仅用 TACC 时，应在后端进程中取消该 key，使该可选压缩不执行。

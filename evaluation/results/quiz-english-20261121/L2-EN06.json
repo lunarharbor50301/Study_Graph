@@ -1,0 +1,92 @@
+{
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      39,
+      40
+    ],
+    "instruction": "Write one English multiple-choice question using only physical PDF pages 39,40. Present a workload issuing requests concurrently across independent channels. Ask how this affects aggregate bandwidth.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 39,
+      "request": {
+        "topic": "Independent memory channels",
+        "query": "Independent memory channels",
+        "type": "multiple-choice",
+        "difficulty": "Advanced",
+        "previous": [],
+        "instructions": "Write one English multiple-choice question using only physical PDF pages 39,40. Present a workload issuing requests concurrently across independent channels. Ask how this affects aggregate bandwidth."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ],
+          "raw_response": {
+            "id": "39ca0fe5-3f23-47bc-884f-7f92d248bb37",
+            "object": "chat.completion",
+            "created": 1795269381,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"type\": \"multiple-choice\", \"difficulty\": \"Advanced\", \"topic\": \"Independent memory channels\", \"prompt\": \"A workload issues requests concurrently across multiple independent memory channels. According to the passage, how does this affect aggregate bandwidth?\", \"source\": \"S1\", \"options\": [\"Aggregate bandwidth is the sum across independent channels when requests use them concurrently.\", \"Aggregate bandwidth stays fixed because all channels share a single data bus.\", \"Aggregate bandwidth doubles automatically because DDR5 splits 64 data bits into two 32-bit subchannels.\", \"Aggregate bandwidth decreases because bank scheduling reduces bus utilization.\"], \"answer\": \"Aggregate bandwidth is the sum across independent channels when requests use them concurrently.\", \"accepted_answers\": [], \"hint\": \"Focus on what the passage says happens when requests actually use the channels at the same time.\", \"explanation\": \"The passage states that independent channels add bandwidth when requests use them concurrently, since aggregate bandwidth is the sum across independent memory-controller channels.\"}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 756,
+              "completion_tokens": 209,
+              "total_tokens": 965,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 756
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "Independent memory channels",
+        "prompt": "A workload issues requests concurrently across multiple independent memory channels. According to the passage, how does this affect aggregate bandwidth?",
+        "citations": [
+          {
+            "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+            "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p40-1",
+            "page": 40,
+            "text": "CPU Memory Hierarchy\n\nDRAM Behind Cache: Channel Bandwidth Grows Along Three\nAxes\n\n\n\n\n\n  Independent channels add bandwidth when requests use them concurrently. Bank\n▪\n  scheduling improves bus utilization.\n DDR5 splits 64 data bits into two 32-bit subchannels. This split alone does not\n▪\n  double total data width.\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        40",
+            "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/40/preview"
+          }
+        ],
+        "type": "multiple-choice",
+        "answer": "Aggregate bandwidth is the sum across independent channels when requests use them concurrently.",
+        "hint": "Focus on what the passage says happens when requests actually use the channels at the same time.",
+        "explanation": "The passage states that independent channels add bandwidth when requests use them concurrently, since aggregate bandwidth is the sum across independent memory-controller channels.",
+        "options": [
+          "Aggregate bandwidth is the sum across independent channels when requests use them concurrently.",
+          "Aggregate bandwidth stays fixed because all channels share a single data bus.",
+          "Aggregate bandwidth doubles automatically because DDR5 splits 64 data bits into two 32-bit subchannels.",
+          "Aggregate bandwidth decreases because bank scheduling reduces bus utilization."
+        ],
+        "accepted_answers": []
+      },
+      "elapsed_s": 2.41
+    }
+  ]
+}

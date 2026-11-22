@@ -1,0 +1,26 @@
+{
+  "id": "L2-EN01",
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      22,
+      24
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 22,24. Ask the learner to identify the locality of repeated scalar use and of sequential array traversal. Require both labels.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 22,
+      "request": {
+        "type": "short-answer",
+        "difficulty": "Foundational",
+        "topic": "Temporal and spatial locality",
+        "query": "Temporal and spatial locality",
+        "instructions": "Write one English short-answer question using only physical PDF pages 22,24. Ask the learner to identify the locality of repeated scalar use and of sequential array traversal. Require both labels.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L2"
+}

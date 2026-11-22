@@ -1,0 +1,26 @@
+{
+  "id": "L2-EN04",
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      48,
+      51
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 48,51. Ask the learner to distinguish a contiguous global warp load from a shared-memory warp load in which all lanes read the same word. Require both mechanisms.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 48,
+      "request": {
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "topic": "Coalescing versus bank conflicts",
+        "query": "Coalescing versus bank conflicts",
+        "instructions": "Write one English short-answer question using only physical PDF pages 48,51. Ask the learner to distinguish a contiguous global warp load from a shared-memory warp load in which all lanes read the same word. Require both mechanisms.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L2"
+}

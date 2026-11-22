@@ -445,3 +445,26 @@
 
 - F18 / Q24 / incorrect：所有数据都应该立即迁移到 HBM，迁移没有成本。
   反馈要求：明确纠正该错误，并基于参考要点给提示。
+
+## 切换 TACC / DeepSeek 运行评测
+
+以下是当前代码的运行方式，历史报告中的模型名称和成绩保持原样；切换模型后应保存到新的结果目录并重新评分。[完整配置、参数和运行说明](../../runners/README.md)。命令均从仓库根目录执行。
+
+先启动 TACC 模型及 SSH 隧道，然后在运行评测脚本的终端设置地址并检查接口：
+
+```bash
+export QWEN_BASE_URL=http://127.0.0.1:18024/v1
+
+curl --noproxy '*' -fsS --max-time 8 \
+  http://127.0.0.1:18024/v1/models
+```
+
+直接调用 TACC 的评测脚本不需要 DeepSeek API key。改用 DeepSeek 时，需要在当前进程配置 `DEEPSEEK_API_KEY`。如果密钥已保存在项目 `.env` 中，可以加载：
+
+```bash
+set -a
+source .env
+set +a
+```
+
+本文件属于历史归档，不应直接套用旧题集或旧命令进行新版比较。当前出题入口使用 `--provider tacc`（可另设 `--judge-provider deepseek`），批改入口使用 `--provider tacc`，概念图语义评分使用 `--judge tacc`。换成 `deepseek` 可使用对应 DeepSeek 接口；当前题集及完整命令见上面的运行说明。

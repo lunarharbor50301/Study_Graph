@@ -1,0 +1,25 @@
+{
+  "id": "L1-EN09",
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      63
+    ],
+    "instruction": "Write one English true-false question using only physical PDF pages 63. Test whether __syncthreads() synchronizes all blocks of a kernel. Explain its actual scope.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 63,
+      "request": {
+        "type": "true-false",
+        "difficulty": "Foundational",
+        "topic": "Scope of CUDA synchronization",
+        "query": "Scope of CUDA synchronization",
+        "instructions": "Write one English true-false question using only physical PDF pages 63. Test whether __syncthreads() synchronizes all blocks of a kernel. Explain its actual scope.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L1"
+}

@@ -1,0 +1,89 @@
+{
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      29
+    ],
+    "instruction": "Write one English true-false question using only physical PDF pages 29. Test whether logical threads share all architectural state. In the explanation distinguish private state from shared execution resources.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 29,
+      "request": {
+        "topic": "Simultaneous multithreading",
+        "query": "Simultaneous multithreading",
+        "type": "true-false",
+        "difficulty": "Foundational",
+        "previous": [],
+        "instructions": "Write one English true-false question using only physical PDF pages 29. Test whether logical threads share all architectural state. In the explanation distinguish private state from shared execution resources."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ],
+          "raw_response": {
+            "id": "ea62bb62-70b1-49db-9acb-d9ff1ba84e62",
+            "object": "chat.completion",
+            "created": 1795269379,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"prompt\": \"In simultaneous multithreading (SMT), each logical thread shares the same architectural state with the other logical threads on the physical core.\", \"source\": \"S1\", \"options\": [], \"answer\": \"False\", \"accepted_answers\": [], \"hint\": \"Consider what each logical thread keeps for itself versus what it shares with other threads on the core.\", \"explanation\": \"False, because each logical thread has its own private architectural state, while execution units, caches, queues, and predictors are the shared resources.\"}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 844,
+              "completion_tokens": 115,
+              "total_tokens": 959,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 844
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "Simultaneous multithreading",
+        "prompt": "In simultaneous multithreading (SMT), each logical thread shares the same architectural state with the other logical threads on the physical core.",
+        "citations": [
+          {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p29-1",
+            "page": 29,
+            "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Optimization #6: OoO Superscalar with Hyper-Threading\n\n¡  Problem: Even OoO superscalar cores have idle slot issues.\n\n¡  Reasons:\n\n   ¡  Cache miss, branch misprediction, dependency chain……\n\n\n¡  Hyper-threading introduces simultaneous multithreading (SMT)\n\n   ¡  Multiple hardware threads share one physical core.\n\n   ¡  Each logical thread has its own architectural state.\n\n   ¡  Execution units, caches, queues, and predictors are shared.\n\n\n\n¡ The closest architecture to modern CPUs.",
+            "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/29/preview"
+          }
+        ],
+        "type": "true-false",
+        "answer": "False",
+        "hint": "Consider what each logical thread keeps for itself versus what it shares with other threads on the core.",
+        "explanation": "False, because each logical thread has its own private architectural state, while execution units, caches, queues, and predictors are the shared resources.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "accepted_answers": []
+      },
+      "elapsed_s": 2.18
+    }
+  ]
+}

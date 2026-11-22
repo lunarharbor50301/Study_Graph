@@ -1,0 +1,93 @@
+{
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      55,
+      57
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 55,57. Ask how dense, short interposer connections between HBM and the processor affect bandwidth and energy per bit. Require both effects.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 55,
+      "request": {
+        "topic": "HBM packaging",
+        "query": "HBM packaging",
+        "type": "short-answer",
+        "difficulty": "Foundational",
+        "previous": [],
+        "instructions": "Write one English short-answer question using only physical PDF pages 55,57. Ask how dense, short interposer connections between HBM and the processor affect bandwidth and energy per bit. Require both effects."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ],
+          "raw_response": {
+            "id": "a802c17e-7da5-4f44-81d5-69f93b51be46",
+            "object": "chat.completion",
+            "created": 1795269384,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"type\": \"short-answer\", \"prompt\": \"According to the passage, how do dense, short interposer connections between HBM and the processor affect bandwidth and energy per bit? Name both effects.\", \"source\": \"S2\", \"options\": [], \"answer\": \"They improve both bandwidth and energy per bit.\", \"accepted_answers\": [\"improve bandwidth and energy per bit\", \"better bandwidth and energy per bit\", \"higher bandwidth and lower energy per bit\", \"increased bandwidth and improved energy per bit\", \"bandwidth and energy per bit both improve\"], \"hint\": \"Think about what shorter, denser wiring does to signal travel and power use.\", \"explanation\": \"The passage states that dense, short wiring improves bandwidth and energy per bit while requiring advanced packaging.\"}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 803,
+              "completion_tokens": 165,
+              "total_tokens": 968,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 803
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "HBM packaging",
+        "prompt": "According to the passage, how do dense, short interposer connections between HBM and the processor affect bandwidth and energy per bit? Name both effects.",
+        "citations": [
+          {
+            "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+            "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p55-1",
+            "page": 55,
+            "text": "GPU Memory Hierarchy\n\nFrom GDDR to HBM: Thousands of Wires for HBMs\n\n\n\n\n\n▪ HBM1–HBM3 use a 1024-bit interface per stack. HBM4 expands the interface to\n  2048 bits.\n▪ Dense, short wiring improves bandwidth and energy per bit, while requiring\n  advanced packaging.\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        55",
+            "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/55/preview"
+          }
+        ],
+        "type": "short-answer",
+        "answer": "They improve both bandwidth and energy per bit.",
+        "hint": "Think about what shorter, denser wiring does to signal travel and power use.",
+        "explanation": "The passage states that dense, short wiring improves bandwidth and energy per bit while requiring advanced packaging.",
+        "options": [],
+        "accepted_answers": [
+          "improve bandwidth and energy per bit",
+          "better bandwidth and energy per bit",
+          "higher bandwidth and lower energy per bit",
+          "increased bandwidth and improved energy per bit",
+          "bandwidth and energy per bit both improve"
+        ]
+      },
+      "elapsed_s": 2.46
+    }
+  ]
+}

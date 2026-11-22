@@ -1,0 +1,42 @@
+{
+  "question": "L2-SA15",
+  "variant": "correct",
+  "student_answer": "Keep hot data in HBM; move it there only if the predicted reuse benefit outweighs copying and tracking overhead.",
+  "raw_response": {
+    "id": "f2000705-d4b2-4b03-bc15-53532ec92833",
+    "object": "chat.completion",
+    "created": 1795271868,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":2},\"errors\":[],\"missing\":[],\"feedback\":\"Correct on both criteria: hot data belongs in HBM, and promotion is justified only when predicted reuse benefit exceeds transfer and bookkeeping overhead.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 370,
+      "completion_tokens": 53,
+      "total_tokens": 423,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 370
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 2
+    },
+    "errors": [],
+    "missing": [],
+    "feedback": "Correct on both criteria: hot data belongs in HBM, and promotion is justified only when predicted reuse benefit exceeds transfer and bookkeeping overhead."
+  }
+}

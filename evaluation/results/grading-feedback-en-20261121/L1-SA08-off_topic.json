@@ -1,0 +1,45 @@
+{
+  "question": "L1-SA08",
+  "variant": "off_topic",
+  "student_answer": "The lecture is part of a computing course.",
+  "raw_response": {
+    "id": "9f7b8426-6d1a-4702-a726-9173c99cd637",
+    "object": "chat.completion",
+    "created": 1795271857,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[],\"missing\":[\"P1\",\"P2\"],\"feedback\":\"Your answer is off-topic. Compute the bound as arithmetic intensity (2 FLOPs/byte) times bandwidth (100 GB/s) = 200 GFLOP/s, and note that since this is below the 500 GFLOP/s compute peak, the kernel is bandwidth-limited.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 387,
+      "completion_tokens": 90,
+      "total_tokens": 477,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 259
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P1",
+      "P2"
+    ],
+    "feedback": "Your answer is off-topic. Compute the bound as arithmetic intensity (2 FLOPs/byte) times bandwidth (100 GB/s) = 200 GFLOP/s, and note that since this is below the 500 GFLOP/s compute peak, the kernel is bandwidth-limited."
+  }
+}

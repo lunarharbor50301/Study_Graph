@@ -1,0 +1,25 @@
+{
+  "id": "L2-EN08",
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      59
+    ],
+    "instruction": "Write one English multiple-choice question using only physical PDF pages 59. Ask which technology is favored for inexpensive expandable capacity. Explain the reason for the correct choice.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 59,
+      "request": {
+        "type": "multiple-choice",
+        "difficulty": "Foundational",
+        "topic": "DDR, GDDR and HBM trade-offs",
+        "query": "DDR, GDDR and HBM trade-offs",
+        "instructions": "Write one English multiple-choice question using only physical PDF pages 59. Ask which technology is favored for inexpensive expandable capacity. Explain the reason for the correct choice.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L2"
+}

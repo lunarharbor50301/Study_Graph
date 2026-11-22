@@ -1,0 +1,47 @@
+{
+  "question": "L1-SA04",
+  "variant": "partial_wrong",
+  "student_answer": "Lanes of the same warp follow different branch paths. Executing divergent paths makes every lane useful on every instruction.",
+  "raw_response": {
+    "id": "c64e61d4-98d9-4507-8cff-b1d75f1acb91",
+    "object": "chat.completion",
+    "created": 1795271849,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[{\"point\":\"P2\",\"span\":\"Executing divergent paths makes every lane useful on every instruction.\"}],\"missing\":[],\"feedback\":\"P1 is correct. P2 is contradicted: divergence means only a subset of lanes is active per path, which wastes SIMD utilization rather than making every lane useful.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 470,
+      "completion_tokens": 80,
+      "total_tokens": 550,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 214
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P2",
+        "span": "Executing divergent paths makes every lane useful on every instruction."
+      }
+    ],
+    "missing": [],
+    "feedback": "P1 is correct. P2 is contradicted: divergence means only a subset of lanes is active per path, which wastes SIMD utilization rather than making every lane useful."
+  }
+}

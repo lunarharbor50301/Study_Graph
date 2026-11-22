@@ -1,0 +1,51 @@
+{
+  "question": "L2-SA15",
+  "variant": "wrong",
+  "student_answer": "HBM should preferentially store large cold objects that are never reused. Promotion pays off whenever the object fits, regardless of migration costs.",
+  "raw_response": {
+    "id": "d16b3620-1e7a-4278-9d84-9c8ffc058d17",
+    "object": "chat.completion",
+    "created": 1795271870,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[{\"point\":\"P1\",\"span\":\"HBM should preferentially store large cold objects that are never reused\"},{\"point\":\"P2\",\"span\":\"Promotion pays off whenever the object fits, regardless of migration costs\"}],\"missing\":[],\"feedback\":\"Reversed both criteria: HBM holds hot, latency-critical, frequently reused data (not cold, never-reused objects), and promotion depends on reuse savings exceeding transfer and bookkeeping costs, not merely fitting.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 373,
+      "completion_tokens": 109,
+      "total_tokens": 482,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 245
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P1",
+        "span": "HBM should preferentially store large cold objects that are never reused"
+      },
+      {
+        "point": "P2",
+        "span": "Promotion pays off whenever the object fits, regardless of migration costs"
+      }
+    ],
+    "missing": [],
+    "feedback": "Reversed both criteria: HBM holds hot, latency-critical, frequently reused data (not cold, never-reused objects), and promotion depends on reuse savings exceeding transfer and bookkeeping costs, not merely fitting."
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "question": "L2-SA13",
+  "variant": "partial_wrong",
+  "student_answer": "Different addresses in one bank can require serialized service rounds. Every same-word read must be serialized individually.",
+  "raw_response": {
+    "id": "003d83ab-e548-4106-b9bc-b8856951e840",
+    "object": "chat.completion",
+    "created": 1795271866,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[{\"point\":\"P2\",\"span\":\"Every same-word read must be serialized individually.\"}],\"missing\":[],\"feedback\":\"P1 is correct. P2 is contradicted: same-word reads can be broadcast, not serialized individually.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 371,
+      "completion_tokens": 66,
+      "total_tokens": 437,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 243
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P2",
+        "span": "Every same-word read must be serialized individually."
+      }
+    ],
+    "missing": [],
+    "feedback": "P1 is correct. P2 is contradicted: same-word reads can be broadcast, not serialized individually."
+  }
+}

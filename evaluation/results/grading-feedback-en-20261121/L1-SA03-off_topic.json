@@ -1,0 +1,45 @@
+{
+  "question": "L1-SA03",
+  "variant": "off_topic",
+  "student_answer": "The lecture is part of a computing course.",
+  "raw_response": {
+    "id": "08f4d2e5-4de6-484c-8932-bdef1c28d98c",
+    "object": "chat.completion",
+    "created": 1795271847,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[],\"missing\":[\"P1\",\"P2\"],\"feedback\":\"Your answer does not address how SMT threads use a physical core or its state. State that multiple hardware threads share one physical core, and that each thread has private architectural state while execution units are shared.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 411,
+      "completion_tokens": 72,
+      "total_tokens": 483,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 155
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P1",
+      "P2"
+    ],
+    "feedback": "Your answer does not address how SMT threads use a physical core or its state. State that multiple hardware threads share one physical core, and that each thread has private architectural state while execution units are shared."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "L2-EN02",
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      45,
+      46
+    ],
+    "instruction": "Write one English multiple-choice question using only physical PDF pages 45,46. Ask which option correctly pairs CUDA local memory scope with its usual physical placement. Include exactly one correct pair.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 45,
+      "request": {
+        "type": "multiple-choice",
+        "difficulty": "Foundational",
+        "topic": "CUDA local memory",
+        "query": "CUDA local memory",
+        "instructions": "Write one English multiple-choice question using only physical PDF pages 45,46. Ask which option correctly pairs CUDA local memory scope with its usual physical placement. Include exactly one correct pair.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L2"
+}

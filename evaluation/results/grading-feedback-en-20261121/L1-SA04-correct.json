@@ -1,0 +1,42 @@
+{
+  "question": "L1-SA04",
+  "variant": "correct",
+  "student_answer": "Lanes of the same warp follow different branch paths. Executing a path with only some lanes active reduces utilization.",
+  "raw_response": {
+    "id": "f591acd3-8222-45f5-ba0c-af1a3148d1c2",
+    "object": "chat.completion",
+    "created": 1795271847,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":2},\"errors\":[],\"missing\":[],\"feedback\":\"Correct: identifies intra-warp divergence as lanes of the same warp taking different branch paths, and notes that executing with only some lanes active reduces SIMD utilization.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 470,
+      "completion_tokens": 57,
+      "total_tokens": 527,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 470
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 2
+    },
+    "errors": [],
+    "missing": [],
+    "feedback": "Correct: identifies intra-warp divergence as lanes of the same warp taking different branch paths, and notes that executing with only some lanes active reduces SIMD utilization."
+  }
+}

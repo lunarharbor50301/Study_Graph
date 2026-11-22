@@ -1,0 +1,47 @@
+{
+  "question": "L1-SA07",
+  "variant": "partial_wrong",
+  "student_answer": "Four processors give a speedup of 2.5. The infinite-processor limit is unbounded.",
+  "raw_response": {
+    "id": "12c42abf-3446-42b5-b718-766474571a85",
+    "object": "chat.completion",
+    "created": 1795271854,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[{\"point\":\"P2\",\"span\":\"The infinite-processor limit is unbounded.\"}],\"missing\":[],\"feedback\":\"P1 is correct. For P2, the infinite-processor limit is 5 (1/(1-0.8)), not unbounded; the serial fraction caps speedup.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 418,
+      "completion_tokens": 79,
+      "total_tokens": 497,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 162
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P2",
+        "span": "The infinite-processor limit is unbounded."
+      }
+    ],
+    "missing": [],
+    "feedback": "P1 is correct. For P2, the infinite-processor limit is 5 (1/(1-0.8)), not unbounded; the serial fraction caps speedup."
+  }
+}

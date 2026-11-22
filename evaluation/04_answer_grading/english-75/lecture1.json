@@ -1,0 +1,682 @@
+{
+  "document_id": "ACS-L1",
+  "status": "human_review_pending",
+  "questions": [
+    {
+      "id": "L1-SA01",
+      "lecture": 1,
+      "pages": [
+        17
+      ],
+      "question": "How do steady-state throughput and instruction latency differ in an ideal five-stage pipeline?",
+      "rubric": {
+        "P1": "After filling, one instruction completes per cycle.",
+        "P2": "One instruction still passes through five stages."
+      },
+      "canonical": "After filling, one instruction completes per cycle. One instruction still passes through five stages.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "One result retires each tick once full; one instruction still traverses all five stages.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "After filling, one instruction completes per cycle.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "After filling, one instruction completes per cycle. Each instruction finishes all stages in one cycle.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "Each instruction finishes all stages in one cycle."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "The filled pipeline completes five instructions per cycle. Each instruction finishes all stages in one cycle.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "The filled pipeline completes five instructions per cycle."
+            ],
+            [
+              "P2",
+              "Each instruction finishes all stages in one cycle."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L1-SA02",
+      "lecture": 1,
+      "pages": [
+        18,
+        22
+      ],
+      "question": "What causes a RAW hazard and how does forwarding help?",
+      "rubric": {
+        "P1": "A consumer needs a register result from an earlier producer.",
+        "P2": "Forwarding routes the result directly to the consumer before write-back."
+      },
+      "canonical": "A consumer needs a register result from an earlier producer. Forwarding routes the result directly to the consumer before write-back.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "A consumer needs a register result from an earlier producer. Forwarding routes the result directly to the consumer before write-back.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "A consumer needs a register result from an earlier producer.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "A consumer needs a register result from an earlier producer. Forwarding helps by forcing the consumer to wait for write-back.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "Forwarding helps by forcing the consumer to wait for write-back."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "A RAW hazard occurs when both instructions only read the same register. Forwarding helps by forcing the consumer to wait for write-back.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "A RAW hazard occurs when both instructions only read the same register."
+            ],
+            [
+              "P2",
+              "Forwarding helps by forcing the consumer to wait for write-back."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L1-SA03",
+      "lecture": 1,
+      "pages": [
+        29
+      ],
+      "question": "How do SMT threads use a physical core and its state?",
+      "rubric": {
+        "P1": "Multiple hardware threads run on one physical core.",
+        "P2": "Each thread keeps private architectural state while sharing execution units."
+      },
+      "canonical": "Multiple hardware threads run on one physical core. Each thread keeps private architectural state while sharing execution units.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "Several logical threads inhabit one core, sharing its execution hardware but maintaining separate architectural contexts.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "Multiple hardware threads run on one physical core.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "Multiple hardware threads run on one physical core. All logical threads share a single architectural register state.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "All logical threads share a single architectural register state."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "Every logical thread requires its own physical core. All logical threads share a single architectural register state.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "Every logical thread requires its own physical core."
+            ],
+            [
+              "P2",
+              "All logical threads share a single architectural register state."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L1-SA04",
+      "lecture": 1,
+      "pages": [
+        44,
+        45
+      ],
+      "question": "When does intra-warp branch divergence occur and what happens to SIMD utilization?",
+      "rubric": {
+        "P1": "Lanes of the same warp follow different branch paths.",
+        "P2": "Executing a path with only some lanes active reduces utilization."
+      },
+      "canonical": "Lanes of the same warp follow different branch paths. Executing a path with only some lanes active reduces utilization.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "Lanes of the same warp follow different branch paths. Executing a path with only some lanes active reduces utilization.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "Lanes of the same warp follow different branch paths.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "Lanes of the same warp follow different branch paths. Executing divergent paths makes every lane useful on every instruction.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "Executing divergent paths makes every lane useful on every instruction."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "Divergence requires different warps to take different paths even when each warp is uniform. Executing divergent paths makes every lane useful on every instruction.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "Divergence requires different warps to take different paths even when each warp is uniform."
+            ],
+            [
+              "P2",
+              "Executing divergent paths makes every lane useful on every instruction."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L1-SA05",
+      "lecture": 1,
+      "pages": [
+        57,
+        58
+      ],
+      "question": "Why can two threads lose an update to a shared sum and how can a mutex help?",
+      "rubric": {
+        "P1": "Both threads can read the old sum before either writes the result.",
+        "P2": "A mutex serializes the whole read-modify-write critical section."
+      },
+      "canonical": "Both threads can read the old sum before either writes the result. A mutex serializes the whole read-modify-write critical section.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "Both workers may load the same original value. Holding a mutex throughout the update makes the updates run one at a time.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "Both threads can read the old sum before either writes the result.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "Both threads can read the old sum before either writes the result. Locking only after both threads finish updating prevents the lost update.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "Locking only after both threads finish updating prevents the lost update."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "A lost update requires the two threads to write different private counters. Locking only after both threads finish updating prevents the lost update.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "A lost update requires the two threads to write different private counters."
+            ],
+            [
+              "P2",
+              "Locking only after both threads finish updating prevents the lost update."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L1-SA06",
+      "lecture": 1,
+      "pages": [
+        62,
+        63
+      ],
+      "question": "For block 2 of size 64 and lane index 3, give the 1-D global thread index and the scope of __syncthreads().",
+      "rubric": {
+        "P1": "The global index is 131.",
+        "P2": "The barrier synchronizes threads within the same block."
+      },
+      "canonical": "The global index is 131. The barrier synchronizes threads within the same block.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "The global index is 131. The barrier synchronizes threads within the same block.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "The global index is 131.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "The global index is 131. The barrier synchronizes every block in the grid.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "The barrier synchronizes every block in the grid."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "The global index is 69. The barrier synchronizes every block in the grid.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "The global index is 69."
+            ],
+            [
+              "P2",
+              "The barrier synchronizes every block in the grid."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L1-SA07",
+      "lecture": 1,
+      "pages": [
+        66
+      ],
+      "question": "For fixed work with an 80% parallel fraction, give the Amdahl speedup on four processors and its infinite-processor limit.",
+      "rubric": {
+        "P1": "Four processors give a speedup of 2.5.",
+        "P2": "The infinite-processor limit is 5."
+      },
+      "canonical": "Four processors give a speedup of 2.5. The infinite-processor limit is 5.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "2.5x at four processors and at most 5x as the processor count grows.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "Four processors give a speedup of 2.5.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "Four processors give a speedup of 2.5. The infinite-processor limit is unbounded.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "The infinite-processor limit is unbounded."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "Four processors give a speedup of 4. The infinite-processor limit is unbounded.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "Four processors give a speedup of 4."
+            ],
+            [
+              "P2",
+              "The infinite-processor limit is unbounded."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L1-SA08",
+      "lecture": 1,
+      "pages": [
+        67
+      ],
+      "question": "At 2 FLOPs/byte, 100 GB/s and a compute peak of 500 GFLOP/s, what throughput bound applies and what limits it?",
+      "rubric": {
+        "P1": "The throughput bound is 200 GFLOP/s.",
+        "P2": "The kernel is bandwidth-limited."
+      },
+      "canonical": "The throughput bound is 200 GFLOP/s. The kernel is bandwidth-limited.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "The throughput bound is 200 GFLOP/s. The kernel is bandwidth-limited.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "The throughput bound is 200 GFLOP/s.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "The throughput bound is 200 GFLOP/s. The kernel is compute-limited.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "The kernel is compute-limited."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "The throughput bound is 500 GFLOP/s. The kernel is compute-limited.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "The throughput bound is 500 GFLOP/s."
+            ],
+            [
+              "P2",
+              "The kernel is compute-limited."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    }
+  ]
+}

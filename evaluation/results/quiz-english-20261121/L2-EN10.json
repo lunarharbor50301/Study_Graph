@@ -1,0 +1,91 @@
+{
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      68,
+      69
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 68,69. Present a frequently reused object in LPDDR. Ask when promotion to HBM is worth the transfer and bookkeeping costs.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 68,
+      "request": {
+        "topic": "HBM tier placement",
+        "query": "HBM tier placement",
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "previous": [],
+        "instructions": "Write one English short-answer question using only physical PDF pages 68,69. Present a frequently reused object in LPDDR. Ask when promotion to HBM is worth the transfer and bookkeeping costs."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ],
+          "raw_response": {
+            "id": "cb6e21be-f029-4498-a2ef-0406b2c416df",
+            "object": "chat.completion",
+            "created": 1795269390,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"prompt\": \"According to the passage, when is promoting a frequently reused object from the LPDDR tier to HBM worth the transfer and bookkeeping costs?\", \"source\": \"S1\", \"options\": [], \"answer\": \"When future reuse saves more than the transfer and bookkeeping cost\", \"accepted_answers\": [\"When future reuse saves more than the transfer and bookkeeping cost\", \"When future reuse savings exceed the transfer and bookkeeping cost\", \"Only when future reuse saves more than the transfer and bookkeeping cost\"], \"hint\": \"Consider the condition that compares the benefit of reuse against the overhead of moving the object.\", \"explanation\": \"The passage states that promotion helps only when future reuse saves more than the transfer and bookkeeping cost.\"}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 789,
+              "completion_tokens": 158,
+              "total_tokens": 947,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 789
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "HBM tier placement",
+        "prompt": "According to the passage, when is promoting a frequently reused object from the LPDDR tier to HBM worth the transfer and bookkeeping costs?",
+        "citations": [
+          {
+            "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+            "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p69-1",
+            "page": 69,
+            "text": "SOTA Memory Technologies\n\nTiered Memory Management Decides What Stays in HBM\n\n\n\n\n\n▪ Keep hot, latency-critical, frequently reused data in HBM. Place large, cold objects\n  in the LPDDR capacity tier.\n▪ Promotion helps only when future reuse saves more than the transfer and\n  bookkeeping cost.\n\nMemory Wall     CPU Memory     GPU Memory    SOTA Memory     Advanced AI Computing and Systems        69",
+            "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/69/preview"
+          }
+        ],
+        "type": "short-answer",
+        "answer": "When future reuse saves more than the transfer and bookkeeping cost",
+        "hint": "Consider the condition that compares the benefit of reuse against the overhead of moving the object.",
+        "explanation": "The passage states that promotion helps only when future reuse saves more than the transfer and bookkeeping cost.",
+        "options": [],
+        "accepted_answers": [
+          "When future reuse saves more than the transfer and bookkeeping cost",
+          "When future reuse savings exceed the transfer and bookkeeping cost",
+          "Only when future reuse saves more than the transfer and bookkeeping cost"
+        ]
+      },
+      "elapsed_s": 2.03
+    }
+  ]
+}

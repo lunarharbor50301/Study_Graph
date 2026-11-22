@@ -1,0 +1,595 @@
+{
+  "document_id": "ACS-L2",
+  "status": "human_review_pending",
+  "questions": [
+    {
+      "id": "L2-SA09",
+      "lecture": 2,
+      "pages": [
+        22
+      ],
+      "question": "Define temporal locality and spatial locality.",
+      "rubric": {
+        "P1": "Temporal locality is reuse of the same data soon afterward.",
+        "P2": "Spatial locality is accessing nearby addresses close together in time."
+      },
+      "canonical": "Temporal locality is reuse of the same data soon afterward. Spatial locality is accessing nearby addresses close together in time.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "Revisiting a value soon is temporal locality; touching neighboring locations in succession is spatial locality.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "Temporal locality is reuse of the same data soon afterward.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "Temporal locality is reuse of the same data soon afterward. Spatial locality requires accesses to far-apart random addresses.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "Spatial locality requires accesses to far-apart random addresses."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "Temporal locality means previously accessed data is never reused. Spatial locality requires accesses to far-apart random addresses.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "Temporal locality means previously accessed data is never reused."
+            ],
+            [
+              "P2",
+              "Spatial locality requires accesses to far-apart random addresses."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L2-SA10",
+      "lecture": 2,
+      "pages": [
+        26
+      ],
+      "question": "Using AMAT, give the expected extra time and total access time for a 2-cycle hit, 4% misses and 100-cycle additional penalty.",
+      "rubric": {
+        "P1": "Misses add 4 cycles on average.",
+        "P2": "The total average is 6 cycles."
+      },
+      "canonical": "Misses add 4 cycles on average. The total average is 6 cycles.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "Misses add 4 cycles on average. The total average is 6 cycles.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "Misses add 4 cycles on average.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "Misses add 4 cycles on average. The total average is 102 cycles.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "The total average is 102 cycles."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "Misses add 100 cycles on average. The total average is 102 cycles.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "Misses add 100 cycles on average."
+            ],
+            [
+              "P2",
+              "The total average is 102 cycles."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L2-SA11",
+      "lecture": 2,
+      "pages": [
+        36,
+        37
+      ],
+      "question": "How do DRAM banks permit parallelism, and what resource can still limit transfers?",
+      "rubric": {
+        "P1": "Independent banks can overlap work with preparation in another bank.",
+        "P2": "Ranks on the same channel share its data bus."
+      },
+      "canonical": "Independent banks can overlap work with preparation in another bank. Ranks on the same channel share its data bus.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "Different banks can prepare and serve work concurrently, but returning data still uses the common channel bus.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "Independent banks can overlap work with preparation in another bank.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "Independent banks can overlap work with preparation in another bank. Every rank on a channel has a dedicated independent channel data bus.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "Every rank on a channel has a dedicated independent channel data bus."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "Only one bank can ever perform any internal operation at a time. Every rank on a channel has a dedicated independent channel data bus.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "Only one bank can ever perform any internal operation at a time."
+            ],
+            [
+              "P2",
+              "Every rank on a channel has a dedicated independent channel data bus."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L2-SA12",
+      "lecture": 2,
+      "pages": [
+        46
+      ],
+      "question": "What is the scope of CUDA local memory and where does it usually reside?",
+      "rubric": {
+        "P1": "It is private to each thread.",
+        "P2": "It usually resides in device DRAM."
+      },
+      "canonical": "It is private to each thread. It usually resides in device DRAM.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "It is private to each thread. It usually resides in device DRAM.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "It is private to each thread.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "It is private to each thread. It is always stored in on-chip registers.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "It is always stored in on-chip registers."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "All threads in a block can directly address another thread's local variables. It is always stored in on-chip registers.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "All threads in a block can directly address another thread's local variables."
+            ],
+            [
+              "P2",
+              "It is always stored in on-chip registers."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L2-SA13",
+      "lecture": 2,
+      "pages": [
+        51
+      ],
+      "question": "How are different-address accesses to one shared-memory bank handled compared with same-address reads?",
+      "rubric": {
+        "P1": "Different addresses in one bank can require serialized service rounds.",
+        "P2": "Reads of the same word can be broadcast."
+      },
+      "canonical": "Different addresses in one bank can require serialized service rounds. Reads of the same word can be broadcast.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "Distinct words in one bank may take multiple rounds; a common word can be sent to all readers together.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "Different addresses in one bank can require serialized service rounds.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "Different addresses in one bank can require serialized service rounds. Every same-word read must be serialized individually.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "Every same-word read must be serialized individually."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "Different words in the same bank always complete together without conflict. Every same-word read must be serialized individually.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "Different words in the same bank always complete together without conflict."
+            ],
+            [
+              "P2",
+              "Every same-word read must be serialized individually."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L2-SA14",
+      "lecture": 2,
+      "pages": [
+        67
+      ],
+      "question": "Distinguish CXL pooling from coherent sharing.",
+      "rubric": {
+        "P1": "Pooling can assign separate portions of memory capacity to different hosts.",
+        "P2": "Coherent sharing allows hosts to access shared data with coherence."
+      },
+      "canonical": "Pooling can assign separate portions of memory capacity to different hosts. Coherent sharing allows hosts to access shared data with coherence.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "Pooling can assign separate portions of memory capacity to different hosts. Coherent sharing allows hosts to access shared data with coherence.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "Pooling can assign separate portions of memory capacity to different hosts.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "Pooling can assign separate portions of memory capacity to different hosts. Coherent sharing requires all memory to be partitioned into disjoint private ranges.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "Coherent sharing requires all memory to be partitioned into disjoint private ranges."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "Pooling always gives every host the same coherently shared bytes. Coherent sharing requires all memory to be partitioned into disjoint private ranges.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "Pooling always gives every host the same coherently shared bytes."
+            ],
+            [
+              "P2",
+              "Coherent sharing requires all memory to be partitioned into disjoint private ranges."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "L2-SA15",
+      "lecture": 2,
+      "pages": [
+        69
+      ],
+      "question": "What belongs in the HBM tier, and when should an object be promoted?",
+      "rubric": {
+        "P1": "Hot, frequently reused or latency-critical data belongs in HBM.",
+        "P2": "Promote when expected reuse savings exceed transfer and bookkeeping costs."
+      },
+      "canonical": "Hot, frequently reused or latency-critical data belongs in HBM. Promote when expected reuse savings exceed transfer and bookkeeping costs.",
+      "variants": [
+        {
+          "variant": "correct",
+          "answer": "Keep hot data in HBM; move it there only if the predicted reuse benefit outweighs copying and tracking overhead.",
+          "points": [
+            2,
+            2
+          ],
+          "errors": [],
+          "missing": []
+        },
+        {
+          "variant": "omission",
+          "answer": "Hot, frequently reused or latency-critical data belongs in HBM.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P2"
+          ]
+        },
+        {
+          "variant": "partial_wrong",
+          "answer": "Hot, frequently reused or latency-critical data belongs in HBM. Promotion pays off whenever the object fits, regardless of migration costs.",
+          "points": [
+            2,
+            0
+          ],
+          "errors": [
+            [
+              "P2",
+              "Promotion pays off whenever the object fits, regardless of migration costs."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "wrong",
+          "answer": "HBM should preferentially store large cold objects that are never reused. Promotion pays off whenever the object fits, regardless of migration costs.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [
+            [
+              "P1",
+              "HBM should preferentially store large cold objects that are never reused."
+            ],
+            [
+              "P2",
+              "Promotion pays off whenever the object fits, regardless of migration costs."
+            ]
+          ],
+          "missing": []
+        },
+        {
+          "variant": "off_topic",
+          "answer": "The lecture is part of a computing course.",
+          "points": [
+            0,
+            0
+          ],
+          "errors": [],
+          "missing": [
+            "P1",
+            "P2"
+          ]
+        }
+      ]
+    }
+  ]
+}

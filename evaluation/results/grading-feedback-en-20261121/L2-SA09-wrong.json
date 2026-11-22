@@ -1,0 +1,51 @@
+{
+  "question": "L2-SA09",
+  "variant": "wrong",
+  "student_answer": "Temporal locality means previously accessed data is never reused. Spatial locality requires accesses to far-apart random addresses.",
+  "raw_response": {
+    "id": "ecf4618c-1431-44e3-bbf7-1d43234ab8e6",
+    "object": "chat.completion",
+    "created": 1795271858,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[{\"point\":\"P1\",\"span\":\"previously accessed data is never reused\"},{\"point\":\"P2\",\"span\":\"requires accesses to far-apart random addresses\"}],\"missing\":[],\"feedback\":\"Both definitions are contradicted. Temporal locality means the same data is likely to be reused soon; spatial locality means nearby addresses tend to be accessed close together in time.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 353,
+      "completion_tokens": 90,
+      "total_tokens": 443,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 225
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P1",
+        "span": "previously accessed data is never reused"
+      },
+      {
+        "point": "P2",
+        "span": "requires accesses to far-apart random addresses"
+      }
+    ],
+    "missing": [],
+    "feedback": "Both definitions are contradicted. Temporal locality means the same data is likely to be reused soon; spatial locality means nearby addresses tend to be accessed close together in time."
+  }
+}

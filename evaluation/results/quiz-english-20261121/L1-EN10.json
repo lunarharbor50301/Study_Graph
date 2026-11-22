@@ -1,0 +1,92 @@
+{
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      67
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 67. Give arithmetic intensity of 2 FLOPs/byte, bandwidth of 100 GB/s and peak compute of 500 GFLOP/s. Ask for the throughput bound and the limiting resource.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 67,
+      "request": {
+        "topic": "Roofline throughput bound",
+        "query": "Roofline throughput bound",
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "previous": [],
+        "instructions": "Write one English short-answer question using only physical PDF pages 67. Give arithmetic intensity of 2 FLOPs/byte, bandwidth of 100 GB/s and peak compute of 500 GFLOP/s. Ask for the throughput bound and the limiting resource."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ],
+          "raw_response": {
+            "id": "a3eae733-9b2c-4efe-9f37-5f222a447fdc",
+            "object": "chat.completion",
+            "created": 1795269390,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\n  \"prompt\": \"Using the Roofline model, with an arithmetic intensity of 2 FLOPs/byte, memory bandwidth of 100 GB/s, and peak compute of 500 GFLOP/s, what is the throughput bound (in GFLOP/s) and which resource limits performance? Provide the bound and the limiting resource concisely.\",\n  \"source\": \"S1\",\n  \"options\": [],\n  \"answer\": \"200 GFLOP/s, memory-bound\",\n  \"accepted_answers\": [\n    \"200 GFLOP/s, memory-bound\",\n    \"200 GFLOP/s, memory bound\",\n    \"200, memory-bound\",\n    \"200, memory bound\",\n    \"200 GFLOP/s, memory\"\n  ],\n  \"hint\": \"Compare the product of arithmetic intensity and bandwidth to the peak compute.\",\n  \"explanation\": \"The memory-bound throughput is arithmetic intensity times bandwidth (2 FLOPs/byte × 100 GB/s = 200 GFLOP/s), which is less than the peak compute of 500 GFLOP/s, so the kernel is memory-bound.\"\n}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 920,
+              "completion_tokens": 236,
+              "total_tokens": 1156,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 920
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "Roofline throughput bound",
+        "prompt": "Using the Roofline model, with an arithmetic intensity of 2 FLOPs/byte, memory bandwidth of 100 GB/s, and peak compute of 500 GFLOP/s, what is the throughput bound (in GFLOP/s) and which resource limits performance? Provide the bound and the limiting resource concisely.",
+        "citations": [
+          {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p67-1",
+            "page": 67,
+            "text": "Performance Models\n  Roofline Model\n\n\n\n\n¡ Memory wall: how much computation it performs for each byte moved.\n\n\n Arithmetic Intensity = FLOPs / Bytes moved from memory\n\n¡  Roofline Model: Compute-Bound or Memory-Bound?\n\n                                            Why peak is hard\n\n                                                                                              •  memory-bound: limited by bandwidth x\n\n                                                                                          intensity\n\n                                                                                              •  compute-bound: still needs vectorization,\n\n                                                                              tensor cores, occupancy\n\n                                                                                              •   real ceilings fall with poor locality or p",
+            "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/67/preview"
+          }
+        ],
+        "type": "short-answer",
+        "answer": "200 GFLOP/s, memory-bound",
+        "hint": "Compare the product of arithmetic intensity and bandwidth to the peak compute.",
+        "explanation": "The memory-bound throughput is arithmetic intensity times bandwidth (2 FLOPs/byte × 100 GB/s = 200 GFLOP/s), which is less than the peak compute of 500 GFLOP/s, so the kernel is memory-bound.",
+        "options": [],
+        "accepted_answers": [
+          "200 GFLOP/s, memory-bound",
+          "200 GFLOP/s, memory bound",
+          "200, memory-bound",
+          "200, memory bound",
+          "200 GFLOP/s, memory"
+        ]
+      },
+      "elapsed_s": 2.23
+    }
+  ]
+}

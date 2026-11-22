@@ -1,0 +1,44 @@
+{
+  "question": "L1-SA03",
+  "variant": "omission",
+  "student_answer": "Multiple hardware threads run on one physical core.",
+  "raw_response": {
+    "id": "197be5f8-b0ee-41c8-8307-7b0e0c75d007",
+    "object": "chat.completion",
+    "created": 1795271847,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[],\"missing\":[\"P2\"],\"feedback\":\"Correctly states that multiple hardware threads share one physical core. However, it omits that each thread keeps its own private architectural state while sharing execution units.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 411,
+      "completion_tokens": 59,
+      "total_tokens": 470,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 155
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P2"
+    ],
+    "feedback": "Correctly states that multiple hardware threads share one physical core. However, it omits that each thread keeps its own private architectural state while sharing execution units."
+  }
+}

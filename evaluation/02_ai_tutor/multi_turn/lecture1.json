@@ -1,5 +1,5 @@
 {
-  "version": "0.3",
+  "version": "0.3-en",
   "status": "human_review_pending",
   "document_id": "ACS-L1",
   "cases": [
@@ -10,14 +10,14 @@
         {
           "turn": 1,
           "input": {
-            "user_message": "解释五级流水线的五个阶段及作用。"
+            "user_message": "Explain the five stages of a five-stage instruction pipeline and what each stage does."
           },
           "expected": {
             "required_points": [
-              "列出IF/ID/EX/MEM/WB",
-              "阶段重叠提高吞吐"
+              "List IF/ID/EX/MEM/WB",
+              "Overlapping stages improves throughput"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L1",
@@ -26,23 +26,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 2,
           "input": {
-            "user_message": "那它是不是让每条指令都只需要一个周期？"
+            "user_message": "Does that mean it makes every instruction take only one cycle?"
           },
           "expected": {
             "required_points": [
-              "它指五级流水线",
-              "区分完成速率与单条指令经过多个阶段；不能认同错误前提"
+              "Resolve it as the five-stage pipeline",
+              "Distinguish completion rate from a single instruction passing through multiple stages; reject the false premise"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L1",
@@ -56,23 +56,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 3,
           "input": {
-            "user_message": "沿用这个理想五级流水线，执行10条指令需要多少周期？"
+            "user_message": "Using the same ideal five-stage pipeline, how many cycles are needed to execute 10 instructions?"
           },
           "expected": {
             "required_points": [
-              "沿用M=5,N=10",
-              "无气泡理想条件下5+10-1=14周期"
+              "Retain M=5 and use N=10",
+              "Under ideal bubble-free conditions, 5+10-1=14 cycles"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L1",
@@ -81,24 +81,24 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 4,
           "input": {
-            "user_message": "如果发生数据冒险，刚才的计算还一定成立吗？请给出依据页。"
+            "user_message": "If a data hazard occurs, does the previous calculation necessarily still hold? Cite the supporting lecture pages."
           },
           "expected": {
             "required_points": [
-              "刚才的计算指14周期理想结果",
-              "冒险可能产生停顿；转发可减少停顿但不保证所有情况仍为14",
-              "引用支持理想公式及冒险影响的页面"
+              "Identify the previous calculation as the ideal 14-cycle result",
+              "Hazards may cause stalls; forwarding can reduce stalls but does not guarantee 14 cycles in every case",
+              "Cite pages supporting both the ideal formula and the effects of hazards"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L1",
@@ -117,9 +117,9 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         }
@@ -132,13 +132,13 @@
         {
           "turn": 1,
           "input": {
-            "user_message": "解释数据并行和任务并行的区别。"
+            "user_message": "Explain the difference between data parallelism and task parallelism."
           },
           "expected": {
             "required_points": [
-              "分别解释不同数据与不同任务的并发"
+              "Explain concurrent operations on different data versus concurrent execution of different tasks"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L1",
@@ -147,23 +147,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 2,
           "input": {
-            "user_message": "前者适合对数组每个元素执行同一个操作吗？为什么？"
+            "user_message": "Is the former suitable for applying the same operation to every element of an array? Why?"
           },
           "expected": {
             "required_points": [
-              "前者指数据并行",
-              "不同元素可并行处理"
+              "Resolve the former as data parallelism",
+              "Different elements can be processed in parallel"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L1",
@@ -172,23 +172,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 3,
           "input": {
-            "user_message": "那SMT是不是同一个概念？"
+            "user_message": "Is SMT the same concept, then?"
           },
           "expected": {
             "required_points": [
-              "比较SMT与前文数据并行",
-              "SMT是多个硬件线程共享一个物理核，并非数据并行的同义词"
+              "Compare SMT with the preceding discussion of data parallelism",
+              "SMT means multiple hardware threads sharing one physical core; it is not a synonym for data parallelism"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L1",
@@ -202,23 +202,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 4,
           "input": {
-            "user_message": "指出支持刚才这个区别的课件页码。"
+            "user_message": "Identify the lecture pages that support the distinction you just explained."
           },
           "expected": {
             "required_points": [
-              "刚才的区别指SMT与数据并行",
-              "给出29及33页或其他确实支持的页"
+              "Resolve the distinction as SMT versus data parallelism",
+              "Give pages 29 and 33, or alternative pages that genuinely support the distinction"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L1",
@@ -232,9 +232,9 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         }
@@ -247,14 +247,14 @@
         {
           "turn": 1,
           "input": {
-            "user_message": "固定规模程序90%可并行，10个处理器能加速多少？"
+            "user_message": "For a fixed-size program that is 90% parallelizable, what speedup can 10 processors achieve?"
           },
           "expected": {
             "required_points": [
-              "f=.9,p=10",
-              "S=100/19≈5.263"
+              "Use f=.9 and p=10",
+              "S=100/19, approximately 5.263"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L1",
@@ -263,23 +263,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 2,
           "input": {
-            "user_message": "如果增加到100个呢？"
+            "user_message": "What if we increase that to 100?"
           },
           "expected": {
             "required_points": [
-              "保持f=.9及固定规模",
-              "S=1/(.1+.009)≈9.174"
+              "Retain f=.9 and the fixed problem size",
+              "S=1/(.1+.009), approximately 9.174"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L1",
@@ -288,23 +288,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 3,
           "input": {
-            "user_message": "所以继续增加就可以突破10倍，对吗？"
+            "user_message": "So adding more processors can push the speedup beyond 10 times, right?"
           },
           "expected": {
             "required_points": [
-              "保持前文条件",
-              "纠正前提，有限p小于10且极限10"
+              "Retain the preceding conditions",
+              "Correct the premise: speedup is below 10 for finite p and approaches 10 in the limit"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L1",
@@ -313,23 +313,23 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         },
         {
           "turn": 4,
           "input": {
-            "user_message": "给我依据页，并说明这里的串行比例是多少。"
+            "user_message": "Give the supporting page and state the serial fraction in this example."
           },
           "expected": {
             "required_points": [
-              "引用66页",
-              "串行比例为1-f=.1"
+              "Cite page 66",
+              "The serial fraction is 1-f=.1"
             ],
-            "point_scale": "每点0/1/2；0错误或缺失，1部分，2完整",
+            "point_scale": "Each point: 0=incorrect or missing, 1=partial, 2=complete and correct",
             "evidence": [
               {
                 "document_id": "ACS-L1",
@@ -338,13 +338,15 @@
               }
             ],
             "failure_conditions": [
-              "错误解析本轮指代或沿用条件",
-              "忽略用户明确话题切换",
-              "引用无法支持本轮结论"
+              "Misresolve a reference or fail to retain applicable preceding conditions",
+              "Ignore an explicit topic switch",
+              "Citations do not support the conclusion in this turn"
             ]
           }
         }
       ]
     }
-  ]
+  ],
+  "language": "en",
+  "translation_note": "English translation preserving original dialogue IDs, conditions, evidence, and scoring requirements."
 }

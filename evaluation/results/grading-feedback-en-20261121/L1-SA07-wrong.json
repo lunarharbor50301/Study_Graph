@@ -1,0 +1,51 @@
+{
+  "question": "L1-SA07",
+  "variant": "wrong",
+  "student_answer": "Four processors give a speedup of 4. The infinite-processor limit is unbounded.",
+  "raw_response": {
+    "id": "3f3b070d-4b64-4206-964e-1001b12cd1c3",
+    "object": "chat.completion",
+    "created": 1795271854,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[{\"point\":\"P1\",\"span\":\"Four processors give a speedup of 4.\"},{\"point\":\"P2\",\"span\":\"The infinite-processor limit is unbounded.\"}],\"missing\":[],\"feedback\":\"Both values are wrong. With f=0.8, S(4)=1/(0.2+0.8/4)=2.5, and the infinite-processor limit is 1/(1-f)=5, not unbounded.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 416,
+      "completion_tokens": 111,
+      "total_tokens": 527,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 160
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P1",
+        "span": "Four processors give a speedup of 4."
+      },
+      {
+        "point": "P2",
+        "span": "The infinite-processor limit is unbounded."
+      }
+    ],
+    "missing": [],
+    "feedback": "Both values are wrong. With f=0.8, S(4)=1/(0.2+0.8/4)=2.5, and the infinite-processor limit is 1/(1-f)=5, not unbounded."
+  }
+}

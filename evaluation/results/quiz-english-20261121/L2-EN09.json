@@ -1,0 +1,91 @@
+{
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      66,
+      67
+    ],
+    "instruction": "Write one English true-false question using only physical PDF pages 66,67. Test the claim that assigning separate pooled capacity to hosts automatically gives them coherent shared access. Explain the distinction.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 66,
+      "request": {
+        "topic": "CXL pooling versus coherent sharing",
+        "query": "CXL pooling versus coherent sharing",
+        "type": "true-false",
+        "difficulty": "Foundational",
+        "previous": [],
+        "instructions": "Write one English true-false question using only physical PDF pages 66,67. Test the claim that assigning separate pooled capacity to hosts automatically gives them coherent shared access. Explain the distinction."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5",
+            "S6"
+          ],
+          "raw_response": {
+            "id": "d0f0952b-4f5c-4b88-9ded-639fb30b2c75",
+            "object": "chat.completion",
+            "created": 1795269388,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"prompt\": \"True or False: Assigning separate pooled CXL memory capacity to different hosts automatically provides those hosts with coherent shared access to that memory.\", \"source\": \"S1\", \"options\": [], \"answer\": \"False\", \"accepted_answers\": [], \"hint\": \"Consider whether pooling and coherent sharing are described as the same capability.\", \"explanation\": \"Pooling only assigns portions of memory devices to different hosts, whereas CXL 3.0 coherent sharing is a distinct capability beyond merely letting several hosts map the same memory region.\"}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 818,
+              "completion_tokens": 116,
+              "total_tokens": 934,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 818
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "CXL pooling versus coherent sharing",
+        "prompt": "True or False: Assigning separate pooled CXL memory capacity to different hosts automatically provides those hosts with coherent shared access to that memory.",
+        "citations": [
+          {
+            "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+            "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p67-1",
+            "page": 67,
+            "text": "SOTA Memory Technologies\n\nCXL Switches Enable Expansion, Pooling, and Sharing\n\n\n\n\n\n▪ Expansion adds capacity to one host. Pooling assigns portions of memory devices\n  to different hosts.\n▪ CXL 3.0 coherent sharing differs from merely allowing several hosts to map the\n same memory region.\n\nMemory Wall     CPU Memory     GPU Memory    SOTA Memory     Advanced AI Computing and Systems        67",
+            "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/67/preview"
+          }
+        ],
+        "type": "true-false",
+        "answer": "False",
+        "hint": "Consider whether pooling and coherent sharing are described as the same capability.",
+        "explanation": "Pooling only assigns portions of memory devices to different hosts, whereas CXL 3.0 coherent sharing is a distinct capability beyond merely letting several hosts map the same memory region.",
+        "options": [
+          "True",
+          "False"
+        ],
+        "accepted_answers": []
+      },
+      "elapsed_s": 2.29
+    }
+  ]
+}

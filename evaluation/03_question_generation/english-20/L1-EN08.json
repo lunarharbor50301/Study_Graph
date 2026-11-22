@@ -1,0 +1,26 @@
+{
+  "id": "L1-EN08",
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      61,
+      62
+    ],
+    "instruction": "Write one English multiple-choice question using only physical PDF pages 61,62. Give blockIdx.x=2, blockDim.x=64 and threadIdx.x=3. Ask for the one-dimensional global index.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 61,
+      "request": {
+        "type": "multiple-choice",
+        "difficulty": "Advanced",
+        "topic": "CUDA global thread index",
+        "query": "CUDA global thread index",
+        "instructions": "Write one English multiple-choice question using only physical PDF pages 61,62. Give blockIdx.x=2, blockDim.x=64 and threadIdx.x=3. Ask for the one-dimensional global index.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L1"
+}

@@ -1,0 +1,93 @@
+{
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      22,
+      24
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 22,24. Ask the learner to identify the locality of repeated scalar use and of sequential array traversal. Require both labels.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 22,
+      "request": {
+        "topic": "Temporal and spatial locality",
+        "query": "Temporal and spatial locality",
+        "type": "short-answer",
+        "difficulty": "Foundational",
+        "previous": [],
+        "instructions": "Write one English short-answer question using only physical PDF pages 22,24. Ask the learner to identify the locality of repeated scalar use and of sequential array traversal. Require both labels."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5"
+          ],
+          "raw_response": {
+            "id": "9cecc223-b93d-42fc-af0a-d345305825ff",
+            "object": "chat.completion",
+            "created": 1795269369,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"prompt\": \"Based on the locality diagram, what type of locality describes a piece of data being quickly reused in the future, and what type describes neighbors of the current data access being accessed in the future? Give both labels.\", \"source\": \"S1\", \"options\": [], \"answer\": \"Temporal locality; Spatial locality\", \"accepted_answers\": [\"Temporal locality and spatial locality\", \"Temporal; Spatial\", \"Temporal locality, spatial locality\", \"Spatial locality and temporal locality\", \"Spatial; Temporal\"], \"hint\": \"One type concerns reusing the same data item; the other concerns accessing nearby data items.\", \"explanation\": \"The diagram defines temporal locality as a piece of data being quickly reused in the future and spatial locality as neighbors of the current data access tending to be accessed in the future.\"}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 979,
+              "completion_tokens": 176,
+              "total_tokens": 1155,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 979
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "Temporal and spatial locality",
+        "prompt": "Based on the locality diagram, what type of locality describes a piece of data being quickly reused in the future, and what type describes neighbors of the current data access being accessed in the future? Give both labels.",
+        "citations": [
+          {
+            "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+            "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p22-1",
+            "page": 22,
+            "text": "CPU Memory Hierarchy\n\nLocality: The Hot Feature Makes Caches Useful\n\n\n\n\n\n  Temporal Locality                 Spatial Locality\n   A piece of data is quickly reused        The neighbors of the current data\n    in the future.                         access tend to be accessed in the\n                                                   future.    E.g., Loops\n                                                  E.g., array\n\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        22",
+            "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/22/preview"
+          }
+        ],
+        "type": "short-answer",
+        "answer": "Temporal locality; Spatial locality",
+        "hint": "One type concerns reusing the same data item; the other concerns accessing nearby data items.",
+        "explanation": "The diagram defines temporal locality as a piece of data being quickly reused in the future and spatial locality as neighbors of the current data access tending to be accessed in the future.",
+        "options": [],
+        "accepted_answers": [
+          "Temporal locality and spatial locality",
+          "Temporal; Spatial",
+          "Temporal locality, spatial locality",
+          "Spatial locality and temporal locality",
+          "Spatial; Temporal"
+        ]
+      },
+      "elapsed_s": 2.66
+    }
+  ]
+}

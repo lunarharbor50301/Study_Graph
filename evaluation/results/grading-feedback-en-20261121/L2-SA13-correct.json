@@ -1,0 +1,42 @@
+{
+  "question": "L2-SA13",
+  "variant": "correct",
+  "student_answer": "Distinct words in one bank may take multiple rounds; a common word can be sent to all readers together.",
+  "raw_response": {
+    "id": "7bbeb729-7b73-48a8-a46d-807bfe67a8cb",
+    "object": "chat.completion",
+    "created": 1795271865,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":2},\"errors\":[],\"missing\":[],\"feedback\":\"Correct: distinct addresses in one bank are serialized into multiple rounds, while same-word reads are broadcast to all readers.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 371,
+      "completion_tokens": 49,
+      "total_tokens": 420,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 371
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 2
+    },
+    "errors": [],
+    "missing": [],
+    "feedback": "Correct: distinct addresses in one bank are serialized into multiple rounds, while same-word reads are broadcast to all readers."
+  }
+}

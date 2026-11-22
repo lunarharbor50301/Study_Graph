@@ -1,0 +1,44 @@
+{
+  "question": "L1-SA06",
+  "variant": "omission",
+  "student_answer": "The global index is 131.",
+  "raw_response": {
+    "id": "38b51c93-8383-41e7-b107-e74e2b3997df",
+    "object": "chat.completion",
+    "created": 1795271852,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[],\"missing\":[\"P2\"],\"feedback\":\"Correct global index (2*64+3=131). You also need to state that __syncthreads() synchronizes threads within the same block.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 634,
+      "completion_tokens": 60,
+      "total_tokens": 694,
+      "prompt_tokens_details": {
+        "cached_tokens": 384
+      },
+      "prompt_cache_hit_tokens": 384,
+      "prompt_cache_miss_tokens": 250
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P2"
+    ],
+    "feedback": "Correct global index (2*64+3=131). You also need to state that __syncthreads() synchronizes threads within the same block."
+  }
+}

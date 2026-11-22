@@ -1,0 +1,93 @@
+{
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      66
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 66. Give a fixed-size workload with 80% parallel work and four processors. Ask for both the finite speedup and the infinite-processor limit.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 66,
+      "request": {
+        "topic": "Amdahl's law",
+        "query": "Amdahl's law",
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "previous": [],
+        "instructions": "Write one English short-answer question using only physical PDF pages 66. Give a fixed-size workload with 80% parallel work and four processors. Ask for both the finite speedup and the infinite-processor limit."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4",
+            "S5",
+            "S6"
+          ],
+          "raw_response": {
+            "id": "85e47f37-6d81-4b3c-9649-e70cb0c6b8ab",
+            "object": "chat.completion",
+            "created": 1795269374,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"prompt\": \"Using Amdahl's law for a fixed-size workload where 80% of the work is parallelizable (f = 0.8) and p = 4 processors, what is the finite speedup S(4), and what is the speedup limit as the number of processors goes to infinity? Give both values.\", \"source\": \"S1\", \"options\": [], \"answer\": \"S(4) = 2.5; infinite-processor limit = 5\", \"accepted_answers\": [\"2.5 and 5\", \"2.5, 5\", \"S(4)=2.5, limit=5\", \"2.5; 5\", \"2.5 and 5x\"], \"hint\": \"Compute the serial fraction first, then apply the formula for p = 4 and take the limit as p grows without bound.\", \"explanation\": \"With f = 0.8, S(4) = 1/((0.2) + 0.8/4) = 1/0.4 = 2.5, and as p → ∞ the speedup approaches 1/(1 − f) = 1/0.2 = 5.\"}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 901,
+              "completion_tokens": 261,
+              "total_tokens": 1162,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 901
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "Amdahl's law",
+        "prompt": "Using Amdahl's law for a fixed-size workload where 80% of the work is parallelizable (f = 0.8) and p = 4 processors, what is the finite speedup S(4), and what is the speedup limit as the number of processors goes to infinity? Give both values.",
+        "citations": [
+          {
+            "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+            "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p66-1",
+            "page": 66,
+            "text": "Performance Models\n  Amdahl's Law: The Serial Fraction Wins\n\n\n\n ¡ When problem size is fixed, even a small serial fraction caps total speedup\n\n\n S(p) = 1 / ((1 - f) + f / p)\n                                                          FIXED PROBLEM SIZE\n\n\n                                                                                          serial            parallelizable work f: parallelizable fraction\n1 - f: serial fraction\n p: number of processors / threads                        More processors squeeze the blue part, but\n                                                                     the purple serial part remains.\nNUMERICAL INTUITION\n\n             f = 0.90                                 f = 0.99\n\n    max speedup -> 10x          max speedup -> 100x",
+            "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/66/preview"
+          }
+        ],
+        "type": "short-answer",
+        "answer": "S(4) = 2.5; infinite-processor limit = 5",
+        "hint": "Compute the serial fraction first, then apply the formula for p = 4 and take the limit as p grows without bound.",
+        "explanation": "With f = 0.8, S(4) = 1/((0.2) + 0.8/4) = 1/0.4 = 2.5, and as p → ∞ the speedup approaches 1/(1 − f) = 1/0.2 = 5.",
+        "options": [],
+        "accepted_answers": [
+          "2.5 and 5",
+          "2.5, 5",
+          "S(4)=2.5, limit=5",
+          "2.5; 5",
+          "2.5 and 5x"
+        ]
+      },
+      "elapsed_s": 2.75
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "question": "L2-SA10",
+  "variant": "off_topic",
+  "student_answer": "The lecture is part of a computing course.",
+  "raw_response": {
+    "id": "40870d04-6645-46ab-9017-7820645861d9",
+    "object": "chat.completion",
+    "created": 1795271861,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[],\"missing\":[\"P1\",\"P2\"],\"feedback\":\"Your answer does not address the AMAT calculation. Compute miss penalty as 4% × 100 = 4 cycles, then total AMAT = 2 + 4 = 6 cycles.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 389,
+      "completion_tokens": 71,
+      "total_tokens": 460,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 261
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P1",
+      "P2"
+    ],
+    "feedback": "Your answer does not address the AMAT calculation. Compute miss penalty as 4% × 100 = 4 cycles, then total AMAT = 2 + 4 = 6 cycles."
+  }
+}

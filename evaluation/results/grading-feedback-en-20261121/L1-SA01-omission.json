@@ -1,0 +1,44 @@
+{
+  "question": "L1-SA01",
+  "variant": "omission",
+  "student_answer": "After filling, one instruction completes per cycle.",
+  "raw_response": {
+    "id": "a877f016-4668-4472-b30c-3f0bdff20591",
+    "object": "chat.completion",
+    "created": 1795271843,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[],\"missing\":[\"P2\"],\"feedback\":\"Correct on steady-state throughput (P1). You omitted the latency point: each instruction still passes through all five stages (P2).\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 382,
+      "completion_tokens": 55,
+      "total_tokens": 437,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 382
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P2"
+    ],
+    "feedback": "Correct on steady-state throughput (P1). You omitted the latency point: each instruction still passes through all five stages (P2)."
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "question": "L1-SA07",
+  "variant": "correct",
+  "student_answer": "2.5x at four processors and at most 5x as the processor count grows.",
+  "raw_response": {
+    "id": "3f1b54b0-4fa5-4ccb-8557-90cd9f6cfeb1",
+    "object": "chat.completion",
+    "created": 1795271853,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":2},\"errors\":[],\"missing\":[],\"feedback\":\"Correct: 2.5x speedup on four processors and 5x infinite-processor limit.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 416,
+      "completion_tokens": 46,
+      "total_tokens": 462,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 416
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 2
+    },
+    "errors": [],
+    "missing": [],
+    "feedback": "Correct: 2.5x speedup on four processors and 5x infinite-processor limit."
+  }
+}

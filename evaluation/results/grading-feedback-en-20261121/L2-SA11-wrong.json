@@ -1,0 +1,51 @@
+{
+  "question": "L2-SA11",
+  "variant": "wrong",
+  "student_answer": "Only one bank can ever perform any internal operation at a time. Every rank on a channel has a dedicated independent channel data bus.",
+  "raw_response": {
+    "id": "5ae6bd61-27ff-461e-9fa2-2814a37df0f1",
+    "object": "chat.completion",
+    "created": 1795271862,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[{\"point\":\"P1\",\"span\":\"Only one bank can ever perform any internal operation at a time\"},{\"point\":\"P2\",\"span\":\"Every rank on a channel has a dedicated independent channel data bus\"}],\"missing\":[],\"feedback\":\"Both statements contradict the lecture: banks operate independently and can overlap work, and ranks on a channel share the channel data bus rather than having dedicated buses.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 466,
+      "completion_tokens": 96,
+      "total_tokens": 562,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 210
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P1",
+        "span": "Only one bank can ever perform any internal operation at a time"
+      },
+      {
+        "point": "P2",
+        "span": "Every rank on a channel has a dedicated independent channel data bus"
+      }
+    ],
+    "missing": [],
+    "feedback": "Both statements contradict the lecture: banks operate independently and can overlap work, and ranks on a channel share the channel data bus rather than having dedicated buses."
+  }
+}

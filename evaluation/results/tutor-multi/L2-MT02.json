@@ -1,0 +1,96 @@
+{
+  "id": "L2-MT02",
+  "document_id": "ACS-L2",
+  "session": "multi-b1af558ad71d495c8843b6d032dfcd6f",
+  "job": "30603",
+  "turns": [
+    {
+      "question": "Is CUDA local memory private to a thread or shared by all threads? Where does it usually reside?",
+      "status": "done",
+      "answer": "CUDA **local memory is private to a single thread** — it is thread-private in scope, not shared by all threads.\n\nHowever, despite being logically private, it **usually resides in device DRAM** (the off-chip GDDR/HBM memory) and accesses to it pass through the L1/L2 caches. See page 46 [S1].\n\nSo the key distinction is:\n- **Scope/visibility:** private to one thread (each thread has its own local memory).\n- **Physical location:** typically in device DRAM, with L1/L2 cache in the access path — not in on-chip registers or shared memory.\n\nThis is why local memory is much slower than registers or shared memory: even though it's logically per-thread, it's backed by the slower off-chip device memory. [S1]",
+      "citations": [
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p46-1",
+          "page": 46,
+          "text": "GPU Memory Hierarchy\n\nEvery CUDA Memory Space Maps to a Physical Resource\n\n\n\n\n\n▪ Local memory is thread-private in scope but usually resides in device DRAM and\n  passes through L1/L2.\n▪ Register and shared-memory allocations limit how many blocks and warps can\n  reside on an SM.\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        46",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/46/preview",
+          "source": "S1"
+        }
+      ],
+      "elapsed_s": 8.19
+    },
+    {
+      "question": "So because its name includes local, must it be as fast as registers?",
+      "status": "done",
+      "answer": "No — the name \"local\" refers to **scope/visibility** (private to a thread), not to speed or physical location. It is a common misconception.\n\nAs the lecture states, local memory is thread-private in scope but **usually resides in device DRAM** and passes through L1/L2 caches. See page 46 [S1]. That makes it much slower than registers, which are allocated per thread and hardware-managed on-chip. [S3]\n\nSo:\n- **Registers:** on-chip, per-thread, fastest.\n- **Local memory:** logically per-thread, but physically in device DRAM (with L1/L2 in the path), so it's far slower — comparable in latency to global memory.\n\nThe \"local\" in the name is about *who can see it* (only that thread), not about *where it lives* or *how fast it is*. [S1]",
+      "citations": [
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p46-1",
+          "page": 46,
+          "text": "GPU Memory Hierarchy\n\nEvery CUDA Memory Space Maps to a Physical Resource\n\n\n\n\n\n▪ Local memory is thread-private in scope but usually resides in device DRAM and\n  passes through L1/L2.\n▪ Register and shared-memory allocations limit how many blocks and warps can\n  reside on an SM.\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        46",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/46/preview",
+          "source": "S1"
+        },
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p43-1",
+          "page": 43,
+          "text": "GPU Memory Hierarchy\n\nLarger Capacity, Longer Access Time\n  Registers\n    Allocated per thread, hardware\n   managed\n  Shared Memory + L1 Cache\n   Per SM explicit scratchpad,\n   hardware cache\n  L2 Cache\n   Device-wide, shared by all SMs\n  Device Memory: GDDR / HBM\n    Off-chip physical memory serving\n   the global address space\n\n\n\n\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        43",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/43/preview",
+          "source": "S3"
+        }
+      ],
+      "elapsed_s": 5.81
+    },
+    {
+      "question": "A different question: in shared memory, how do accesses to different addresses in the same bank differ from reads of the same address?",
+      "status": "done",
+      "answer": "In shared memory, the two cases behave very differently:\n\n**Same address (all threads read the same location):**\n- The hardware can use **broadcast** — the value is read once and delivered to all threads in the warp simultaneously. This is a single, fast transaction with no conflict. See page 51 [S4].\n\n**Different addresses in the same bank:**\n- This causes a **bank conflict**. Since a bank can only serve one address per cycle, the accesses must be **serialized into multiple service rounds** (e.g., if 4 threads hit the same bank, it takes 4 rounds). This is a bank conflict that serializes what would otherwise be parallel accesses. See page 51 [S4].\n\n**Key contrast:**\n- Same address → broadcast, no penalty.\n- Different addresses in the same bank → serialized (N-way conflict = N rounds).\n- Different addresses in *different* banks → fully parallel, one round (the ideal case).\n\nThe lecture also notes this differs from global-memory coalescing, where the coalescer groups addresses by cache-sector/transaction granularity before DRAM access. [S4][S5]",
+      "citations": [
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p51-1",
+          "page": 51,
+          "text": "GPU Memory Hierarchy\n\nAccess Memory: Bank Conflicts Serialize Otherwise Parallel\nAccesses\n\n\n\n\n\n▪ Typical GPUs use 32 banks; the figure shows 8 for readability. Same-address\n  reads can use broadcast.\n▪ Different addresses in the same bank require multiple service rounds. This differs\n  from global-memory coalescing.\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        51",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/51/preview",
+          "source": "S4"
+        },
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p47-1",
+          "page": 47,
+          "text": "GPU Memory Hierarchy\n\nAccess Memory: One Warp Memory Instruction Generates Up to\n32 Addresses\n\n\n\n\n\n▪ The coalescer groups addresses by cache-sector or transaction granularity before\n DRAM access.\n▪ The transaction count depends on alignment, address spacing, access width, and\n GPU architecture.\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        47",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/47/preview",
+          "source": "S5"
+        }
+      ],
+      "elapsed_s": 10.21
+    },
+    {
+      "question": "Is that the same thing as global-memory coalescing? Cite the source.",
+      "status": "done",
+      "answer": "No, it is **not** the same thing. The lecture explicitly states that bank conflicts in shared memory **\"differ from global-memory coalescing.\"** See page 51 [S4].\n\nThe key differences:\n\n- **Shared memory (bank conflicts):** The hardware checks which *bank* each address maps to. If multiple threads in a warp hit the *same bank* at *different addresses*, the accesses are serialized into multiple rounds. Same-address reads use broadcast. [S4]\n\n- **Global memory (coalescing):** The coalescer groups addresses by *cache-sector or transaction granularity* before the DRAM access. The number of transactions depends on alignment, address spacing, access width, and GPU architecture. [S5]\n\nSo the mechanisms are fundamentally different:\n- Shared memory: bank-based, conflict = serialization within a bank.\n- Global memory: sector/transaction-based, coalescing = merging nearby addresses into fewer DRAM transactions.\n\nBoth aim to maximize parallelism, but they operate at different levels of the memory hierarchy with different rules. [S4][S5]",
+      "citations": [
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p51-1",
+          "page": 51,
+          "text": "GPU Memory Hierarchy\n\nAccess Memory: Bank Conflicts Serialize Otherwise Parallel\nAccesses\n\n\n\n\n\n▪ Typical GPUs use 32 banks; the figure shows 8 for readability. Same-address\n  reads can use broadcast.\n▪ Different addresses in the same bank require multiple service rounds. This differs\n  from global-memory coalescing.\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        51",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/51/preview",
+          "source": "S4"
+        },
+        {
+          "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+          "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p47-1",
+          "page": 47,
+          "text": "GPU Memory Hierarchy\n\nAccess Memory: One Warp Memory Instruction Generates Up to\n32 Addresses\n\n\n\n\n\n▪ The coalescer groups addresses by cache-sector or transaction granularity before\n DRAM access.\n▪ The transaction count depends on alignment, address spacing, access width, and\n GPU architecture.\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        47",
+          "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/47/preview",
+          "source": "S5"
+        }
+      ],
+      "elapsed_s": 6.19
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "id": "L1-MT01",
+  "document_id": "ACS-L1",
+  "session": "multi-2388aa100672417c9b59f679b28e73ac",
+  "job": "30603",
+  "turns": [
+    {
+      "question": "Explain the five stages of a five-stage instruction pipeline and what each stage does.",
+      "status": "done",
+      "answer": "The five-stage instruction pipeline is a way to overlap the work of executing many instructions so that, after the pipeline is filled, one instruction can complete every cycle. The five stages and what each does are:\n\n1. **Fetch (IF)** – Get the instruction from instruction memory/cache.\n2. **Decode (ID)** – Resolve the opcode and operands (i.e., figure out what the instruction is and which registers/operands it uses).\n3. **Execute (EX)** – Perform the actual operation using the ALU, vector unit, load/store unit, or tensor core.\n4. **Memory Access (MEM)** – Load or store data through the cache or memory hierarchy.\n5. **Write Back (WB)** – Update the architectural state (write the result back to the register file).\n\nSee page 16 [S1].\n\nA couple of related points from the same material:\n- In a **perfect pipeline**, one instruction completes per cycle after the pipeline is filled, with no bubbles and maximum throughput. For N instructions and M stages, total cycles = M + N − 1, and average throughput = N / (M + N − 1) instructions per cycle. See page 17 [S2].\n- A **superscalar** CPU extends this idea by trying to execute multiple instructions per cycle, requiring a \"wide\" pipeline (wide fetch, wide decode, multiple execution units, multiple load/store paths, wide writeback, and a multi-ported register file). See page 26 [S3].\n\nIn short, the pipeline splits instruction execution into these five sequential steps so that different instructions can be in different stages at the same time, improving throughput.",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p16-1",
+          "page": 16,
+          "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Five-Stage Instruction Pipeline\n\n¡  Goal: Overlap time of data load/store\n\n¡  Fetch (IF)\n\n   ¡  Get instructions from instruction memory/cache\n\n¡ Decode (ID)\n\n   ¡  Resolve opcode and operands\n¡  Execute (EX)\n\n   ¡  ALU, vector unit, load/store unit, tensor core\n¡ Memory Access (MEM)\n\n   ¡  Load/store data through cache or memory hierarchy\n¡  Write Back (WB)\n\n   ¡  Update architectural state",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/16/preview",
+          "source": "S1"
+        },
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p17-1",
+          "page": 17,
+          "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Five-Stage Instruction Pipeline\n\n¡ Perfect Pipeline\n\n   ¡ One instruction completes per cycle after filling\n      the pipeline.\n\n   ¡ No bubbles and maximum throughput.\n\n\n¡ For N instructions and M stages:\n\n   ¡  Total Cycles = M + N – 1\n\n   ¡  Average throughput\n     = N / (M + N - 1) instructions per cycle\n\n   ¡  Instruction throughput per second\n     Frequency * N / (M + N - 1)",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/17/preview",
+          "source": "S2"
+        },
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p26-1",
+          "page": 26,
+          "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Optimization #4: Superscalar\n\n¡  Superscalar CPU: tries to execute multiple instructions every cycle.\n\n¡ Need a \"wide\" pipeline\n\n   ¡ Wide fetch\n\n   ¡ Wide decode\n\n   ¡  Multiple execution units\n\n   ¡  Multiple load/store paths\n\n   ¡ Wide writeback\n\n   ¡  Multi-ported register file\n\n\n¡  Challenge:\n\n   ¡   If instruction pipeline can issue N instructions concurrently,\n\n   ¡  The CPU needs resolve O(N2) dependence complexity.",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/26/preview",
+          "source": "S3"
+        }
+      ],
+      "elapsed_s": 10.32
+    },
+    {
+      "question": "Does that mean it makes every instruction take only one cycle?",
+      "status": "done",
+      "answer": "No — that's a common misconception. The pipeline does **not** make each individual instruction take only one cycle. Each instruction still takes **five cycles** to go through all five stages (IF → ID → EX → MEM → WB).\n\nWhat the pipeline changes is **throughput**, not **latency**:\n\n- **Latency per instruction:** still 5 cycles (one per stage).\n- **Throughput:** after the pipeline is filled, one instruction *completes* every cycle, because different instructions are in different stages simultaneously.\n\nSo if you have N instructions and M = 5 stages, the total time is M + N − 1 cycles, not N cycles. For example, 10 instructions take 5 + 10 − 1 = 14 cycles, not 10. The average throughput is N / (M + N − 1) instructions per cycle, which approaches 1 instruction per cycle as N gets large, but never makes a single instruction finish in one cycle. See page 17 [S2].\n\nThe \"one instruction completes per cycle\" claim refers to the **completion rate** of the stream of instructions, not the time any single instruction spends in the pipeline. See page 17 [S2].",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p17-1",
+          "page": 17,
+          "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Five-Stage Instruction Pipeline\n\n¡ Perfect Pipeline\n\n   ¡ One instruction completes per cycle after filling\n      the pipeline.\n\n   ¡ No bubbles and maximum throughput.\n\n\n¡ For N instructions and M stages:\n\n   ¡  Total Cycles = M + N – 1\n\n   ¡  Average throughput\n     = N / (M + N - 1) instructions per cycle\n\n   ¡  Instruction throughput per second\n     Frequency * N / (M + N - 1)",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/17/preview",
+          "source": "S2"
+        }
+      ],
+      "elapsed_s": 6.36
+    },
+    {
+      "question": "Using the same ideal five-stage pipeline, how many cycles are needed to execute 10 instructions?",
+      "status": "done",
+      "answer": "Using the formula from the lecture, for N instructions and M stages:\n\n**Total Cycles = M + N − 1**\n\nWith M = 5 (five-stage pipeline) and N = 10:\n\n**Total Cycles = 5 + 10 − 1 = 14 cycles**\n\nSo it takes **14 cycles** to execute 10 instructions in an ideal five-stage pipeline. See page 17 [S2].\n\nTo visualize why: the first instruction takes 5 cycles to fill the pipeline (one per stage), and then each of the remaining 9 instructions completes one cycle after the previous one, giving 5 + 9 = 14 cycles total.",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p17-1",
+          "page": 17,
+          "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Five-Stage Instruction Pipeline\n\n¡ Perfect Pipeline\n\n   ¡ One instruction completes per cycle after filling\n      the pipeline.\n\n   ¡ No bubbles and maximum throughput.\n\n\n¡ For N instructions and M stages:\n\n   ¡  Total Cycles = M + N – 1\n\n   ¡  Average throughput\n     = N / (M + N - 1) instructions per cycle\n\n   ¡  Instruction throughput per second\n     Frequency * N / (M + N - 1)",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/17/preview",
+          "source": "S2"
+        }
+      ],
+      "elapsed_s": 4.91
+    },
+    {
+      "question": "If a data hazard occurs, does the previous calculation necessarily still hold? Cite the supporting lecture pages.",
+      "status": "done",
+      "answer": "No — the 14-cycle calculation does **not** necessarily still hold if a data hazard occurs.\n\nThe formula **Total Cycles = M + N − 1** (i.e., 5 + 10 − 1 = 14) assumes a **perfect pipeline** with no bubbles. See page 17 [S2].\n\nHowever, the lecture explicitly states that a **data hazard** is a condition that causes the pipeline to **stall**, and the result is \"much bubbles and degraded efficiency.\" See page 18 [S4]. A data hazard arises from data dependencies such as:\n- **Read-after-write (RAW)**\n- **Write-after-write (WAW)**\n- **Write-after-read (WAR)**\n\nSee page 18 [S4].\n\nSo if a data hazard occurs, the pipeline must insert **stall cycles (bubbles)** to wait for the dependent data to be ready, which means the total cycles will be **greater than 14**. The exact number depends on how many stalls are needed.\n\nThe lecture also mentions techniques to mitigate this:\n- **Data Forwarding** (Optimization #1): passes the result directly from a pipeline register to the ALU input, allowing the consumer to execute earlier and reducing stalls. See page 22 [S6].\n- **Out-of-Order Execution** (Optimization #3): the hardware reorders independent instructions to fill the pipeline while others wait, reducing stall time. See page 25 [S5].\n\nIn summary: the 14-cycle figure is the **ideal, hazard-free** case. Any data hazard introduces bubbles, increasing the total cycle count beyond 14.",
+      "citations": [
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p17-1",
+          "page": 17,
+          "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Five-Stage Instruction Pipeline\n\n¡ Perfect Pipeline\n\n   ¡ One instruction completes per cycle after filling\n      the pipeline.\n\n   ¡ No bubbles and maximum throughput.\n\n\n¡ For N instructions and M stages:\n\n   ¡  Total Cycles = M + N – 1\n\n   ¡  Average throughput\n     = N / (M + N - 1) instructions per cycle\n\n   ¡  Instruction throughput per second\n     Frequency * N / (M + N - 1)",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/17/preview",
+          "source": "S2"
+        },
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p18-1",
+          "page": 18,
+          "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n Why Pipeline Stalls: Hazards\n\n¡ Any condition that causes the pipeline to\n   stall is called a hazard.\n\n   ¡  Result: Much bubbles and degraded efficiency\n¡ Various types of hazards\n\n   ¡  Data Hazard: Stall due to dependencies of some\n       data\n\n      ¡  Read-after-write (RAW)\n\n      ¡  Write-after-write (WAW)\n\n      ¡  Write-after-read (WAR)\n\n   ¡  Control Hazard: Stall due to branch and\n       synchronization\n\n   ¡  Structural hazard: Stall due to contention on\n      hardware such as memory channel, cache slot,\n      queue, etc.",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/18/preview",
+          "source": "S4"
+        },
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p22-1",
+          "page": 22,
+          "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Optimization #1: Data Forwarding\n\n¡  Enable Register-to-Register or Register-to-ALU Forwarding\n\n   ¡   E.g., result is passed directly from pipeline register to ALU input.\n\n   ¡  The consumer can execute earlier ——> Fewer stalls and higher pipeline efficiency",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/22/preview",
+          "source": "S6"
+        },
+        {
+          "document_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402",
+          "chunk_id": "34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402-p25-1",
+          "page": 25,
+          "text": "CPU: Optimize Latency of a Small Number of Complex Threads\n  Optimization #3: Out-of-Order (OoO) Execution\n¡  Out-of-order execution separates:\n\n   ¡ Program order: order written by the programmer\n\n   ¡  Execution order: order chosen by hardware\n   ¡ Commit order: order that updates architectural state\n\n\n¡  Typically, the compiler would find independent instruction sets to enable OoO execution, reducing\n   the stall time of the instruction pipeline.\n\n¡ At runtime, CPU involves a controller to find independent instructions while some instructions are\n   waiting.\n\n   ¡  Preempt current pipeline\n\n   ¡  Issue independent instruction\n\n   ¡  Restore preempted instruction when it finishes waiting",
+          "preview_url": "/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/25/preview",
+          "source": "S5"
+        }
+      ],
+      "elapsed_s": 10.67
+    }
+  ]
+}

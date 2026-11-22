@@ -1,0 +1,42 @@
+{
+  "question": "L1-SA03",
+  "variant": "correct",
+  "student_answer": "Several logical threads inhabit one core, sharing its execution hardware but maintaining separate architectural contexts.",
+  "raw_response": {
+    "id": "10a4a77f-48b7-4cad-9f7f-7d7d4b10633c",
+    "object": "chat.completion",
+    "created": 1795271846,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":2},\"errors\":[],\"missing\":[],\"feedback\":\"Correct: states multiple logical threads share one physical core and its execution hardware while keeping separate architectural state.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 419,
+      "completion_tokens": 45,
+      "total_tokens": 464,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 419
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 2
+    },
+    "errors": [],
+    "missing": [],
+    "feedback": "Correct: states multiple logical threads share one physical core and its execution hardware while keeping separate architectural state."
+  }
+}

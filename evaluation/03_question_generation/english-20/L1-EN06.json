@@ -1,0 +1,25 @@
+{
+  "id": "L1-EN06",
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      33
+    ],
+    "instruction": "Write one English multiple-choice question using only physical PDF pages 33. Describe the same operation applied independently to different array elements. Ask the learner to classify the parallelism.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 33,
+      "request": {
+        "type": "multiple-choice",
+        "difficulty": "Foundational",
+        "topic": "Data versus task parallelism",
+        "query": "Data versus task parallelism",
+        "instructions": "Write one English multiple-choice question using only physical PDF pages 33. Describe the same operation applied independently to different array elements. Ask the learner to classify the parallelism.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L1"
+}

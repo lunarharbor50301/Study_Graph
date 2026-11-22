@@ -1,0 +1,25 @@
+{
+  "id": "L1-EN05",
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      29
+    ],
+    "instruction": "Write one English true-false question using only physical PDF pages 29. Test whether logical threads share all architectural state. In the explanation distinguish private state from shared execution resources.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 29,
+      "request": {
+        "type": "true-false",
+        "difficulty": "Foundational",
+        "topic": "Simultaneous multithreading",
+        "query": "Simultaneous multithreading",
+        "instructions": "Write one English true-false question using only physical PDF pages 29. Test whether logical threads share all architectural state. In the explanation distinguish private state from shared execution resources.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L1"
+}

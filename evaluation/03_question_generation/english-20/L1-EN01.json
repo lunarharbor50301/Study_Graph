@@ -1,0 +1,26 @@
+{
+  "id": "L1-EN01",
+  "input": {
+    "document_id": "ACS-L1",
+    "allowed_pages": [
+      16,
+      17
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 16,17. Ask the student to distinguish steady-state throughput from the latency of a single instruction in a five-stage pipeline.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 16,
+      "request": {
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "topic": "Instruction pipeline throughput",
+        "query": "Instruction pipeline throughput",
+        "instructions": "Write one English short-answer question using only physical PDF pages 16,17. Ask the student to distinguish steady-state throughput from the latency of a single instruction in a five-stage pipeline.",
+        "previous": []
+      }
+    }
+  ],
+  "document_id": "ACS-L1"
+}

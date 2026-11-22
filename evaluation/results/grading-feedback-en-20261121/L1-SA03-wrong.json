@@ -1,0 +1,51 @@
+{
+  "question": "L1-SA03",
+  "variant": "wrong",
+  "student_answer": "Every logical thread requires its own physical core. All logical threads share a single architectural register state.",
+  "raw_response": {
+    "id": "89b618bb-c286-4872-b782-8b47f2c46086",
+    "object": "chat.completion",
+    "created": 1795271847,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[{\"point\":\"P1\",\"span\":\"Every logical thread requires its own physical core\"},{\"point\":\"P2\",\"span\":\"All logical threads share a single architectural register state\"}],\"missing\":[],\"feedback\":\"Reversed both facts: SMT threads share one physical core, and each thread has its own private architectural state while sharing execution units.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 421,
+      "completion_tokens": 86,
+      "total_tokens": 507,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 165
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [
+      {
+        "point": "P1",
+        "span": "Every logical thread requires its own physical core"
+      },
+      {
+        "point": "P2",
+        "span": "All logical threads share a single architectural register state"
+      }
+    ],
+    "missing": [],
+    "feedback": "Reversed both facts: SMT threads share one physical core, and each thread has its own private architectural state while sharing execution units."
+  }
+}

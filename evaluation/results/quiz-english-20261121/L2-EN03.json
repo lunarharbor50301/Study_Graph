@@ -1,0 +1,90 @@
+{
+  "input": {
+    "document_id": "ACS-L2",
+    "allowed_pages": [
+      26,
+      27
+    ],
+    "instruction": "Write one English short-answer question using only physical PDF pages 26,27. Give a hit time of 2 cycles, miss rate of 4% and additional miss penalty of 100 cycles. Ask for AMAT in cycles.",
+    "required_count": 1
+  },
+  "slots": [
+    {
+      "seed_page": 26,
+      "request": {
+        "topic": "Average memory access time",
+        "query": "Average memory access time",
+        "type": "short-answer",
+        "difficulty": "Advanced",
+        "previous": [],
+        "instructions": "Write one English short-answer question using only physical PDF pages 26,27. Give a hit time of 2 cycles, miss rate of 4% and additional miss penalty of 100 cycles. Ask for AMAT in cycles."
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "provider": "deepseek",
+          "temperature": 0,
+          "valid_sources": [
+            "S1",
+            "S2",
+            "S3",
+            "S4"
+          ],
+          "raw_response": {
+            "id": "41217cd0-9705-409d-acf3-a6c2d38236de",
+            "object": "chat.completion",
+            "created": 1795269374,
+            "model": "deepseek-flash",
+            "choices": [
+              {
+                "index": 0,
+                "message": {
+                  "role": "assistant",
+                  "content": "{\"prompt\": \"Using the AMAT formula, compute the average memory access time in cycles for a cache with a hit time of 2 cycles, a miss rate of 4%, and an additional miss penalty of 100 cycles.\", \"source\": \"S2\", \"options\": [], \"answer\": \"6 cycles\", \"accepted_answers\": [\"6\", \"6 cycles\", \"6 clks\"], \"hint\": \"Multiply the miss rate by the miss penalty, then add the hit time.\", \"explanation\": \"AMAT = Hit time + Miss rate × Miss penalty = 2 + 0.04 × 100 = 6 cycles.\"}"
+                },
+                "logprobs": null,
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 925,
+              "completion_tokens": 137,
+              "total_tokens": 1062,
+              "prompt_tokens_details": {
+                "cached_tokens": 0
+              },
+              "prompt_cache_hit_tokens": 0,
+              "prompt_cache_miss_tokens": 925
+            },
+            "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+          },
+          "status": "accepted"
+        }
+      ],
+      "result": {
+        "concept": "Average memory access time",
+        "prompt": "Using the AMAT formula, compute the average memory access time in cycles for a cache with a hit time of 2 cycles, a miss rate of 4%, and an additional miss penalty of 100 cycles.",
+        "citations": [
+          {
+            "document_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402",
+            "chunk_id": "ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402-p26-1",
+            "page": 26,
+            "text": "CPU Memory Hierarchy\n\nAverage Memory Access Time (AMAT)\n\n  AMAT = Hit time + Miss rate x Miss penalty\n  Miss Penalty: time to fetch a block from lower memory\n  level\n   Access Time: Latency for the memory to handle one access\n    Transfer Time: Latency to transfer data block to higher level\n   Miss penalty = access time + data size / bandwidth\n\n\n\n\n\n A cache helps when common hits remain fast and sufficiently few accesses pay\n▪\n  the miss penalty.\n\n\nMemory Wall     CPU Memory    GPU Memory    SOTA Memory     Advanced AI Computing and Systems        26",
+            "preview_url": "/api/documents/ad66f2c8360da43ea0981bffa549956185949044062a0abe4689381ced423402/pages/26/preview"
+          }
+        ],
+        "type": "short-answer",
+        "answer": "6 cycles",
+        "hint": "Multiply the miss rate by the miss penalty, then add the hit time.",
+        "explanation": "AMAT = Hit time + Miss rate × Miss penalty = 2 + 0.04 × 100 = 6 cycles.",
+        "options": [],
+        "accepted_answers": [
+          "6",
+          "6 cycles",
+          "6 clks"
+        ]
+      },
+      "elapsed_s": 2.29
+    }
+  ]
+}

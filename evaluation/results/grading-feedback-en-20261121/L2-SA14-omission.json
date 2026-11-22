@@ -1,0 +1,44 @@
+{
+  "question": "L2-SA14",
+  "variant": "omission",
+  "student_answer": "Pooling can assign separate portions of memory capacity to different hosts.",
+  "raw_response": {
+    "id": "a0b6ee7e-f31f-443e-999f-defebef8a01b",
+    "object": "chat.completion",
+    "created": 1795271867,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":2,\"P2\":0},\"errors\":[],\"missing\":[\"P2\"],\"feedback\":\"Correctly defines pooling (P1). Missing the distinction that coherent sharing lets hosts access shared data with coherence (P2).\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 349,
+      "completion_tokens": 53,
+      "total_tokens": 402,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "prompt_cache_hit_tokens": 128,
+      "prompt_cache_miss_tokens": 221
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 2,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P2"
+    ],
+    "feedback": "Correctly defines pooling (P1). Missing the distinction that coherent sharing lets hosts access shared data with coherence (P2)."
+  }
+}

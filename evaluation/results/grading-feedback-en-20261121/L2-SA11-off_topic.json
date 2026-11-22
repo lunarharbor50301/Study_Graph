@@ -1,0 +1,45 @@
+{
+  "question": "L2-SA11",
+  "variant": "off_topic",
+  "student_answer": "The lecture is part of a computing course.",
+  "raw_response": {
+    "id": "808cea26-a84d-40e8-a23e-607c2512084a",
+    "object": "chat.completion",
+    "created": 1795271862,
+    "model": "deepseek-flash",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\"points\":{\"P1\":0,\"P2\":0},\"errors\":[],\"missing\":[\"P1\",\"P2\"],\"feedback\":\"Your answer is off-topic and does not address DRAM bank parallelism or the shared data bus limitation. Explain that independent banks overlap work with preparation in another bank, and that ranks on the same channel share its data bus.\"}"
+        },
+        "logprobs": null,
+        "finish_reason": "stop"
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 449,
+      "completion_tokens": 76,
+      "total_tokens": 525,
+      "prompt_tokens_details": {
+        "cached_tokens": 256
+      },
+      "prompt_cache_hit_tokens": 256,
+      "prompt_cache_miss_tokens": 193
+    },
+    "system_fingerprint": "bc19ba97cbe016479903222bb1578db6"
+  },
+  "prediction": {
+    "points": {
+      "P1": 0,
+      "P2": 0
+    },
+    "errors": [],
+    "missing": [
+      "P1",
+      "P2"
+    ],
+    "feedback": "Your answer is off-topic and does not address DRAM bank parallelism or the shared data bus limitation. Explain that independent banks overlap work with preparation in another bank, and that ranks on the same channel share its data bus."
+  }
+}
