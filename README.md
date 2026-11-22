@@ -1,5 +1,3 @@
-**English** · [简体中文](README.zh-CN.md)
-
 # StudyGraph
 
 StudyGraph helps undergraduate and graduate students organize course materials, review key concepts, and practice for exams. It has two workspaces:
