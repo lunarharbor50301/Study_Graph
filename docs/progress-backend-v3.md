@@ -55,10 +55,10 @@
 
 ### 产物
 
-- DeepSeek 全量结果（自定义偏好）：[concept-map-v3-deepseek-flash.json](../concept-map-v3-deepseek-flash.json)
-- DeepSeek 默认指令结果（54 节点，评分用）：[concept-map-v3-deepseek-default.json](../concept-map-v3-deepseek-default.json)
+- DeepSeek 全量结果（自定义偏好）：[concept-map-v3-deepseek-flash.json](../evaluation/archive/concept-map-v3-deepseek-flash.json)
+- DeepSeek 默认指令结果（54 节点，评分用）：[concept-map-v3-deepseek-default.json](../evaluation/archive/concept-map-v3-deepseek-default.json)
 - V3 评分预测/指标/判定：[prediction.json](../evaluation/results/v3-default/prediction.json)、[metrics.json](../evaluation/results/v3-default/metrics.json)、[review](../evaluation/results/v3-default/metrics.review.json)
-- Qwen 6 页小讲义结果：[concept-map-v3-qwen-small.json](../concept-map-v3-qwen-small.json)
+- Qwen 6 页小讲义结果：[concept-map-v3-qwen-small.json](../evaluation/archive/concept-map-v3-qwen-small.json)
 - 实现：[backend/concept_map.py](../backend/concept_map.py)、[backend/study_guide.py](../backend/study_guide.py)
 - 测试：[backend/test_concept_map.py](../backend/test_concept_map.py)、[backend/test_study_guide.py](../backend/test_study_guide.py)
 - 评测基线：[evaluation/results/l2-run1/comparison.md](../evaluation/results/l2-run1/comparison.md)
@@ -196,7 +196,7 @@
 - **对前端**：一次响应会包含 60+ 条笔记和 60+ 页 `sources`，比旧图大；组图逻辑不用改，但需要确认大图滚动和主题总览的实际体验。
 - **对测试**：这是目前唯一实测的“69 页完整图”；复现要关缓存、固定讲义和 provider，并记录调用次数。
 - **局限/下一步**：没有按 v0.4-en 评覆盖率、准确率和笔记得分；不能据此说 V3 比 V0 质量好。
-- **产物**：[concept-map-v3-deepseek-flash.json](../concept-map-v3-deepseek-flash.json)
+- **产物**：[concept-map-v3-deepseek-flash.json](../evaluation/archive/concept-map-v3-deepseek-flash.json)
 
 ## 2026-11-18 — TACC Qwen 吞吐、骨架和小讲义
 
@@ -210,7 +210,7 @@
 - **对前端**：Qwen 全量不适合放在同步点击路径；如果必须用，需要后台生成 + 通知/轮询，不能沿用当前“等完整图”的交互。
 - **对测试**：Qwen 的默认 180 秒单次超时够跑骨架，但默认 2400 输出/12 节点批会显著拉长；测 Qwen 时用上面的 Qwen 预设。
 - **局限/下一步**：Qwen 全量、Qwen 与 DeepSeek 的质量对比都没做。
-- **产物**：[concept-map-v3-qwen-small.json](../concept-map-v3-qwen-small.json)
+- **产物**：[concept-map-v3-qwen-small.json](../evaluation/archive/concept-map-v3-qwen-small.json)
 
 ## 2026-11-18 — 测试状态
 
