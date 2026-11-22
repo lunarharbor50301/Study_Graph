@@ -67,12 +67,12 @@ On Windows, `.\scripts\studygraph.cmd -NoTaccWait` is an alternative launcher af
 
 ### Try a complete workflow in the browser
 
-This example uses the bundled Lecture 1 PDF and DeepSeek for generation. Configure DeepSeek as described above, start the server, and open `http://127.0.0.1:8000/`.
+This example uses the bundled Lecture 1 PDF and Qwen on TACC for concept map and test generation. Start the TACC service and SSH tunnel as described above. In your local `.env`, set `STUDYGRAPH_GENERATION_PROVIDER=tacc`, `STUDYGRAPH_TUTOR_PROVIDER=tacc`, and `QWEN_BASE_URL=http://127.0.0.1:18024/v1`. Load `.env` in the server terminal, restart Uvicorn, and open `http://127.0.0.1:8000/`.
 
 1. Open **Learning**, choose `evaluation/ACS_Lecture_1_2026F.pdf`, and click **Generate concept map**.
 2. Open a topic and select one of its concepts. Click a page citation in the study note to check it against the original slide in **Lecture Viewer**.
 
-StudyGraph extracts the PDF text with its page numbers and uses DeepSeek to organize it into topics and page-linked notes.
+StudyGraph extracts the PDF text with its page numbers and uses Qwen on TACC to organize it into topics and page-linked notes.
 
 **Expected result.** A new concept map appears under **My Course**. Selecting a concept opens its study note, and clicking a citation opens the corresponding PDF page.
 
