@@ -1,36 +1,56 @@
-# Study-Graph
+# StudyGraph
 
-StudyGraph 帮助学生从课程讲义的概念图出发，提问、回到原页核对解释，并在同一会话中练习、查看提示和重答。
+StudyGraph turns course slides into a study workspace. Students can navigate a concept map, read cited notes alongside the source slides, ask a retrieval-enabled AI tutor, and build and take a practice test.
 
-## 评审快速开始
+[GitHub repository](https://github.com/lunarharbor50301/Study_Graph) · [Backend contributor statement](docs/backend-contributions.md) · [Course project proposal](docs/project/StudyGraph_Project_Proposal%281%29.pdf)
 
-课程项目不评估界面体验，重点是可运行、结果可复现。生成（概念图、study note、练习题）默认使用 **DeepSeek 公共 API**，不需要 TACC；AI Tutor 固定使用 **TACC Qwen**，需要可用的 TACC 服务或隧道。
+## Getting Started Instructions
 
-依赖：Python 3.12、Node.js 22.19+（建议 24）。首次安装需要联网。
+### Install and start
+
+Run the commands from the repository root. Use Python 3.12 and Node.js 24. Dependency installation requires internet access. The local smoke check uses SQLite and the bundled Lecture 1 PDF and can run without model credentials. Model-backed generation needs a DeepSeek API key or a configured TACC Qwen endpoint. The documented Tutor configuration uses Qwen on TACC.
+
+**macOS/Linux (Bash)**
+
+```bash
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -r backend/requirements-lock.txt
+npm ci --prefix frontend
+npm ci --prefix agent --ignore-scripts
+npm run build --prefix frontend
+.venv/bin/python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
+```
+
+**Windows (PowerShell)**
 
 ```powershell
-python -m venv .venv
+py -3.12 -m venv .venv
 .\.venv\Scripts\python -m pip install -r backend/requirements-lock.txt
 npm ci --prefix frontend
 npm ci --prefix agent --ignore-scripts
 npm run build --prefix frontend
+.\.venv\Scripts\python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000
 ```
 
-在仓库根目录创建 `.env`（不要提交），最小配置：
+Open [StudyGraph](http://127.0.0.1:8000/) and the [API reference](http://127.0.0.1:8000/docs). FastAPI serves the built React application, so this setup uses a single local server. The backend writes uploaded documents, search indexes and Agent history to SQLite. The browser keeps its course shelf, saved tests and practice progress in local storage.
 
-```text
-STUDYGRAPH_LLM_PROVIDER=deepseek
-STUDYGRAPH_TUTOR_PROVIDER=tacc
-DEEPSEEK_API_KEY=你的 key
-DEEPSEEK_BASE_URL=https://api.deepseek.com
-DEEPSEEK_MODEL=deepseek-flash
+### Run a small end-to-end check
 
-# AI Tutor 固定走 TACC；没有 TACC 时生成仍可用，只有 tutor 不可用
-QWEN_BASE_URL=http://127.0.0.1:18029/v1
-QWEN_MODEL=qwen3.8-27b
+Keep the server running. In a second terminal, upload the bundled lecture and open its page 67 preview. The examples below use `curl` in Bash. In Windows PowerShell use `curl.exe` and put each command on one line.
+
+```bash
+curl -fsS -F "file=@docs/ACS_Lecture_1_2026F.pdf" http://127.0.0.1:8000/api/documents
 ```
 
-启动后端和前端开发服务器：
+Expect HTTP 201 and JSON containing `"page_count":67` and document ID `34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402`. Open the [page 67 preview](http://127.0.0.1:8000/api/documents/34911c46e78edc833f283f8dd678b85d6f8c92d66859e6bf6886949181d95402/pages/67/preview) and expect the Roofline Model slide. In the web app, User A can also open **AI Computing Foundations** in the course shelf, select question 5 and use **Page 67** to open the source. Enter `200 GFLOP/s memory-bound` and submit to see the built-in grading and feedback.
+
+To check the same local stack from the command line, run `python -m unittest backend.test_smoke backend.test_documents` using the virtual environment's Python. Expect `OK`.
+
+### Enable model-backed workflows
+
+Create a local `.env` from [the example](.env.example). Set your own `DEEPSEEK_API_KEY` for default generation. For Tutor, set `STUDYGRAPH_TUTOR_PROVIDER=tacc` and point `QWEN_BASE_URL` to the reachable OpenAI-compatible endpoint with the `/v1` suffix. The Agent needs a service with native tool calling. Submit [the TACC Agent job](deploy/tacc-agent/) and open the persistent SSH tunnel as described in [the Agent setup](docs/pi-agent.md). Check that `/v1/models` returns `qwen3.8-27b` before testing the Tutor. TACC access requires a course account with GPU permissions. The supplied job requests two GPUs and a one-hour allocation. Review any node exclusions in its job configuration for your allocation.
+
+Load `.env` in the server terminal and restart Uvicorn. In Bash, run `set -a`, `source .env`, then `set +a`. In PowerShell, use the following before running the start command above.
 
 ```powershell
 Get-Content .env | ForEach-Object {
@@ -38,115 +58,90 @@ Get-Content .env | ForEach-Object {
         [Environment]::SetEnvironmentVariable($Matches[1], $Matches[2].Trim('"', "'"), 'Process')
     }
 }
-.\.venv\Scripts\python -m uvicorn backend.main:app --port 8000
-# 另一个终端
-npm run dev --prefix frontend
 ```
 
-打开 Vite 打印的地址（默认 `http://127.0.0.1:5173/`）。接口文档在 `http://127.0.0.1:8000/docs`。
+On Windows, `.\scripts\studygraph.cmd -NoTaccWait` is an alternative launcher after setup and build. With default options it waits for an already submitted TACC service. To enable full-layout PPTX previews, install LibreOffice on the backend host and set `SOFFICE_PATH` if `soffice` is outside PATH. PDF previews and the simplified PPTX preview work with the base setup.
 
-### 一键启动（Windows PowerShell）
+With DeepSeek configured, open **Test**, upload the bundled PDF, select one question and generate the test. Expect a practice question with a source page, answer feedback and a saved entry in the course shelf. With TACC healthy, open the built-in lecture and ask **What does the Roofline model explain?** in AI Tutor. Look for a streamed explanation and an actionable slide citation. [Test flow](docs/test-flow.md) · [Document API](docs/document-api.md)
 
-安装一次启动命令：
+## Detailed Instructions
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/install-studygraph.ps1
+### Inputs and reference results
+
+Use the PDFs identified by the [SHA-256 manifest](evaluation/sources/documents.json). Lecture 1 is [bundled in the repository](docs/ACS_Lecture_1_2026F.pdf). Obtain `ACS_lecture_2_2026F.pdf` from the course materials and verify its SHA-256 against `ACS-L2` in the manifest. Both original PDFs are required for a fresh two-lecture run. The stored predictions, responses and reviews suffice for offline recomputation. Page numbers refer to physical PDF pages starting at 1.
+
+| Experiment | Tracked inputs and recorded results |
+|---|---|
+| Concept maps and embedded study notes | The [English v0.5 reference sets](evaluation/01_knowledge/v0.5-en/) cover 17 core concepts for Lecture 1 and 19 for Lecture 2. In the archived run, core recall was 17/17 and 19/19, and mean note-point scores were 96.08% and 96.49%. The guides assigned 67/67 and 69/69 physical pages. Lecture 1's first attempt failed its coverage check. See [the iteration report and result table](evaluation/results/concept-map-iterations.md#3-全页覆盖版本在新参考集上的表现) and [raw guides, reviews and metrics](evaluation/results/v0.5-en-20261119/). |
+| English single-turn AI Tutor | The [English cases](evaluation/02_ai_tutor/single_turn/en/) contain 14 Lecture 1 and 16 Lecture 2 questions. In the archived run, 30/30 completed and 26/26 answerable cases returned structured citations. The preliminary rubric score was 98.96%, with 14.89 s median and 24.25 s P95 response time. See [the Tutor evaluation report](evaluation/results/AI-Tutor-单轮问答评测报告.md) and [recorded responses, reviews and summary](evaluation/results/tutor-single-en-29876-citations/). |
+
+### Recompute archived metrics offline
+
+From the repository root, run the following with the project virtual environment active. In Bash, activate it with `source .venv/bin/activate`. The examples below use Bash. On Windows PowerShell, run the Python commands once per lecture, replacing `$i` with `1` and `2` and `$d` with the corresponding archived directory. Use a fresh output path on each run.
+
+```bash
+for i in 1 2; do
+  d="evaluation/results/v0.5-en-20261119/l$i"
+  python -m evaluation.runners.knowledge score \
+    --reference "evaluation/01_knowledge/v0.5-en/lecture$i.json" \
+    --prediction "$d/prediction.json" --review "$d/review.json" \
+    --output "evaluation/local-reproduction/offline/l$i/metrics.json"
+done
+python -m evaluation.runners.tutor_single summarize en evaluation/results/tutor-single-en-29876-citations
 ```
 
-打开一个新的 PowerShell 窗口，输入：
+Compare each concept-map output with the corresponding archived `metrics.json` and the Tutor output with its archived `summary.json`. The concept-map scorer checks that the review belongs to the supplied reference and prediction. The archived `page_checks.json` records source-page coverage and continuity separately from semantic scores.
 
-```powershell
-studygraph
+### Generate and score fresh outputs
+
+For concept maps, start the backend with `STUDYGRAPH_GENERATION_PROVIDER=deepseek`, `DEEPSEEK_MODEL=deepseek-flash`, `STUDYGRAPH_CONCEPT_MAP_MODE=staged` and `STUDYGRAPH_CONCEPT_MAP_CACHE=0`. Keep the default generation budgets and omit custom instructions for this benchmark. The runtime uses the same study-guide generation path as **Learning**. In an evaluation terminal with the DeepSeek variables loaded, run:
+
+```bash
+# Point this to the confirmed course PDF on your machine.
+l2_pdf="/path/to/ACS_lecture_2_2026F.pdf"
+out="evaluation/local-reproduction/live-$(date +%Y%m%d-%H%M%S)"
+
+for i in 1 2; do
+  pdf="$l2_pdf"
+  if [ "$i" = 1 ]; then pdf="docs/ACS_Lecture_1_2026F.pdf"; fi
+
+  python -m evaluation.runners.knowledge generate \
+    --base-url http://127.0.0.1:8000 --pdf "$pdf" --dataset-id "ACS-L$i" \
+    --document-manifest evaluation/sources/documents.json \
+    --output "$out/concept-map/l$i/prediction.json" || continue
+
+  python -m evaluation.runners.knowledge score \
+    --reference "evaluation/01_knowledge/v0.5-en/lecture$i.json" \
+    --prediction "$out/concept-map/l$i/prediction.json" --judge deepseek \
+    --save-review "$out/concept-map/l$i/review.json" \
+    --output "$out/concept-map/l$i/metrics.json"
+done
 ```
 
-它会：
+Expect a prediction, raw judge response, structured review and metrics per successful lecture. Keep failed attempts and use a fresh output directory for a diagnostic retry. For scoring definitions and a human-review template, see [the runner instructions](evaluation/runners/README.md).
 
-1. 读取 `.env`；
-2. 启动后端到 `http://127.0.0.1:8000`（前端 `dist` 由后端托管）；
-3. 最多等 5 分钟 TACC `/v1/models`，准备好后提示 `TACC model is ready.`；
-4. 打开 `http://127.0.0.1:8000`。
+For Tutor, start the Qwen service and tunnel, then upload both verified PDFs to the backend's default profile. The concept-map run above also uploads them to that profile. Set `tacc_job_id` to the current job's ID and run the following in Bash.
 
-TACC 没准备好时会在超时后提示并仍然打开页面，生成功能仍可用。可选参数：
-
-```powershell
-studygraph -NoTaccWait
-studygraph -TaccTimeoutSeconds 120
-studygraph -NoOpen
+```bash
+tacc_job_id="YOUR_JOB_ID"
+tutor_out="evaluation/local-reproduction/tutor-$(date +%Y%m%d-%H%M%S)"
+python -m evaluation.runners.tutor_single run en "$tutor_out" \
+  --base-url http://127.0.0.1:8000 --job "$tacc_job_id"
 ```
 
-后端日志在 `.run/backend.out.log` 和 `.run/backend.err.log`。这个脚本不负责提交 TACC 作业，只等待已有的 TACC 服务/隧道。
+Expect 30 per-question JSON files and a `review.json` template. The runner uses independent sessions with up to three concurrent requests. Fill in the successful answers' rubric scores using the English cases. Failed requests count as zero. Run `python -m evaluation.runners.tutor_single summarize en "$tutor_out"` and compare completion, rubric score, structured citation coverage and latency against the [archived Tutor summary](evaluation/results/tutor-single-en-29876-citations/summary.json).
 
-### PPTX 原版式预览
+### Interpret results and run regression checks
 
-访问网页的学生只需浏览器。后端用 LibreOffice 将上传的 PPTX 转成分页预览，转换结果随讲义缓存。多人共用一个后端时，只在服务器安装一次；每人各自启动 localhost 时，每台运行后端的电脑都需要这个组件。
+- Offline recomputation uses frozen outputs and reviews. Fresh model runs can change wording, node segmentation, scores and latency. Concept-map semantic scores are from an automated judge. The Tutor rubric review is provisional. The archived runs predate this submission branch's Test fixes.
+- Concept-map scores cover the notes returned with the guide. The separately streamed note on opening a node has its own API. The graph's layout links do not represent evaluated semantic relationships. Coverage validation can reject an otherwise usable guide when physical pages are omitted. [Concept-map evaluation](evaluation/results/concept-map-iterations.md)
+- Tutor latency includes retrieval, inference and streaming. GPU allocation, concurrency, endpoint health and model startup can affect timing. The Tutor benchmark is single-turn. [Tutor evaluation](evaluation/results/AI-Tutor-单轮问答评测报告.md)
+- Practice tests support three question types and local scoring. The archived tables above cover concept maps, guide notes and Tutor. The [evaluation index](evaluation/README.md) lists separate practice and grading reference sets.
 
-Windows 的 `scripts/install-studygraph.ps1` 会检测 LibreOffice，缺失时调用 winget 安装。macOS 后端运行 `brew install --cask libreoffice`；Debian 或 Ubuntu 后端运行 `sudo apt-get install libreoffice-impress`。自定义安装位置可通过 `SOFFICE_PATH` 指向 soffice 可执行文件。为接近原稿排版，可在服务器安装课件使用的字体。
-
-已有的简化预览可通过重新上传同一份 PPTX 升级。转换结果是静态幻灯片，支持分页查看。
-
-### 模型供应商
-
-AI Tutor 固定使用 TACC Qwen；可切换的是**生成模型**（概念图、study note、练习题）。
-
-```text
-# 生成模型默认：deepseek；也可设为 tacc
-STUDYGRAPH_LLM_PROVIDER=deepseek
-STUDYGRAPH_GENERATION_PROVIDER=
-
-# AI Tutor 固定 TACC
-STUDYGRAPH_TUTOR_PROVIDER=tacc
+```bash
+python -m unittest discover -s backend -p "test_*.py"
+node agent/test-runner.mjs
+npm run build --prefix frontend
 ```
 
-- `deepseek`：使用 `DEEPSEEK_API_KEY`、`DEEPSEEK_BASE_URL`、`DEEPSEEK_MODEL`。
-- `tacc`：使用 `QWEN_BASE_URL`（必须带 `/v1`）、`QWEN_MODEL`（默认 `qwen3.8-27b`）、`QWEN_API_KEY`（本地服务可省略）；AI tutor 还需要持久 SSH 隧道。
-- 侧栏的 **Generation model** 下拉可现场切换生成 provider（DeepSeek API / TACC Qwen）。它只改当前后端进程，重启后回到 `.env`；API key 始终留在后端；AI Tutor 不受这个下拉影响。
-- 切到 TACC 前会先请求 `QWEN_BASE_URL/models`（2.5 秒超时），TACC 不可用时快速返回 503，不切换； tutor 每轮开始前也做同样 preflight，不会等满 180 秒。
-
-TACC 作业通常只有 1 小时时限，作业结束后隧道会失效，AI Tutor 会报连接错误。生成可以继续用 DeepSeek；需要 TACC tutor 时按 [TACC 连接步骤](docs/tacc/live-qa.md)重新提交并更新 `QWEN_BASE_URL`。
-
-## 组员从这里开始
-
-第一次开会请用[25 分钟议程与演示步骤](docs/kickoff.md)。当前底座采用 React、TypeScript、FastAPI 和 SQLite；安装、启动和 provider 配置以上面的“评审快速开始”为准。后端检查运行：
-
-```powershell
-.\.venv\Scripts\python -m unittest discover -s backend -p 'test_*.py' -q
-```
-
-前端开发服务器用 `npm run dev --prefix frontend`；前端有改动时再跑 `npm run build --prefix frontend`。
-
-从 Learning 上传 PDF 或 PPTX，生成概念图后可在助教面板提问，点击引用打开讲义原页。Test 支持上传多份讲义，选题型和难度后生成练习。课程架保存概念图、测验和作答进度，也可以直接打开内置样例。浏览器保存课程架与普通问答，Agent 对话保存在后端。真实模型配置见 [TACC 连接步骤](docs/tacc/live-qa.md)和 [pi Agent 接入说明](docs/pi-agent.md)。
-
-上传资料后，后端解析课件并调用模型生成主题、概念节点及初始学习要点。不填写学习偏好时使用后端统一的默认指令，填写后使用用户偏好；需要配置可用的生成模型。前端负责转换并展示图谱。已保存图谱（包括旧标题分组图谱）直接恢复，不在重新打开时自动生成或分组。点击节点后的详细学习笔记仍由独立接口按需生成。
-
-| 负责人 | 开工任务 | 第一次交接 |
-|---|---|---|
-| 底座负责人（兼任） | 准备前后端入口、锁定依赖、配置样例和 Windows 启动说明 | 另一名组员按 README 独立启动并打开样例讲义 |
-| A 前端 | 用固定样例连接概念图、对话框和讲义 viewer | 点击引用能打开指定文档的指定页 |
-| B 检索与模型 | 解析讲义并保留页码，核实 TACC 使用方式 | 给 A、C 提供真实片段，跑通并记录一次真实模型调用 |
-| C 图谱与反馈 | 将概念、关系、练习和反馈关联到同一组片段 | 提供样例图谱，以及一次答错、提示、重答的记录 |
-
-## 第一周交接
-
-- **D1**：底座负责人组织 2–3 小时对齐接口。计划用 `frontend/` 放前端，`backend/` 放后端，`examples/` 放共享讲义和样例。实现入口时同步补上依赖版本、PowerShell 安装与启动命令、访问地址和成功标志。样例模式应能在没有 TACC 凭据时运行。
-- **D2–D3**：三人按样例并行。B 优先参考课程通知中的公共 vLLM 环境示例，按包内 README 在 TACC 启动推理服务，用配套客户端完成一次请求，再把同一调用接入应用后端。记录实际模型名、连接配置和服务重启步骤。课程提供的两个包均为可选参考；私有环境示例适用于需要修改并重新构建 vLLM 的场景。
-- **D4**：用一份真实讲义联调选概念、提问、打开引用页。检查引用位置和原文能否支撑回答。
-- **D7**：在同一会话完成出题、作答、提示和重答，保留两次作答。第二周再扩至 2–3 份讲义，并在独立 Tests 页面完成选范围、生成整套题、逐题练习和查看结果。
-
-## 协作方式
-
-每项任务从 main 开分支，通过 PR 合并。PR 写明改动、复现步骤和结果。改共享字段时同时更新接口说明、样例，并请使用该字段的组员审阅。每人负责自己模块的检查；A 汇总导航结果，B 汇总引用、耗时和 baseline 对比，C 汇总图谱、反馈及三方评测结果。
-
-搭建时补齐依赖锁文件、自动检查、只含占位值的 `.env.example` 和忽略规则。真实凭据仅由后端读取，本地配置、数据库和构建产物排除在版本控制之外。
-
-## 项目材料
-
-概念图与学习指南评测支持命令行导出、语义判分及离线复算，完整命令见 [评测运行说明](evaluation/runners/README.md#概念图与学习笔记可复现命令)。该流程复用网页的后端学习指南生成路径；省略 instructions 时与网页不填偏好使用同一默认指令。按需生成笔记的范围区别见说明。参考集仍待人工审核，尚无正式成绩。
-
-本地工作台接入真实模型的步骤见 [TACC 问答配置](docs/tacc/live-qa.md)。
-
-- [课程要求](docs/project/course_project.pdf)
-- [项目提案](docs/project/StudyGraph_Project_Proposal%281%29.pdf)
-- [团队分工与里程碑](docs/kickoff.md)
-- [TACC 教程](docs/tacc/TACC_Toturial.pdf) · [公共环境参考包](docs/tacc/project-release-1.zip)
-
-上传讲义、检索与引用跳页见[前端接入文档](docs/document-api.md)。
+The documentation follows the course's two-section artifact README format. [NSDI ’27 README instructions](https://www.usenix.org/conference/nsdi27/call-for-artifacts#readme-instructions)
