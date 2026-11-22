@@ -2,7 +2,12 @@
 
 # StudyGraph
 
-StudyGraph turns course slides into a study workspace. Students can navigate a concept map, read cited notes alongside the source slides, ask a retrieval-enabled AI tutor, and build and take a practice test.
+StudyGraph helps undergraduate and graduate students organize course materials, review key concepts, and practice for exams. It has two workspaces:
+
+- **Learning** turns an uploaded PDF or PPTX into an interactive concept map. Students can explore topics and open study notes for individual concepts.
+- **Test** generates practice questions from one or more uploaded lecture files. Students can choose question types and difficulty, request hints, submit answers, and review feedback.
+
+In both workspaces, students can click page citations to open the corresponding page or slide in the original PDF or PPTX preview. They can also ask the **AI Tutor** questions as they study or practice.
 
 ## Getting Started Instructions
 
@@ -62,7 +67,22 @@ Get-Content .env | ForEach-Object {
 
 On Windows, `.\scripts\studygraph.cmd -NoTaccWait` is an alternative launcher after setup and build. With default options it waits for an already submitted TACC service. To enable full-layout PPTX previews, install LibreOffice on the backend host and set `SOFFICE_PATH` if `soffice` is outside PATH. PDF previews and the simplified PPTX preview work with the base setup.
 
-With DeepSeek configured, open **Test**, upload the bundled PDF, select one question and generate the test. Expect a practice question with a source page, answer feedback and a saved entry in the course shelf. With TACC healthy, open the built-in Lecture 1 concept map in User A and ask **What does the Roofline model explain?** in AI Tutor. Look for a streamed explanation and an actionable slide citation. The implementation is documented in `docs/test-flow.md` and `docs/document-api.md`.
+### Try a complete workflow in the browser
+
+This example uses the bundled Lecture 1 PDF and DeepSeek for generation. Configure DeepSeek as described above, start the server, and open `http://127.0.0.1:8000/`.
+
+1. Open **Learning**, choose `evaluation/ACS_Lecture_1_2026F.pdf`, and click **Generate concept map**.
+2. Open a topic and select one of its concepts. Click a page citation in the study note to check it against the original slide in **Lecture Viewer**.
+
+StudyGraph extracts the PDF text with its page numbers and uses DeepSeek to organize it into topics and page-linked notes.
+
+**Expected result.** A new concept map appears under **My Course**. Selecting a concept opens its study note, and clicking a citation opens the corresponding PDF page.
+
+You can also try **Test** with the same PDF. Set **Multiple choice** to 1 and the other question types to 0, click **Generate test**, then choose an option and click **Submit answer**. Expect one question with a page citation, feedback on your answer, and a saved test in **My Course**.
+
+If TACC Qwen is running, ask the **AI Tutor** in your new Learning workspace, *What does the Roofline model explain?* For lecture-specific questions, the Tutor can use `search_lecture` to find relevant passages and `read_page` to check the full page before answering. Expect a streamed explanation with a source citation you can open in **Lecture Viewer**.
+
+The implementation is documented in `docs/test-flow.md` and `docs/document-api.md`.
 
 ## Detailed Instructions
 
