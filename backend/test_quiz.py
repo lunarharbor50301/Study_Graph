@@ -54,3 +54,37 @@ class QuestionSetTest(unittest.TestCase):
                     self.assertEqual(question["answer"], "False" if question_type == "true-false" else answer)
                     self.assertEqual(question["options"], ["True", "False"] if question_type == "true-false" else options)
                     self.assertEqual(question["accepted_answers"], ["Host processor"] if question_type == "short-answer" else [])
+
+    def test_failed_evaluation_retains_both_unmodified_replies(self):
+        scope = quiz.PracticeRequest(topic="Warp", query="SIMD", type="short-answer", difficulty="Advanced")
+        replies = [{"choices": [{"message": {"content": text}}]} for text in ("  broken ", "{}")]
+        attempts = []
+        with patch.object(quiz.documents, "search", return_value=[{"text": "SIMD"}]), patch.object(
+            quiz, "quiz_model", return_value=("test", "test", unittest.mock.Mock(side_effect=replies))
+        ), self.assertRaises(HTTPException) as failure:
+            quiz.generate_practice_question("lecture", scope, attempts=attempts)
+        self.assertEqual(failure.exception.status_code, 502)
+        self.assertEqual([a["raw_response"] for a in attempts], replies)
+        self.assertEqual([a["status"] for a in attempts], ["invalid_response"] * 2)
+        self.assertIn("Invalid JSON", attempts[0]["error"])
+        self.assertIn("source", attempts[1]["error"])
+
+    def test_overlong_answer_list_gets_targeted_retry(self):
+        scope = quiz.PracticeRequest(topic="Warp", query="SIMD", type="short-answer", difficulty="Advanced")
+        draft = dict(prompt="What happens to utilization?", source="S1", answer="It falls.",
+                     hint="Consider inactive lanes.", explanation="Only some lanes execute.")
+        def model(messages, endpoint, temperature, max_tokens):
+            if temperature == 0:
+                self.assertIn("at most 5", messages[0]["content"])
+                count = 6
+            else:
+                self.assertIn("accepted_answers", messages[-1]["content"])
+                self.assertIn("not 6", messages[-1]["content"])
+                self.assertEqual(messages[-2]["role"], "assistant")
+                count = 5
+            content = json.dumps({**draft, "accepted_answers": ["variant"] * count})
+            return {"choices": [{"message": {"content": content}}]}
+        with patch.object(quiz.documents, "search", return_value=[{"text": "SIMD"}]), patch.object(
+            quiz, "quiz_model", return_value=("test", "test", model)
+        ):
+            self.assertEqual(len(quiz.practice_question("lecture", scope)["accepted_answers"]), 5)

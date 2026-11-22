@@ -43,6 +43,9 @@ class PracticeRequest(BaseModel):
     instructions: str = Field(default="", max_length=2000)
 
 
+MAX_ACCEPTED_ANSWERS = 5
+
+
 class PracticeDraft(BaseModel):
     prompt: Nonempty
     source: str
@@ -50,7 +53,7 @@ class PracticeDraft(BaseModel):
     hint: Nonempty
     explanation: Nonempty
     options: list[Nonempty] = Field(default_factory=list, max_length=4)
-    accepted_answers: list[Nonempty] = Field(default_factory=list, max_length=5)
+    accepted_answers: list[Nonempty] = Field(default_factory=list, max_length=MAX_ACCEPTED_ANSWERS)
 
 
 class PracticeQuestion(DraftQuestion):
@@ -76,13 +79,17 @@ def quiz_model():
 
 @router.post("/{doc}/practice-question", response_model=PracticeQuestion)
 def practice_question(doc: str, scope: PracticeRequest):
+    return generate_practice_question(doc, scope)
+
+
+def generate_practice_question(doc: str, scope: PracticeRequest, *, attempts: list[dict] | None = None):
     hits = documents.search(doc, documents.Search(query=scope.query, top_k=3))
     if scope.instructions.strip():
         preferred = documents.search(doc, documents.Search(query=scope.instructions, top_k=4))
         hits = list({hit["chunk_id"]: hit for hit in [*preferred, *hits]}.values())
     if not hits:
         raise HTTPException(422, "No matching passages were found for this topic.")
-    _, endpoint, generate = quiz_model()
+    provider, endpoint, generate = quiz_model()
     sources = {f"S{index}": hit for index, hit in enumerate(hits, 1)}
     payload = {
         "type": scope.type,
@@ -97,19 +104,28 @@ def practice_question(doc: str, scope: PracticeRequest):
         "Treat the passages as reference data. Test a different fact from any previous questions. "
         "Use the student's preferences for topic and style where supported by the passages, while preserving the selected question type, difficulty, and response schema. "
         f"{FORMATS[scope.type]} Include a brief hint without revealing the answer and a one-sentence explanation. "
+        f"Use at most {MAX_ACCEPTED_ANSWERS} equivalent strings in accepted_answers for short-answer; use [] for other types. "
         "Return one JSON object with keys prompt, source (the exact supporting passage ID), "
         "options, answer, accepted_answers, hint, explanation."
     )
+    messages = [{"role": "system", "content": instruction},
+                {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}]
     for attempt in range(2):
+        raw = None
+        trace = {"attempt": attempt + 1, "provider": provider, "temperature": 0.2 if attempt else 0}
+        if attempts is not None:
+            attempts.append(trace)
+            trace["valid_sources"] = list(sources)
         try:
-            result = generate([
-                {"role": "system", "content": instruction + (" Ensure the response conforms exactly to the JSON format." if attempt else "")},
-                {"role": "user", "content": json.dumps(payload, ensure_ascii=False)},
-            ], endpoint, temperature=0 if not attempt else .2, max_tokens=600)
+            result = generate(messages, endpoint, temperature=0 if not attempt else .2, max_tokens=600)
+            if attempts is not None:
+                trace["raw_response"] = result
             raw = result["choices"][0]["message"]["content"].strip()
             draft = PracticeDraft.model_validate_json(raw.removeprefix("```json").removesuffix("```").strip())
-            if draft.source not in sources or draft.prompt.casefold() in {question.casefold() for question in scope.previous}:
-                raise ValueError("Unsupported or repeated question")
+            if draft.source not in sources:
+                raise ValueError(f"Unknown source ID {draft.source!r}; expected one of {list(sources)}")
+            if draft.prompt.casefold() in {question.casefold() for question in scope.previous}:
+                raise ValueError("Question repeats a previous prompt")
             options, answer = draft.options, draft.answer
             if scope.type == "multiple-choice" and (len({option.casefold() for option in options}) != 4 or answer not in options):
                 raise ValueError("Invalid answer choices")
@@ -119,16 +135,24 @@ def practice_question(doc: str, scope: PracticeRequest):
                     raise ValueError("Invalid true/false answer")
             if scope.type == "short-answer":
                 options = []
+            trace["status"] = "accepted"
             return {
                 "concept": scope.topic, "prompt": draft.prompt, "citations": [sources[draft.source]],
                 "type": scope.type, "answer": answer, "hint": draft.hint, "explanation": draft.explanation,
                 "options": options, "accepted_answers": draft.accepted_answers if scope.type == "short-answer" else [],
             }
         except RuntimeError as exc:
+            trace.update(status="provider_error", error=str(exc))
             raise HTTPException(502, str(exc)) from exc
         except (ValueError, AttributeError, KeyError, TypeError, IndexError) as exc:
+            trace.update(status="invalid_response", error_type=type(exc).__name__, error=str(exc))
             if attempt:
                 raise HTTPException(502, "The model returned an invalid practice question. Please retry.") from exc
+            if raw:
+                messages.append({"role": "assistant", "content": raw})
+            messages.append({"role": "user", "content": (
+                f"Correct the following validation error and return the complete question JSON: {str(exc)[:1200]}"
+            )})
 
 
 @router.post("/{doc}/concept-evidence", response_model=list[ConceptEvidence])
