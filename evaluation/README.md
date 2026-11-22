@@ -152,7 +152,22 @@ export QWEN_BASE_URL=http://127.0.0.1:18024/v1
   --output "$EVAL_RUN/map-l$i/metrics-tacc.json"
 ```
 
-**Report mapping.** The current-results table reports 17/17 and 19/19 core concept coverage, 96.08% and 96.49% mean note scores, and 67/67 and 69/69 physical pages covered. The saved page checks and L1 failure record are in the corresponding lecture folders under `evaluation/results/v0.5-en-20261119/`. To verify the page checks, inspect each final node's evidence pages in the saved guide, check that each list forms a contiguous interval, and compare their union with pages 1 through the PDF page count. Record missing and multiply assigned pages separately. L1 succeeded on its second attempt, so the reported successful-request time excludes the first attempt. The semantic metrics cover notes returned with the map. The separate on-demand note endpoint and semantic relations are outside the current evaluation.
+**Recompute physical page coverage.** Restart the backend with the updated exporter before generating a fresh prediction. It saves each concept's full `evidence_pages` from the same request. Use the archived guides for the published run.
+
+```bash
+"$EVAL_PY" -m evaluation.runners.page_coverage \
+  evaluation/results/v0.5-en-20261119/l1/guide.json --pages 67
+"$EVAL_PY" -m evaluation.runners.page_coverage \
+  evaluation/results/v0.5-en-20261119/l2/guide.json --pages 69
+
+# Fresh prediction above. Use --pages 69 for Lecture 2.
+"$EVAL_PY" -m evaluation.runners.page_coverage \
+  "$EVAL_RUN/map-l$i/prediction.json" --pages 67
+```
+
+The output counts unique covered pages and lists missing pages, pages shared by several nodes, and invalid or nonconsecutive node ranges.
+
+**Report mapping.** The current-results table reports 17/17 and 19/19 core concept coverage, 96.08% and 96.49% mean note scores, and 67/67 and 69/69 physical pages covered. The saved page checks and L1 failure record are in the corresponding lecture folders under `evaluation/results/v0.5-en-20261119/`. L1 succeeded on its second attempt, so the reported successful-request time excludes the first attempt. The semantic metrics cover notes returned with the map. The separate on-demand note endpoint and semantic relations are outside the current evaluation.
 
 ## 2. AI tutor
 
@@ -205,6 +220,24 @@ export STUDYGRAPH_TUTOR_PROVIDER=tacc
 "$EVAL_PY" -m evaluation.runners.tutor_multi "$EVAL_RUN/tutor-multi-tacc" \
   --base-url "$EVAL_BASE" --job "$TACC_JOB_ID"
 ```
+
+**Score fresh responses and reproduce the published scores.**
+
+```bash
+"$EVAL_PY" -m evaluation.runners.tutor_multi_review \
+  --template "$EVAL_RUN/tutor-multi" > "$EVAL_RUN/tutor-multi-review.json"
+
+# Fill the pending fields in tutor-multi-review.json before summarizing.
+"$EVAL_PY" -m evaluation.runners.tutor_multi_review \
+  --review "$EVAL_RUN/tutor-multi-review.json"
+
+"$EVAL_PY" -m evaluation.runners.tutor_multi_review \
+  --review evaluation/results/tutor-multi/scores.json
+```
+
+Read the raw answer and its citation excerpts beside the reference rubric. Replace each pending point score with 0 (missing or wrong), 1 (partial), or 2 (complete). For each completed turn, record whether there was a substantive error and whether the required citation evidence was complete. Review context retention for turns 2–4. Failed and skipped turns count as zero. A dialogue succeeds only if all four turns completed, earned full points, contained no substantive errors, passed each applicable context check, and provided all required evidence. The mean gives equal weight to each turn after it is divided by its own maximum.
+
+For example, **L1-MT01 turn 1** lists all five pipeline stages and explains how overlapping them improves throughput, so both points earned 2/2. The turn earned 4/4, with `substantive_error: false`, `required_evidence_complete: true`, and context marked `not_applicable`. The archived review contains the full scored dialogue and cases where a turn blocked strict success. [Shared scoring rules](shared/scoring.md) · [Scored dialogue examples](results/tutor-multi/README.md#per-turn-scoring)
 
 Review each turn against its required points on the 0–2 scale. Record context retention, substantive errors and required citation support separately. Average normalized turn scores and report strict dialogue success only when all four turns meet the criteria in the report. The runner collects responses. New semantic review and aggregation are separate steps. The frozen review documents 24/24 completed turns, 99.31% mean turn score, 18/18 applicable context checks and 4/6 strict dialogue successes. Context checks were annotated after execution. Browser citation navigation was unmeasured. [Frozen turn scores](results/tutor-multi/scores.json)
 

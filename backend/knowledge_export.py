@@ -20,7 +20,7 @@ def knowledge(doc: str, body: study_guide.StudyRequest):
                                        *([note.formula] if note.formula else [])]))
             concepts.append({"id": cid, "document_id": doc, "name": note.title,
                              "aliases": [], "importance": "generated", "facts": facts,
-                             "evidence": evidence})
+                             "evidence": evidence, "evidence_pages": note.evidence_pages})
             notes.append({"id": f"N-{cid}", "title": note.title,
                           "required_points": [{"id": f"{cid}-P{k+1}", "text": fact,
                                                "max_score": 2, "evidence": evidence}
